@@ -52,24 +52,26 @@ public class AppMainController implements Initializable{
 		// 맨 처음 값을 200(닫혀있음)으로 만듬
 		bottomPaneLocation.set(200);
 		rightPaneLocation.set(350);
+		// 열닫힘 버튼 클릭 이벤트 등록
 		openBottom.setOnMouseClicked(event -> {
 			animateBottomPane();
 		});
 		openRight.setOnMouseClicked(event->{
 			animateRightPane();
 		});
+		// 위에서 선언한 Double 속성값의 Listener 등록
 		bottomPaneLocation.addListener(change -> updateVBox());
 		rightPaneLocation.addListener(change -> updateHBox());
 	}
 	
-	private void updateVBox() {
-		bottomMovePane.setTranslateY(bottomPaneLocation.get());
-	}
+	// 각 전체 Pane의 위치를 property 값 만큼 변경
+	private void updateVBox() {	bottomMovePane.setTranslateY(bottomPaneLocation.get());}
 	
 	private void updateHBox() {
 		rightMovePane.setTranslateX(rightPaneLocation.get());
 	}
 	
+	// animate 메소드는 현재 상태를 파악하여 어느위치로 이동시켜야되는지 slidePane에게 전달해준다.
 	private void animateRightPane() {
 		if(rightControl) {
 			// bottomPane이 열려있으면 닫아줌 -> fxThread로 안돌리면 오류난다.
@@ -94,11 +96,14 @@ public class AppMainController implements Initializable{
 		}
 	}
 	
+	// slidePane은 property의 값을 property에 있는 현재 위치값에서부터 to 변수로 주어진 값만큼 숫자를 0.3초 동안 올려주거나 내려준다.
+	// 여기서 property의 값이 변경되면 initSlide()에 등록한 Listener가 실행되고 각 Box의 위치를 조절한다. -> Animation
 	private void slidePane(double to, DoubleProperty property) {
 		KeyValue keyValue = new KeyValue(property, to);
 		KeyFrame keyFrame = new KeyFrame(Duration.millis(300),keyValue);
 		Timeline timeline = new Timeline(keyFrame);
 		timeline.play();
+		// 위치 수정이 끝나면 여닫힘 상태를 갱신
 		timeline.setOnFinished((event)->{
 			if(property.equals(bottomPaneLocation))	bottomControl = !bottomControl;
 			else rightControl = !rightControl;
