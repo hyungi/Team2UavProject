@@ -38,9 +38,7 @@ public class AppMainController implements Initializable{
 	private DoubleProperty bottomPaneLocation 
 	 = new SimpleDoubleProperty(this,"bottomPaneLocation");
 	private DoubleProperty rightPaneLocation
-	 = new SimpleDoubleProperty(this,"rightPaneLocation");
-
-	
+	 = new SimpleDoubleProperty(this,"rightPaneLocation");	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -64,7 +62,7 @@ public class AppMainController implements Initializable{
 		rightPaneLocation.addListener(change -> updateHBox());
 	}
 	
-	// 각 전체 Pane의 위치를 property 값 만큼 변경
+	// 각 전체 Pane의 위치를 property 값 만큼 변경(SlidePane 메소드를 통해 차례로 변경된 값이 적용됨)
 	private void updateVBox() {	bottomMovePane.setTranslateY(bottomPaneLocation.get());}
 	
 	private void updateHBox() {
@@ -97,7 +95,10 @@ public class AppMainController implements Initializable{
 	}
 	
 	// slidePane은 property의 값을 property에 있는 현재 위치값에서부터 to 변수로 주어진 값만큼 숫자를 0.3초 동안 올려주거나 내려준다.
-	// 여기서 property의 값이 변경되면 initSlide()에 등록한 Listener가 실행되고 각 Box의 위치를 조절한다. -> Animation
+	// 여기서 property의 값이 변경되면 initSlide()에 등록한 Listener가 실행되고 각 Box의 위치를 조절한다.
+	// KeyValue를 통해 property의 현재 값을 -> to로 변경시키겠다.
+	// KeyFrame을 통해 keyValue를 0.3초 동안 변경시키겠다.
+	// Timeline을 통해 keyFrame의 값을 가지고 Animation play
 	private void slidePane(double to, DoubleProperty property) {
 		KeyValue keyValue = new KeyValue(property, to);
 		KeyFrame keyFrame = new KeyFrame(Duration.millis(300),keyValue);
@@ -109,7 +110,4 @@ public class AppMainController implements Initializable{
 			else rightControl = !rightControl;
 		});
 	}
-
-
-
 }
