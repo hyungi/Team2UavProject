@@ -78,7 +78,7 @@ public class AppMainController implements Initializable{
 			slidePane(0,rightPaneLocation);
 		}else {
 			rightOpenLabel.setText("Open");
-			slidePane(300,rightPaneLocation);
+			slidePane(350,rightPaneLocation);
 		}
 	}
 	
