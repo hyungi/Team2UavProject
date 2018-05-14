@@ -37,7 +37,7 @@
             <AnchorPane fx:id="leftPane" maxWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: #0000ff;" StackPane.alignment="CENTER_LEFT" />
             <VBox fx:id="bottomMovePane" alignment="BOTTOM_CENTER" maxHeight="-Infinity" style="-fx-background-color: transparent;" translateY="200.0" StackPane.alignment="BOTTOM_CENTER">
                <children>
-                  <AnchorPane fx:id="openBottom" maxWidth="-Infinity" prefWidth="200.0" style="-fx-background-color: #222222; -fx-background-radius: 10;" translateY="10.0">
+                  <AnchorPane fx:id="openBottom" maxWidth="-Infinity" prefWidth="200.0" style="-fx-background-color: #222222; -fx-background-radius: 10 10 0 0;">
                      <children>
                         <Label fx:id="bottomOpenLabel" alignment="CENTER" contentDisplay="CENTER" prefWidth="200.0" text="Open Mission" textAlignment="CENTER" textFill="WHITE">
                            <font>
@@ -45,16 +45,13 @@
                            </font>
                         </Label>
                      </children>
-                     <padding>
-                        <Insets bottom="10.0" />
-                     </padding>
                   </AnchorPane>
                   <BorderPane fx:id="missionPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #222222;" />
                </children>
             </VBox>
-            <HBox fx:id="rightMovePane" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" style="-fx-background-color: transparent;" translateX="300.0" StackPane.alignment="CENTER_RIGHT">
+            <HBox fx:id="rightMovePane" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" opacity="0.7" style="-fx-background-color: transparent;" translateX="300.0" StackPane.alignment="CENTER_RIGHT">
                <children>
-                  <AnchorPane fx:id="openRight" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="100.0" style="-fx-background-color: #222222; -fx-background-radius: 10; -fx-rotate: -90;" translateX="45.0">
+                  <AnchorPane fx:id="openRight" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="100.0" style="-fx-background-color: #222222; -fx-background-radius: 5 5 0 0; -fx-rotate: -90;" translateX="37.5">
                      <children>
                         <Label fx:id="rightOpenLabel" alignment="CENTER" prefWidth="100.0" text="Open" textAlignment="CENTER" textFill="WHITE">
                            <font>
@@ -65,9 +62,6 @@
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
-                     <padding>
-                        <Insets bottom="10.0" />
-                     </padding>
                   </AnchorPane>
                   <AnchorPane fx:id="viewPane" prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: #222222;" />
                </children>
