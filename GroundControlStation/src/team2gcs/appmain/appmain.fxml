@@ -34,7 +34,6 @@
    <center>
       <StackPane BorderPane.alignment="CENTER">
          <children>
-            <WebView fx:id="webView" prefHeight="200.0" prefWidth="200.0" />
             <VBox fx:id="leftVbox" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" StackPane.alignment="TOP_LEFT">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -49,17 +48,17 @@
                            <font>
                               <Font name="Aharoni Bold" size="18.0" />
                            </font></Label>
-                        <Label fx:id="rollLabel" layoutX="10.0" layoutY="47.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="140.0" text="    Roll" textFill="WHITE">
+                        <Label fx:id="rollLabel" layoutX="10.0" layoutY="47.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="140.0" text="     Roll" textFill="WHITE">
                            <font>
                               <Font name="Aharoni Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="pitchLabel" layoutX="10.0" layoutY="91.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="140.0" text="    Pitch" textFill="WHITE">
+                        <Label fx:id="pitchLabel" layoutX="10.0" layoutY="91.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="140.0" text="     Pitch" textFill="WHITE">
                            <font>
                               <Font name="Aharoni Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="yawLabel" layoutX="10.0" layoutY="135.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="140.0" text="    Yaw" textFill="WHITE">
+                        <Label fx:id="yawLabel" layoutX="10.0" layoutY="135.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="140.0" text="     Yaw" textFill="WHITE">
                            <font>
                               <Font name="Aharoni Bold" size="14.0" />
                            </font>
@@ -71,11 +70,61 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="6.0" />
                      </VBox.margin>
                      <children>
-                        <Label layoutX="10.0" layoutY="10.0" text="Sensor Data" textAlignment="CENTER" textFill="WHITE">
+						<Label layoutX="10.0" layoutY="10.0" text="Sensor Data" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="Aharoni Bold" size="18.0" />
                            </font></Label>
-                        <Label layoutX="47.0" layoutY="305.0" text="Label" textFill="WHITE" />
+                        <Label layoutX="32.0" layoutY="52.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Air Speed" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="32.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Ground Speed" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="32.0" layoutY="148.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Data3" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="32.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Data4" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="32.0" layoutY="244.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Altitude" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="189.0" layoutY="244.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="30M" textAlignment="RIGHT" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="189.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Data" textAlignment="RIGHT" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="189.0" layoutY="148.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Data" textAlignment="RIGHT" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="189.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="                           10m/s" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="189.0" layoutY="52.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="                           10m/s" textAlignment="RIGHT" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        
                      </children></AnchorPane>
                </children>
                <StackPane.margin>
@@ -84,7 +133,7 @@
             </VBox>
             <VBox fx:id="bottomMovePane" alignment="BOTTOM_CENTER" maxHeight="-Infinity" style="-fx-background-color: transparent;" translateY="200.0" StackPane.alignment="BOTTOM_CENTER">
                <children>
-                  <AnchorPane fx:id="openBottom" maxWidth="-Infinity" prefHeight="35" prefWidth="200.0" style="-fx-background-color: #222222; -fx-background-radius: 10 10 0 0;">
+                  <AnchorPane fx:id="openBottom" maxWidth="-Infinity" prefHeight="35" prefWidth="200.0" style="-fx-background-color: #222222; -fx-background-radius: 5 5 0 0;">
                      <children>
                         <Label fx:id="bottomOpenLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="35" prefWidth="200.0" text="Open Mission" textAlignment="CENTER" textFill="WHITE">
                            <font>
@@ -96,7 +145,7 @@
                   <BorderPane fx:id="missionPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #222222;" />
                </children>
             </VBox>
-            <HBox fx:id="rightMovePane" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" opacity="0.7" style="-fx-background-color: transparent;" translateX="350.0" StackPane.alignment="CENTER_RIGHT">
+            <HBox fx:id="rightMovePane" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" opacity="0.9" style="-fx-background-color: transparent;" translateX="350.0" StackPane.alignment="CENTER_RIGHT">
                <children>
                   <AnchorPane fx:id="openRight" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35" prefWidth="200" style="-fx-background-color: #222222; -fx-background-radius: 5 5 0 0; -fx-rotate: -90;" translateX="83">
                      <children>
