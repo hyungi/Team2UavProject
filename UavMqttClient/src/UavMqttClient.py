@@ -16,7 +16,7 @@ import simplejson
 debug = True
 
 #Autopilot과 연결-----------------------------------------
-vehicle = connect("udp:172.30.1.23:14560", wait_ready=True)
+vehicle = connect("udp:192.168.3.217:14560", wait_ready=True)
 #vehicle = connect("udp:192.168.3.18:14560", wait_ready=True)
 #vehicle = connect("/dev/ttyS0", wait_ready=True, baud=57600)
 

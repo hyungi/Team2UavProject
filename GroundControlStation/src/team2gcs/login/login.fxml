@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1300.0" style="-fx-background-color: #222222;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="768.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_RIGHT">
+               <image>
+                  <Image url="@../images/bg.png" />
+               </image>
+            </ImageView>
+            <AnchorPane maxHeight="300.0" maxWidth="400.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #666666; -fx-background-radius: 20;">
+               <children>
+                  <TextField fx:id="txtIP" layoutX="131.0" layoutY="111.0" promptText="MQTT Broker IP" style="-fx-background-color: #666666;" />
+                  <PasswordField fx:id="txtPort" layoutX="131.0" layoutY="146.0" promptText="MQTT Broker Port" style="-fx-background-color: #666666;" />
+                  <SplitMenuButton fx:id="com" layoutX="132.0" layoutY="182.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="137.0" text="Connect USB">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                      <MenuItem mnemonicParsing="false" text="Action 2" />
+                    </items>
+                  </SplitMenuButton>
+                  <Button fx:id="btnConnect" layoutX="143.0" layoutY="233.0" mnemonicParsing="false" text="Connect" />
+                  <ImageView fitHeight="66.0" fitWidth="137.0" layoutX="150.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/droneFive.png" />
+                     </image>
+                  </ImageView>
+                  <Separator layoutX="132.0" layoutY="134.0" prefHeight="2.0" prefWidth="138.0" />
+                  <Separator layoutX="131.0" layoutY="168.0" prefHeight="2.0" prefWidth="138.0" />
+                  <Button fx:id="btnConnect1" layoutX="218.0" layoutY="233.0" mnemonicParsing="false" text="Exit" />
+               </children>
+            </AnchorPane>
+            <ImageView fitHeight="768.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;" StackPane.alignment="TOP_LEFT">
+               <image>
+                  <Image url="@../images/bg.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+   </center>
+</BorderPane>
