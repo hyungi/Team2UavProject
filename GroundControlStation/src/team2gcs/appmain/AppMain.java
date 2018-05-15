@@ -1,6 +1,7 @@
 package team2gcs.appmain;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,11 +20,12 @@ public class AppMain extends Application{
 		
 		Parent root = FXMLLoader.load(getClass().getResource("appmain.fxml"));
 		scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("../images/app.css").toExternalForm());
+		
 		primaryStage.setTitle("UAV Ground Control Station(Team2)");
 		primaryStage.setScene(scene);		
 		primaryStage.setMaximized(true);
 		primaryStage.show();
+		
 	}
 	
 	@Override
@@ -34,4 +36,5 @@ public class AppMain extends Application{
 	public static void main(String[] args) {
 		launch(args);
 	}
+
 }
