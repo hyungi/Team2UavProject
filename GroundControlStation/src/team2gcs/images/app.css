@@ -15,3 +15,8 @@
 #borderPane, #bottomPane {
 	-fx-background-color: rgba(0, 0, 0, 0.6);
 }
+
+#rollLabel, #pitchLabel, #yawLabel {
+	-fx-background-color: black;
+	-fx-background-radius: 30;
+}
