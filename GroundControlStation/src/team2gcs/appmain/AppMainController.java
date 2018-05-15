@@ -3,7 +3,7 @@ package team2gcs.appmain;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import gcs.appmain.AppMain;
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -12,6 +12,8 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,8 +30,15 @@ public class AppMainController implements Initializable{
 	@FXML private AnchorPane bottomPane;
 	@FXML private BorderPane borderPane;
 	@FXML private ImageView imageView;
-//	// 좌측 메뉴
+	@FXML private Canvas hudCanvas;
+	private GraphicsContext ctx;
+	
+	//좌측 메뉴
 	@FXML private VBox leftVbox;
+	@FXML private Label rollLabel;
+	@FXML private Label pitchLabel;
+	@FXML private Label yawLabel;
+	
 	// 아래 버튼 & Pane & 둘을 가지고있는 VBox & control 값
 	@FXML private AnchorPane openBottom;
 	@FXML private BorderPane missionPane;
@@ -54,13 +63,41 @@ public class AppMainController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		ViewLoop viewLoop = new ViewLoop();
+		viewLoop.start();
+		
+		initCanvasLayer();
 		initSlide();
 		initImageView();
-		functionsLabel.setTextFill(Color.WHITE);
-		cameraLabel.setTextFill(Color.WHITE);
-		statusLabel.setTextFill(Color.WHITE);
+		initRightPane();
+		initLeftPane();
 	}
 	
+	class ViewLoop extends AnimationTimer {
+		@Override
+		public void handle(long now) {
+			ctx.translate(-50, -50);
+			ctx.clearRect(0, 0, 140, 140); 
+			ctx.translate(50, 50);
+			layerDraw();
+		} 
+	}
+	
+	private void layerDraw() {
+		ctx.setLineWidth(5);
+		ctx.strokeOval(0, 0, 50, 50);
+		ctx.fillText("N", 10, 10);	//N
+		
+		ctx.setLineWidth(1);
+//		ctx.strokeLine(210, -10, 50*Math.cos(++angle*0.05)+210, 50*Math.sin(angle*0.05)-10);
+		ctx.setFill(Color.WHITE);
+//	  	ctx.fillRoundRect(205+50*Math.cos(yaw*0.01-Math.PI/2),-15+50*Math.sin(yaw*0.01-Math.PI/2), 10, 10, 6, 6);
+	}
+	
+	private void initCanvasLayer() {
+		ctx = hudCanvas.getGraphicsContext2D();	//�� ��ü�� ��.
+		ctx.setStroke(Color.WHITE);
+	}
 ////////////////////////////////// Slide Menu 관련 ////////////////////////////////
 	public void initSlide() {
 		// 맨 처음 값을 200(닫혀있음)으로 만듬
@@ -133,5 +170,15 @@ public class AppMainController implements Initializable{
 		imageView.setImage(image);
 		imageView.fitWidthProperty().bind(borderPane.widthProperty());
 		imageView.fitHeightProperty().bind(leftVbox.heightProperty());
+	}
+	
+	private void initRightPane() {
+		functionsLabel.setTextFill(Color.WHITE);
+		cameraLabel.setTextFill(Color.WHITE);
+		statusLabel.setTextFill(Color.WHITE);
+	}
+	
+	private void initLeftPane() {
+		
 	}
 }
