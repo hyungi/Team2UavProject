@@ -19,7 +19,7 @@ public class AppMain extends Application{
 		
 		Parent root = FXMLLoader.load(getClass().getResource("appmain.fxml"));
 		scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("../resources/css/app.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("../images/app.css").toExternalForm());
 		primaryStage.setTitle("UAV Ground Control Station(Team2)");
 		primaryStage.setScene(scene);		
 		primaryStage.setMaximized(true);
@@ -34,5 +34,4 @@ public class AppMain extends Application{
 	public static void main(String[] args) {
 		launch(args);
 	}
-
 }
