@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-
+  
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1300.0" style="-fx-background-color: #222222;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -14,7 +14,7 @@
                   <Image url="@../images/bg.png" />
                </image>
             </ImageView>
-            <AnchorPane maxHeight="300.0" maxWidth="400.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #666666; -fx-background-radius: 20;">
+            <AnchorPane maxHeight="300.0" maxWidth="400.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #666666; -fx-background-radius: 8;">
                <children>
                   <TextField fx:id="txtIP" layoutX="131.0" layoutY="111.0" promptText="MQTT Broker IP" style="-fx-background-color: #666666;" />
                   <PasswordField fx:id="txtPort" layoutX="131.0" layoutY="146.0" promptText="MQTT Broker Port" style="-fx-background-color: #666666;" />

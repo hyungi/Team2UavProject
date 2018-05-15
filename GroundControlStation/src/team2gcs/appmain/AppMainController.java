@@ -3,7 +3,6 @@ package team2gcs.appmain;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import gcs.appmain.AppMain;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -20,6 +19,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.util.Duration;
 
 public class AppMainController implements Initializable{
@@ -45,6 +46,8 @@ public class AppMainController implements Initializable{
 	@FXML private Label cameraLabel;
 	@FXML private Label statusLabel;
 	private boolean rightControl = true;
+	@FXML WebView webView;
+	private WebEngine webEngine;
 	
 	// Pane을 움직이기 위해 Double 속성값을 사용 -> Listener를 등록가능
 	private DoubleProperty bottomPaneLocation 
@@ -55,7 +58,7 @@ public class AppMainController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initSlide();
-		initImageView();
+		initWenView();
 		functionsLabel.setTextFill(Color.WHITE);
 		cameraLabel.setTextFill(Color.WHITE);
 		statusLabel.setTextFill(Color.WHITE);
@@ -134,4 +137,9 @@ public class AppMainController implements Initializable{
 		imageView.fitWidthProperty().bind(borderPane.widthProperty());
 		imageView.fitHeightProperty().bind(leftVbox.heightProperty());
 	}
+	private void initWenView() {
+		webEngine = webView.getEngine();		
+		webEngine.load(getClass().getResource("javascript/index.html").toExternalForm());
+	}
+	
 }
