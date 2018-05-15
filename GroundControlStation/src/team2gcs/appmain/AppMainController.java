@@ -25,72 +25,79 @@ import javafx.scene.web.WebView;
 import javafx.util.Duration;
 
 public class AppMainController implements Initializable{
-   public static AppMainController instance;
-//   //공용
-   @FXML private AnchorPane bottomPane;
-   @FXML private BorderPane borderPane;
-   @FXML private Canvas hudCanvas;
-   private GraphicsContext ctx;
+	public static AppMainController instance;
+	//공용
+	@FXML private AnchorPane bottomPane;
+	@FXML private BorderPane borderPane;
+	@FXML private Canvas hudCanvas;
+	private GraphicsContext ctx;
    
-   //좌측 메뉴
-   @FXML private VBox leftVbox;
-   @FXML private Label rollLabel;
-   @FXML private Label pitchLabel;
-   @FXML private Label yawLabel;
+	//좌측 메뉴
+	@FXML private VBox leftVbox;
+	@FXML private Label rollLabel;
+	@FXML private Label pitchLabel;
+	@FXML private Label yawLabel;
    
-   // 아래 버튼 & Pane & 둘을 가지고있는 VBox & control 값
-   @FXML private AnchorPane openBottom;
-   @FXML private BorderPane missionPane;
-   @FXML private VBox bottomMovePane;
-   @FXML private Label bottomOpenLabel;
-   private boolean bottomControl = true;
-   // 우측 버튼 & Pane & 둘을 가지고있는 HBox & control 값
-   @FXML private AnchorPane openRight;
-   @FXML private AnchorPane viewPane;
-   @FXML private HBox rightMovePane;
-   @FXML private Label rightOpenLabel;
-   @FXML private Label functionsLabel;
-   @FXML private Label cameraLabel;
-   @FXML private Label statusLabel;
-   private boolean rightControl = true;
-   @FXML WebView webView;
-   private WebEngine webEngine;
-   
+	// 아래 버튼 & Pane & 둘을 가지고있는 VBox & control 값
+	@FXML private AnchorPane openBottom;
+	@FXML private BorderPane missionPane;
+	@FXML private VBox bottomMovePane;
+	@FXML private Label bottomOpenLabel;
+	private boolean bottomControl = true;
+	// 우측 버튼 & Pane & 둘을 가지고있는 HBox & control 값
+	@FXML private AnchorPane openRight;
+	@FXML private AnchorPane viewPane;
+	@FXML private HBox rightMovePane;
+	@FXML private Label rightOpenLabel;
+	@FXML private Label functionsLabel;
+	@FXML private Label cameraLabel;
+	@FXML private Label statusLabel;
+	private boolean rightControl = true;
+	@FXML WebView webView;
+	private WebEngine webEngine;
      
-   // Pane을 움직이기 위해 Double 속성값을 사용 -> Listener를 등록가능
-   private DoubleProperty bottomPaneLocation 
-    = new SimpleDoubleProperty(this,"bottomPaneLocation");
-   private DoubleProperty rightPaneLocation
-    = new SimpleDoubleProperty(this,"rightPaneLocation");   
+   	// Pane을 움직이기 위해 Double 속성값을 사용 -> Listener를 등록가능
+   	private DoubleProperty bottomPaneLocation 
+   	= new SimpleDoubleProperty(this,"bottomPaneLocation");
+   	private DoubleProperty rightPaneLocation
+   	= new SimpleDoubleProperty(this,"rightPaneLocation");   
 
-   @Override
-   public void initialize(URL location, ResourceBundle resources) {
-//      ViewLoop viewLoop = new ViewLoop();
-//      viewLoop.start();
-      
-//      initCanvasLayer();
-      initSlide();
-//      initTop();
-      
-      initWenView();
+   	//상단 라벨
+   	@FXML private Label currtimeLabel;
+	@FXML private Label homeLabel;
+	@FXML private Label locationLabel;
+	@FXML private Label batteryLabel;
+	@FXML private Label signalLabel;
 
-      initRightPane();
-      initLeftPane();
-   }
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		ViewLoop viewLoop = new ViewLoop();
+		viewLoop.start();
+		
+		initCanvasLayer();
+		initSlide();
+		initTop();
+		
+		initWenView();
+
+		initRightPane();
+		initLeftPane();
+	}
 //////////////////////////////////Top Menu 관련 ////////////////////////////////
-//   	public void initTop() {
-//	   	currTime();
-//	   	homeLabel.setText("12m");
-//	   	locationLabel.setText("12m");
-//	   	batteryLabel.setText("12m");
-//	   	signalLabel.setText("12m");
-//   	}
-//	   
-//	public void currTime() {
-//   		String inTime = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
-//   		currtimeLabel.setText(inTime);
-//   	}         
-	   
+	public void initTop() {
+		currTime();
+		homeLabel.setText("12m");
+		locationLabel.setText("12m");
+		batteryLabel.setText("12m");
+		signalLabel.setText("12m");
+	
+	}
+	
+	public void currTime() {
+		String inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
+		currtimeLabel.setText(inTime);
+	}
+	
 	class ViewLoop extends AnimationTimer {
 		@Override
 		public void handle(long now) {
@@ -103,19 +110,17 @@ public class AppMainController implements Initializable{
 	   
 	private void layerDraw() {
     	ctx.setLineWidth(5);
-    	ctx.strokeOval(0, 0, 50, 50);
+    	ctx.strokeOval(20, 30, 110, 110);
     	ctx.fillText("N", 10, 10);   //N
-	      
     	ctx.setLineWidth(1);
-//	  	ctx.strokeLine(210, -10, 50*Math.cos(++angle*0.05)+210, 50*Math.sin(angle*0.05)-10);
     	ctx.setFill(Color.WHITE);
-//	   	ctx.fillRoundRect(205+50*Math.cos(yaw*0.01-Math.PI/2),-15+50*Math.sin(yaw*0.01-Math.PI/2), 10, 10, 6, 6);
 	}
 	   
 	private void initCanvasLayer() {
 		ctx = hudCanvas.getGraphicsContext2D();   //�� ��ü�� ��.
 		ctx.setStroke(Color.WHITE);
 	}   
+	
 ////////////////////////////////// Slide Menu 관련 ////////////////////////////////
 	public void initSlide() {
 		// 맨 처음 값을 200(닫혀있음)으로 만듬
