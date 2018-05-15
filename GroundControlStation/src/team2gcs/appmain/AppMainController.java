@@ -173,7 +173,7 @@ public class AppMainController implements Initializable{
 		});
 	}
 	
-
+	//맵
 	private void initWenView() {
 		webEngine = webView.getEngine();		
 		webEngine.load(getClass().getResource("javascript/index.html").toExternalForm());
