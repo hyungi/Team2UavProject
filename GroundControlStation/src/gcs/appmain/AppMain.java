@@ -7,7 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class AppMain extends Application {	
+public class AppMain extends Application {	 
 	public static AppMain instance;
 	public Stage primaryStage;
 	public Scene scene;
