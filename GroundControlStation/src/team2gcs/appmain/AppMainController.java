@@ -58,6 +58,13 @@ public class AppMainController implements Initializable{
 	@FXML WebView webView;
 	private WebEngine webEngine;
 	
+	//상단 라벨
+	@FXML private Label currtimeLabel;
+	@FXML private Label homeLabel;
+	@FXML private Label locationLabel;
+	@FXML private Label batteryLabel;
+	@FXML private Label signalLabel;
+	
 	// Pane을 움직이기 위해 Double 속성값을 사용 -> Listener를 등록가능
 	private DoubleProperty bottomPaneLocation 
 	 = new SimpleDoubleProperty(this,"bottomPaneLocation");
@@ -71,7 +78,8 @@ public class AppMainController implements Initializable{
 		
 		initCanvasLayer();
 		initSlide();
-
+		initTop();
+		
 		initWenView();
 		functionsLabel.setTextFill(Color.WHITE);
 		cameraLabel.setTextFill(Color.WHITE);
@@ -81,6 +89,20 @@ public class AppMainController implements Initializable{
 		initLeftPane();
 
 	}
+//////////////////////////////////Top Menu 관련 ////////////////////////////////
+	public void initTop() {
+		currTime();
+		homeLabel.setText("12m");
+		locationLabel.setText("12m");
+		batteryLabel.setText("12m");
+		signalLabel.setText("12m");
+	
+	}
+	
+	public void currTime() {
+		String inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
+		currtimeLabel.setText(inTime);
+	}			
 	
 	class ViewLoop extends AnimationTimer {
 		@Override
