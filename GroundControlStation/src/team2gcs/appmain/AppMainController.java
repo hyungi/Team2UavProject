@@ -3,6 +3,7 @@ package team2gcs.appmain;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import gcs.appmain.AppMain;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -12,14 +13,24 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class AppMainController implements Initializable{
 	public static AppMainController instance;
+	//공용
+	@FXML private AnchorPane bottomPane;
+	@FXML private BorderPane borderPane;
+	@FXML private ImageView imageView;
+	// 좌측 메뉴
+	@FXML private VBox leftVbox;
+	
 	
 	// 아래 버튼 & Pane & 둘을 가지고있는 VBox & control 값
 	@FXML private AnchorPane openBottom;
@@ -32,6 +43,9 @@ public class AppMainController implements Initializable{
 	@FXML private AnchorPane viewPane;
 	@FXML private HBox rightMovePane;
 	@FXML private Label rightOpenLabel;
+	@FXML private Label functionsLabel;
+	@FXML private Label cameraLabel;
+	@FXML private Label statusLabel;
 	private boolean rightControl = true;
 	
 	// Pane을 움직이기 위해 Double 속성값을 사용 -> Listener를 등록가능
@@ -43,6 +57,10 @@ public class AppMainController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initSlide();
+		initImageView();
+		functionsLabel.setTextFill(Color.WHITE);
+		cameraLabel.setTextFill(Color.WHITE);
+		statusLabel.setTextFill(Color.WHITE);
 	}
 	
 ////////////////////////////////// Slide Menu 관련 ////////////////////////////////
@@ -109,5 +127,13 @@ public class AppMainController implements Initializable{
 			if(property.equals(bottomPaneLocation))	bottomControl = !bottomControl;
 			else rightControl = !rightControl;
 		});
+	}
+	
+	private void initImageView() {
+		Image image = new Image("team2gcs/resources/images/map.JPG");
+		imageView.setPreserveRatio(false);
+		imageView.setImage(image);
+		imageView.fitWidthProperty().bind(borderPane.widthProperty());
+		imageView.fitHeightProperty().bind(leftVbox.heightProperty());
 	}
 }
