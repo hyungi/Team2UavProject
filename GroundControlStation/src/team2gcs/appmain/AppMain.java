@@ -1,6 +1,7 @@
 package team2gcs.appmain;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,10 +25,7 @@ public class AppMain extends Application{
 		tempScene = scene;
 		primaryStage.setTitle("UAV Ground Control Station(Team2)");
 		primaryStage.setScene(scene);		
-<<<<<<< HEAD
-//		primaryStage.setMaximized(true);
-		primaryStage.show();
-=======
+
 		primaryStage.setMaximized(true);
 		primaryStage.show();
 
@@ -47,7 +45,6 @@ public class AppMain extends Application{
         };
 		
 		thread.start();
->>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
 	}
 	
 	@Override

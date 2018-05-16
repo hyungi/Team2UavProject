@@ -124,15 +124,12 @@ public class AppMainController implements Initializable{
 		String inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
 		currtimeLabel.setText(inTime);
 	}
-<<<<<<< HEAD
 	public void currTime2() {
 		System.out.println("gg");
 	}
 	
 //////////////////////////////////HUD 관련 ////////////////////////////////
-=======
-	
->>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
+
 	class ViewLoop extends AnimationTimer {
 		@Override
 		public void handle(long now) {
