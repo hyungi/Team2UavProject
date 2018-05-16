@@ -3,6 +3,7 @@ package team2gcs.appmain;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import gcs.network.Network;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -10,11 +11,18 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -22,13 +30,16 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class AppMainController implements Initializable{
 	public static AppMainController instance2;
 	//공용
 	@FXML private AnchorPane bottomPane;
-	@FXML private BorderPane borderPane;
+	@FXML private BorderPane mainBorderPane;
+	@FXML private BorderPane loginBorderPane;
 	@FXML private Canvas hudCanvas;
 	private GraphicsContext ctx;
    
@@ -52,9 +63,18 @@ public class AppMainController implements Initializable{
 	@FXML private Label functionsLabel;
 	@FXML private Label cameraLabel;
 	@FXML private Label statusLabel;
+	@FXML private Label labelConnect;
 	private boolean rightControl = true;
 	@FXML WebView webView;
 	private WebEngine webEngine;
+	@FXML private TextField txtIP;
+	@FXML private TextField txtPort;
+	@FXML private Button btnConnect;
+	@FXML private Button btnCancle;
+	@FXML private SplitMenuButton com;
+	public static String ip;
+	public static String port;
+	boolean connectState=false;
      
    	// Pane을 움직이기 위해 Double 속성값을 사용 -> Listener를 등록가능
    	private DoubleProperty bottomPaneLocation 
@@ -72,10 +92,14 @@ public class AppMainController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		instance2 = this;
-		
+		mainBorderPane.setVisible(false);
+		loginBorderPane.setVisible(true);
 		ViewLoop viewLoop = new ViewLoop();
 		viewLoop.start();
 		
+		initConnect();
+		initLoginButton();
+
 		initCanvasLayer();
 		initSlide();
 		initTop();
@@ -100,11 +124,15 @@ public class AppMainController implements Initializable{
 		String inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
 		currtimeLabel.setText(inTime);
 	}
+<<<<<<< HEAD
 	public void currTime2() {
 		System.out.println("gg");
 	}
 	
 //////////////////////////////////HUD 관련 ////////////////////////////////
+=======
+	
+>>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
 	class ViewLoop extends AnimationTimer {
 		@Override
 		public void handle(long now) {
@@ -209,4 +237,49 @@ public class AppMainController implements Initializable{
 	private void initLeftPane() {
       
 	}
+	//IP, PORT 보내기
+	public void initConnect() {
+		ip=txtIP.getText();
+		port=txtPort.getText();
+	}
+	//로그인 버튼
+	public void initLoginButton() {
+		btnConnect.setOnAction((event)->{handleConnect(event);});
+		btnCancle.setOnAction((event)->{handleCancle(event);});
+	}
+	//로그인 버튼 이벤트 처리
+	public void handleConnect(ActionEvent event) {
+		System.out.println("1");
+		Network.connect();
+		Thread thread = new Thread(){
+            @Override
+            public void run() {
+               while(true) {
+                   try{
+                	   Platform.runLater(()->{
+                           labelConnect.setText("Connect.");
+                       });   
+                       Thread.sleep(500);
+                       Platform.runLater(()->{
+                           labelConnect.setText("Connect..");
+                       });   
+                       Thread.sleep(500);
+                       Platform.runLater(()->{
+                           labelConnect.setText("Connect...");
+                       });   
+                       Thread.sleep(500);
+                   }
+                   catch(Exception e){}
+                }
+            }
+        };
+      thread.start();
+		mainBorderPane.setVisible(true);
+		loginBorderPane.setVisible(false);
+	}
+	public void handleCancle(ActionEvent event) {
+		System.exit(0);
+	}
+	
+	
 }

@@ -24,8 +24,30 @@ public class AppMain extends Application{
 		tempScene = scene;
 		primaryStage.setTitle("UAV Ground Control Station(Team2)");
 		primaryStage.setScene(scene);		
+<<<<<<< HEAD
 //		primaryStage.setMaximized(true);
 		primaryStage.show();
+=======
+		primaryStage.setMaximized(true);
+		primaryStage.show();
+
+		Thread thread = new Thread(){
+            @Override
+            public void run() {
+            	while(true) {
+	                try{
+	            		Platform.runLater(()->{
+	            			 AppMainController.instance2.currTime();
+	            		});	
+	            		Thread.sleep(1000);
+	                }
+	                catch(Exception e){}
+                }
+            }
+        };
+		
+		thread.start();
+>>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
 	}
 	
 	@Override
