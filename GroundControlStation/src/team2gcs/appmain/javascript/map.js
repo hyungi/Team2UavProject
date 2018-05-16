@@ -11,10 +11,10 @@ var map = {
 				document.getElementById('map'), 
 				{
 					center: {lat: 37.495064, lng: 127.122280},
-					zoom: 17,
+					zoom: 3,
 					mapTypeId : "roadmap",
-					//mapTypeId: "satellite", //위성사진
-					zoomControl: false, //줌
+					mapTypeId: "satellite", //위성사진
+					zoomControl: true, //줌
 					fullscreenControl: false, //풀스크린버튼
 					streetViewControl: false // 스트리뷰
 				}

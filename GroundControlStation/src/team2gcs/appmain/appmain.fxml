@@ -216,8 +216,117 @@
                   </AnchorPane>
                   <BorderPane fx:id="missionPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #222222;">
                      <center>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-                     </center></BorderPane>
+                        <TableView prefWidth="850.0" style="-fx-background-color: #222222;" BorderPane.alignment="CENTER">
+                          <columns>
+                            <TableColumn maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="NO" style="-fx-background-color: #222222;" />
+                            <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" text="Command" style="-fx-background-color: #222222;" />
+                            <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" text="Latitude" style="-fx-background-color: #222222;" />
+                            <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" text="Longitude" style="-fx-background-color: #222222;" />
+                            <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" text="Altitude" style="-fx-background-color: #222222;" />
+                            <TableColumn maxWidth="80.0" minWidth="80.0" text="Jump" style="-fx-background-color: #222222;"/>
+                            <TableColumn maxWidth="80.0" minWidth="80.0" text="num" style="-fx-background-color: #222222;"/>
+                            <TableColumn maxWidth="80.0" minWidth="80.0" text="Waiting Time" style="-fx-background-color: #222222;" />
+                            <TableColumn maxWidth="80.0" minWidth="80.0" text="Delete" style="-fx-background-color: #222222;" />
+                          </columns>
+                        </TableView>
+                     </center>
+                     <left>
+                        <AnchorPane prefWidth="400.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Label layoutX="18.0" layoutY="17.0" text="Fence" textFill="WHITE">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Label>
+                              <Button layoutX="102.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="upload">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Button>
+                              <Button layoutX="185.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="download">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Button>
+                              <Button layoutX="102.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="vitalization">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Button>
+                              <Button layoutX="185.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="deactivation">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Button>
+                              <Button layoutX="18.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="all delete">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Button>
+                              <Button layoutX="18.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="set">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Button>
+                              <Label layoutX="293.0" layoutY="17.0" text="no-fly zone" textFill="WHITE">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Label>
+                              <AnchorPane fx:id="bottomPane" layoutX="-617.0" layoutY="41.0" prefHeight="80.0" />
+                              <Button layoutX="292.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="set">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Button>
+                              <Button layoutX="292.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="delete">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Button>
+                              <Button layoutX="18.0" layoutY="145.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="cargo WP">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Button>
+                              <Label layoutX="18.0" layoutY="127.0" text="cargo" textFill="WHITE">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Label>
+                              <Separator layoutX="14.0" layoutY="119.0" prefHeight="2.0" prefWidth="365.0" />
+                           </children></AnchorPane>
+                     </left>
+                     <right>
+                        <AnchorPane prefWidth="350.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Label layoutX="21.0" layoutY="15.0" text="mission" textFill="WHITE">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Label>
+                              <Button layoutX="20.0" layoutY="36.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="go to">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Button>
+                              <Button layoutX="130.0" layoutY="75.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="read">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Button>
+                              <Button layoutX="239.0" layoutY="36.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="upload">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Button>
+                              <Button layoutX="239.0" layoutY="75.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="download">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Button>
+                              <Button layoutX="20.0" layoutY="75.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="set">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Button>
+                              <Button layoutX="19.0" layoutY="132.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="jump">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Button>
+                              <Button layoutX="130.0" layoutY="132.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Loi">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Button>
+                              <Button layoutX="239.0" layoutY="132.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="m​odification">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="12.0" />
+                                 </font></Button>
+                           </children>
+                        </AnchorPane>
+                     </right></BorderPane>
                </children>
             </VBox>
             <HBox fx:id="rightMovePane" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" opacity="0.9" style="-fx-background-color: transparent;" translateX="350.0" StackPane.alignment="CENTER_RIGHT">
