@@ -26,24 +26,6 @@ public class AppMain extends Application{
 		primaryStage.setMaximized(true);
 		primaryStage.show();
 		
-//		Thread thread = new Thread(){
-//            @Override
-//            public void run() {
-//            	while(true) {
-//                try{
-//            		Thread.sleep(1000);
-//            		System.out.println("thread");
-//            		 Platform.runLater(()->{
-//            		//	 AppMainController.instance.currTime();
-//            			 System.out.println("thread2");
-//                 	 });	
-//                }
-//                catch(Exception e){}
-//                }
-//            }
-//        };
-//		
-//		thread.start();
 	}
 	
 	@Override
