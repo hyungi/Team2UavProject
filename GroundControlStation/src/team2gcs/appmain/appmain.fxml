@@ -22,14 +22,18 @@
             </BorderPane>
             <HBox fx:id="smallTopPane" alignment="CENTER" prefHeight="110.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;">
                <children>
-                  <ImageView fx:id="logoImage" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
-                     <image>
-                        <Image url="@../images/droneFive.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets bottom="3.0" left="10.0" right="200.0" top="3.0" />
-                     </HBox.margin>
-                  </ImageView>
+                  <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <ImageView fx:id="logoImage" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/droneFive.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </ImageView>
+                     </children>
+                  </VBox>
                   <ImageView fx:id="logoImage1" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/그림1.png" />
@@ -203,14 +207,17 @@
                <children>
                   <AnchorPane fx:id="openBottom" maxWidth="-Infinity" prefHeight="35" prefWidth="200.0" style="-fx-background-color: #222222; -fx-background-radius: 5 5 0 0;">
                      <children>
-                        <Label fx:id="bottomOpenLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="35" prefWidth="200.0" text="Open Mission" textAlignment="CENTER" textFill="WHITE">
+                        <Label fx:id="bottomOpenLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="35" prefWidth="200.0" text="Open Mission" textAlignment="CENTER" textFill="#b9b3b3">
                            <font>
                               <Font name="Aharoni Bold" size="16.0" />
                            </font>
                         </Label>
                      </children>
                   </AnchorPane>
-                  <BorderPane fx:id="missionPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #222222;" />
+                  <BorderPane fx:id="missionPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #222222;">
+                     <center>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                     </center></BorderPane>
                </children>
             </VBox>
             <HBox fx:id="rightMovePane" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" opacity="0.9" style="-fx-background-color: transparent;" translateX="350.0" StackPane.alignment="CENTER_RIGHT">
@@ -295,6 +302,28 @@
       </StackPane>
    </center>
    <bottom>
-      <AnchorPane fx:id="bottomPane" prefHeight="80.0" BorderPane.alignment="CENTER" />
+      <AnchorPane fx:id="bottomPane" prefHeight="80.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" layoutX="49.0" layoutY="22.0" prefHeight="100.0" prefWidth="492.0" spacing="10.0">
+               <children>
+                  <Label text="Control" textFill="WHITE">
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                  </Label>
+                  <Button fx:id="armBtn" mnemonicParsing="false" text="Arm" />
+                  <Button fx:id="takeoffBtn" mnemonicParsing="false" text="Take Off" />
+                  <Button fx:id="landBtn" mnemonicParsing="false" text="Land" />
+                  <Button fx:id="loiterBtn" mnemonicParsing="false" text="Loiter" />
+                  <Button fx:id="rtlBtn" mnemonicParsing="false" text="RTL" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
+            <Label alignment="CENTER" layoutX="901.0" layoutY="63.0" prefHeight="19.0" prefWidth="77.0" text="Status" textFill="WHITE" />
+            <Label alignment="CENTER" layoutX="1040.0" layoutY="63.0" prefHeight="19.0" prefWidth="249.0" text="0" textFill="WHITE" />
+         </children>
+      </AnchorPane>
    </bottom>
 </BorderPane>

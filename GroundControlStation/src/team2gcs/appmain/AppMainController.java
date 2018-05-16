@@ -99,9 +99,6 @@ public class AppMainController implements Initializable{
 		String inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
 		currtimeLabel.setText(inTime);
 	}
-	public void currTime2() {
-		System.out.println("gg");
-	}
 	
 	class ViewLoop extends AnimationTimer {
 		@Override
