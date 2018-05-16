@@ -34,7 +34,7 @@ public class AppMain extends Application{
             		Thread.sleep(1000);
             		System.out.println("thread");
             		 Platform.runLater(()->{
-            			 AppMainController.instance.currTime();
+            			// AppMainController.instance.currTime();
             			 System.out.println("thread2");
                  	 });	
                 }
