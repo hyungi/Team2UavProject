@@ -218,15 +218,15 @@
                      <center>
                         <TableView prefWidth="850.0" style="-fx-background-color: #222222;" BorderPane.alignment="CENTER">
                           <columns>
-                            <TableColumn maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="NO" style="-fx-background-color: #222222;" />
-                            <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" text="Command" style="-fx-background-color: #222222;" />
-                            <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" text="Latitude" style="-fx-background-color: #222222;" />
-                            <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" text="Longitude" style="-fx-background-color: #222222;" />
-                            <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" text="Altitude" style="-fx-background-color: #222222;" />
-                            <TableColumn maxWidth="80.0" minWidth="80.0" text="Jump" style="-fx-background-color: #222222;"/>
-                            <TableColumn maxWidth="80.0" minWidth="80.0" text="num" style="-fx-background-color: #222222;"/>
-                            <TableColumn maxWidth="80.0" minWidth="80.0" text="Waiting Time" style="-fx-background-color: #222222;" />
-                            <TableColumn maxWidth="80.0" minWidth="80.0" text="Delete" style="-fx-background-color: #222222;" />
+                            <TableColumn maxWidth="50.0" minWidth="50.0" prefWidth="50.0" style="-fx-background-color: #222222;" text="NO" />
+                            <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" style="-fx-background-color: #222222;" text="Command" />
+                            <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" style="-fx-background-color: #222222;" text="Latitude" />
+                            <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" style="-fx-background-color: #222222;" text="Longitude" />
+                            <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" style="-fx-background-color: #222222;" text="Altitude" />
+                            <TableColumn maxWidth="80.0" minWidth="80.0" style="-fx-background-color: #222222;" text="Jump" />
+                            <TableColumn maxWidth="80.0" minWidth="80.0" style="-fx-background-color: #222222;" text="num" />
+                            <TableColumn maxWidth="80.0" minWidth="80.0" style="-fx-background-color: #222222;" text="Waiting Time" />
+                            <TableColumn maxWidth="80.0" minWidth="80.0" style="-fx-background-color: #222222;" text="Delete" />
                           </columns>
                         </TableView>
                      </center>
@@ -411,9 +411,9 @@
       </StackPane>
    </center>
    <bottom>
-      <AnchorPane fx:id="bottomPane" prefHeight="80.0" BorderPane.alignment="CENTER">
-         <children>
-            <HBox alignment="CENTER" layoutX="49.0" layoutY="22.0" prefHeight="100.0" prefWidth="492.0" spacing="10.0">
+      <BorderPane maxHeight="80.0" minHeight="80.0" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #000000;" BorderPane.alignment="CENTER">
+         <center>
+            <HBox alignment="CENTER" prefHeight="51.0" prefWidth="492.0" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
                   <Label text="Control" textFill="WHITE">
                      <padding>
@@ -430,9 +430,15 @@
                   <Insets />
                </opaqueInsets>
             </HBox>
-            <Label alignment="CENTER" layoutX="901.0" layoutY="63.0" prefHeight="19.0" prefWidth="77.0" text="Status" textFill="WHITE" />
-            <Label alignment="CENTER" layoutX="1040.0" layoutY="63.0" prefHeight="19.0" prefWidth="249.0" text="0" textFill="WHITE" />
-         </children>
-      </AnchorPane>
+         </center>
+         <right>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label alignment="CENTER" prefHeight="19.0" prefWidth="77.0" text="Status" textFill="WHITE" />
+                  <Label alignment="CENTER" prefHeight="19.0" prefWidth="151.0" text="0" textFill="WHITE" />
+               </children>
+            </HBox>
+         </right>
+      </BorderPane>
    </bottom>
 </BorderPane>
