@@ -16,9 +16,45 @@
          <center>
             <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
+<<<<<<< HEAD
                   <ImageView fitHeight="768.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_RIGHT">
                      <image>
                         <Image url="@../images/bg.png" />
+=======
+                  <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <ImageView fx:id="logoImage" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/droneFive.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <ImageView fx:id="logoImage1" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/그림1.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="200.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label prefHeight="19.0" prefWidth="100.0" text="Home">
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="homeLabel" prefHeight="51.0" prefWidth="105.0" text="Label" />
+                     </children>
+                  </VBox>
+                  <ImageView fx:id="logoImage2" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/그림2.png" />
+>>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
                      </image>
                   </ImageView>
                   <AnchorPane maxHeight="300.0" maxWidth="400.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #666666; -fx-background-radius: 8;">
@@ -53,8 +89,104 @@
                            <font>
                               <Font name="Aharoni Bold" size="12.0" />
                            </font></Label>
+<<<<<<< HEAD
+=======
+                        <Label fx:id="rollLabel" layoutX="10.0" layoutY="47.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="140.0" text="     Roll" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="pitchLabel" layoutX="10.0" layoutY="91.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="140.0" text="     Pitch" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="yawLabel" layoutX="10.0" layoutY="135.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="140.0" text="     Yaw" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Canvas fx:id="hudCanvas" height="150.0" layoutX="200.0" layoutY="16.0" width="150.0" />
+                     </children></AnchorPane>
+                  <AnchorPane fx:id="dataPane" maxWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="6.0" />
+                     </VBox.margin>
+                     <children>
+						<Label layoutX="10.0" layoutY="10.0" text="Sensor Data" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="18.0" />
+                           </font></Label>
+                        <Label layoutX="32.0" layoutY="52.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Air Speed" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="32.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Ground Speed" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="32.0" layoutY="148.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Data3" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="32.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Data4" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="32.0" layoutY="244.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Altitude" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="189.0" layoutY="244.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="30M" textAlignment="RIGHT" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="189.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Data" textAlignment="RIGHT" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="189.0" layoutY="148.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Data" textAlignment="RIGHT" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="189.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="10m/s" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="189.0" layoutY="52.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="10m/s" textAlignment="RIGHT" textFill="WHITE">
+                           <font>
+                              <Font name="Aharoni Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        
+                     </children></AnchorPane>
+               </children>
+               <StackPane.margin>
+                  <Insets />
+               </StackPane.margin>
+            </VBox>
+            <VBox fx:id="bottomMovePane" alignment="BOTTOM_CENTER" maxHeight="-Infinity" style="-fx-background-color: transparent;" translateY="200.0" StackPane.alignment="BOTTOM_CENTER">
+               <children>
+                  <AnchorPane fx:id="openBottom" maxWidth="-Infinity" prefHeight="35" prefWidth="200.0" style="-fx-background-color: #222222; -fx-background-radius: 5 5 0 0;">
+                     <children>
+                        <Label fx:id="bottomOpenLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="35" prefWidth="200.0" text="Open Mission" textAlignment="CENTER" textFill="#b9b3b3">
+                           <font>
+                              <Font name="Aharoni Bold" size="16.0" />
+                           </font>
+                        </Label>
+>>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
                      </children>
                   </AnchorPane>
+<<<<<<< HEAD
                   <ImageView fitHeight="570.0" fitWidth="564.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;" StackPane.alignment="TOP_LEFT">
                      <image>
                         <Image url="@../images/bg.png" />
@@ -72,6 +204,26 @@
                   <VBox fx:id="leftVbox" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" StackPane.alignment="TOP_LEFT">
                      <children>
                         <AnchorPane fx:id="hudPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="180.0" prefWidth="374.0" VBox.vgrow="ALWAYS">
+=======
+                  <BorderPane fx:id="missionPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #222222;">
+                     <center>
+                        <TableView prefWidth="850.0" style="-fx-background-color: #222222;" BorderPane.alignment="CENTER">
+                          <columns>
+                            <TableColumn maxWidth="50.0" minWidth="50.0" prefWidth="50.0" style="-fx-background-color: #222222;" text="NO" />
+                            <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" style="-fx-background-color: #222222;" text="Command" />
+                            <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" style="-fx-background-color: #222222;" text="Latitude" />
+                            <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" style="-fx-background-color: #222222;" text="Longitude" />
+                            <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" style="-fx-background-color: #222222;" text="Altitude" />
+                            <TableColumn maxWidth="80.0" minWidth="80.0" style="-fx-background-color: #222222;" text="Jump" />
+                            <TableColumn maxWidth="80.0" minWidth="80.0" style="-fx-background-color: #222222;" text="num" />
+                            <TableColumn maxWidth="80.0" minWidth="80.0" style="-fx-background-color: #222222;" text="Waiting Time" />
+                            <TableColumn maxWidth="80.0" minWidth="80.0" style="-fx-background-color: #222222;" text="Delete" />
+                          </columns>
+                        </TableView>
+                     </center>
+                     <left>
+                        <AnchorPane prefWidth="400.0" BorderPane.alignment="CENTER">
+>>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
                            <children>
                               <Label layoutX="10.0" layoutY="10.0" text="HUD" textAlignment="CENTER" textFill="WHITE">
                                  <font>
@@ -397,6 +549,7 @@
                      </children>
                   </HBox>
                </children>
+<<<<<<< HEAD
             </StackPane>
          </center>
          <top>
@@ -488,3 +641,41 @@
       </BorderPane>
    </children>
 </StackPane>
+=======
+            </HBox>
+         </children>
+      </StackPane>
+   </center>
+   <bottom>
+      <BorderPane maxHeight="80.0" minHeight="80.0" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #000000;" BorderPane.alignment="CENTER">
+         <center>
+            <HBox alignment="CENTER" prefHeight="51.0" prefWidth="492.0" spacing="10.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Control" textFill="WHITE">
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                  </Label>
+                  <Button fx:id="armBtn" mnemonicParsing="false" text="Arm" />
+                  <Button fx:id="takeoffBtn" mnemonicParsing="false" text="Take Off" />
+                  <Button fx:id="landBtn" mnemonicParsing="false" text="Land" />
+                  <Button fx:id="loiterBtn" mnemonicParsing="false" text="Loiter" />
+                  <Button fx:id="rtlBtn" mnemonicParsing="false" text="RTL" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
+         </center>
+         <right>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label alignment="CENTER" prefHeight="19.0" prefWidth="77.0" text="Status" textFill="WHITE" />
+                  <Label alignment="CENTER" prefHeight="19.0" prefWidth="151.0" text="0" textFill="WHITE" />
+               </children>
+            </HBox>
+         </right>
+      </BorderPane>
+   </bottom>
+</BorderPane>
+>>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
