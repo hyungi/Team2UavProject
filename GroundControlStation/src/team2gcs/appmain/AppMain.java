@@ -25,8 +25,6 @@ public class AppMain extends Application{
 		primaryStage.setScene(scene);		
 		primaryStage.setMaximized(true);
 		primaryStage.show();
-
-
 	}
 	
 	@Override
@@ -37,5 +35,4 @@ public class AppMain extends Application{
 	public static void main(String[] args) {
 		launch(args);
 	}
-
 }
