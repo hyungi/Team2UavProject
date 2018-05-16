@@ -25,7 +25,8 @@ public class AppMain extends Application{
 		primaryStage.setScene(scene);		
 		primaryStage.setMaximized(true);
 		primaryStage.show();
-		
+
+
 	}
 	
 	@Override
