@@ -25,7 +25,7 @@ import javafx.scene.web.WebView;
 import javafx.util.Duration;
 
 public class AppMainController implements Initializable{
-	public static AppMainController instance;
+	public static AppMainController instance2;
 	//공용
 	@FXML private AnchorPane bottomPane;
 	@FXML private BorderPane borderPane;
@@ -71,6 +71,8 @@ public class AppMainController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		instance2 = this;
+		
 		ViewLoop viewLoop = new ViewLoop();
 		viewLoop.start();
 		
@@ -96,6 +98,9 @@ public class AppMainController implements Initializable{
 	public void currTime() {
 		String inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
 		currtimeLabel.setText(inTime);
+	}
+	public void currTime2() {
+		System.out.println("gg");
 	}
 	
 	class ViewLoop extends AnimationTimer {
