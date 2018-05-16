@@ -29,21 +29,22 @@ public class AppMainController implements Initializable{
 	//공용
 	@FXML private AnchorPane bottomPane;
 	@FXML private BorderPane borderPane;
-	@FXML private Canvas hudCanvas;
-	private GraphicsContext ctx;
-   
+	
 	//좌측 메뉴
 	@FXML private VBox leftVbox;
 	@FXML private Label rollLabel;
 	@FXML private Label pitchLabel;
 	@FXML private Label yawLabel;
-   
+	@FXML private Canvas hudCanvas;
+	private GraphicsContext ctx;
+	
 	// 아래 버튼 & Pane & 둘을 가지고있는 VBox & control 값
 	@FXML private AnchorPane openBottom;
 	@FXML private BorderPane missionPane;
 	@FXML private VBox bottomMovePane;
 	@FXML private Label bottomOpenLabel;
 	private boolean bottomControl = true;
+	
 	// 우측 버튼 & Pane & 둘을 가지고있는 HBox & control 값
 	@FXML private AnchorPane openRight;
 	@FXML private AnchorPane viewPane;
@@ -83,21 +84,20 @@ public class AppMainController implements Initializable{
 		initRightPane();
 		initLeftPane();
 	}
-//////////////////////////////////Top Menu 관련 ////////////////////////////////
-	public void initTop() {
-		currTime();
-		homeLabel.setText("12m");
-		locationLabel.setText("12m");
-		batteryLabel.setText("12m");
-		signalLabel.setText("12m");
 	
+//////////////////////////////////우측 메뉴 ////////////////////////////////
+	private void initRightPane() {
+		functionsLabel.setTextFill(Color.WHITE);
+		cameraLabel.setTextFill(Color.WHITE);
+		statusLabel.setTextFill(Color.WHITE);
 	}
 	
-	public void currTime() {
-		String inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
-		currtimeLabel.setText(inTime);
+//////////////////////////////////우측 메뉴 ////////////////////////////////   
+	private void initLeftPane() {
+      
 	}
 	
+//////////////////////////////////HUD 관련 ////////////////////////////////
 	class ViewLoop extends AnimationTimer {
 		@Override
 		public void handle(long now) {
@@ -110,10 +110,24 @@ public class AppMainController implements Initializable{
 	   
 	private void layerDraw() {
     	ctx.setLineWidth(5);
-    	ctx.strokeOval(20, 30, 110, 110);
-    	ctx.fillText("N", 10, 10);   //N
+    	ctx.strokeOval(20, 35, 110, 110);
+    	ctx.fillText("N", 70, 10);   //N
     	ctx.setLineWidth(1);
     	ctx.setFill(Color.WHITE);
+	}
+
+	public void initTop() {
+		currTime();
+		homeLabel.setText("12m");
+		locationLabel.setText("12m");
+		batteryLabel.setText("12m");
+		signalLabel.setText("12m");
+	
+	}
+	
+	public void currTime() {
+		String inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
+		currtimeLabel.setText(inTime);
 	}
 	   
 	private void initCanvasLayer() {
@@ -187,19 +201,9 @@ public class AppMainController implements Initializable{
 		});
 	}
    
-	//맵
+//////////////////////////////////맵 ////////////////////////////////
 	private void initWenView() {
 		webEngine = webView.getEngine();      
 		webEngine.load(getClass().getResource("javascript/index.html").toExternalForm());
-	}
-  
-	private void initRightPane() {
-		functionsLabel.setTextFill(Color.WHITE);
-		cameraLabel.setTextFill(Color.WHITE);
-		statusLabel.setTextFill(Color.WHITE);
-	}
-   
-	private void initLeftPane() {
-      
 	}
 }

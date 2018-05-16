@@ -161,7 +161,7 @@
                               <Font name="Aharoni Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="32.0" layoutY="244.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Altitude" textFill="WHITE">
+                        <Label alignment="BOTTOM_LEFT" layoutX="32.0" layoutY="244.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Altitude" textFill="WHITE">
                            <font>
                               <Font name="Aharoni Bold" size="14.0" />
                            </font>
