@@ -28,11 +28,9 @@
             <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
 >>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
                <children>
-<<<<<<< HEAD
                   <ImageView fitHeight="768.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_RIGHT">
                      <image>
                         <Image url="@../images/bg.png" />
-=======
                   <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                      <children>
                         <ImageView fx:id="logoImage" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
@@ -66,7 +64,6 @@
                   <ImageView fx:id="logoImage2" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/그림2.png" />
->>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
                      </image>
                   </ImageView>
                   <AnchorPane maxHeight="300.0" maxWidth="400.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #666666; -fx-background-radius: 8;">
@@ -161,9 +158,8 @@
                         <Label fx:id="labelConnect" layoutX="180.0" layoutY="218.0" textFill="WHITE">
                            <font>
                               <Font name="Aharoni Bold" size="12.0" />
-                           </font></Label>
-<<<<<<< HEAD
-=======
+                           </font>
+                        </Label>
                         <Label fx:id="rollLabel" layoutX="10.0" layoutY="47.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="140.0" text="     Roll" textFill="WHITE">
                            <font>
                               <Font name="Aharoni Bold" size="14.0" />
@@ -287,10 +283,8 @@
                               <Font name="Aharoni Bold" size="16.0" />
                            </font>
                         </Label>
->>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
                      </children>
                   </AnchorPane>
-<<<<<<< HEAD
                   <ImageView fitHeight="570.0" fitWidth="564.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;" StackPane.alignment="TOP_LEFT">
                      <image>
                         <Image url="@../images/bg.png" />
@@ -308,7 +302,6 @@
                   <VBox fx:id="leftVbox" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" StackPane.alignment="TOP_LEFT">
                      <children>
                         <AnchorPane fx:id="hudPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="180.0" prefWidth="374.0" VBox.vgrow="ALWAYS">
-=======
                   <BorderPane fx:id="missionPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #222222;">
                      <center>
                         <TableView prefWidth="850.0" style="-fx-background-color: #222222;" BorderPane.alignment="CENTER">
@@ -327,7 +320,6 @@
                      </center>
                      <left>
                         <AnchorPane prefWidth="400.0" BorderPane.alignment="CENTER">
->>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
                            <children>
 <<<<<<< HEAD
                               <Label layoutX="18.0" layoutY="11.0" text="Fence" textFill="WHITE">
@@ -817,7 +809,6 @@
                      </children>
                   </HBox>
                </children>
-<<<<<<< HEAD
             </StackPane>
          </center>
          <top>
