@@ -91,7 +91,7 @@ public class AppMainController implements Initializable{
 	}
 //////////////////////////////////Top Menu 관련 ////////////////////////////////
 	public void initTop() {
-		currTime();
+	//	currTime();
 		homeLabel.setText("12m");
 		locationLabel.setText("12m");
 		batteryLabel.setText("12m");
