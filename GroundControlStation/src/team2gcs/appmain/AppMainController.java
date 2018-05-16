@@ -43,9 +43,14 @@ public class AppMainController implements Initializable{
    	@FXML private Label rollLabel;
    	@FXML private Label pitchLabel;
    	@FXML private Label yawLabel;
-   	@FXML private Canvas hudCanvas;
+   	@FXML private Canvas hudCircleCanvas;
+   	@FXML private Canvas hudLineCanvas;
    	private GraphicsContext ctx;
-    private int yaw = 0;
+   	private GraphicsContext ctx2;
+   	private int roll = 0;
+   	private int pitch = 0;
+   	private int yaw = 0;
+    
    
     // 아래 버튼 & Pane & 둘을 가지고있는 VBox & control 값
     @FXML private AnchorPane openBottom;
@@ -103,6 +108,7 @@ public class AppMainController implements Initializable{
     	initRightPane();
     	initLeftPane();
     	handleYaw();
+    	ctx2.rotate(roll);
     }
 //////////////////////////////////Top Menu 관련 ////////////////////////////////
     public void initTop() {
@@ -117,6 +123,7 @@ public class AppMainController implements Initializable{
     	String inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
     	currtimeLabel.setText(inTime);
     }
+    
 //////////////////////////////////좌측 메뉴 //////////////////////////////// 
 	class ViewLoop extends AnimationTimer {
 		@Override
@@ -124,6 +131,9 @@ public class AppMainController implements Initializable{
    			ctx.translate(-50, -50);
 			ctx.clearRect(0, 0, 140, 140); 
 			ctx.translate(50, 50);
+			ctx2.translate(-50, -50);
+			ctx2.clearRect(0, 0, 140, 140); 
+			ctx2.translate(50, 50);
 			
 			hudDraw();
 			hudLine();
@@ -148,12 +158,15 @@ public class AppMainController implements Initializable{
    	}
    	
    	public void hudLine() {
-		ctx.setLineWidth(2);
-		ctx.setStroke(Color.WHITE);
-		ctx.strokeLine(45, 80.5, 105, 80.5);
+		ctx2.setLineWidth(1);
+		ctx2.setStroke(Color.WHITE);
+		ctx2.strokeLine(55, 80.5, 95, 80.5);
 		
-		for(int i=0; i<30; i+=5) {
-			
+		for(int i=0; i<20; i+=5) {
+			if(i!=0) {
+				ctx2.strokeLine(65, 80.5-(i*1.8), 85, 80.5-(i*1.8));
+				ctx2.strokeLine(65, 80.5+(i*1.8), 85, 80.5+(i*1.8));
+			}
 		}
 	}
 	
@@ -162,11 +175,22 @@ public class AppMainController implements Initializable{
 			AppMain.tempScene.setOnKeyPressed((event) -> {
 				if(event.getCode() == KeyCode.LEFT) {
 					yaw--;
+					if(yaw == -1) yaw = 359;
 					System.out.println(yaw);
 				} else if(event.getCode() == KeyCode.RIGHT) {
 					yaw++;
 					if(yaw == 360) yaw = 0;
 					System.out.println(yaw);
+				} else if(event.getCode() == KeyCode.NUMPAD4) {
+					if(roll>= -21) {
+						ctx2.rotate(-1);
+						roll--;
+					}
+				} else if(event.getCode() == KeyCode.NUMPAD6) {
+					if(roll < 21) {
+						ctx2.rotate(1);
+						roll++;
+					}
 				}
 			});
 		});
@@ -179,8 +203,8 @@ public class AppMainController implements Initializable{
    	}
    	
    	private void initCanvasLayer() {
-   		ctx = hudCanvas.getGraphicsContext2D();   
-   		ctx.setStroke(Color.WHITE);
+   		ctx = hudCircleCanvas.getGraphicsContext2D();
+   		ctx2 = hudLineCanvas.getGraphicsContext2D();
    	}   
    
 ////////////////////////////////// Slide Menu 관련 ////////////////////////////////
