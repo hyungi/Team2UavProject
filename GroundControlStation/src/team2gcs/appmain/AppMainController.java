@@ -13,6 +13,7 @@ import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -22,6 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -71,6 +73,7 @@ public class AppMainController implements Initializable {
 	@FXML
 	private Label bottomOpenLabel;
 	private boolean bottomControl = true;
+	
 	// 우측 버튼 & Pane & 둘을 가지고있는 HBox & control 값
 	@FXML
 	private AnchorPane openRight;
@@ -84,6 +87,13 @@ public class AppMainController implements Initializable {
 	private Label cameraLabel;
 	@FXML
 	private Label statusLabel;
+	@FXML
+	private VBox cameraVbox;
+	@FXML
+	private VBox statusVbox;
+	
+	
+	
 	@FXML
 	private Label labelConnect;
 	private boolean rightControl = true;
@@ -342,7 +352,6 @@ public class AppMainController implements Initializable {
 		System.out.println(port);
 
 		if (!ip.equals(null) && !port.equals(null)) {
-			System.out.println("1");
 			Network.connect();
 			Thread thread = new Thread() {
 				@Override
