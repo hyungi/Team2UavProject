@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import gcs.mission.FencePoint;
 import gcs.mission.WayPoint;
+import team2gcs.appmain.AppMainController;
 
 public class UAV {
 	
@@ -56,7 +57,8 @@ public class UAV {
 					mqttClient.connect();
 					//MQTT 메세지 수신
 					mqttClient.subscribe(Network.uavPubTopic);
-					
+					System.out.println("uav connect end");
+					AppMainController.connectState=true;
 				}catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -229,7 +231,7 @@ public class UAV {
 	}
 	
 	
-	public static void main(String[] args) throws Exception {
+/*	public static void main(String[] args) throws Exception {
 		UAV uav = new UAV();
 		uav.connect();
 		while(!uav.connected) {
@@ -252,22 +254,22 @@ public class UAV {
 		//uav.rtl(20);
 		
 		//바로가기 테스트
-		/*double lat=37.1693195;
-		double lng=128.4705967;
-		double alt=30;
-		uav.gotoLocation(lat, lng, alt);*/
+//		double lat=37.1693195;
+//		double lng=128.4705967;
+//		double alt=30;
+//		uav.gotoLocation(lat, lng, alt);
 		
 		//미션 업로드 테스트
-		/*List<WayPoint> list = Arrays.asList(
-				new WayPoint(1,"takeoff",  0,0,0,0,10),
-				new WayPoint(2,"waypoint", 0,0,37.1692554,128.4709883,10),
-				new WayPoint(3,"waypoint", 0,0,37.1694349,128.4704572,10),
-				new WayPoint(4,"waypoint", 0,0,37.1697812,128.4706879,10),
-				new WayPoint(5,"waypoint", 0,0,37.1695461,128.4712189,10),
-				new WayPoint(6,"jump", 2,3,0,0,0),
-				new WayPoint(7,"rtl", 0,0,0,0,0)
-		);
-		uav.missionUpload(list);*/
+//		List<WayPoint> list = Arrays.asList(
+//				new WayPoint(1,"takeoff",  0,0,0,0,10),
+//				new WayPoint(2,"waypoint", 0,0,37.1692554,128.4709883,10),
+//				new WayPoint(3,"waypoint", 0,0,37.1694349,128.4704572,10),
+//				new WayPoint(4,"waypoint", 0,0,37.1697812,128.4706879,10),
+//				new WayPoint(5,"waypoint", 0,0,37.1695461,128.4712189,10),
+//				new WayPoint(6,"jump", 2,3,0,0,0),
+//				new WayPoint(7,"rtl", 0,0,0,0,0)
+//		);
+//		uav.missionUpload(list);
 		
 		//미션 다운로드 테스트
 		//uav.missionDownload();
@@ -288,15 +290,15 @@ public class UAV {
 		//uav.fenceDisable();
 		
 		//펜스 업로드 테스트
-		/*List<FencePoint> list = Arrays.asList(
-				new FencePoint(0,37.1695242,128.4708725),//Home
-				new FencePoint(1,37.1692554,128.4709883),
-				new FencePoint(2,37.1694349,128.4704572),
-				new FencePoint(3,37.1697812,128.4706879),
-				new FencePoint(4,37.1695461,128.4712189),
-				new FencePoint(5,37.1692554,128.4709883) // 1번다시
-		);
-		uav.fenceUpload(list);*/
+//		List<FencePoint> list = Arrays.asList(
+//				new FencePoint(0,37.1695242,128.4708725),//Home
+//				new FencePoint(1,37.1692554,128.4709883),
+//				new FencePoint(2,37.1694349,128.4704572),
+//				new FencePoint(3,37.1697812,128.4706879),
+//				new FencePoint(4,37.1695461,128.4712189),
+//				new FencePoint(5,37.1692554,128.4709883) // 1번다시
+//		);
+//		uav.fenceUpload(list);
 		
 		//펜스 다운로드 테스트
 		//uav.fenceDownload();
@@ -305,6 +307,6 @@ public class UAV {
 		//uav.fenceClear();
 		
 		System.in.read();
-	}
+	}*/
 	
 }

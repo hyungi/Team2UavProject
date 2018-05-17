@@ -13,10 +13,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -30,8 +27,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class AppMainController implements Initializable{
@@ -71,10 +66,9 @@ public class AppMainController implements Initializable{
 	@FXML private TextField txtPort;
 	@FXML private Button btnConnect;
 	@FXML private Button btnCancle;
-	@FXML private SplitMenuButton com;
 	public static String ip;
 	public static String port;
-	boolean connectState=false;
+	public static boolean connectState=false;
      
    	// Pane을 움직이기 위해 Double 속성값을 사용 -> Listener를 등록가능
    	private DoubleProperty bottomPaneLocation 
@@ -96,8 +90,7 @@ public class AppMainController implements Initializable{
 		loginBorderPane.setVisible(true);
 		ViewLoop viewLoop = new ViewLoop();
 		viewLoop.start();
-		
-		initConnect();
+
 		initLoginButton();
 
 		initCanvasLayer();
@@ -228,46 +221,54 @@ public class AppMainController implements Initializable{
 	private void initLeftPane() {
       
 	}
-	//IP, PORT 보내기
-	public void initConnect() {
-		ip=txtIP.getText();
-		port=txtPort.getText();
-	}
+
 	//로그인 버튼
 	public void initLoginButton() {
 		btnConnect.setOnAction((event)->{handleConnect(event);});
 		btnCancle.setOnAction((event)->{handleCancle(event);});
 	}
-	//로그인 버튼 이벤트 처리
+	//로그인화면 연결 버튼 이벤트 처리
 	public void handleConnect(ActionEvent event) {
-		System.out.println("1");
-		Network.connect();
-		Thread thread = new Thread(){
-            @Override
-            public void run() {
-               while(true) {
-                   try{
-                	   Platform.runLater(()->{
-                           labelConnect.setText("Connect.");
-                       });   
-                       Thread.sleep(500);
-                       Platform.runLater(()->{
-                           labelConnect.setText("Connect..");
-                       });   
-                       Thread.sleep(500);
-                       Platform.runLater(()->{
-                           labelConnect.setText("Connect...");
-                       });   
-                       Thread.sleep(500);
-                   }
-                   catch(Exception e){}
-                }
-            }
-        };
-      thread.start();
-		mainBorderPane.setVisible(true);
-		loginBorderPane.setVisible(false);
+		//ip,port 보내기
+		ip=txtIP.getText();
+		port=txtPort.getText();
+		System.out.println(ip);
+		System.out.println(port);
+		
+		if(!ip.equals(null)&&!port.equals(null)) {
+			System.out.println("1");
+			Network.connect();
+			Thread thread = new Thread(){
+	            @Override
+	            public void run() {
+	               while(!connectState) {
+	                   try{
+	                	   Platform.runLater(()->{
+	                           labelConnect.setText("Connect.");
+	                       });   
+	                       Thread.sleep(500);
+	                       Platform.runLater(()->{
+	                           labelConnect.setText("Connect..");
+	                       });   
+	                       Thread.sleep(500);
+	                       Platform.runLater(()->{
+	                           labelConnect.setText("Connect...");
+	                       });
+	                       Thread.sleep(500);
+	                   }
+	                   catch(Exception e){}
+	                }
+	               mainBorderPane.setVisible(true);
+	               loginBorderPane.setVisible(false);
+	            }
+	        };
+	      thread.start();
+		}else {
+			labelConnect.setText("IP 또는 Port를 입력해주세요");
+		}
+		
 	}
+	// 로그인화면 취소 버튼 이벤트처리
 	public void handleCancle(ActionEvent event) {
 		System.exit(0);
 	}
