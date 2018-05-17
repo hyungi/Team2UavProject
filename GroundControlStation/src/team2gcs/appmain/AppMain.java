@@ -18,21 +18,21 @@ public class AppMain extends Application{
 		instance = this;
 		this.primaryStage = primaryStage;
 		
-		Parent root = FXMLLoader.load(getClass().getResource("appmain.fxml"));
+ 		Parent root = FXMLLoader.load(getClass().getResource("appmain.fxml"));
 		scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("../images/app.css").toExternalForm());
 		primaryStage.setTitle("UAV Ground Control Station(Team2)");
 		primaryStage.setScene(scene);		
 		primaryStage.setMaximized(true);
 		primaryStage.show();
-		
+
 		Thread thread = new Thread(){
             @Override
             public void run() {
             	while(true) {
 	                try{
 	            		Platform.runLater(()->{
-	            			 AppMainController.instance2.currTime();
+	             			 AppMainController.instance2.currTime();
 	            		});	
 	            		Thread.sleep(1000);
 	                }

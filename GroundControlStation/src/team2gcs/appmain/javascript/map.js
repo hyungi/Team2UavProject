@@ -1,82 +1,88 @@
 var map = {
 	googlemap: null,
-	
-	gotoMake:false,
-	missionMake:false,
+
+	gotoMake: false,
+	missionMake: false,
+	roiMake: false,
+	fenceMake: false,
 	
 	uav: null,
+	
 	init: function() {
-		try {
-			map.googlemap = new google.maps.Map(
-				document.getElementById('map'), 
-				{
-					center: {lat: 37.495064, lng: 127.122280},
-					zoom: 3,
-					mapTypeId : "roadmap",
-					mapTypeId: "satellite", //위성사진
-					zoomControl: true, //줌
-					fullscreenControl: false, //풀스크린버튼
-					streetViewControl: false // 스트리뷰
-				}
-			);
-
-
-			//맵에서 마우스휠로 확대/축소 했을 경우
-			document.getElementById('map').addEventListener("wheel", function() {  //(이벤트 이름, 함수)
-				jsproxy.setZoomSliderValue(map.googlemap.getZoom());
+		try {			
+			map.googlemap = new google.maps.Map(document.getElementById('map'), {
+				zoom: 3,
+				center: {lat:37.313778, lng:127.109004},
+				//mapTypeId : "roadmap",
+				mapTypeId : "satellite",
+				zoomControl: false,
+				streetViewControl: false,
+				rotateControl: false,
+				fullscreenControl: false
 			});
 			
-			//맵에 보여줄 UAV 생성
+			//지도 상에서 마우스 휠도 확대/축소할 경우 MapViewController.java의 zoomSlider의 value 변경
+			document.getElementById('map').addEventListener("wheel", function() {
+				jsproxy.setZoomSliderValue(map.googlemap.getZoom());
+			});				
+			
 			map.uav = new UAV();
 			
-			//맵에서 클릭했을 경우
-			map.googlemap.addListener("click", function(event){
+			map.googlemap.addListener('click', function(e) {
 				try {
-					if(map.gotoMake==true){
-						var clickLocation = event.latLng.toJSON();
+					if(map.gotoMake == true) {
+						var clickLocation = {lat:e.latLng.lat(), lng:e.latLng.lng()};
 						map.uav.gotoStart(clickLocation);
-					} else if(map.missionMake == true){
-						map.uav.makeMissionMarker("waypoint", event.latLng.lat(), event.latLng.lng());
+					} else if(map.missionMake == true) {
+						map.uav.makeMissionMark("waypoint", e.latLng.lat(), e.latLng.lng());
+					} else if(map.roiMake == true) {
+						map.uav.makeMissionMark("roi", e.latLng.lat(), e.latLng.lng(), map.uav.roiIndex);
+						jsproxy.addROI({lat:e.latLng.lat(), lng:e.latLng.lng()});
+						map.roiMake = false;
+					} else if(map.fenceMake == true) {
+						map.uav.makeFenceMark(e.latLng.lat(), e.latLng.lng());
 					}
-					
-				} catch (err) {
-					console.log(">>[map.googlemap.clickHandler()] "+err);
+				} catch(err) {
+					console.log(">> [map.googlemap.click_function()] " + err);
+				}
+			});	
+			
+			map.googlemap.addListener('maptypeid_changed', function() {
+				if(map.googlemap.getMapTypeId() == "roadmap") {
+					map.uav.setUavColor("#00a421", "#f15f5f");
+				} else if(map.googlemap.getMapTypeId() == "satellite") {
+					map.uav.setUavColor("#ffff00", "#f15f5f");
 				}
 			});
 			
-			//맵 애니메이션 드로잉 시작
 			map.animation.start();
-			
 		} catch(err) {
 			console.log(">> [map.init()] " + err);
 		}
 	},
 
-		
-		animation: {
-			value: 0,
-			start: function() {
-				var self = this;
-				setInterval(function() { //주기적 호출  cf)setTimeout 예약시간때 실행
-					try {
-						self.value += 10;
-						if(self.value>360) {
-							self.value = self.value - 360;
-						}
-						map.uav.heading = self.value;
-						map.uav.drawUav();
+	animation: {
+		count: 1,
+		start: function() {
+			setInterval(function() {
+				try {
+					if(map.uav.currLocation != null) {
+						map.uav.drawUav();	
 						map.uav.drawHeadingLine();
 						map.uav.drawDestLine();
-					} catch(err) {
-						console.log(">> [map.animation.start()] " + err);
+						
+						if(map.animation.count >= 3) { 
+							map.googlemap.panTo(map.uav.currLocation);
+							map.animation.count = 1;
+						} else {
+							map.animation.count += 1;
+						}
 					}
-				}, 1000);
-			}
+					//window.requestAnimationFrame(map.uav.animation.start);
+				} catch(err) {
+					console.log(">> [map.animation.start()] " + err);
+				}
+			}, 1000);
 		}
-	};
-
-
-
-
-
-
+	},
+};

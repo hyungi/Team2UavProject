@@ -12,6 +12,7 @@ import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -28,6 +29,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.util.Duration;
+import netscape.javascript.JSObject;
 
 public class AppMainController implements Initializable{
 	public static AppMainController instance2;
@@ -37,6 +39,8 @@ public class AppMainController implements Initializable{
 	@FXML private BorderPane loginBorderPane;
 	@FXML private Canvas hudCanvas;
 	private GraphicsContext ctx;
+	private JSObject jsproxy;
+
    
 	//좌측 메뉴
 	@FXML private VBox leftVbox;
@@ -60,8 +64,10 @@ public class AppMainController implements Initializable{
 	@FXML private Label statusLabel;
 	@FXML private Label labelConnect;
 	private boolean rightControl = true;
+	//맵
 	@FXML WebView webView;
 	private WebEngine webEngine;
+	//로그인부분
 	@FXML private TextField txtIP;
 	@FXML private TextField txtPort;
 	@FXML private Button btnConnect;
@@ -69,6 +75,8 @@ public class AppMainController implements Initializable{
 	public static String ip;
 	public static String port;
 	public static boolean connectState=false;
+	//미션부분
+	@FXML private Button btnMissionSet;
      
    	// Pane을 움직이기 위해 Double 속성값을 사용 -> Listener를 등록가능
    	private DoubleProperty bottomPaneLocation 
@@ -86,11 +94,11 @@ public class AppMainController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		instance2 = this;
-		mainBorderPane.setVisible(false);
-		loginBorderPane.setVisible(true);
+		mainBorderPane.setVisible(true);
+		loginBorderPane.setVisible(false);
 		ViewLoop viewLoop = new ViewLoop();
 		viewLoop.start();
-
+		initMissionButton();
 		initLoginButton();
 
 		initCanvasLayer();
@@ -209,7 +217,7 @@ public class AppMainController implements Initializable{
 	//맵
 	private void initWenView() {
 		webEngine = webView.getEngine();      
-		webEngine.load(getClass().getResource("javascript/index.html").toExternalForm());
+		webEngine.load(getClass().getResource("javascript/map.html").toExternalForm());
 	}
   
 	private void initRightPane() {
@@ -253,7 +261,7 @@ public class AppMainController implements Initializable{
 	                       Thread.sleep(500);
 	                       Platform.runLater(()->{
 	                           labelConnect.setText("Connect...");
-	                       });
+ 	                       });
 	                       Thread.sleep(500);
 	                   }
 	                   catch(Exception e){}
@@ -273,5 +281,16 @@ public class AppMainController implements Initializable{
 		System.exit(0);
 	}
 	
+	//미션부분 버튼
+	public void initMissionButton() {
+		btnMissionSet.setOnAction((event)->{handleMissionSet(event);});
+	}
+	
+	//미션생성 이벤트 처리
+	public void handleMissionSet(ActionEvent event) {
+		Platform.runLater(() -> {
+			jsproxy.call("missionMake");
+		});
+	}
 	
 }
