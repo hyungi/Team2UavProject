@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import gcs.mission.FencePoint;
 import gcs.mission.WayPoint;
+import team2gcs.appmain.AppMainController;
 
 public class UAV {
 	
@@ -32,7 +33,6 @@ public class UAV {
 					//콜백 객체 등록
 					mqttClient.setCallback(new MqttCallback() {
 						String json;
-						
 						@Override //메세지가 도착했을때
 						public void messageArrived(String topic, MqttMessage message) throws Exception {
 							connected =true;
@@ -56,7 +56,7 @@ public class UAV {
 					mqttClient.connect();
 					//MQTT 메세지 수신
 					mqttClient.subscribe(Network.uavPubTopic);
-					
+					AppMainController.connectState = true;
 				}catch (Exception e) {
 					e.printStackTrace();
 				}
