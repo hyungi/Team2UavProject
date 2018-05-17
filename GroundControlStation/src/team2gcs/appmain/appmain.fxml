@@ -174,19 +174,7 @@
                         </AnchorPane>
                         <BorderPane fx:id="missionPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #222222;">
                            <center>
-                              <TableView prefWidth="850.0" style="-fx-background-color: #222222;" BorderPane.alignment="CENTER">
-                                 <columns>
-                                    <TableColumn maxWidth="50.0" minWidth="50.0" prefWidth="50.0" style="-fx-background-color: #222222;" text="NO" />
-                                    <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" style="-fx-background-color: #222222;" text="Command" />
-                                    <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" style="-fx-background-color: #222222;" text="Latitude" />
-                                    <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" style="-fx-background-color: #222222;" text="Longitude" />
-                                    <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" style="-fx-background-color: #222222;" text="Altitude" />
-                                    <TableColumn maxWidth="80.0" minWidth="80.0" style="-fx-background-color: #222222;" text="Jump" />
-                                    <TableColumn maxWidth="80.0" minWidth="80.0" style="-fx-background-color: #222222;" text="num" />
-                                    <TableColumn maxWidth="80.0" minWidth="80.0" style="-fx-background-color: #222222;" text="Waiting Time" />
-                                    <TableColumn maxWidth="80.0" minWidth="80.0" style="-fx-background-color: #222222;" text="Delete" />
-                                 </columns>
-                              </TableView>
+                              <TableView fx:id="tableView" prefWidth="850.0" style="-fx-background-color: #222222;" BorderPane.alignment="CENTER" />
                            </center>
                            <left>
                               <AnchorPane prefWidth="400.0" BorderPane.alignment="CENTER">
@@ -264,22 +252,22 @@
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Button layoutX="20.0" layoutY="36.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="go to">
+                                    <Button fx:id="btnMissionGoto" layoutX="20.0" layoutY="36.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="go to">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button layoutX="130.0" layoutY="75.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="read">
+                                    <Button fx:id="btnMissionRead" layoutX="130.0" layoutY="75.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="read">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button layoutX="239.0" layoutY="36.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="upload">
+                                    <Button fx:id="btnMissionUpload" layoutX="239.0" layoutY="36.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="upload">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button layoutX="239.0" layoutY="75.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="download">
+                                    <Button fx:id="btnMissionDownload" layoutX="239.0" layoutY="75.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="download">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
@@ -289,12 +277,12 @@
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button layoutX="19.0" layoutY="132.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="jump">
+                                    <Button fx:id="btnMissionJump" layoutX="19.0" layoutY="132.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="jump">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button layoutX="130.0" layoutY="132.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Loi">
+                                    <Button fx:id="btnMissionLoi" layoutX="130.0" layoutY="132.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Loi">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>

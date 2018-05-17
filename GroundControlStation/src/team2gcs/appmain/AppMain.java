@@ -19,9 +19,9 @@ public class AppMain extends Application{
 		this.primaryStage = primaryStage;
 		
  		Parent root = FXMLLoader.load(getClass().getResource("appmain.fxml"));
-		scene = new Scene(root);
+ 		scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("../images/app.css").toExternalForm());
-		primaryStage.setTitle("UAV Ground Control Station(Team2)");
+	 	primaryStage.setTitle("UAV Ground Control Station(Team2)");
 		primaryStage.setScene(scene);		
 		primaryStage.setMaximized(true);
 		primaryStage.show();
@@ -31,9 +31,9 @@ public class AppMain extends Application{
             public void run() {
             	while(true) {
 	                try{
-	            		Platform.runLater(()->{
+ 	            		Platform.runLater(()->{
 	             			 AppMainController.instance2.currTime();
-	            		});	
+	             		});	
 	            		Thread.sleep(1000);
 	                }
 	                catch(Exception e){}

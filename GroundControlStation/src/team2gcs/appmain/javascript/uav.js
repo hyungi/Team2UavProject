@@ -1,266 +1,494 @@
 function UAV() {
+	//-------------------------------
+	this.frameIcon1 = {
+		path:"M-30.14012510194162,-0.6472990536338017 C-30.14012510194162,-4.36100347511945 -26.9396213477545,-7.369104056522829 -22.988382145054345,-7.369104056522829 C-19.037142942354194,-7.369104056522829 -15.836639188167071,-4.36100347511945 -15.836639188167071,-0.6472990536338017 C-15.836639188167071,3.06640536785185 -19.037142942354194,6.074505949255226 -22.988382145054345,6.074505949255226 C-26.9396213477545,6.074505949255226 -30.14012510194162,3.06640536785185 -30.14012510194162,-0.6472990536338017 z M-6.711553535002267,24.0669865286702 C-6.711553535002267,20.353282107184548 -3.511049780815142,17.34518152578117 0.44018942188500887,17.34518152578117 C4.39142862458516,17.34518152578117 7.5919323787722846,20.353282107184548 7.5919323787722846,24.0669865286702 C7.5919323787722846,27.78069095015585 4.39142862458516,30.788791531559227 0.44018942188500887,30.788791531559227 C-3.511049780815142,30.788791531559227 -6.711553535002267,27.78069095015585 -6.711553535002267,24.0669865286702 z M17.145587020975555,0.20984434846580768 C17.145587020975555,-3.503860073019837 20.346090775162672,-6.51196065442322 24.29732997786283,-6.51196065442322 C28.24856918056298,-6.51196065442322 31.449072934750106,-3.503860073019837 31.449072934750106,0.20984434846580768 C31.449072934750106,3.923548769951452 28.24856918056298,6.931649351354835 24.29732997786283,6.931649351354835 C20.346090775162672,6.931649351354835 17.145587020975555,3.923548769951452 17.145587020975555,0.20984434846580768 z M-7.140127858656442,-24.79015735026657 C-7.140127858656442,-28.50386177175222 -3.939624104469317,-31.511962353155596 0.011615098230834064,-31.511962353155596 C3.962854300930985,-31.511962353155596 7.16335805511811,-28.50386177175222 7.16335805511811,-24.79015735026657 C7.16335805511811,-21.076452928780917 3.962854300930985,-18.06835234737754 0.011615098230834064,-18.06835234737754 C-3.939624104469317,-18.06835234737754 -7.140127858656442,-21.076452928780917 -7.140127858656442,-24.79015735026657 z M-15.496242274669473,0.06630312002640437 L16.634312041951254,0.06630312002640437 M0.28571338525838996,-17.78571321283068 L0.42857052811552876,17.5000010728836 M-25.14285719394684,-0.5714285969734192 C-25.14285719394684,-1.676400972664027 -24.247829569637446,-2.571428596973419 -23.14285719394684,-2.571428596973419 C-22.03788481825623,-2.571428596973419 -21.14285719394684,-1.676400972664027 -21.14285719394684,-0.5714285969734192 C-21.14285719394684,0.5335437787171886 -22.03788481825623,1.4285714030265808 -23.14285719394684,1.4285714030265808 C-24.247829569637446,1.4285714030265808 -25.14285719394684,0.5335437787171886 -25.14285719394684,-0.5714285969734192 z M-1.9999997168779375,-24.85714226961136 C-1.9999997168779375,-25.962114645301966 -1.104972092568545,-26.85714226961136 2.8312206271086104e-7,-26.85714226961136 C1.1049726588126703,-26.85714226961136 2.0000002831220627,-25.962114645301966 2.0000002831220627,-24.85714226961136 C2.0000002831220627,-23.75216989392075 1.1049726588126703,-22.85714226961136 2.8312206271086104e-7,-22.85714226961136 C-1.104972092568545,-22.85714226961136 -1.9999997168779375,-23.75216989392075 -1.9999997168779375,-24.85714226961136 z M22.42857150733471,0.2857148051261902 C22.42857150733471,-0.8192575705644174 23.3235991316441,-1.7142851948738098 24.42857150733471,-1.7142851948738098 C25.533543883025317,-1.7142851948738098 26.42857150733471,-0.8192575705644174 26.42857150733471,0.2857148051261902 C26.42857150733471,1.3906871808167978 25.533543883025317,2.28571480512619 24.42857150733471,2.28571480512619 C23.3235991316441,2.28571480512619 22.42857150733471,1.3906871808167978 22.42857150733471,0.2857148051261902 z M-1.5714304745197296,24.142857044935226 C-1.5714304745197296,23.03788466924462 -0.6764028502103372,22.142857044935226 0.4285695254802704,22.142857044935226 C1.5335419011708782,22.142857044935226 2.4285695254802704,23.03788466924462 2.4285695254802704,24.142857044935226 C2.4285695254802704,25.247829420625834 1.5335419011708782,26.142857044935226 0.4285695254802704,26.142857044935226 C-0.6764028502103372,26.142857044935226 -1.5714304745197296,25.247829420625834 -1.5714304745197296,24.142857044935226 z",
+		strokeColor: "#ffff00",
+		strokeWeight: 3
+	};	
 	
-	this.currLocation = map.googlemap.getCenter().toJSON();
-	this.heading = 0;
-
-	//그리기
-   this.frameIcon1 = {
-		      path : "M111.25,222.803c12.77,0,25.305-2.154,37.259-6.403c3.903-1.387,5.942-5.676,4.556-9.579 "+
-				"c-1.388-3.903-5.678-5.94-9.579-4.555c-10.337,3.674-21.183,5.537-32.235,5.537c-53.072,0-96.25-43.178-96.25-96.25 "+
-				"c0-53.072,43.178-96.25,96.25-96.25c53.072,0,96.25,43.178,96.25,96.25c0,10.754-1.765,21.32-5.244,31.404 "+
-				"c-1.352,3.916,0.728,8.185,4.644,9.536c3.914,1.35,8.186-0.728,9.536-4.644c4.024-11.662,6.064-23.874,6.064-36.297 "+
-				"c0-61.343-49.906-111.25-111.25-111.25S0,50.209,0,111.553S49.906,222.803,111.25,222.803z "+
-				"M207.314,317.675c-3.909,1.37-5.968,5.648-4.599,9.558c3.576,10.211,5.39,20.917,5.39,31.82 "+
-				"c0,53.072-43.178,96.25-96.25,96.25c-53.072,0-96.25-43.178-96.25-96.25c0-53.072,43.178-96.25,96.25-96.25 "+
-				"c10.9,0,21.605,1.813,31.82,5.39c3.912,1.369,8.188-0.69,9.557-4.6c1.369-3.909-0.69-8.188-4.6-9.557 "+
-				"c-11.812-4.136-24.185-6.233-36.777-6.233c-61.344,0-111.25,49.907-111.25,111.25s49.906,111.25,111.25,111.25 "+
-				"s111.25-49.907,111.25-111.25c0-12.595-2.097-24.969-6.233-36.778C215.503,318.365,211.224,316.305,207.314,317.675z "+
-				"M359.355,247.803c-12.593,0-24.966,2.097-36.777,6.233c-3.909,1.369-5.969,5.648-4.6,9.557 "+
-				"c1.368,3.91,5.649,5.968,9.557,4.6c10.215-3.577,20.92-5.39,31.82-5.39c53.072,0,96.25,43.178,96.25,96.25 "+
-				"c0,53.072-43.178,96.25-96.25,96.25c-53.072,0-96.25-43.178-96.25-96.25c0-10.9,1.813-21.606,5.39-31.82 "+
-				"c1.369-3.909-0.69-8.188-4.6-9.557c-3.91-1.368-8.188,0.691-9.557,4.6c-4.137,11.812-6.233,24.185-6.233,36.777 "+
-				"c0,61.343,49.906,111.25,111.25,111.25s111.25-49.907,111.25-111.25S420.699,247.803,359.355,247.803z " +
-				"M263.896,152.93c3.909-1.369,5.969-5.648,4.6-9.557c-3.576-10.214-5.39-20.92-5.39-31.82 "+
-				"c0-53.072,43.178-96.25,96.25-96.25c53.072,0,96.25,43.178,96.25,96.25s-43.178,96.25-96.25,96.25 "+
-				"c-10.901,0-21.607-1.813-31.82-5.39c-3.909-1.368-8.188,0.691-9.557,4.6c-1.369,3.91,0.689,8.188,4.6,9.558 "+
-				"c11.81,4.136,24.184,6.233,36.777,6.233c61.344,0,111.25-49.907,111.25-111.25S420.699,0.303,359.355,0.303 "+
-				"s-111.25,49.907-111.25,111.25c0,12.592,2.097,24.966,6.233,36.777C255.707,152.24,259.987,154.3,263.896,152.93z "+
-				"M332.272,363.789c0.54,3.094,1.595,6.012,3.08,8.66l-33.426,33.427c-2.929,2.929-2.929,7.678,0,10.606 "+
-				"c1.465,1.464,3.385,2.197,5.304,2.197c1.919,0,3.839-0.732,5.304-2.197l33.426-33.426c3.967,2.223,8.535,3.497,13.397,3.497 "+
-				"c15.163,0,27.5-12.336,27.5-27.5c0-4.862-1.273-9.43-3.496-13.397l33.427-33.427c2.929-2.929,2.929-7.678,0-10.606 "+
-				"c-2.929-2.929-7.677-2.929-10.607,0l-33.427,33.426c-2.649-1.484-5.566-2.54-8.66-3.08l-82.101-82.101 "+
-				"c1.448-4.601,2.231-9.493,2.231-14.565c0-5.072-0.784-9.965-2.232-14.566l82.101-82.101c3.094-0.54,6.011-1.595,8.66-3.08 "+
-				"l33.427,33.426c1.465,1.464,3.385,2.197,5.304,2.197c1.919,0,3.839-0.732,5.304-2.197c2.929-2.929,2.929-7.678,0-10.606 "+
-				"l-33.427-33.427c2.223-3.967,3.496-8.535,3.496-13.397c0-15.164-12.337-27.5-27.5-27.5c-4.862,0-9.429,1.273-13.397,3.496 "+
-				"l-33.426-33.426c-2.93-2.929-7.678-2.929-10.607,0c-2.929,2.929-2.929,7.678,0,10.606l33.426,33.427 "+
-				"c-1.484,2.649-2.54,5.566-3.08,8.66l-82.101,82.101c-4.601-1.448-9.493-2.231-14.565-2.231c-5.072,0-9.965,0.784-14.565,2.231 "+
-				"l-82.101-82.101c-0.54-3.094-1.595-6.011-3.08-8.66l33.427-33.427c2.929-2.929,2.929-7.678,0-10.606 "+
-				"c-2.929-2.929-7.677-2.929-10.607,0l-33.427,33.426c-3.967-2.223-8.535-3.496-13.397-3.496c-15.163,0-27.5,12.336-27.5,27.5 "+
-				"c0,4.862,1.273,9.43,3.496,13.397l-33.426,33.427c-2.929,2.929-2.929,7.678,0,10.606c1.465,1.464,3.385,2.197,5.304,2.197 "+
-				"s3.839-0.732,5.304-2.197l33.426-33.426c2.649,1.484,5.567,2.54,8.661,3.08l82.101,82.101c-1.448,4.601-2.232,9.493-2.232,14.566 "+
-				"c0,5.072,0.783,9.964,2.231,14.565l-82.101,82.102c-3.094,0.54-6.012,1.596-8.661,3.08l-33.426-33.426 "+
-				"c-2.929-2.929-7.677-2.929-10.607,0c-2.929,2.929-2.929,7.678,0,10.606l33.426,33.427c-2.223,3.967-3.496,8.535-3.496,13.397 "+
-				"c0,15.164,12.337,27.5,27.5,27.5c4.862,0,9.43-1.273,13.397-3.497l33.427,33.426c1.465,1.464,3.385,2.197,5.304,2.197 "+
-				"s3.839-0.732,5.304-2.197c2.929-2.929,2.929-7.678,0-10.606l-33.427-33.427c1.484-2.648,2.54-5.565,3.079-8.659l82.101-82.102 "+
-				"c4.601,1.448,9.493,2.232,14.566,2.232s9.965-0.784,14.566-2.232L332.272,363.789z M359.355,346.553 "+
-				"c3.434,0,6.547,1.393,8.809,3.642c2.299,2.311,3.691,5.425,3.691,8.858c0,6.892-5.607,12.5-12.5,12.5 "+
-				"c-3.434,0-6.547-1.393-8.809-3.642c-2.299-2.311-3.691-5.425-3.691-8.858C346.855,352.16,352.462,346.553,359.355,346.553z "+
-				"M350.497,102.745c2.311-2.299,5.425-3.691,8.858-3.691c6.893,0,12.5,5.607,12.5,12.5c0,3.434-1.393,6.547-3.642,8.809 "+
-				"c-2.311,2.299-5.425,3.691-8.858,3.691c-6.893,0-12.5-5.607-12.5-12.5C346.855,108.12,348.248,105.006,350.497,102.745z "+
-				"M345.958,335.049c-4.438,2.487-8.119,6.167-10.606,10.606l-71.103-71.104c4.057-2.969,7.637-6.549,10.606-10.606 "+
-				"L345.958,335.049z M335.352,124.951c2.487,4.438,6.168,8.119,10.606,10.606l-71.103,71.103 "+
-				"c-2.969-4.057-6.549-7.637-10.606-10.606L335.352,124.951z M111.855,124.053c-3.434,0-6.547-1.393-8.809-3.642 "+
-				"c-2.299-2.311-3.691-5.425-3.691-8.858c0-6.893,5.608-12.5,12.5-12.5c3.434,0,6.547,1.393,8.809,3.642 "+
-				"c2.299,2.311,3.691,5.425,3.691,8.858C124.355,118.446,118.748,124.053,111.855,124.053z M125.253,135.556 "+
-				"c4.438-2.487,8.118-6.167,10.605-10.606l71.104,71.104c-4.057,2.969-7.637,6.549-10.606,10.606L125.253,135.556z "+
-				"M120.713,367.862c-2.311,2.299-5.425,3.691-8.858,3.691c-6.892,0-12.5-5.608-12.5-12.5c0-3.434,1.393-6.547,3.642-8.809 "+
-				"c2.311-2.299,5.425-3.691,8.858-3.691c6.893,0,12.5,5.607,12.5,12.5C124.355,362.487,122.962,365.6,120.713,367.862z "+
-				"M135.859,345.656c-2.487-4.438-6.168-8.119-10.606-10.606l71.103-71.104c2.969,4.057,6.549,7.637,10.606,10.606L135.859,345.656 "+
-				"z M235.605,268.92c-18.536,0-33.616-15.081-33.616-33.617c0-18.537,15.08-33.617,33.616-33.617 "+
-				"c18.536,0,33.617,15.081,33.617,33.617S254.141,268.92,235.605,268.92z",
-		      strokeWeight : 10,
-		      rotation : 270
-		        };
-			   
+	this.frameIcon2 = {
+		path:"M-25.14285719394684,-0.5714285969734192 C-25.14285719394684,-1.676400972664027 -24.247829569637446,-2.571428596973419 -23.14285719394684,-2.571428596973419 C-22.03788481825623,-2.571428596973419 -21.14285719394684,-1.676400972664027 -21.14285719394684,-0.5714285969734192 C-21.14285719394684,0.5335437787171886 -22.03788481825623,1.4285714030265808 -23.14285719394684,1.4285714030265808 C-24.247829569637446,1.4285714030265808 -25.14285719394684,0.5335437787171886 -25.14285719394684,-0.5714285969734192 z M-1.9999997168779375,-24.85714226961136 C-1.9999997168779375,-25.962114645301966 -1.104972092568545,-26.85714226961136 2.8312206271086104e-7,-26.85714226961136 C1.1049726588126703,-26.85714226961136 2.0000002831220627,-25.962114645301966 2.0000002831220627,-24.85714226961136 C2.0000002831220627,-23.75216989392075 1.1049726588126703,-22.85714226961136 2.8312206271086104e-7,-22.85714226961136 C-1.104972092568545,-22.85714226961136 -1.9999997168779375,-23.75216989392075 -1.9999997168779375,-24.85714226961136 z",
+		strokeColor: '#f15f5f',
+		strokeWeight: 3
+	};
 	
-	
-	//적용, 설정
 	this.frameMarker1 = new google.maps.Marker({
-		icon : this.frameIcon1,
-		map : map.googlemap,
-		position : this.currLocation,
-		optimized: false
+		icon: this.frameIcon1,
+		map: map.googlemap,
+		optimized: false,
+		zIndex: google.maps.Marker.MAX_ZINDEX + 1
 	});
-
 	
-
-	//회전
+	this.frameMarker2 = new google.maps.Marker({
+		icon: this.frameIcon2,
+		map: map.googlemap,
+		optimized: false,
+		zIndex: google.maps.Marker.MAX_ZINDEX + 1
+	});
+	//---------------------------------------------
 	this.drawUav = function() {
 		try {
-			this.frameIcon1.rotation = 270+this.heading;
-
+			this.frameIcon1.rotation = 45 + this.heading;
 			this.frameMarker1.setIcon(this.frameIcon1);
-
-		} catch (err) {
-			console.log(">>[uav.drawUav()]" + err);
+			
+			this.frameIcon2.rotation = 45 + this.heading;
+			this.frameMarker2.setIcon(this.frameIcon2);
+			
+			this.frameMarker1.setPosition(this.currLocation);	
+			this.frameMarker2.setPosition(this.currLocation);
+		} catch(err) {
+			console.log(">> [uav.drawUav()] " + err);
 		}
+	};	
+	//----------------------------------------------
+	this.currLocation = null;
+	this.heading = 0;	
+	this.setCurrLocation = function(latitude, longitude, heading) {
+		try {
+			this.currLocation = {lat:latitude, lng:longitude};
+			this.heading = heading;
+		} catch(err) {
+			console.log(">> [uav.setCurrLocation()] " + err);
+		}	
 	};
-
+	//---------------------------------------------
 	this.headingLine = null;
 	this.drawHeadingLine = function() {
 		try {
-			//전의 것 지우기
-			if(this.headingLine != null){
+			if(this.headingLine != null) {
 				this.headingLine.setMap(null);
 			}
 			
-			//그리기
-			var endHeadingLatLng =google.maps.geometry.spherical.computeOffset(
-					new google.maps.LatLng(this.currLocation),
-					2000,
-					this.heading //0~360
+			var endheadingLatLng = google.maps.geometry.spherical.computeOffset(
+				new google.maps.LatLng(map.uav.currLocation), 
+				2000, 
+				this.heading
 			);
-
-			this.headingLine = new google.maps.Polyline({ //라인 그리기
-				path : [
-					//시작점
-					this.currLocation,
-					//끝점
-					endHeadingLatLng
-				],
-				strokeColor : "#ff0000",
-				strokeWeight : 2,
-				map : map.googlemap
-			})
-		} catch (err) {
-			console.log(">>[uav.drawHeading] " + err)
-		}
-	};
-	
-	this.gotoMarker = null;
-	this.gotoStart = function(location){
-		try {
 			
-			//전의것 지우기
-			if(this.gotoMarker != null){
-				this.gotoMarker.setMap(null);
-			}
-			//마크만들기
-			this.gotoMarker = new google.maps.Marker({
-				position: location,
+			this.headingLine = new google.maps.Polyline({
+				path: [
+					this.currLocation,
+					endheadingLatLng.toJSON()
+				],
+				strokeColor: '#FF0000',
+				strokeOpacity: 1.0,
+				strokeWeight: 2,
 				map: map.googlemap
-			}); 
-		} catch (err) {
-			console.log(">>[uav.gotoStart()] "+err)
+		    });
+		} catch(err) {
+			console.log(">> [uav.drawHeadingLine()] " + err);
 		}
-	};
-	
+	};	
+	//----------------------------------------------
+	this.homeLocation = null;
+	this.homeMarker = null;
+	//---------------------------------------------
+	this.goto = false;
+	this.gotoMarker = null;
+	this.gotoLocation = null;
+	//---------------------------------------------
+	this.mission = false;
+	this.missionMarkers = [];
+	this.missionPolylines = [];	
+	this.nextLocation = null;	
+	this.nextMarker = null;
+	this.roiIndex = 0;
+	//---------------------------------------------
+	this.rtl = false;	
+	//---------------------------------------------
 	this.destLocation = null;
-	this.destLine = null;
-	this.drawDestLine = function(){
-		if(this.gotoMarker != null){
-			this.destLocation = this.gotoMarker.getPosition().toJSON();
-		}else{
-			this.destLocation = this.currLocation;
-		}
-		var bearing = google.maps.geometry.spherical.computeHeading(
-				new google.maps.LatLng(this.currLocation),
+	this.destLine = null;	
+	//---------------------------------------------
+	this.drawDestLine = function() {
+		try {
+			if(this.goto == true) {
+				this.destLocation = this.gotoMarker.getPosition().toJSON();
+			} else if(this.mission == true) {
+				this.destLocation = this.nextLocation;
+			} else if(this.rtl == true) {
+				this.destLocation = this.homeLocation;
+			} else {
+				this.destLocation = this.currLocation;
+			}
+			
+			var bearing = google.maps.geometry.spherical.computeHeading(
+				new google.maps.LatLng(this.currLocation), 
 				new google.maps.LatLng(this.destLocation)
 			);
-		
-		// 시계방향: 0~180 반시계 방향: 0~ -180
-		if(bearing < 0){
-			bearing += 360;
-		}
-		var endBearingLatLng = google.maps.geometry.spherical.computeOffset(
-				new google.maps.LatLng(this.currLocation),
-				2000,
-				bearing//0~360
-			);
-		
-		if(this.destLine != null){
-			this.destLine.setMap(null);
-		}
-		
-		this.destLine = new google.maps.Polyline({ //라인 그리기
-			path : [
-				//시작점
-				this.currLocation,
-				//끝점
-				endBearingLatLng
-			],
-			strokeColor : "#ff9900",
-			strokeWeight : 2,
-			map : map.googlemap,
-			optimized: false
-		})
-		
-		console.log(bearing);
-
-	};
-	
-	//미션 만들기의 마크 그리기
-	this.missionMarkers = [];
-	this.makeMissionMarker = function(kind, lat, lng){
-		try {
-			var marker = null;
-			if(kind == "waypoint"){
-				marker= new google.maps.Marker({
-					map: map.googlemap,
-					position: {lat:lat, lng,lng},
-					icon: {
-						path: google.maps.SymbolPath.CIRCLE,
-						fillColor: "#ffffff",
-						fillOpacity: 1,
-						strokeColor: "#0000ff",
-						strokeWeight: 1,	
-						scale: 12,
-						optimized: false
-					},
-					draggable:true
-				});
-				marker.kind = kind;
-				//드래그 이벤트처리
-				var self = this;
-				marker.addListener('drag', function(){
-					self.drawMissionPath();
-				});
-				this.missionMarkers.push(marker);
+			if(bearing<0) {
+				bearing += 360;
 			}
-			for(var i=0;i<this.missionMarkers.length;i++){
-				this.missionMarkers[i].index = i;
-				this.missionMarkers[i].setLabel({
-					color: "#000000",
-					fontSize: "12px",
-					fontWeight: "600",
-					text: String(i+1),
+			
+			var endbearingLatLng = google.maps.geometry.spherical.computeOffset(
+				new google.maps.LatLng(this.currLocation), 
+				2000, 
+				bearing
+			);
+			
+			if(this.destLine != null)  this.destLine.setMap(null);
+			this.destLine = new google.maps.Polyline({
+				path: [
+					this.currLocation,
+					endbearingLatLng.toJSON()
+				],
+				strokeColor: '#FF9900',
+				strokeOpacity: 1.0,
+				strokeWeight: 2,
+				map: map.googlemap
+		    });
+		} catch(err) {
+			console.log(">> [uav.drawDestLine()] " + err);
+		}
+	};		
+	//---------------------------------------------
+	this.setUavColor = function(color1, color2) {
+		try {
+			this.frameIcon1.strokeColor = color1;
+			this.frameIcon2.strokeColor = color2;
+			this.frameMarker1.setIcon(this.frameIcon1);
+			this.frameMarker2.setIcon(this.frameIcon2);
+		} catch(err) {
+			console.log(">> [uav.setUavColor()] " + err);
+		}
+	};
+	//---------------------------------------------
+	this.setHomeLocation = function(latitude, longitude) {
+		try {
+			if(this.homeLocation == null || this.homeLocation.lat!=latitude || this.homeLocation.lng!=longitude) {
+				this.homeLocation = {lat:latitude, lng:longitude};
+				if(this.homeMarker != null) {
+					this.homeMarker.setMap(null);
+				}
+				if(this.gotoMarker != null) {
+					this.gotoMarker.setMap(null);
+				}
+				this.homeMarker = new google.maps.Marker({
+					map: map.googlemap,
+					position: this.homeLocation,
+					label: {color:"#ffffff", text:"H"},
 					optimized: false
 				});
+
+				map.googlemap.setCenter(map.uav.currLocation);
+				map.googlemap.setZoom(18);
+				jsproxy.setZoomSliderValue(18);
+			}
+		} catch(err) {
+			console.log(">> [uav.setHomeLocation()] " + err);
+		}
+	};	
+	//---------------------------------------------
+	this.gotoStop = function() {
+		try {
+			this.goto = false;
+			if(this.gotoMarker != null) {
+				this.gotoMarker.setMap(null);
+			}
+		} catch(err) {
+			console.log(">> [uav.gotoStart()] " + err);
+		}
+	};
+	//---------------------------------------------
+	this.makeMissionMark = function(kind, lat, lng, index) {
+		try {
+			var marker = null;
+			
+			if(kind == "takeoff") {
+				marker = new google.maps.Marker({
+					position: map.uav.homeLocation
+				});
+				marker.kind = kind;
+				marker.index = 0;
+				this.missionMarkers.splice(marker.index,0,marker);
+			} 
+			
+			else if(kind == "waypoint") {
+				marker = new google.maps.Marker({
+					map: map.googlemap,
+					position: {lat:lat, lng:lng},
+					icon: {
+					  path: google.maps.SymbolPath.CIRCLE,
+					  fillOpacity: 1,
+					  fillColor: '#fff',
+					  strokeOpacity: 1,
+					  strokeWeight: 1,
+					  strokeColor: '#333',
+					  scale: 12
+					},
+					draggable: true,
+					optimized: false
+				});
+				marker.kind = kind;
+				marker.index = this.missionMarkers.length;
+				this.missionMarkers.push(marker);
+				var self = this;
+				marker.addListener('drag', function() {
+					self.drawMissionPath();
+				});
+			} 
+			
+			else if(kind == "rtl") {
+				marker = new google.maps.Marker({
+					position: map.uav.homeLocation
+				});
+				marker.kind = kind;
+				marker.index = this.missionMarkers.length;
+				this.missionMarkers.push(marker);
+			}
+			
+			else if(kind == "roi") {
+				marker = new google.maps.Marker({
+					map: map.googlemap,
+					position: {lat:lat, lng:lng},
+					draggable: true,
+					optimized: false
+				});
+				marker.kind = kind;
+				if(index) {
+					marker.index = index;
+					this.missionMarkers.splice(marker.index,0,marker);
+				} else {
+					marker.index = this.missionMarkers.length;
+					this.missionMarkers.push(marker);
+				}
+			}			
+			
+			for(var i=0; i<this.missionMarkers.length; i++) {
+				this.missionMarkers[i].index = i;
+				if(this.missionMarkers[i].kind != "takeoff" && this.missionMarkers[i].kind != "rtl") {
+					this.missionMarkers[i].setLabel({color: '#000', fontSize: '12px', fontWeight: '600', text: String(i+1)});
+				}
 			}
 			
 			this.drawMissionPath();
-			
-		} catch (err) {
-			console.log(">>[uav.makeMissionMarker] "+err)
+		} catch(err) {
+			console.log(">> [uav.makeMissionMark()] " + err);
 		}
 	};
-	
-	this.missionPolylines = [];
-	this.drawMissionPath = function(){
+	//---------------------------------------------
+	this.gotoStart = function(location) {
 		try {
-			//Polyline을 지도에서 제거
-			for(var i=0;i<this.missionPolylines.length;i++){
+			this.goto = true;
+			if(this.gotoMarker != null) {
+				this.gotoMarker.setMap(null);
+			} 
+			this.gotoMarker = new google.maps.Marker({
+				map: map.googlemap,
+				position: location,
+				optimized: false
+			});
+			this.missionStop();
+			this.rtlStop();
+			jsproxy.gotoStart(location);
+		} catch(err) {
+			console.log(">> [uav.gotoStart()] " + err);
+		}
+	};
+	//---------------------------------------------
+	this.missionStart = function() {
+		this.mission = true;
+		this.gotoStop();
+		this.rtlStop();
+	};
+	//---------------------------------------------
+	this.missionStop = function() {
+		this.mission = false;
+	};
+	//---------------------------------------------
+	this.rtlStart = function() {
+		this.rtl = true;
+		this.missionStop();
+		this.gotoStop();
+	};
+	//---------------------------------------------
+	this.rtlStop = function() {
+		this.rtl = false;
+	};	
+	//---------------------------------------------
+	this.removeMissionMark = function(index) {
+		try {
+			this.missionMarkers[index].setMap(null);
+			this.missionMarkers.splice(index,1);
+			for(var i=0; i<this.missionMarkers.length; i++) {
+				this.missionMarkers[i].index = i;
+				if(this.missionMarkers[i].kind != "takeoff" && this.missionMarkers[i].kind != "rtl") {
+					this.missionMarkers[i].setLabel({color: '#000', fontSize: '12px', fontWeight: '600', text: String(i+1)});
+				}
+			}
+			this.drawMissionPath();
+		} catch(err) {
+			console.log(">> [uav.gotoStart()] " + err);
+		}
+	};
+	//---------------------------------------------
+	this.clearMission = function() {
+		try {
+			for(var i=0; i<map.uav.missionMarkers.length; i++) {
+				map.uav.missionMarkers[i].setMap(null);
+			}
+			map.uav.missionMarkers = [];
+			for(var i=0; i<map.uav.missionPolylines.length; i++) {
+				map.uav.missionPolylines[i].setMap(null);
+			}
+			map.uav.missionPolylines = [];	
+		} catch(err) {
+			console.log(">> [uav.clearMission()] " + err);
+		}
+	};
+	//---------------------------------------------
+	this.setMission = function(missionArr) {
+		try {
+			this.clearMission();
+			for(var i=0; i<missionArr.length; i++) {
+				this.makeMissionMark(missionArr[i].kind, missionArr[i].lat, missionArr[i].lng);
+			}
+		} catch(err) {
+			console.log(">> [uav.setMission()] " + err);
+		}
+	};
+	//---------------------------------------------
+	this.setNextWaypointNo = function(nextWaypointNo) {
+		try {
+			if(this.mission == true) {
+				if(1<=nextWaypointNo && (nextWaypointNo)<=this.missionMarkers.length) {
+					this.nextLocation = this.missionMarkers[nextWaypointNo-1].getPosition().toJSON();
+					this.nextMarker = this.missionMarkers[nextWaypointNo-1];
+				}
+			}
+		} catch(err) {
+			console.log(">> [uav.setNextWaypointNo()] " + err);
+		}
+	};
+	//---------------------------------------------
+	this.drawMissionPath = function() {
+		try {
+			for(var i=0; i<this.missionPolylines.length; i++) {
 				this.missionPolylines[i].setMap(null);
 			}
-			this.missionPolylines = [];
+			this.missionPolylines = [];	
 			
-			//시작점
 			var prevMarker = this.missionMarkers[0];
-			//끝점
 			var nextMarker = null;
-			for(var i=1;i<this.missionMarkers.length;i++){
-				//선을 생성
+			for(var i=1; i<this.missionMarkers.length; i++) {			 
 				var polyline = new google.maps.Polyline({
-					strokeColor: "#1EA4FF",
+					strokeColor: '#1ea4ff',
+					strokeOpacity: 1.0,
 					strokeWeight: 3,
-					map: map.googlemap,
+					map: map.googlemap
 				});
-				//선 그리기
-				nextMarker = this.missionMarkers[i];
-				polyline.setPath([ prevMarker.getPosition(), nextMarker.getPosition() ]);
-				//배열에 저정
-				this.missionPolylines.push(polyline);
-				//이전 마크 변경
-				prevMarker = nextMarker;
 				
+				nextMarker = this.missionMarkers[i];
+				
+				if(nextMarker.kind == "roi") {
+					continue;
+				} else {
+					polyline.setPath([prevMarker.getPosition(), nextMarker.getPosition()]);
+				}
+				
+				this.missionPolylines.push(polyline);
+				prevMarker = nextMarker;
 			}
-			
-		} catch (err) {
-			console.log(">>[uav.drawMissionPath] "+err);
+		} catch(err) {
+			console.log(">> [uav.drawMissionPath()] " + err);
 		}
 	};
-	
+	//Fence 관련 속성 및 메소드-----------------------------------------------------------
+	this.fenceMarkers = [];
+	this.makeFenceMark = function(lat, lng) {
+		try {
+			var image = {
+	          url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+	          size: new google.maps.Size(20, 32),
+	          origin: new google.maps.Point(0, 0),
+	          anchor: new google.maps.Point(0, 32)
+	        };
+			var marker = new google.maps.Marker({
+				map: map.googlemap,
+				position: {lat:lat, lng:lng},
+				icon: image,
+				draggable: true,
+				optimized: false
+			});
+			var self = this;
+			marker.addListener('drag', function() {
+				self.drawFencePolygon();
+			});
+			this.fenceMarkers.push(marker);
+			this.drawFencePolygon();
+		} catch(err) {
+			console.log(">> [uav.makeFenceMark()] " + err);
+		}
+	};
+	this.setFence = function(fencePoints) {
+		try {
+			this.fenceClear();
+			for(var i=0; i<fencePoints.length; i++) {
+				this.makeFenceMark(fencePoints[i].lat, fencePoints[i].lng);
+			}
+		} catch(err) {
+			console.log(">> [uav.setFence()] " + err);
+		}
+	};	
+	this.removeFenceMark = function(index) {
+		try {
 
+		} catch(err) {
+			console.log(">> [uav.removeFenceMark()] " + err);
+		}
+	};
+	this.fenceClear = function() {
+		try {
+			if(this.fencePolygon != null) {
+				this.fencePolygon.setMap(null);
+			}
+			for(var i=0; i<this.fenceMarkers.length; i++) {
+				this.fenceMarkers[i].setMap(null);
+			}
+			this.fenceMarkers = [];
+		} catch(err) {
+			console.log(">> [uav.clearFence()] " + err);
+		}
+	};
+	this.fencePolygon = null;
+	this.drawFencePolygon = function() {
+		try {
+			var coords = [];
+			for(var i=0; i<this.fenceMarkers.length; i++) {
+				coords.push(this.fenceMarkers[i].getPosition());
+			}
+			if(this.fencePolygon != null) {
+				this.fencePolygon.setMap(null);
+			}
+			this.fencePolygon = new google.maps.Polygon({
+				map: map.googlemap,
+				paths: coords,
+				strokeColor: '#FF0000',
+				strokeOpacity: 0.8,
+				strokeWeight: 2,
+				//fillColor: '#00ff00',
+		        fillOpacity: 0.15
+			});
+			
+			this.fencePolygon.addListener('click', function(e) {
+				if(map.gotoMake == true) {
+					var clickLocation = {lat:e.latLng.lat(), lng:e.latLng.lng()};
+					map.uav.gotoStart(clickLocation);
+				} else if(map.missionMake == true) {
+					map.uav.makeMissionMark("waypoint", e.latLng.lat(), e.latLng.lng());
+				} else if(map.roiMake == true) {
+					map.uav.makeMissionMark("roi", e.latLng.lat(), e.latLng.lng(), map.uav.roiIndex);
+					jsproxy.addROI({lat:e.latLng.lat(), lng:e.latLng.lng()});
+					map.roiMake = false;
+				}
+			});
+		} catch(err) {
+			console.log(">> [uav.drawFencePolygon()] " + err);
+		}
+	};		
 }
+
+
+
+
 
 

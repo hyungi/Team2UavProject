@@ -1,8 +1,14 @@
 package team2gcs.appmain;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import gcs.mission.WayPoint;
 import gcs.network.Network;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -11,16 +17,20 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -39,8 +49,6 @@ public class AppMainController implements Initializable{
 	@FXML private BorderPane loginBorderPane;
 	@FXML private Canvas hudCanvas;
 	private GraphicsContext ctx;
-	private JSObject jsproxy;
-
    
 	//좌측 메뉴
 	@FXML private VBox leftVbox;
@@ -67,6 +75,7 @@ public class AppMainController implements Initializable{
 	//맵
 	@FXML WebView webView;
 	private WebEngine webEngine;
+	private JSObject jsproxy;
 	//로그인부분
 	@FXML private TextField txtIP;
 	@FXML private TextField txtPort;
@@ -77,6 +86,16 @@ public class AppMainController implements Initializable{
 	public static boolean connectState=false;
 	//미션부분
 	@FXML private Button btnMissionSet;
+	@FXML private Button btnMissionRead;
+	@FXML private Button btnMissionUpload;
+	@FXML private Button btnMissionDownload;
+	@FXML private Button btnMissionGoto;
+	@FXML private Button btnMissionJump;
+	@FXML private Button btnMissionLoi;
+
+	
+	//미션 테이블 뷰
+	@FXML private TableView tableView;
      
    	// Pane을 움직이기 위해 Double 속성값을 사용 -> Listener를 등록가능
    	private DoubleProperty bottomPaneLocation 
@@ -90,7 +109,7 @@ public class AppMainController implements Initializable{
 	@FXML private Label locationLabel;
 	@FXML private Label batteryLabel;
 	@FXML private Label signalLabel;
-
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		instance2 = this;
@@ -98,18 +117,23 @@ public class AppMainController implements Initializable{
 		loginBorderPane.setVisible(false);
 		ViewLoop viewLoop = new ViewLoop();
 		viewLoop.start();
+		
+		initWebView();
+		initTableView();
 		initMissionButton();
 		initLoginButton();
 
-		initCanvasLayer();
+ 		initCanvasLayer();
 		initSlide();
 		initTop();
-		
-		initWenView();
 
 		initRightPane();
 		initLeftPane();
+		
+
 	}
+
+	
 //////////////////////////////////Top Menu 관련 ////////////////////////////////
 	public void initTop() {
 	//	currTime();
@@ -130,7 +154,7 @@ public class AppMainController implements Initializable{
 		public void handle(long now) {
 			ctx.translate(-50, -50);
 			ctx.clearRect(0, 0, 140, 140); 
-			ctx.translate(50, 50);
+		 	ctx.translate(50, 50);
 			layerDraw();
 		} 
 	}
@@ -215,10 +239,25 @@ public class AppMainController implements Initializable{
 	}
    
 	//맵
-	private void initWenView() {
-		webEngine = webView.getEngine();      
+	private void initWebView() {
+		webEngine = webView.getEngine();
+		webEngine.getLoadWorker().stateProperty().addListener(webEngineLoadStateListener);	
 		webEngine.load(getClass().getResource("javascript/map.html").toExternalForm());
 	}
+	
+	private ChangeListener<State> webEngineLoadStateListener = (observable, oldValue, newValue) -> {
+		if(newValue == State.SUCCEEDED) {
+			Platform.runLater(() -> {
+				try {
+					jsproxy = (JSObject) webEngine.executeScript("jsproxy");
+					jsproxy.setMember("java", AppMainController.this);
+					//setMapSize();
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			});
+		}
+	};	
   
 	private void initRightPane() {
 		functionsLabel.setTextFill(Color.WHITE);
@@ -244,7 +283,6 @@ public class AppMainController implements Initializable{
 		System.out.println(port);
 		
 		if(!ip.equals(null)&&!port.equals(null)) {
-			System.out.println("1");
 			Network.connect();
 			Thread thread = new Thread(){
 	            @Override
@@ -284,6 +322,12 @@ public class AppMainController implements Initializable{
 	//미션부분 버튼
 	public void initMissionButton() {
 		btnMissionSet.setOnAction((event)->{handleMissionSet(event);});
+		btnMissionRead.setOnAction((event)->{handleMissionRead(event);});
+//		btnMissionUpload.setOnAction((event)->{handleMissionUpload(event);});
+//		btnMissionDownload.setOnAction((event)->{handleMissionDownload(event);});
+//		btnMissionGoto.setOnAction((event)->{handleMissionGoto(event);});
+//		btnMissionJump.setOnAction((event)->{handleMissionJump(event);});
+//		btnMissionLoi.setOnAction((event)->{handleMissionLoi(event);});
 	}
 	
 	//미션생성 이벤트 처리
@@ -292,5 +336,100 @@ public class AppMainController implements Initializable{
 			jsproxy.call("missionMake");
 		});
 	}
+	//미션읽기
+	public void handleMissionRead(ActionEvent event) {
+		Platform.runLater(() -> {
+			jsproxy.call("getMission");
+		});
+	}
+	public void getMissionResponse(String data) {
+		Platform.runLater(() -> {
+			List<WayPoint> list = new ArrayList<WayPoint>();			
+			JSONArray jsonArray = new JSONArray(data);
+			for(int i=0; i<jsonArray.length(); i++) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+				WayPoint wayPoint = new WayPoint();
+				wayPoint.no = jsonObject.getInt("no");
+				wayPoint.kind = jsonObject.getString("kind"); //all is "waypoint";
+				wayPoint.lat = jsonObject.getDouble("lat");
+				wayPoint.lng = jsonObject.getDouble("lng");
+				wayPoint.alt = 10;
+				list.add(wayPoint);
+			}
+			setTableViewItems(list);
+		});
+	}
+	public void setTableViewItems(List<WayPoint> list) {
+		tableView.getItems().clear();
+		tableView.setItems(FXCollections.observableArrayList(list));
+	}
 	
+	
+	
+	//테이블뷰 설정
+	private void initTableView() {	
+
+		TableColumn<WayPoint, Integer> column1 = new TableColumn<WayPoint, Integer>("No");
+		column1.setCellValueFactory(new PropertyValueFactory<WayPoint, Integer>("no"));
+		column1.setPrefWidth(50);
+		column1.setSortable(false);
+		column1.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
+		tableView.getColumns().add(column1);
+		
+		TableColumn<WayPoint, String> column2 = new TableColumn<WayPoint, String>("Command");
+		column2.setCellValueFactory(new PropertyValueFactory<WayPoint, String>("kind"));
+		column2.setPrefWidth(200);
+		column2.setSortable(false);
+		column2.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
+		tableView.getColumns().add(column2);
+		
+		TableColumn<WayPoint, Double> column3 = new TableColumn<WayPoint, Double>("Latitude");
+		column3.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("lat"));
+		column3.setPrefWidth(200);
+		column3.setSortable(false);
+		column3.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
+		tableView.getColumns().add(column3);
+		
+		TableColumn<WayPoint, Double> column4 = new TableColumn<WayPoint, Double>("Longitude");
+		column4.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("lng"));
+		column4.setPrefWidth(200);
+		column4.setSortable(false);
+		column4.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
+		tableView.getColumns().add(column4);
+		
+		TableColumn<WayPoint, Double> column5 = new TableColumn<WayPoint, Double>("Altitude");
+		column5.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("alt"));
+		column5.setPrefWidth(200);
+		column5.setSortable(false);
+		column5.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
+		tableView.getColumns().add(column5);
+		
+		TableColumn<WayPoint, Double> column6 = new TableColumn<WayPoint, Double>("Jump");
+		column6.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("jump"));
+		column6.setPrefWidth(80);
+		column6.setSortable(false);
+		column6.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
+		tableView.getColumns().add(column6);
+		
+		TableColumn<WayPoint, Double> column7 = new TableColumn<WayPoint, Double>("num");
+		column7.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("jumpnum"));
+		column7.setPrefWidth(80);
+		column7.setSortable(false);
+		column7.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
+		tableView.getColumns().add(column7);
+		
+		TableColumn<WayPoint, Double> column8 = new TableColumn<WayPoint, Double>("Waiting Time");
+		column8.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("waitingTime"));
+		column8.setPrefWidth(80);
+		column8.setSortable(false);
+		column8.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
+		tableView.getColumns().add(column8);
+		
+		TableColumn<WayPoint, Double> column9 = new TableColumn<WayPoint, Double>("Delect");
+		column9.setText("Del");
+		column9.setPrefWidth(80);
+		column9.setSortable(false);
+		column9.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
+		tableView.getColumns().add(column9);
+	}
 }

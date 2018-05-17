@@ -1,21 +1,29 @@
 package gcs.mission;
 
-public class FencePoint {
-	private int idx;
-	private double lat;
-	private double lng;
+import java.io.Serializable;
+
+public class FencePoint implements Serializable {
 	
-	public FencePoint(int idx, double lat, double lng) {
-		super();
-		this.idx = idx;
-		this.lat = lat;
-		this.lng = lng;
+	public int idx;
+	public int count;
+	public double lat;
+	public double lng;
+	
+	public FencePoint() {
+		
 	}
+	
 	public int getIdx() {
 		return idx;
 	}
 	public void setIdx(int idx) {
 		this.idx = idx;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
 	}
 	public double getLat() {
 		return lat;
@@ -29,6 +37,4 @@ public class FencePoint {
 	public void setLng(double lng) {
 		this.lng = lng;
 	}
-	
-	
 }

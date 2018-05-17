@@ -1,66 +1,92 @@
 package gcs.network;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import gcs.mission.FencePoint;
 import gcs.mission.WayPoint;
+import team2gcs.appmain.AppMain;
 import team2gcs.appmain.AppMainController;
 
-public class UAV {
+public class UAV implements Cloneable {
+	public String systemStatus;	
+	public String statusText;
+	public String mode;
+	public double batteryVoltage;
+	public double batteryCurrent;
+	public double batteryLevel;
+	public double roll;
+	public double pitch;
+	public double yaw;
+	public boolean armed;
+	public double latitude;
+	public double longitude;
+	public double altitude;
+	public double heading;
+	public double airSpeed;
+	public double groundSpeed;	
+	public double homeLat;
+	public double homeLng;
+	public double rangeFinderDistance;
+	public double opticalFlowQuality;	
 	
-	public MqttClient mqttClient;
+	public int nextWaypointNo;
+	public List<WayPoint> wayPoints;
+	
+	public double fenceEnable;
+	public double fenceType;
+	public double fenceAction;
+	public double fenceRadius;
+	public double fenceAltMax;
+	public double fenceMargin;
+	public double fenceTotal;
+	public List<FencePoint> fencePoints;
+	
 	public boolean connected;
+	private MqttClient mqttClient;
 	
 	public UAV() {
-
 	}
-	
 	
 	public void connect() {
 		Thread thread = new Thread() {
 			@Override
-			public void run() {
+			public void run() {			
 				try {
-					//MQTT Broker와 연결하기
-					mqttClient = new MqttClient("tcp://"+Network.mqttIp+":"+Network.mqttPort, MqttClient.generateClientId(), null);
-					//콜백 객체 등록
+					mqttClient = new MqttClient("tcp://" + Network.mqttIp + ":" + Network.mqttPort, MqttClient.generateClientId(), null);
 					mqttClient.setCallback(new MqttCallback() {
-						String json;
-						
-						@Override //메세지가 도착했을때
+						String strJson;
+						@Override
 						public void messageArrived(String topic, MqttMessage message) throws Exception {
-							connected =true;
-							json = new String(message.getPayload());
-							System.out.println(json);
-							
+							strJson = new String(message.getPayload());
+							dataParsing(strJson);
+							connected = true;
 						}
-						
-						@Override //메세지를 보냈을때
+						@Override
 						public void deliveryComplete(IMqttDeliveryToken token) {
-							// TODO Auto-generated method stub
-							
 						}
-						
-						@Override //연결이 끊어졌을때
+						@Override
 						public void connectionLost(Throwable e) {
-							disconnect();
+							UAV.this.disconnect();
+							e.printStackTrace();
 						}
 					});
-					//MQTT Broker 연결
-					mqttClient.connect();
-					//MQTT 메세지 수신
+					MqttConnectOptions mco = new MqttConnectOptions();
+					mco.setConnectionTimeout(3);
+					mqttClient.connect(mco);
 					mqttClient.subscribe(Network.uavPubTopic);
-					System.out.println("uav connect end");
 					AppMainController.connectState=true;
-				}catch (Exception e) {
-					e.printStackTrace();
+				} catch (Exception e) {
+					UAV.this.disconnect();
+					//e.printStackTrace();
 				}
 			}
 		};
@@ -70,243 +96,256 @@ public class UAV {
 	
 	public void disconnect() {
 		try {
-			connected =false;
+			//AppMainController.instance2.setStatus(new UAV());
 			mqttClient.disconnect();
 			mqttClient.close();
-		}catch (Exception e) {}
-		
+		} catch (Exception e) {
+		}
+		connected = false;
 	}
+
+	private void dataParsing(String strJson) {
+		try {
+			JSONObject jsonObject = new JSONObject(strJson);
+			systemStatus = jsonObject.getString("system_status");
+			statusText = jsonObject.getString("statustext");
+			mode = jsonObject.getString("mode");
+			batteryVoltage = jsonObject.getDouble("battery_voltage");
+			batteryCurrent = jsonObject.getDouble("battery_current");
+			try {
+				batteryLevel = jsonObject.getDouble("battery_level");
+			} catch(Exception e) {
+				//SITL에서 가끔 battery_level 을 보내지 않아
+				//시뮬레이션에서 가끔 NullPointerException 발생
+			}
+			roll = jsonObject.getDouble("roll");
+			pitch = jsonObject.getDouble("pitch");
+			yaw = jsonObject.getDouble("yaw");
+			armed = jsonObject.getBoolean("armed");
+			latitude = jsonObject.getDouble("latitude");
+			longitude = jsonObject.getDouble("longitude");
+			altitude = jsonObject.getDouble("altitude");
+			heading = jsonObject.getDouble("heading");
+			airSpeed = jsonObject.getDouble("airspeed");
+			groundSpeed = jsonObject.getDouble("groundspeed");
+			homeLat = jsonObject.getDouble("homeLat");
+			homeLng = jsonObject.getDouble("homeLng");
+			
+			try {
+				rangeFinderDistance = jsonObject.getDouble("rangefinder_distance");
+				opticalFlowQuality = jsonObject.getDouble("optical_flow_quality");
+			} catch(Exception e) {
+				rangeFinderDistance = 0;
+				opticalFlowQuality = 0;
+			}
+			
+			nextWaypointNo = jsonObject.getInt("next_waypoint_no");
+			
+			JSONArray jsonArrayWayPoints = jsonObject.getJSONArray("waypoints");
+			List<WayPoint> listWayPoint = new ArrayList<WayPoint>();
+			for(int i=0; i<jsonArrayWayPoints.length(); i++) {
+				JSONObject jo = jsonArrayWayPoints.getJSONObject(i);
+				WayPoint wp = new WayPoint();
+				wp.no = i+1;
+				wp.kind = jo.getString("kind");
+				if(wp.kind.equals("takeoff")) {
+					wp.alt = jo.getDouble("alt");
+				} else if(wp.kind.equals("waypoint")) {
+					wp.lat = jo.getDouble("lat");
+					wp.lng = jo.getDouble("lng");
+					wp.alt = jo.getDouble("alt");
+				} else if(wp.kind.equals("rtl")) {
+				} else if(wp.kind.equals("jump")) {
+					wp.lat = jo.getDouble("lat");
+					wp.lng = jo.getDouble("lng");
+				} else if(wp.kind.equals("roi")) {
+					wp.lat = jo.getDouble("lat");
+					wp.lng = jo.getDouble("lng");
+				}
+				listWayPoint.add(wp);
+			}
+			wayPoints = listWayPoint;
+			
+			JSONObject jsonObjectFenceInfo =  jsonObject.getJSONObject("fence_info");
+			fenceEnable = jsonObjectFenceInfo.getDouble("fence_enable");
+			try {
+				fenceType = jsonObjectFenceInfo.getDouble("fence_type");
+				fenceAction = jsonObjectFenceInfo.getDouble("fence_action");
+				fenceRadius = jsonObjectFenceInfo.getDouble("fence_radius");
+				fenceAltMax = jsonObjectFenceInfo.getDouble("fence_alt_max");
+				fenceMargin = jsonObjectFenceInfo.getDouble("fence_margin");
+				fenceTotal = jsonObjectFenceInfo.getDouble("fence_total");
+				JSONArray jsonArrayFencePoints = jsonObjectFenceInfo.getJSONArray("fence_points");
+				List<FencePoint> listFencePoint = new ArrayList<FencePoint>();
+				for(int i=0; i<jsonArrayFencePoints.length(); i++) {
+					JSONObject jo = jsonArrayFencePoints.getJSONObject(i);
+					FencePoint fp = new FencePoint();
+					fp.idx = jo.getInt("idx");
+					fp.count = jo.getInt("count");
+					fp.lat = jo.getDouble("lat");
+					fp.lng = jo.getDouble("lng");
+					listFencePoint.add(fp);
+				}
+				fencePoints = listFencePoint;
+			} catch(Exception e) {
+				fenceType = 0;
+				fenceAction = 0;
+				fenceRadius = 0;
+				fenceAltMax = 0;
+				fenceMargin = 0;
+				fenceTotal = 0;
+				fencePoints = new ArrayList<FencePoint>();
+			}
+			
+//			AppMainController.instance2.viewStatus((UAV)this.clone());
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}	
 	
-	public void send(String json){
+	public void send(String strJson) {
 		if(connected) {
 			Thread thread = new Thread() {
 				@Override
 				public void run() {
 					try {
-						MqttMessage message = new MqttMessage(json.getBytes());
+						MqttMessage message = new MqttMessage(strJson.getBytes());
 						mqttClient.publish(Network.uavSubTopic, message);
-					}catch(Exception e) {}
+					} catch(Exception e) {
+						e.printStackTrace();
+						UAV.this.disconnect();
+					} 
 				}
 			};
 			thread.setDaemon(true);
 			thread.start();
 		}
-	}
+	}	
 	
 	public void arm() {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("command", "arm");
-		String json = jsonObject.toString();
-		send(json);
+		String strJson = jsonObject.toString();
+		send(strJson);
 	}
 	
 	public void disarm() {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("command", "disarm");
-		String json = jsonObject.toString();
-		send(json);
+		String strJson = jsonObject.toString();
+		send(strJson);
 	}
 	
-	public void takeoff(int alt) {
+	public void takeoff(int height) {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("command", "takeoff");
-		jsonObject.put("alt", alt);
-		String json = jsonObject.toString();
-		send(json);
-	}
-	public void land() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("command", "land");
-		String json = jsonObject.toString();
-		send(json);
-	}
-	public void rtl(int rtlAltMeter) {
+		jsonObject.put("height", height);
+		String strJson = jsonObject.toString();
+		send(strJson);
+	}	
+	
+	public void rtl() {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("command", "rtl");
-		jsonObject.put("rtl_alt", rtlAltMeter*100);
-		String json = jsonObject.toString();
-		send(json);
-	}
+		String strJson = jsonObject.toString();
+		send(strJson);	
+	}	
 	
-	public void gotoLocation(double lat,double lng,double alt) {
+	public void land() {	
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("command", "land");
+		String strJson = jsonObject.toString();
+		send(strJson);
+	}	
+	
+	public void gotoStart(double latitude, double longitude, double altitude) {	
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("command", "goto");
-		jsonObject.put("lat", lat);
-		jsonObject.put("lng", lng);
-		jsonObject.put("alt", alt);
-		String json = jsonObject.toString();
-		send(json);
+		jsonObject.put("latitude", latitude);
+		jsonObject.put("longitude", longitude);
+		jsonObject.put("altitude", altitude);
+		String strJson = jsonObject.toString();
+		send(strJson);
 	}
 	
-	public void missionUpload(List<WayPoint> list) {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("command", "mission_upload");
+	public void missionUpload(List<WayPoint> list) {	
+		JSONObject root = new JSONObject();
+		root.put("command", "mission_upload");
 		JSONArray jsonArray = new JSONArray();
-		for(WayPoint wp: list) {
+		for(WayPoint wp : list) {
 			JSONObject jo = new JSONObject();
-			jo.put("kind", wp.getKind());
-			jo.put("next", wp.getNext());
-			jo.put("repeat", wp.getRepeat());
-			jo.put("alt", wp.getAlt());
-			jo.put("lat", wp.getLat());
-			jo.put("lng", wp.getLng());
+			jo.put("kind", wp.kind);
+			jo.put("lat", wp.lat);
+			jo.put("lng", wp.lng);
+			jo.put("alt", wp.alt);
 			jsonArray.put(jo);
 		}
-		jsonObject.put("waypoints", jsonArray);
-		String json = jsonObject.toString();
-		send(json);
-		
+		root.put("waypoints", jsonArray);
+		String strJson = root.toString();
+		send(strJson);
 	}
+	
 	public void missionDownload() {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("command", "mission_download");
-		String json = jsonObject.toString();
-		send(json);
+		String strJson = jsonObject.toString();
+		send(strJson);
 	}
-	public void missionStart() {
+	
+	public void missionStart() {	
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("command", "mission_start");
-		String json = jsonObject.toString();
-		send(json);
+		String strJson = jsonObject.toString();
+		send(strJson);
 	}
-	public void missionStop() {
+	
+	public void missionStop() {	
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("command", "mission_stop");
-		String json = jsonObject.toString();
-		send(json);
+		String strJson = jsonObject.toString();
+		send(strJson);
 	}
-	public void missionClear() {
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("command", "mission_clear");
-		String json = jsonObject.toString();
-		send(json);
-	}
+	
 	public void fenceEnable() {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("command", "fence_enable");
-		String json = jsonObject.toString();
-		send(json);
-	}
+		String strJson = jsonObject.toString();
+		send(strJson);
+	}	
+	
 	public void fenceDisable() {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("command", "fence_disable");
-		String json = jsonObject.toString();
-		send(json);
-	}
-	public void fenceUpload(List<FencePoint> list) {
+		String strJson = jsonObject.toString();
+		send(strJson);
+	}	
+	
+	public void fenceUpload(String jsonFencePoints) {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("command", "fence_upload");
-		
-		jsonObject.put("fence_type", 4); //타입 7가지 , 4번이 폴리곤
-		jsonObject.put("fence_action", 1); //펜스 도달했을때 어떻게 할까? 0(report only) 1(RTL and LAND) , 그외 사용자 정의도 가능
+		jsonObject.put("fence_type", 4); //4:polygon, 7:All=polygon+radius+alt_max
+		jsonObject.put("fence_action", 1); //RTL
 		jsonObject.put("fence_radius", 500);
 		jsonObject.put("fence_alt_max", 100);
-		jsonObject.put("fence_margin", 10);
-		jsonObject.put("fence_total", list.size());
-		
-		JSONArray jsonArray = new JSONArray();
-		for(FencePoint fp : list) {
-			JSONObject jsonFP = new JSONObject();
-			jsonFP.put("idx", fp.getIdx());
-			jsonFP.put("lat", fp.getLat());
-			jsonFP.put("lng", fp.getLng());
-			jsonArray.put(jsonFP);
-		}
-		jsonObject.put("fence_points", jsonArray);
-		
-		String json = jsonObject.toString();
-		send(json);
+		jsonObject.put("fence_margin", 5);
+		JSONArray jsonArrayFencePoints = new JSONArray(jsonFencePoints);
+		jsonObject.put("fence_total", jsonArrayFencePoints.length());
+		jsonObject.put("points", jsonArrayFencePoints);
+		String strJson = jsonObject.toString();
+		send(strJson);
 	}
+	
 	public void fenceDownload() {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("command", "fence_download");
-		String json = jsonObject.toString();
-		send(json);
+		String strJson = jsonObject.toString();
+		send(strJson);
 	}
+	
 	public void fenceClear() {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("command", "fence_clear");
-		String json = jsonObject.toString();
-		send(json);
+		String strJson = jsonObject.toString();
+		send(strJson);
 	}
-	
-	
-/*	public static void main(String[] args) throws Exception {
-		UAV uav = new UAV();
-		uav.connect();
-		while(!uav.connected) {
-			Thread.sleep(100);
-		}
-		
-		//시동 켜기 테스트
-		//uav.arm();
-		
-		//시동 끄기 테스트
-		//uav.disarm();
-		
-		//이륙 테스트
-		//uav.takeoff(30);
-		
-		//착륙 테스트
-		//uav.land();
-		
-		//리턴 홈 테스트
-		//uav.rtl(20);
-		
-		//바로가기 테스트
-//		double lat=37.1693195;
-//		double lng=128.4705967;
-//		double alt=30;
-//		uav.gotoLocation(lat, lng, alt);
-		
-		//미션 업로드 테스트
-//		List<WayPoint> list = Arrays.asList(
-//				new WayPoint(1,"takeoff",  0,0,0,0,10),
-//				new WayPoint(2,"waypoint", 0,0,37.1692554,128.4709883,10),
-//				new WayPoint(3,"waypoint", 0,0,37.1694349,128.4704572,10),
-//				new WayPoint(4,"waypoint", 0,0,37.1697812,128.4706879,10),
-//				new WayPoint(5,"waypoint", 0,0,37.1695461,128.4712189,10),
-//				new WayPoint(6,"jump", 2,3,0,0,0),
-//				new WayPoint(7,"rtl", 0,0,0,0,0)
-//		);
-//		uav.missionUpload(list);
-		
-		//미션 다운로드 테스트
-		//uav.missionDownload();
-		
-		//미션 시작 테스트
-		//uav.missionStart();
-		
-		//미션 시작 테스트
-		//uav.missionStop();3
-		
-		//미션 지우기 테스트
-		//uav.missionClear();
-		
-		//펜스 활성화 테스트
-		//uav.fenceEnable();
-		
-		//펜스 비활성화 테스트
-		//uav.fenceDisable();
-		
-		//펜스 업로드 테스트
-//		List<FencePoint> list = Arrays.asList(
-//				new FencePoint(0,37.1695242,128.4708725),//Home
-//				new FencePoint(1,37.1692554,128.4709883),
-//				new FencePoint(2,37.1694349,128.4704572),
-//				new FencePoint(3,37.1697812,128.4706879),
-//				new FencePoint(4,37.1695461,128.4712189),
-//				new FencePoint(5,37.1692554,128.4709883) // 1번다시
-//		);
-//		uav.fenceUpload(list);
-		
-		//펜스 다운로드 테스트
-		//uav.fenceDownload();
-		
-		//펜스 클리어 테스트
-		//uav.fenceClear();
-		
-		System.in.read();
-	}*/
-	
 }
