@@ -1,13 +1,12 @@
 package gcs.network;
 
+import team2gcs.login.LoginController;
+
 public class Network {
-	//public static String mqttIp = "106.253.56.122";
-	public static String mqttIp = "localhost";
-	public static int mqttPort = 1883;
-	public static String uavPubTopic = "/uav/pub";
-	public static String uavSubTopic = "/uav/sub";
-	public static String uavCameraTopic = "/uav/camera";
-	
+	public static String mqttIp = LoginController.ip;
+	public static String mqttPort = LoginController.port;
+	public static String uavPubTopic = "/uav2/pub" ;
+	public static String uavSubTopic = "/uav2/sub" ;
 	private static UAV uav;
 	
 	public static void connect() {

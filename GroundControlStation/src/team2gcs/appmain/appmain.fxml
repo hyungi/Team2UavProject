@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.paint.*?>
@@ -11,439 +12,545 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane fx:id="borderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1300.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team2gcs.appmain.AppMainController">
-   <top>
-      <VBox prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <BorderPane prefHeight="30.0" prefWidth="200.0">
-               <center>
-                  <Label fx:id="currtimeLabel" text="Label" textFill="WHITE" BorderPane.alignment="CENTER_RIGHT" />
-               </center>
-            </BorderPane>
-            <HBox fx:id="smallTopPane" alignment="CENTER" prefHeight="90.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;">
+<StackPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team2gcs.appmain.AppMainController">
+   <children>
+       <BorderPane fx:id="loginBorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="731.25" prefWidth="1300.0" style="-fx-background-color: #222222;">
+         <center>
+            <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                  <ImageView fitHeight="768.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_RIGHT">
+                     <image>
+                        <Image url="@../images/bg.png" />
+                     </image>
+                  </ImageView>
+                  <AnchorPane maxHeight="300.0" maxWidth="400.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #666666; -fx-background-radius: 8;">
                      <children>
-                        <ImageView fx:id="logoImage" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                        <TextField fx:id="txtIP" layoutX="131.0" layoutY="111.0" promptText="MQTT Broker IP" style="-fx-background-color: #666666;" />
+                        <TextField fx:id="txtPort" layoutX="131.0" layoutY="143.0" promptText="MQTT Broker Port" style="-fx-background-color: #666666;" />
+                        <SplitMenuButton fx:id="com" layoutX="132.0" layoutY="182.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="137.0" text="Connect USB" textFill="#5e5e5e">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="Action 1" />
+                              <MenuItem mnemonicParsing="false" text="Action 2" />
+                           </items>
+                           <font>
+                              <Font name="Aharoni Bold" size="12.0" />
+                           </font>
+                        </SplitMenuButton>
+                        <Button fx:id="btnConnect" layoutX="131.0" layoutY="248.0" mnemonicParsing="false" text="Connect" textFill="#5e5e5e">
+                           <font>
+                              <Font name="Aharoni Bold" size="12.0" />
+                           </font></Button>
+                        <ImageView fitHeight="66.0" fitWidth="137.0" layoutX="150.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/droneFive.png" />
                            </image>
-                           <VBox.margin>
-                              <Insets top="15.0" />
-                           </VBox.margin>
                         </ImageView>
-                     </children>
-                  </VBox>
-                  <ImageView fx:id="logoImage1" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/그림1.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets left="200.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Label prefHeight="19.0" prefWidth="100.0" text="Home">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
+                        <Separator layoutX="132.0" layoutY="134.0" prefHeight="2.0" prefWidth="138.0" />
+                        <Separator layoutX="131.0" layoutY="168.0" prefHeight="2.0" prefWidth="138.0" />
+                        <Button fx:id="btnCancle" layoutX="214.0" layoutY="248.0" mnemonicParsing="false" text="Cancel" textFill="#5e5e5e">
                            <font>
-                              <Font name="Agency FB" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="homeLabel" prefHeight="51.0" prefWidth="105.0" text="Label">
+                              <Font name="Aharoni Bold" size="12.0" />
+                           </font></Button>
+                        <Label fx:id="labelConnect" layoutX="180.0" layoutY="218.0" textFill="WHITE">
                            <font>
-                              <Font name="Agency FB" size="15.0" />
+                              <Font name="Aharoni Bold" size="12.0" />
                            </font></Label>
-                     </children>
-                  </VBox>
-                  <ImageView fx:id="logoImage2" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/그림2.png" />
-                     </image>
-                  </ImageView>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Label prefHeight="19.0" prefWidth="100.0" text="Location">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label fx:id="locationLabel" prefHeight="51.0" prefWidth="105.0" text="Label" />
-                     </children>
-                  </VBox>
-                  <ImageView fx:id="logoImage3" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/그림3.png" />
-                     </image>
-                  </ImageView>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Label prefHeight="19.0" prefWidth="100.0" text="Battery">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label fx:id="batteryLabel" prefHeight="51.0" prefWidth="105.0" text="Label" />
-                     </children>
-                  </VBox>
-                  <ImageView fx:id="logoImage31" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/그림4.png" />
-                     </image>
-                  </ImageView>
-                  <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Label prefHeight="19.0" prefWidth="100.0" text="Signal">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label fx:id="signalLabel" prefHeight="51.0" prefWidth="105.0" text="Label" />
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-   </top>
-   <center>
-      <StackPane BorderPane.alignment="CENTER">
-         <children>
-            <WebView fx:id="webView" prefHeight="200.0" prefWidth="200.0" />
-            <VBox fx:id="leftVbox" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" StackPane.alignment="TOP_LEFT">
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-               <children>
-                  <AnchorPane fx:id="hudPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="180.0" prefWidth="374.0" VBox.vgrow="ALWAYS">
-                     <VBox.margin>
-                        <Insets bottom="6.0" left="8.0" right="8.0" top="8.0" />
-                     </VBox.margin>
-                     <children>
-                        <Label layoutX="10.0" layoutY="10.0" text="HUD" textAlignment="CENTER" textFill="WHITE">
-                           <font>
-                              <Font name="Aharoni Bold" size="18.0" />
-                           </font></Label>
-                        <Label fx:id="rollLabel" layoutX="10.0" layoutY="47.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="140.0" text="     Roll" textFill="WHITE">
-                           <font>
-                              <Font name="Aharoni Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="pitchLabel" layoutX="10.0" layoutY="91.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="140.0" text="     Pitch" textFill="WHITE">
-                           <font>
-                              <Font name="Aharoni Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="yawLabel" layoutX="10.0" layoutY="135.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="140.0" text="     Yaw" textFill="WHITE">
-                           <font>
-                              <Font name="Aharoni Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Canvas fx:id="hudCanvas" height="150.0" layoutX="200.0" layoutY="16.0" width="150.0" />
-                     </children></AnchorPane>
-                  <AnchorPane fx:id="dataPane" maxWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" VBox.vgrow="ALWAYS">
-                     <VBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="6.0" />
-                     </VBox.margin>
-                     <children>
-						<Label layoutX="10.0" layoutY="10.0" text="Sensor Data" textAlignment="CENTER" textFill="WHITE">
-                           <font>
-                              <Font name="Aharoni Bold" size="18.0" />
-                           </font></Label>
-                        <Label layoutX="32.0" layoutY="52.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Air Speed" textFill="WHITE">
-                           <font>
-                              <Font name="Aharoni Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="32.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Ground Speed" textFill="WHITE">
-                           <font>
-                              <Font name="Aharoni Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="32.0" layoutY="148.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Data3" textFill="WHITE">
-                           <font>
-                              <Font name="Aharoni Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="32.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Data4" textFill="WHITE">
-                           <font>
-                              <Font name="Aharoni Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="32.0" layoutY="244.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Altitude" textFill="WHITE">
-                           <font>
-                              <Font name="Aharoni Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="189.0" layoutY="244.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="30M" textAlignment="RIGHT" textFill="WHITE">
-                           <font>
-                              <Font name="Aharoni Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="189.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Data" textAlignment="RIGHT" textFill="WHITE">
-                           <font>
-                              <Font name="Aharoni Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="189.0" layoutY="148.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Data" textAlignment="RIGHT" textFill="WHITE">
-                           <font>
-                              <Font name="Aharoni Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="189.0" layoutY="100.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="10m/s" textFill="WHITE">
-                           <font>
-                              <Font name="Aharoni Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="189.0" layoutY="52.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="10m/s" textAlignment="RIGHT" textFill="WHITE">
-                           <font>
-                              <Font name="Aharoni Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        
-                     </children></AnchorPane>
-               </children>
-               <StackPane.margin>
-                  <Insets />
-               </StackPane.margin>
-            </VBox>
-            <VBox fx:id="bottomMovePane" alignment="BOTTOM_CENTER" maxHeight="-Infinity" style="-fx-background-color: transparent;" translateY="200.0" StackPane.alignment="BOTTOM_CENTER">
-               <children>
-                  <AnchorPane fx:id="openBottom" maxWidth="-Infinity" prefHeight="35" prefWidth="200.0" style="-fx-background-color: #222222; -fx-background-radius: 5 5 0 0;">
-                     <children>
-                        <Label fx:id="bottomOpenLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="35" prefWidth="200.0" text="Open Mission" textAlignment="CENTER" textFill="#b9b3b3">
-                           <font>
-                              <Font name="Aharoni Bold" size="16.0" />
-                           </font>
-                        </Label>
                      </children>
                   </AnchorPane>
-                  <BorderPane fx:id="missionPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #222222;">
+                  <ImageView fitHeight="570.0" fitWidth="564.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;" StackPane.alignment="TOP_LEFT">
+                     <image>
+                        <Image url="@../images/bg.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+         </center>
+      </BorderPane>
+
+      <BorderPane fx:id="mainBorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1300.0" style="-fx-background-color: #000000;">
+         <top>
+            <VBox prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <BorderPane prefHeight="30.0" prefWidth="200.0">
                      <center>
-                        <TableView prefWidth="850.0" style="-fx-background-color: #222222;" BorderPane.alignment="CENTER">
-                          <columns>
-                            <TableColumn maxWidth="50.0" minWidth="50.0" prefWidth="50.0" style="-fx-background-color: #222222;" text="NO" />
-                            <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" style="-fx-background-color: #222222;" text="Command" />
-                            <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" style="-fx-background-color: #222222;" text="Latitude" />
-                            <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" style="-fx-background-color: #222222;" text="Longitude" />
-                            <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" style="-fx-background-color: #222222;" text="Altitude" />
-                            <TableColumn maxWidth="80.0" minWidth="80.0" style="-fx-background-color: #222222;" text="Jump" />
-                            <TableColumn maxWidth="80.0" minWidth="80.0" style="-fx-background-color: #222222;" text="num" />
-                            <TableColumn maxWidth="80.0" minWidth="80.0" style="-fx-background-color: #222222;" text="Waiting Time" />
-                            <TableColumn maxWidth="80.0" minWidth="80.0" style="-fx-background-color: #222222;" text="Delete" />
-                          </columns>
-                        </TableView>
+                        <Label fx:id="currtimeLabel" text="Label" textFill="WHITE" BorderPane.alignment="CENTER_RIGHT" />
                      </center>
+                  </BorderPane>
+                  <HBox fx:id="smallTopPane" alignment="CENTER" prefHeight="90.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <ImageView fx:id="logoImage" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/droneFive.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets top="15.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                           </children>
+                        </VBox>
+                        <ImageView fx:id="logoImage1" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/그림1.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="200.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label prefHeight="19.0" prefWidth="100.0" text="Home">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font name="Agency FB" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="homeLabel" prefHeight="51.0" prefWidth="105.0" text="Label">
+                                 <font>
+                                    <Font name="Agency FB" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <ImageView fx:id="logoImage2" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/그림2.png" />
+                           </image>
+                        </ImageView>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label prefHeight="19.0" prefWidth="100.0" text="Location">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="locationLabel" prefHeight="51.0" prefWidth="105.0" text="Label" />
+                           </children>
+                        </VBox>
+                        <ImageView fx:id="logoImage3" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/그림3.png" />
+                           </image>
+                        </ImageView>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label prefHeight="19.0" prefWidth="100.0" text="Battery">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="batteryLabel" prefHeight="51.0" prefWidth="105.0" text="Label" />
+                           </children>
+                        </VBox>
+                        <ImageView fx:id="logoImage31" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/그림4.png" />
+                           </image>
+                        </ImageView>
+                        <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label prefHeight="19.0" prefWidth="100.0" text="Signal">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="signalLabel" prefHeight="51.0" prefWidth="105.0" text="Label" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </top>
+         <center>
+            <StackPane BorderPane.alignment="CENTER">
+               <children>
+                  <WebView fx:id="webView" prefHeight="200.0" prefWidth="200.0" />
+                  <VBox fx:id="leftVbox" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" StackPane.alignment="TOP_LEFT">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <children>
+                        <BorderPane maxHeight="-Infinity" opacity="0.8" prefHeight="166.0" prefWidth="370.0" style="-fx-background-color: #222222; -fx-background-radius: 8;">
+                     <top>
+                        <Label alignment="TOP_LEFT" text="HUD" textAlignment="RIGHT" textFill="WHITE" BorderPane.alignment="CENTER_LEFT">
+                           <font>
+                              <Font name="Aharoni Bold" size="18.0" />
+                           </font>
+                           <BorderPane.margin>
+                              <Insets left="20.0" top="10.0" />
+                           </BorderPane.margin></Label>
+                     </top>
                      <left>
-                        <AnchorPane prefWidth="400.0" BorderPane.alignment="CENTER">
+                        <VBox maxWidth="-Infinity" prefHeight="150.0" prefWidth="180.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Label layoutX="18.0" layoutY="17.0" text="Fence" textFill="WHITE">
+                              <Label fx:id="rollLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="140.0" text="     Roll" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Label>
-                              <Button layoutX="102.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="upload">
+                                    <Font name="Aharoni Bold" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="20.0" top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="pitchLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="140.0" text="     Pitch" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Button>
-                              <Button layoutX="185.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="download">
+                                    <Font name="Aharoni Bold" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="20.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="yawLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="140.0" text="     Yaw" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Button>
-                              <Button layoutX="102.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="vitalization">
-                                 <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Button>
-                              <Button layoutX="185.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="deactivation">
-                                 <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Button>
-                              <Button layoutX="18.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="all delete">
-                                 <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Button>
-                              <Button layoutX="18.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="set">
-                                 <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Button>
-                              <Label layoutX="293.0" layoutY="17.0" text="no-fly zone" textFill="WHITE">
-                                 <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Label>
-                              <AnchorPane fx:id="bottomPane" layoutX="-617.0" layoutY="41.0" prefHeight="80.0" />
-                              <Button layoutX="292.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="set">
-                                 <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Button>
-                              <Button layoutX="292.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="delete">
-                                 <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Button>
-                              <Button layoutX="18.0" layoutY="145.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="cargo WP">
-                                 <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Button>
-                              <Label layoutX="18.0" layoutY="127.0" text="cargo" textFill="WHITE">
-                                 <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Label>
-                              <Separator layoutX="14.0" layoutY="119.0" prefHeight="2.0" prefWidth="365.0" />
-                           </children></AnchorPane>
+                                    <Font name="Aharoni Bold" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="20.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
                      </left>
-                     <right>
-                        <AnchorPane prefWidth="350.0" BorderPane.alignment="CENTER">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                           <center>
+                              <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                 <children>
+                              <Canvas fx:id="hudCircleCanvas" height="150.0" width="150.0" />
+                                    <Canvas fx:id="hudLineCanvas" height="150.0" width="150.0" />
+                                 </children>
+                              </StackPane>
+                           </center>
+                  </BorderPane>
+                        <BorderPane opacity="0.8" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #222222; -fx-background-radius: 8;">
+                     <top>
+						<Label text="Sensor Data" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER_LEFT">
+                           <font>
+                              <Font name="Aharoni Bold" size="18.0" />
+                           </font>
+                           <BorderPane.margin>
+                              <Insets left="20.0" top="10.0" />
+                           </BorderPane.margin></Label>
+                     </top>
+                     <center>
+                        <VBox opacity="0.8" prefHeight="200.0" prefWidth="100.0" style="-fx-opacity: 0.8;" BorderPane.alignment="CENTER">
                            <children>
-                              <Label layoutX="21.0" layoutY="15.0" text="mission" textFill="WHITE">
+                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Air Speed" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Label>
-                              <Button layoutX="20.0" layoutY="36.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="go to">
+                                    <Font name="Aharoni Bold" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="40.0" top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Ground Speed" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Button>
-                              <Button layoutX="130.0" layoutY="75.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="read">
+                                    <Font name="Aharoni Bold" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="40.0" top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Data3" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Button>
-                              <Button layoutX="239.0" layoutY="36.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="upload">
+                                    <Font name="Aharoni Bold" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="40.0" top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Data4" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Button>
-                              <Button layoutX="239.0" layoutY="75.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="download">
+                                    <Font name="Aharoni Bold" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="40.0" top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label alignment="BOTTOM_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Altitude" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Button>
-                              <Button layoutX="20.0" layoutY="75.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="set">
+                                    <Font name="Aharoni Bold" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" left="40.0" top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </center>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+                     </VBox.margin>
+                  </BorderPane>
+                     </children>
+                     <StackPane.margin>
+                        <Insets />
+                     </StackPane.margin>
+                  </VBox>
+                  <VBox fx:id="bottomMovePane" alignment="BOTTOM_CENTER" maxHeight="-Infinity" style="-fx-background-color: transparent;" translateY="200.0" StackPane.alignment="BOTTOM_CENTER">
+                     <children>
+                        <AnchorPane fx:id="openBottom" maxWidth="-Infinity" prefHeight="35" prefWidth="200.0" style="-fx-background-color: #222222; -fx-background-radius: 5 5 0 0;">
+                           <children>
+                              <Label fx:id="bottomOpenLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="35" prefWidth="200.0" text="Open Mission" textAlignment="CENTER" textFill="#b9b3b3">
                                  <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Button>
-                              <Button layoutX="19.0" layoutY="132.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="jump">
-                                 <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Button>
-                              <Button layoutX="130.0" layoutY="132.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Loi">
-                                 <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Button>
-                              <Button layoutX="239.0" layoutY="132.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="m​odification">
-                                 <font>
-                                    <Font name="Aharoni Bold" size="12.0" />
-                                 </font></Button>
+                                    <Font name="Aharoni Bold" size="16.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
-                     </right></BorderPane>
-               </children>
-            </VBox>
-            <HBox fx:id="rightMovePane" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" opacity="0.9" style="-fx-background-color: transparent;" translateX="350.0" StackPane.alignment="CENTER_RIGHT">
-               <children>
-                  <AnchorPane fx:id="openRight" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35" prefWidth="200" style="-fx-background-color: #222222; -fx-background-radius: 5 5 0 0; -fx-rotate: -90;" translateX="83">
-                     <children>
-                        <Label fx:id="rightOpenLabel" alignment="CENTER" prefHeight="35" prefWidth="200" text="Open" textAlignment="CENTER" textFill="WHITE">
-                           <font>
-                              <Font name="Aharoni Bold" size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </AnchorPane>
-                  <VBox prefHeight="200.0" prefWidth="350.0">
-                     <children>
-                        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: rgba(3, 3, 3);">
-                           <children>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-width: 0 1 1 0; -fx-border-color: #000000;">
+                        <BorderPane fx:id="missionPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #222222;">
+                           <center>
+                              <TableView prefWidth="850.0" style="-fx-background-color: #222222;" BorderPane.alignment="CENTER">
+                                <columns>
+                                  <TableColumn maxWidth="50.0" minWidth="50.0" prefWidth="50.0" style="-fx-background-color: #222222;" text="NO" />
+                                  <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" style="-fx-background-color: #222222;" text="Command" />
+                                  <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" style="-fx-background-color: #222222;" text="Latitude" />
+                                  <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" style="-fx-background-color: #222222;" text="Longitude" />
+                                  <TableColumn maxWidth="200.0" minWidth="-1.0" prefWidth="200.0" style="-fx-background-color: #222222;" text="Altitude" />
+                                  <TableColumn maxWidth="80.0" minWidth="80.0" style="-fx-background-color: #222222;" text="Jump" />
+                                  <TableColumn maxWidth="80.0" minWidth="80.0" style="-fx-background-color: #222222;" text="num" />
+                                  <TableColumn maxWidth="80.0" minWidth="80.0" style="-fx-background-color: #222222;" text="Waiting Time" />
+                                  <TableColumn maxWidth="80.0" minWidth="80.0" style="-fx-background-color: #222222;" text="Delete" />
+                                </columns>
+                              </TableView>
+                           </center>
+                           <left>
+                              <AnchorPane prefWidth="400.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Label fx:id="cameraLabel" layoutX="38.0" layoutY="11.0" prefHeight="28.0" prefWidth="100.0" text="Camera">
+                                    <Label layoutX="18.0" layoutY="17.0" text="Fence" textFill="WHITE">
                                        <font>
-                                          <Font name="Aharoni Bold" size="24.0" />
+                                          <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-width: 0 0 1 1; -fx-border-color: #000000;">
-                                 <children>
-                                    <Label fx:id="statusLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="11.0" text="Status" textAlignment="CENTER">
+                                    <Button layoutX="102.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="upload">
                                        <font>
-                                          <Font name="Aharoni Bold" size="24.0" />
+                                          <Font name="Aharoni Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="185.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="download">
+                                       <font>
+                                          <Font name="Aharoni Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="102.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="vitalization">
+                                       <font>
+                                          <Font name="Aharoni Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="185.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="deactivation">
+                                       <font>
+                                          <Font name="Aharoni Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="18.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="all delete">
+                                       <font>
+                                          <Font name="Aharoni Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="18.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="set">
+                                       <font>
+                                          <Font name="Aharoni Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Label layoutX="293.0" layoutY="17.0" text="no-fly zone" textFill="WHITE">
+                                       <font>
+                                          <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Label>
+                                    <AnchorPane fx:id="bottomPane" layoutX="-617.0" layoutY="41.0" prefHeight="80.0" />
+                                    <Button layoutX="292.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="set">
+                                       <font>
+                                          <Font name="Aharoni Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="292.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="delete">
+                                       <font>
+                                          <Font name="Aharoni Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="18.0" layoutY="145.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="cargo WP">
+                                       <font>
+                                          <Font name="Aharoni Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Label layoutX="18.0" layoutY="127.0" text="cargo" textFill="WHITE">
+                                       <font>
+                                          <Font name="Aharoni Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Separator layoutX="14.0" layoutY="119.0" prefHeight="2.0" prefWidth="365.0" />
                                  </children>
                               </AnchorPane>
-                           </children>
-                        </HBox>
-                        <StackPane prefHeight="522.0" prefWidth="350.0">
-                           <children>
-                              <VBox fx:id="functionVbox1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #222222;">
+                           </left>
+                           <right>
+                              <AnchorPane prefWidth="350.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <AnchorPane fx:id="fcameraPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="12.0" right="12.0" top="10.0" />
-                                       </VBox.margin>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="bcameraPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="12.0" right="12.0" top="5.0" />
-                                       </VBox.margin>
-                                    </AnchorPane>
+                                    <Label layoutX="21.0" layoutY="15.0" text="mission" textFill="WHITE">
+                                       <font>
+                                          <Font name="Aharoni Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Button layoutX="20.0" layoutY="36.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="go to">
+                                       <font>
+                                          <Font name="Aharoni Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="130.0" layoutY="75.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="read">
+                                       <font>
+                                          <Font name="Aharoni Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="239.0" layoutY="36.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="upload">
+                                       <font>
+                                          <Font name="Aharoni Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="239.0" layoutY="75.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="download">
+                                       <font>
+                                          <Font name="Aharoni Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="20.0" layoutY="75.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="set">
+                                       <font>
+                                          <Font name="Aharoni Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="19.0" layoutY="132.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="jump">
+                                       <font>
+                                          <Font name="Aharoni Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="130.0" layoutY="132.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Loi">
+                                       <font>
+                                          <Font name="Aharoni Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="239.0" layoutY="132.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="m​odification">
+                                       <font>
+                                          <Font name="Aharoni Bold" size="12.0" />
+                                       </font>
+                                    </Button>
                                  </children>
-                              </VBox>
-                              <VBox fx:id="functionVbox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #222222;" VBox.vgrow="ALWAYS">
-                                 <children>
-                                    <AnchorPane fx:id="statusPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="12.0" right="12.0" top="10.0" />
-                                       </VBox.margin>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="dronePane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                                       <VBox.margin>
-                                          <Insets bottom="5.0" left="12.0" right="12.0" top="5.0" />
-                                       </VBox.margin>
-                                    </AnchorPane>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </VBox>
-                           </children>
-                        </StackPane>
+                              </AnchorPane>
+                           </right>
+                        </BorderPane>
                      </children>
                   </VBox>
+                  <HBox fx:id="rightMovePane" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" opacity="0.9" style="-fx-background-color: transparent;" translateX="350.0" StackPane.alignment="CENTER_RIGHT">
+                     <children>
+                        <AnchorPane fx:id="openRight" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35" prefWidth="200" style="-fx-background-color: #222222; -fx-background-radius: 5 5 0 0; -fx-rotate: -90;" translateX="83">
+                           <children>
+                              <Label fx:id="rightOpenLabel" alignment="CENTER" prefHeight="35" prefWidth="200" text="Open" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font name="Aharoni Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </AnchorPane>
+                        <VBox prefHeight="200.0" prefWidth="350.0">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: rgba(3, 3, 3);">
+                                 <children>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-width: 0 1 1 0; -fx-border-color: #000000;">
+                                       <children>
+                                          <Label fx:id="cameraLabel" layoutX="38.0" layoutY="11.0" prefHeight="28.0" prefWidth="100.0" text="Camera">
+                                             <font>
+                                                <Font name="Aharoni Bold" size="24.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-width: 0 0 1 1; -fx-border-color: #000000;">
+                                       <children>
+                                          <Label fx:id="statusLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="11.0" text="Status" textAlignment="CENTER">
+                                             <font>
+                                                <Font name="Aharoni Bold" size="24.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </HBox>
+                              <StackPane prefHeight="522.0" prefWidth="350.0">
+                                 <children>
+                                    <VBox fx:id="functionVbox1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #222222;">
+                                       <children>
+                                          <AnchorPane fx:id="fcameraPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="12.0" right="12.0" top="10.0" />
+                                             </VBox.margin>
+                                          </AnchorPane>
+                                          <AnchorPane fx:id="bcameraPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="12.0" right="12.0" top="5.0" />
+                                             </VBox.margin>
+                                          </AnchorPane>
+                                       </children>
+                                    </VBox>
+                                    <VBox fx:id="functionVbox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #222222;" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <AnchorPane fx:id="statusPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="12.0" right="12.0" top="10.0" />
+                                             </VBox.margin>
+                                          </AnchorPane>
+                                          <AnchorPane fx:id="dronePane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="12.0" right="12.0" top="5.0" />
+                                             </VBox.margin>
+                                          </AnchorPane>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </VBox>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
-         </children>
-      </StackPane>
-   </center>
-   <bottom>
-      <BorderPane maxHeight="80.0" minHeight="80.0" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #000000;" BorderPane.alignment="CENTER">
-         <center>
-            <HBox alignment="CENTER" prefHeight="51.0" prefWidth="492.0" spacing="10.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Label text="Control" textFill="WHITE">
-                     <padding>
-                        <Insets right="10.0" />
-                     </padding>
-                  </Label>
-                  <Button fx:id="armBtn" mnemonicParsing="false" text="Arm" />
-                  <Button fx:id="takeoffBtn" mnemonicParsing="false" text="Take Off" />
-                  <Button fx:id="landBtn" mnemonicParsing="false" text="Land" />
-                  <Button fx:id="loiterBtn" mnemonicParsing="false" text="Loiter" />
-                  <Button fx:id="rtlBtn" mnemonicParsing="false" text="RTL" />
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </HBox>
+            </StackPane>
          </center>
-         <right>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Label alignment="CENTER" prefHeight="19.0" prefWidth="77.0" text="Status" textFill="WHITE" />
-                  <Label alignment="CENTER" prefHeight="19.0" prefWidth="151.0" text="0" textFill="WHITE" />
-               </children>
-            </HBox>
-         </right>
+         <bottom>
+            <BorderPane maxHeight="80.0" minHeight="80.0" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #000000;" BorderPane.alignment="CENTER">
+               <center>
+                  <HBox alignment="CENTER" prefHeight="51.0" prefWidth="492.0" spacing="10.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label text="Control" textFill="WHITE">
+                           <padding>
+                              <Insets right="10.0" />
+                           </padding>
+                        </Label>
+                        <Button fx:id="armBtn" mnemonicParsing="false" text="Arm" />
+                        <Button fx:id="takeoffBtn" mnemonicParsing="false" text="Take Off" />
+                        <Button fx:id="landBtn" mnemonicParsing="false" text="Land" />
+                        <Button fx:id="loiterBtn" mnemonicParsing="false" text="Loiter" />
+                        <Button fx:id="rtlBtn" mnemonicParsing="false" text="RTL" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+               </center>
+               <right>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="77.0" text="Status" textFill="WHITE" />
+                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="151.0" text="0" textFill="WHITE" />
+                     </children>
+                  </HBox>
+               </right>
+            </BorderPane>
+         </bottom>
       </BorderPane>
-   </bottom>
-</BorderPane>
+   </children>
+</StackPane>
