@@ -49,7 +49,6 @@ public class AppMainController implements Initializable{
 	@FXML private AnchorPane viewPane;
 	@FXML private HBox rightMovePane;
 	@FXML private Label rightOpenLabel;
-	@FXML private Label functionsLabel;
 	@FXML private Label cameraLabel;
 	@FXML private Label statusLabel;
 	private boolean rightControl = true;
@@ -87,12 +86,10 @@ public class AppMainController implements Initializable{
 	}
 //////////////////////////////////Top Menu 관련 ////////////////////////////////
 	public void initTop() {
-	//	currTime();
 		homeLabel.setText("12m");
 		locationLabel.setText("12m");
 		batteryLabel.setText("12m");
 		signalLabel.setText("12m");
-	
 	}
 	
 	public void currTime() {
@@ -196,7 +193,6 @@ public class AppMainController implements Initializable{
 	}
   
 	private void initRightPane() {
-		functionsLabel.setTextFill(Color.WHITE);
 		cameraLabel.setTextFill(Color.WHITE);
 		statusLabel.setTextFill(Color.WHITE);
 	}
