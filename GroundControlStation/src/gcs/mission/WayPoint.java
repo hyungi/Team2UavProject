@@ -1,5 +1,7 @@
 package gcs.mission;
 
+import javafx.scene.control.Button;
+
 public class WayPoint {
 	public int no;
 	public String kind;
@@ -11,6 +13,16 @@ public class WayPoint {
 	public int jump;
 	public int jumpnum;
 	public double waitingTime;
+	private Button button = new Button("x");
+	
+	
+	
+	public Button getButton() {
+		return button;
+	}
+	public void setButton(Button button) {
+		this.button = button;
+	}
 	public int getNo() {
 		return no;
 	}
