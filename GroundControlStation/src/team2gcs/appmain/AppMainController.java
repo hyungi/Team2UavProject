@@ -490,8 +490,8 @@ public class AppMainController implements Initializable{
 		column8.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column8);
 		
-		TableColumn<WayPoint, Double> column9 = new TableColumn<WayPoint, Double>("Delect");
-		column9.setText("Del");
+		TableColumn<WayPoint, Button> column9 = new TableColumn<WayPoint, Button>("Delect");
+		column9.setCellValueFactory(new PropertyValueFactory<>("button"));
 		column9.setPrefWidth(80);
 		column9.setSortable(false);
 		column9.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
