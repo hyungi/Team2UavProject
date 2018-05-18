@@ -61,7 +61,7 @@
             <StackPane BorderPane.alignment="CENTER">
                <children>
                   <WebView fx:id="webView" prefHeight="-1.0" prefWidth="-1.0" />
-                  <VBox fx:id="leftPane" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="400.0" style="-fx-background-color: #FF0000;" StackPane.alignment="TOP_LEFT" />
+                  <VBox fx:id="leftPane" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="400.0" StackPane.alignment="TOP_LEFT" />
                   <HBox fx:id="rightMovePane" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" opacity="0.9" style="-fx-background-color: transparent;" translateX="550.0" StackPane.alignment="CENTER_RIGHT">
                      <children>
                         <AnchorPane fx:id="openRight" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35" prefWidth="200" style="-fx-background-color: #222222; -fx-background-radius: 5 5 0 0; -fx-rotate: -90;" translateX="-117.0">
@@ -85,7 +85,7 @@
                            <children>
                               <Label fx:id="bottomOpenLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="35" prefWidth="200.0" text="Open Mission" textAlignment="CENTER" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="16.0" />
+                                    <Font name="System Bold" size="16.0" />
                                  </font>
                               </Label>
                            </children>

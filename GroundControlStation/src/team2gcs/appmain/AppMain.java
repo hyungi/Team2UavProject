@@ -42,8 +42,7 @@ public class AppMain extends Application{
 	                catch(Exception e){}
                 }
             }
-        };
-		
+        };		
 		thread.start();
 	}
 	
