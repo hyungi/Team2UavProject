@@ -13,10 +13,6 @@ import org.json.JSONObject;
 
 import gcs.mission.FencePoint;
 import gcs.mission.WayPoint;
-<<<<<<< HEAD
-import team2gcs.appmain.AppMain;
-=======
->>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
 import team2gcs.appmain.AppMainController;
 
 public class UAV implements Cloneable {
@@ -66,13 +62,10 @@ public class UAV implements Cloneable {
 				try {
 					mqttClient = new MqttClient("tcp://" + Network.mqttIp + ":" + Network.mqttPort, MqttClient.generateClientId(), null);
 					mqttClient.setCallback(new MqttCallback() {
-<<<<<<< HEAD
+
 						String strJson;
 						@Override
-=======
-						String json;
-						@Override //메세지가 도착했을때
->>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
+
 						public void messageArrived(String topic, MqttMessage message) throws Exception {
 							strJson = new String(message.getPayload());
 							dataParsing(strJson);
@@ -91,16 +84,12 @@ public class UAV implements Cloneable {
 					mco.setConnectionTimeout(3);
 					mqttClient.connect(mco);
 					mqttClient.subscribe(Network.uavPubTopic);
-<<<<<<< HEAD
+
 					AppMainController.connectState=true;
 				} catch (Exception e) {
 					UAV.this.disconnect();
 					//e.printStackTrace();
-=======
-					AppMainController.connectState = true;
-				}catch (Exception e) {
-					e.printStackTrace();
->>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
+
 				}
 			}
 		};
