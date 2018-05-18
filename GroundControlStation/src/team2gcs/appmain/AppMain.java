@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class AppMain extends Application{
+	
+	public static Scene tempScene;
 	public static AppMain instance;
 	public Stage primaryStage;
 	public Scene scene;
@@ -21,7 +23,8 @@ public class AppMain extends Application{
  		Parent root = FXMLLoader.load(getClass().getResource("appmain.fxml"));
  		scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("../images/app.css").toExternalForm());
-	 	primaryStage.setTitle("UAV Ground Control Station(Team2)");
+	 	tempScene = scene;
+		primaryStage.setTitle("UAV Ground Control Station(Team2)");
 		primaryStage.setScene(scene);		
 		primaryStage.setMaximized(true);
 		primaryStage.show();
