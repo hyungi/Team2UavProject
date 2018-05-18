@@ -10,7 +10,6 @@ import org.json.JSONObject;
 
 import gcs.mission.WayPoint;
 import gcs.network.Network;
-import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -22,22 +21,19 @@ import javafx.collections.FXCollections;
 import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.ArcType;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.util.Duration;
@@ -45,24 +41,17 @@ import netscape.javascript.JSObject;
 
 public class AppMainController implements Initializable{
 	public static AppMainController instance2;
+	// child들의 높이 조정을 위해
+	public static double heightSize;
 	//공용
 	@FXML private AnchorPane bottomPane;
 	@FXML private BorderPane mainBorderPane;
 	@FXML private BorderPane loginBorderPane;
-
-   
-	//좌측 메뉴
-	@FXML private VBox leftVbox;
-	@FXML private Label rollLabel;
-	@FXML private Label pitchLabel;
-	@FXML private Label yawLabel;
-	@FXML private Canvas hudCanvas;
-	@FXML private Canvas hudLineCanvas;
-	private GraphicsContext ctx;
-	private GraphicsContext ctx2;
-	private int roll = 0;
-	private int pitch = 0;
-	private int yaw = 0;
+	
+	// 좌측
+	@FXML private VBox leftPane;
+	// 우측
+	@FXML private VBox rightPane;
 	
 	// 아래 버튼 & Pane & 둘을 가지고있는 VBox & control 값
 	@FXML private AnchorPane openBottom;
@@ -122,34 +111,32 @@ public class AppMainController implements Initializable{
 		instance2 = this;
 		mainBorderPane.setVisible(true);
 		loginBorderPane.setVisible(false);
-		ViewLoop viewLoop = new ViewLoop();
-		viewLoop.start();
 		
 		initWebView();
 		initTableView();
 		initMissionButton();
 		initLoginButton();
 
- 		initCanvasLayer();
+
 		initSlide();
 		initTop();
-
-		initLeftPane();
-		handleYaw();
-		ctx2.rotate(roll);
-		
-
+		heightSize = webView.getHeight();
+		System.out.println("앱메인에서 :: "+heightSize);
+		try {
+			Parent leftRoot = FXMLLoader.load(getClass().getResource("../leftpane/left.fxml"));
+			Parent rightRoot = FXMLLoader.load(getClass().getResource("../rightpane/right.fxml"));
+			leftPane.getChildren().add(leftRoot);
+			rightPane.getChildren().add(rightRoot);
+		}catch (Exception e) {}
 	}
 
-	
 //////////////////////////////////Top Menu 관련 ////////////////////////////////
 	public void initTop() {
 	//	currTime();
 		homeLabel.setText("12m");
 		locationLabel.setText("12m");
 		batteryLabel.setText("12m");
-		signalLabel.setText("12m");
-	
+		signalLabel.setText("12m");	
 	}
 	
 	public void currTime() {
@@ -157,92 +144,7 @@ public class AppMainController implements Initializable{
 		currtimeLabel.setText(inTime);
 	}
 	
-	////////////////////////////////// 좌측 메뉴 ////////////////////////////////
-	class ViewLoop extends AnimationTimer {
-		@Override
-		public void handle(long now) {
 
-			ctx.translate(-50, -50);
-			ctx.clearRect(0, 0, 140, 140);
-			ctx.translate(50, 50);
-			ctx2.translate(-50, -50);
-			ctx2.clearRect(0, 0, 140, 140);
-			ctx2.translate(50, 50);
-
-			hudDraw();
-			hudLine();
-		}
-	}
-
-	private void hudDraw() {
-		ctx.setLineWidth(5);
-		// 큰원
-		ctx.setFill(Color.rgb(36, 35, 35));
-		ctx.fillOval(20, 25, 110, 110);
-		// 위반원
-		ctx.setFill(Color.rgb(12, 143, 217));
-		ctx.fillArc(25, 30, 100, 100, 0, 180, ArcType.ROUND);
-		// 아래반원
-		ctx.setFill(Color.rgb(75, 187, 161));
-		ctx.fillArc(25, 30, 100, 100, 0, -180, ArcType.ROUND);
-		// ctx.rotate(180);
-		// yaw원
-		ctx.setFill(Color.WHITE);
-		ctx.fillOval(70 + 50 * Math.cos(yaw * 0.01735 - Math.PI / 2), 75 + 50 * Math.sin(yaw * 0.01735 - Math.PI / 2),
-				10, 10);
-	}
-
-	public void hudLine() {
-		ctx2.setLineWidth(1);
-		ctx2.setStroke(Color.WHITE);
-		ctx2.strokeLine(55, 80.5, 95, 80.5);
-
-		for (int i = 0; i < 20; i += 5) {
-			if (i != 0) {
-				ctx2.strokeLine(65, 80.5 - (i * 1.8), 85, 80.5 - (i * 1.8));
-				ctx2.strokeLine(65, 80.5 + (i * 1.8), 85, 80.5 + (i * 1.8));
-			}
-		}
-	}
-
-	private void handleYaw() {
-		Platform.runLater(() -> {
-			AppMain.tempScene.setOnKeyPressed((event) -> {
-				if (event.getCode() == KeyCode.LEFT) {
-					yaw--;
-					if (yaw == -1)
-						yaw = 359;
-					System.out.println(yaw);
-				} else if (event.getCode() == KeyCode.RIGHT) {
-					yaw++;
-					if (yaw == 360)
-						yaw = 0;
-					System.out.println(yaw);
-				} else if (event.getCode() == KeyCode.NUMPAD4) {
-					if (roll >= -21) {
-						ctx2.rotate(-1);
-						roll--;
-					}
-				} else if (event.getCode() == KeyCode.NUMPAD6) {
-					if (roll < 21) {
-						ctx2.rotate(1);
-						roll++;
-					}
-				}
-			});
-		});
-	}
-
-	private void initLeftPane() {
-		ViewLoop viewLoop = new ViewLoop();
-		viewLoop.start();
-		initCanvasLayer();
-	}
-
-	private void initCanvasLayer() {
-		ctx = hudCanvas.getGraphicsContext2D();
-		ctx2 = hudLineCanvas.getGraphicsContext2D();
-	}
 
 ////////////////////////////////// Slide Menu 관련 ////////////////////////////////
 	public void initSlide() {
@@ -274,10 +176,10 @@ public class AppMainController implements Initializable{
 			// bottomPane이 열려있으면 닫아줌 -> fxThread로 안돌리면 오류난다.
 			if(!bottomControl) Platform.runLater(()->animateBottomPane());
 			rightOpenLabel.setText("Close");
-			slidePane(0,rightPaneLocation);
+			slidePane(200,rightPaneLocation);
 		}else {
 			rightOpenLabel.setText("Open");
-			slidePane(350,rightPaneLocation);
+			slidePane(550,rightPaneLocation);
 		}
 	}
    
@@ -432,8 +334,7 @@ public class AppMainController implements Initializable{
 	
 	
 	//테이블뷰 설정////////////////////////////////////////////////////////////////////////////////////////////////////////
-	private void initTableView() {	
-
+	private void initTableView() {
 		TableColumn<WayPoint, Integer> column1 = new TableColumn<WayPoint, Integer>("No");
 		column1.setCellValueFactory(new PropertyValueFactory<WayPoint, Integer>("no"));
 		column1.setPrefWidth(50);

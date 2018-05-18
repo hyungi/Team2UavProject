@@ -13,7 +13,6 @@ import org.json.JSONObject;
 
 import gcs.mission.FencePoint;
 import gcs.mission.WayPoint;
-import team2gcs.appmain.AppMain;
 import team2gcs.appmain.AppMainController;
 
 public class UAV implements Cloneable {
@@ -65,9 +64,7 @@ public class UAV implements Cloneable {
 					mqttClient.setCallback(new MqttCallback() {
 
 						String strJson;
-						String json;
 						@Override //메세지가 도착했을때
-
 						public void messageArrived(String topic, MqttMessage message) throws Exception {
 							strJson = new String(message.getPayload());
 							dataParsing(strJson);
@@ -87,11 +84,9 @@ public class UAV implements Cloneable {
 					mqttClient.connect(mco);
 					mqttClient.subscribe(Network.uavPubTopic);
 
-					AppMainController.connectState=true;
+					AppMainController.connectState = true;
 				} catch (Exception e) {
 					UAV.this.disconnect();
-					//e.printStackTrace();
-					AppMainController.connectState = true;
 				}
 			}
 		};

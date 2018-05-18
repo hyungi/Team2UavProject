@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<VBox fx:id="rightVbox" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefWidth="350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team2gcs.rightpane.rightPaneController">
+   <children>
+      <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+         <tabs>
+            <Tab text="Camera">
+               <content>
+                  <VBox fx:id="statusVbox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #222222;">
+                     <children>
+                        <AnchorPane fx:id="statusPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                           <children>
+                              <Label layoutX="215.0" layoutY="105.0" text="Label1" textFill="WHITE" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="12.0" right="12.0" top="10.0" />
+                           </VBox.margin>
+                        </AnchorPane>
+                        <AnchorPane fx:id="dronePane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="12.0" right="12.0" top="5.0" />
+                           </VBox.margin>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+            <Tab text="Status">
+               <content>
+                  <VBox fx:id="cameraVbox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #222222;">
+                     <children>
+                        <AnchorPane fx:id="fcameraPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                           <children>
+                              <Label layoutX="183.0" layoutY="129.0" text="Label2" textFill="WHITE" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="12.0" right="12.0" top="10.0" />
+                           </VBox.margin>
+                        </AnchorPane>
+                        <AnchorPane fx:id="bcameraPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="12.0" right="12.0" top="5.0" />
+                           </VBox.margin>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </children>
+</VBox>
