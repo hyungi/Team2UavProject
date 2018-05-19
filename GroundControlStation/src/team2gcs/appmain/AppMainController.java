@@ -109,8 +109,8 @@ public class AppMainController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		instance2 = this;
-		mainBorderPane.setVisible(true);
-		loginBorderPane.setVisible(false);
+		mainBorderPane.setVisible(false);
+		loginBorderPane.setVisible(true);
 		
 		initWebView();
 		initTableView();
@@ -244,9 +244,7 @@ public class AppMainController implements Initializable{
 		//ip,port 보내기
 		ip=txtIP.getText();
 		port=txtPort.getText();
-		System.out.println(ip);
-		System.out.println(port);
-		
+
 		if(!ip.equals(null)&&!port.equals(null)) {
 			Network.connect();
 			Thread thread = new Thread(){
@@ -290,8 +288,8 @@ public class AppMainController implements Initializable{
 	public void initMissionButton() {
 		btnMissionSet.setOnAction((event)->{handleMissionSet(event);});
 		btnMissionRead.setOnAction((event)->{handleMissionRead(event);});
-//		btnMissionUpload.setOnAction((event)->{handleMissionUpload(event);});
-//		btnMissionDownload.setOnAction((event)->{handleMissionDownload(event);});
+		btnMissionUpload.setOnAction((event)->{handleMissionUpload(event);});
+		btnMissionDownload.setOnAction((event)->{handleMissionDownload(event);});
 //		btnMissionGoto.setOnAction((event)->{handleMissionGoto(event);});
 //		btnMissionJump.setOnAction((event)->{handleMissionJump(event);});
 //		btnMissionLoi.setOnAction((event)->{handleMissionLoi(event);});
@@ -316,21 +314,31 @@ public class AppMainController implements Initializable{
 			for(int i=0; i<jsonArray.length(); i++) {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
 				WayPoint wayPoint = new WayPoint();
-				wayPoint.no = jsonObject.getInt("no");
+	 			wayPoint.no = jsonObject.getInt("no");
 				wayPoint.kind = jsonObject.getString("kind"); //all is "waypoint";
-				wayPoint.lat = jsonObject.getDouble("lat");
-				wayPoint.lng = jsonObject.getDouble("lng");
-				wayPoint.alt = 10;
+				wayPoint.latitude = jsonObject.getDouble("lat");
+				wayPoint.longitude = jsonObject.getDouble("lng");
+				wayPoint.altitude = 10;
 				list.add(wayPoint);
 			}
 			setTableViewItems(list);
 		});
 	}
 	public void setTableViewItems(List<WayPoint> list) {
-		tableView.getItems().clear();
+ 		tableView.getItems().clear();
 		tableView.setItems(FXCollections.observableArrayList(list));
 	}
 	
+	//미션 업로드
+	public void handleMissionUpload(ActionEvent event) {
+		List<WayPoint> list = tableView.getItems();
+		Network.getUav().missionUpload(list);
+	}
+	
+	//미션 다운로드
+	public void handleMissionDownload(ActionEvent event) {
+		Network.getUav().missionDownload();
+	}
 	
 	
 	//테이블뷰 설정////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -350,21 +358,21 @@ public class AppMainController implements Initializable{
 		tableView.getColumns().add(column2);
 		
 		TableColumn<WayPoint, Double> column3 = new TableColumn<WayPoint, Double>("Latitude");
-		column3.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("lat"));
+		column3.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("latitude"));
 		column3.setPrefWidth(200);
 		column3.setSortable(false);
 		column3.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column3);
 		
 		TableColumn<WayPoint, Double> column4 = new TableColumn<WayPoint, Double>("Longitude");
-		column4.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("lng"));
+		column4.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("longitude"));
 		column4.setPrefWidth(200);
 		column4.setSortable(false);
 		column4.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column4);
 		
 		TableColumn<WayPoint, Double> column5 = new TableColumn<WayPoint, Double>("Altitude");
-		column5.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("alt"));
+		column5.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("altitude"));
 		column5.setPrefWidth(200);
 		column5.setSortable(false);
 		column5.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해

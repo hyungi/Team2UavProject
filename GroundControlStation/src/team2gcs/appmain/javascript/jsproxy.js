@@ -1,6 +1,11 @@
-
+//자바와 자바스크립트간의 통신을 위한 객체
 var jsproxy = {	
 	//-------------------------------------------------------
+	//MapViewController.java의 zoomSlider의 value를 변경했을 경우 지도를 확대/축소
+	//MapViewController.java -> jsproxy.js
+	//지도 확대/축소 설정
+	//일반지도(zoom 범위: 0~22)
+	//위성사진(zoom 범위: 0~19)
 	setMapZoom: function(zoom) {
 		try {
 			map.googlemap.setZoom(zoom);
@@ -9,6 +14,8 @@ var jsproxy = {
 		}
 	},
 	//-------------------------------------------------------
+	//지도 상에서 마우스휠로 확대/축소할 경우 MapViewController.java의 zoomSlider의 value 변경
+	//jsproxy.js -> MapViewController.java
 	setZoomSliderValue: function(zoom) {
 		try {
 			jsproxy.java.setZoomSliderValue(zoom);
