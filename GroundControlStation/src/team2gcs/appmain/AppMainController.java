@@ -334,7 +334,7 @@ public class AppMainController implements Initializable{
 		btnMissionStop.setOnAction((event)->{handleMissionStop(event);});
 		
 	}
-	//미션 시작 정
+	//미션 시작 정지
 	public void handleMissionStart(ActionEvent event) {
 		Network.getUav().missionStart();
 		Platform.runLater(() -> {
@@ -371,14 +371,16 @@ public class AppMainController implements Initializable{
 	}
 	//비햄금지구역 이벤트 처리
 	public void handleNoflyzoneSet(ActionEvent event) {
-		
+		System.out.println("비행금지구역SET");
+
 	}
 	public void handleNoflyzoneDelete(ActionEvent event) {
-		
+		System.out.println("비행금지구역삭제");
+
 	}
 	//화물운송 WP 이벤트 처
 	public void handleCargoWP(ActionEvent event) {
-		
+		System.out.println("화물운송WP");
 	}
 	
 	//Arm, Takeoff, Land, Roiter, Rtl
