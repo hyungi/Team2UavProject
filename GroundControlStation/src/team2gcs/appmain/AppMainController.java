@@ -93,6 +93,20 @@ public class AppMainController implements Initializable{
 	@FXML private Button landBtn;
 	@FXML private Button rtlBtn;
 	@FXML private Button roiterBtn;
+	//펜스
+	@FXML private Button btnFenceSet;
+	@FXML private Button btnFenceUpload;
+	@FXML private Button btnFenceDownload;
+	@FXML private Button btnFenceActivate;
+	@FXML private Button btnFenceDeactivate;
+	@FXML private Button btnFenceDelete;
+	//비행금지구역
+	@FXML private Button btnNoflyzoneSet;
+	@FXML private Button btnNoflyzoneDelete;
+	//화물
+	@FXML private Button btnCargoWP;
+	
+	
 
 	
 	//미션 테이블 뷰
@@ -304,7 +318,51 @@ public class AppMainController implements Initializable{
 		landBtn.setOnAction((event)->{handleLand(event);});
 		roiterBtn.setOnAction((event)->{handleRoiter(event);});
 		rtlBtn.setOnAction((event)->{handleRtl(event);});
+		btnFenceSet.setOnAction((event)->{handleFenceSet(event);});
+		btnFenceUpload.setOnAction((event)->{handleFenceUpload(event);});
+		btnFenceDownload.setOnAction((event)->{handleFenceDownload(event);});
+		btnFenceActivate.setOnAction((event)->{handleFenceActivate(event);});
+		btnFenceDeactivate.setOnAction((event)->{handleFenceDeactivate(event);});
+		btnFenceDelete.setOnAction((event)->{handleFenceDelete(event);});
+		btnNoflyzoneSet.setOnAction((event)->{handleNoflyzoneSet(event);});
+		btnNoflyzoneDelete.setOnAction((event)->{handleNoflyzoneDelete(event);});
+		btnCargoWP.setOnAction((event)->{handleCargoWP(event);});
 	}
+	//펜스 이벤트 처리
+	public void handleFenceSet(ActionEvent event) {
+		Platform.runLater(() -> {
+			jsproxy.call("fenceMake");
+		});
+	}
+	public void handleFenceUpload(ActionEvent event) {
+		jsproxy.call("fenceUpload");
+	}
+	public void handleFenceDownload(ActionEvent event) {
+		Network.getUav().fenceDownload();
+	}
+	public void handleFenceActivate(ActionEvent event) {
+		Network.getUav().fenceEnable();
+	}
+	public void handleFenceDeactivate(ActionEvent event) {
+		Network.getUav().fenceDisable();
+	}
+	public void handleFenceDelete(ActionEvent event) {
+		Network.getUav().fenceClear();
+		jsproxy.call("fenceClear");
+	}
+	//비햄금지구역 이벤트 처리
+	public void handleNoflyzoneSet(ActionEvent event) {
+		
+	}
+	public void handleNoflyzoneDelete(ActionEvent event) {
+		
+	}
+	//화물운송 WP 이벤트 처
+	public void handleCargoWP(ActionEvent event) {
+		
+	}
+	
+	//Arm, Takeoff, Land, Roiter, Rtl
 	public void handleArm(ActionEvent event) {
 		Network.getUav().arm();
 	}

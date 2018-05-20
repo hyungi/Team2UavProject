@@ -102,32 +102,32 @@
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Button layoutX="102.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="upload">
+                                    <Button fx:id="btnFenceUpload" layoutX="102.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="upload">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button layoutX="185.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="download">
+                                    <Button fx:id="btnFenceDownload" layoutX="185.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="download">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button layoutX="102.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="vitalization">
+                                    <Button fx:id="btnFenceActivate" layoutX="102.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="activate">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button layoutX="185.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="deactivation">
+                                    <Button fx:id="btnFenceDeactivate" layoutX="185.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="deactivate">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button layoutX="18.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="all delete">
+                                    <Button fx:id="btnFenceDelete" layoutX="18.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="all delete">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button layoutX="18.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="set">
+                                    <Button fx:id="btnFenceSet" layoutX="18.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="set">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
@@ -137,17 +137,17 @@
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Button layoutX="292.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="set">
+                                    <Button fx:id="btnNoflyzoneSet" layoutX="292.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="set">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button layoutX="292.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="delete">
+                                    <Button fx:id="btnNoflyzoneDelete" layoutX="292.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="delete">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button layoutX="18.0" layoutY="145.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="cargo WP">
+                                    <Button fx:id="btnCargoWP" layoutX="18.0" layoutY="145.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="cargo WP">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
