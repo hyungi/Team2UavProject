@@ -233,6 +233,8 @@
                         <Button fx:id="landBtn" mnemonicParsing="false" text="Land" />
                         <Button fx:id="loiterBtn" mnemonicParsing="false" text="Loiter" />
                         <Button fx:id="rtlBtn" mnemonicParsing="false" text="RTL" />
+                        <Button fx:id="btnMissionStart" mnemonicParsing="false" text="Mission Start" />
+                        <Button fx:id="btnMissionStop" mnemonicParsing="false" text="Mission Stop" />
                      </children>
                      <opaqueInsets>
                         <Insets />

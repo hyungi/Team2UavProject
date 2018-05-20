@@ -35,7 +35,7 @@ public class UAV implements Cloneable {
 	public double homeLat;
 	public double homeLng;
 	public double rangeFinderDistance;
-	public double opticalFlowQuality;	
+	public double opticalFlowQuality;
 	
 	public int nextWaypointNo;
 	public List<WayPoint> wayPoints;

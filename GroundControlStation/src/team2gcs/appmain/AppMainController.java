@@ -93,6 +93,9 @@ public class AppMainController implements Initializable{
 	@FXML private Button landBtn;
 	@FXML private Button rtlBtn;
 	@FXML private Button loiterBtn;
+	@FXML private Button btnMissionStart;
+	@FXML private Button btnMissionStop;
+	
 	//펜스
 	@FXML private Button btnFenceSet;
 	@FXML private Button btnFenceUpload;
@@ -327,6 +330,22 @@ public class AppMainController implements Initializable{
 		btnNoflyzoneSet.setOnAction((event)->{handleNoflyzoneSet(event);});
 		btnNoflyzoneDelete.setOnAction((event)->{handleNoflyzoneDelete(event);});
 		btnCargoWP.setOnAction((event)->{handleCargoWP(event);});
+		btnMissionStart.setOnAction((event)->{handleMissionStart(event);});
+		btnMissionStop.setOnAction((event)->{handleMissionStop(event);});
+		
+	}
+	//미션 시작 정
+	public void handleMissionStart(ActionEvent event) {
+		Network.getUav().missionStart();
+		Platform.runLater(() -> {
+			jsproxy.call("missionStart");
+		});
+	}
+	public void handleMissionStop(ActionEvent event) {
+		Network.getUav().missionStop();
+		Platform.runLater(() -> {
+			jsproxy.call("missionStop");
+		});
 	}
 	//펜스 이벤트 처리
 	public void handleFenceSet(ActionEvent event) {
@@ -441,8 +460,6 @@ public class AppMainController implements Initializable{
 	private void addJump() {
 		WayPoint waypoint = new WayPoint();
 		waypoint.kind = "jump";
-		waypoint.latitude = 2;
-		waypoint.longitude = -1;
 		
 		int selectedIndex = tableView.getSelectionModel().getSelectedIndex();
 		WayPoint wp = tableView.getItems().get(selectedIndex);
