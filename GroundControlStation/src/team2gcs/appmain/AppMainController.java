@@ -92,7 +92,7 @@ public class AppMainController implements Initializable{
 	@FXML private Button takeoffBtn;
 	@FXML private Button landBtn;
 	@FXML private Button rtlBtn;
-	@FXML private Button roiterBtn;
+	@FXML private Button loiterBtn;
 	//펜스
 	@FXML private Button btnFenceSet;
 	@FXML private Button btnFenceUpload;
@@ -316,7 +316,7 @@ public class AppMainController implements Initializable{
 		armBtn.setOnAction((event)->{handleArm(event);});
 		takeoffBtn.setOnAction((event)->{handleTakeoff(event);});
 		landBtn.setOnAction((event)->{handleLand(event);});
-		roiterBtn.setOnAction((event)->{handleRoiter(event);});
+		loiterBtn.setOnAction((event)->{handleLoiter(event);});
 		rtlBtn.setOnAction((event)->{handleRtl(event);});
 		btnFenceSet.setOnAction((event)->{handleFenceSet(event);});
 		btnFenceUpload.setOnAction((event)->{handleFenceUpload(event);});
@@ -372,7 +372,7 @@ public class AppMainController implements Initializable{
 	public void handleLand(ActionEvent event) {
 		Network.getUav().land();	
 	}
-	public void handleRoiter(ActionEvent event) {
+	public void handleLoiter(ActionEvent event) {
 		System.out.println("로이터 모드 실행 그러나 코딩 안함");
 	}
 	public void handleRtl(ActionEvent event) {
