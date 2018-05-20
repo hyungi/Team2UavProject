@@ -28,7 +28,7 @@ public class AppMain extends Application{
 		primaryStage.setScene(scene);		
 		primaryStage.setMaximized(true);
 		primaryStage.show();
-
+		
 		Thread thread = new Thread(){
             @Override
             public void run() {

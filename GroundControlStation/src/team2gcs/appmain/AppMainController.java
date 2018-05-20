@@ -88,10 +88,15 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnMissionGoto;
 	@FXML private Button btnMissionJump;
 	@FXML private Button btnMissionLoi;
+	@FXML private Button armBtn;
+	@FXML private Button takeoffBtn;
+	@FXML private Button landBtn;
+	@FXML private Button rtlBtn;
+	@FXML private Button roiterBtn;
 
 	
 	//미션 테이블 뷰
-	@FXML private TableView tableView;
+	@FXML private TableView<WayPoint> tableView;
      
    	// Pane을 움직이기 위해 Double 속성값을 사용 -> Listener를 등록가능
    	private DoubleProperty bottomPaneLocation 
@@ -223,6 +228,7 @@ public class AppMainController implements Initializable{
 		if(newValue == State.SUCCEEDED) {
 			Platform.runLater(() -> {
 				try {
+					webEngine.executeScript("console.log = function(message) { jsproxy.java.log(message); };");
 					jsproxy = (JSObject) webEngine.executeScript("jsproxy");
 					jsproxy.setMember("java", AppMainController.this);
 					//setMapSize();
@@ -290,9 +296,32 @@ public class AppMainController implements Initializable{
 		btnMissionRead.setOnAction((event)->{handleMissionRead(event);});
 		btnMissionUpload.setOnAction((event)->{handleMissionUpload(event);});
 		btnMissionDownload.setOnAction((event)->{handleMissionDownload(event);});
-//		btnMissionGoto.setOnAction((event)->{handleMissionGoto(event);});
-//		btnMissionJump.setOnAction((event)->{handleMissionJump(event);});
-//		btnMissionLoi.setOnAction((event)->{handleMissionLoi(event);});
+		btnMissionGoto.setOnAction((event)->{handleMissionGoto(event);});
+		btnMissionJump.setOnAction((event)->{handleMissionJump(event);});
+		btnMissionLoi.setOnAction((event)->{handleMissionLoi(event);});
+		armBtn.setOnAction((event)->{handleArm(event);});
+		takeoffBtn.setOnAction((event)->{handleTakeoff(event);});
+		landBtn.setOnAction((event)->{handleLand(event);});
+		roiterBtn.setOnAction((event)->{handleRoiter(event);});
+		rtlBtn.setOnAction((event)->{handleRtl(event);});
+	}
+	public void handleArm(ActionEvent event) {
+		Network.getUav().arm();
+	}
+	public void handleTakeoff(ActionEvent event) {
+		Network.getUav().takeoff(10);//나중에 숫자입력으로 바꾸
+	}
+	public void handleLand(ActionEvent event) {
+		Network.getUav().land();	
+	}
+	public void handleRoiter(ActionEvent event) {
+		System.out.println("로이터 모드 실행 그러나 코딩 안함");
+	}
+	public void handleRtl(ActionEvent event) {
+		Network.getUav().rtl();
+		Platform.runLater(() -> {
+			jsproxy.call("rtlStart");
+		});
 	}
 	
 	//미션생성 이벤트 처리
@@ -339,6 +368,73 @@ public class AppMainController implements Initializable{
 	public void handleMissionDownload(ActionEvent event) {
 		Network.getUav().missionDownload();
 	}
+	
+	//미션 바로가기
+	public void handleMissionGoto(ActionEvent event) {
+		Platform.runLater(() -> {
+			jsproxy.call("gotoMake");
+		});
+	}
+	
+	//미션 점프
+	public void handleMissionJump(ActionEvent event) {
+		addJump();
+	}
+	private void addJump() {
+		WayPoint waypoint = new WayPoint();
+		waypoint.kind = "jump";
+		waypoint.latitude = 2;
+		waypoint.longitude = -1;
+		
+		int selectedIndex = tableView.getSelectionModel().getSelectedIndex();
+		WayPoint wp = tableView.getItems().get(selectedIndex);
+		
+		if(selectedIndex < tableView.getItems().size()-1) {
+			tableView.getItems().add(selectedIndex+1, waypoint);
+		} else {
+			tableView.getItems().add(waypoint);
+		}
+		for(int i=0; i<tableView.getItems().size(); i++) {
+			wp = tableView.getItems().get(i);
+			wp.no = i+1;
+		}
+	}
+	
+	//미션 Lio
+	public void handleMissionLoi(ActionEvent event) {
+		roiMake();
+	}
+	private void roiMake() {
+		int selectedIndex = tableView.getSelectionModel().getSelectedIndex();
+		
+		WayPoint wp = tableView.getItems().get(selectedIndex);
+		wp = tableView.getItems().get(selectedIndex+1);
+		
+		Platform.runLater(() -> {
+			jsproxy.call("roiMake", selectedIndex);
+		});
+	}
+	
+	public void addROI(String data) {
+		Platform.runLater(() -> {
+			WayPoint waypoint = new WayPoint();
+			waypoint.kind = "roi";
+			JSONObject jsonObject = new JSONObject(data);
+			waypoint.latitude = jsonObject.getDouble("lat");
+			waypoint.longitude = jsonObject.getDouble("lng");
+			int selectedIndex = tableView.getSelectionModel().getSelectedIndex();
+			if(selectedIndex != tableView.getItems().size()-1) {
+				tableView.getItems().add(selectedIndex+1, waypoint);
+			} else {
+				tableView.getItems().add(waypoint);
+			}
+			for(int i=0; i<tableView.getItems().size(); i++) {
+				WayPoint wp = tableView.getItems().get(i);
+				wp.no = i+1;
+			}
+		});
+	}		
+	
 	
 	
 	//테이블뷰 설정////////////////////////////////////////////////////////////////////////////////////////////////////////
