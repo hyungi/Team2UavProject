@@ -92,7 +92,10 @@
                         </AnchorPane>
                         <BorderPane fx:id="missionPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #222222;">
                            <center>
-                              <TableView fx:id="tableView" prefWidth="850.0" style="-fx-background-color: #222222;" BorderPane.alignment="CENTER" />
+                              <TableView fx:id="tableView" prefWidth="850.0" style="-fx-background-color: #222222;" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets right="20.0" />
+                                 </BorderPane.margin></TableView>
                            </center>
                            <left>
                               <VBox prefHeight="200.0" prefWidth="400.0" BorderPane.alignment="CENTER">
@@ -433,42 +436,6 @@
                </children>
             </VBox>
          </top>
-         <bottom>
-            <BorderPane maxHeight="80.0" minHeight="80.0" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #000000;" BorderPane.alignment="CENTER">
-               <center>
-                  <HBox alignment="CENTER" prefHeight="51.0" prefWidth="492.0" spacing="10.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Label style="-fx-text-fill: white; -fx-background-color: black;" text="Control" textFill="WHITE">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets left="150.0" />
-                           </HBox.margin>
-                        </Label>
-                        <Button fx:id="armBtn" alignment="CENTER" prefHeight="87.0" prefWidth="59.0" style="-fx-background-radius: 0;" text="Arm" />
-                        <Button fx:id="takeoffBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Take Off" />
-                        <Button fx:id="landBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Land" />
-                        <Button fx:id="loiterBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Loiter" />
-                        <Button fx:id="rtlBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="RTL" />
-                        <Button fx:id="btnMissionStart" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Mission Start" />
-                        <Button fx:id="btnMissionStop" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Mission Stop" />
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </HBox>
-               </center>
-               <right>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="77.0" text="Status" textFill="WHITE" />
-                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="151.0" text="0" textFill="WHITE" />
-                     </children>
-                  </HBox>
-               </right>
-            </BorderPane>
-         </bottom>
       </BorderPane>
    </children>
 </StackPane>
