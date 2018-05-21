@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -31,7 +32,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -130,10 +130,7 @@ public class AppMainController implements Initializable{
 	@FXML private Label locationLabel;
 	@FXML private Label batteryLabel;
 	@FXML private Label signalLabel;
-	@FXML private ImageView mqttButton;
-	@FXML private ImageView uavButton;
-	private boolean mqttStatus = true;
-	private boolean uavStatus = false;
+	@FXML private ImageView connButton;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -156,8 +153,6 @@ public class AppMainController implements Initializable{
 			leftPane.getChildren().add(leftRoot);
 			rightPane.getChildren().add(rightRoot);
 		}catch (Exception e) {}
-		mainBorderPane.setVisible(false);
-		loginBorderPane.setVisible(true);
 	}
 
 //////////////////////////////////Top Menu 관련 ////////////////////////////////
@@ -168,7 +163,7 @@ public class AppMainController implements Initializable{
 		batteryLabel.setText("12m");
 		signalLabel.setText("12m");	
 		// 연결 이벤트 클릭 관리
-		uavButton.setOnMouseClicked((event)->{
+		connButton.setOnMouseClicked((event)->{
 			if(connectState) {
 				mainBorderPane.setVisible(false);
 				loginBorderPane.setVisible(true);
@@ -282,7 +277,7 @@ public class AppMainController implements Initializable{
 		ip=txtIP.getText();
 		port=txtPort.getText();
 
-		if(!ip.equals(null)&&!port.equals(null)) {
+		if(!ip.equals("")&&!port.equals("")) {
 			Network.connect();
 			Thread thread = new Thread(){
 	            @Override
