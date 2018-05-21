@@ -3,6 +3,7 @@ package team2gcs.leftpane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import gcs.network.UAV;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.Event;
@@ -19,6 +20,7 @@ import javafx.scene.paint.Color;
 import team2gcs.appmain.AppMain;
 
 public class leftPaneController implements Initializable{
+	public static leftPaneController instance;
 	// 좌측 메뉴
 	@FXML private BorderPane sensorBorderPane;
    	@FXML private BorderPane sensorDetailBorderPane;
@@ -34,12 +36,13 @@ public class leftPaneController implements Initializable{
    	private GraphicsContext ctx1;
    	private GraphicsContext ctx2;
    	private GraphicsContext ctx3;
-   	private int roll = 0;
-   	private int pitch = 0;
-   	private int yaw = 0;
+   	private double roll = 0;
+   	private double pitch = 0;
+   	private double yaw = 0;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		instance = this;
 		leftVbox.setPrefHeight(300);
 		ViewLoop viewLoop = new ViewLoop();
 		viewLoop.start();
@@ -175,5 +178,11 @@ public class leftPaneController implements Initializable{
 			}
 		});
    	}
+	
+	public void setStatus(UAV uav) {
+		roll = uav.roll;
+		pitch = uav.pitch;
+		yaw = uav.yaw;
+	}
 
 }

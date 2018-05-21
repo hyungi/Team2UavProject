@@ -8,8 +8,10 @@ import java.util.ResourceBundle;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import gcs.mission.FencePoint;
 import gcs.mission.WayPoint;
 import gcs.network.Network;
+import gcs.network.UAV;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -34,10 +36,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.util.Duration;
 import netscape.javascript.JSObject;
+import team2gcs.leftpane.leftPaneController;
 
 public class AppMainController implements Initializable{
 	public static AppMainController instance2;
@@ -250,7 +255,7 @@ public class AppMainController implements Initializable{
 				}
 			});
 		}
-	};	
+	};
   
 
 	//로그인 버튼////////////////////////////////////////////////////////////////////////////////////////
@@ -407,6 +412,7 @@ public class AppMainController implements Initializable{
 			jsproxy.call("missionMake");
 		});
 	}
+
 	//미션읽기
 	public void handleMissionRead(ActionEvent event) {
 		Platform.runLater(() -> {
@@ -574,5 +580,96 @@ public class AppMainController implements Initializable{
 		column9.setSortable(false);
 		column9.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column9);
+	}
+	
+	public void viewStatus(UAV uav) {
+		try {
+			leftPaneController.instance.setStatus(uav);
+			setStatus(uav);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void setStatus(UAV uav) {
+		Platform.runLater(() -> {
+			if(uav.homeLat != 0.0) {
+				jsproxy.call("setHomeLocation", uav.homeLat, uav.homeLng);
+			}
+			jsproxy.call("setUavLocation", uav.latitude, uav.longitude, uav.heading);
+			
+			if(uav.wayPoints.size() != 0) {
+				setMission(uav.wayPoints);
+			} 
+			
+			jsproxy.call("setNextWaypointNo", uav.nextWaypointNo);			
+			if(Network.getUav().mode.equals("AUTO")) {
+				for(int i=0; i<tableView.getItems().size(); i++) {
+					WayPoint wp = tableView.getItems().get(i);
+					if(wp.no == uav.nextWaypointNo) {
+						tableView.getSelectionModel().select(wp);
+					}
+				}
+			}
+			
+			if(uav.fenceEnable == 0) {
+				btnFenceActivate.setGraphic(new Circle(5, Color.rgb(0x35, 0x35, 0x35)));
+			} else {
+				btnFenceActivate.setGraphic(new Circle(5, Color.RED)); 
+			}
+			
+			if(uav.fencePoints.size() != 0) {
+				setFence(uav.fencePoints);
+			}
+		});
+	}
+	
+	public void setMission(List<WayPoint> wayPoints) {
+		setTableViewItems(wayPoints);
+		JSONArray jsonArray = new JSONArray();
+		for(WayPoint wayPoint : wayPoints) {
+			JSONObject jsonObject = new JSONObject();
+			if(wayPoint.kind.equals("takeoff")) {
+				jsonObject.put("kind",  wayPoint.kind);
+				jsonObject.put("lat", Network.getUav().homeLat);
+				jsonObject.put("lng", Network.getUav().homeLng);
+			} else if(wayPoint.kind.equals("waypoint")) {
+				jsonObject.put("kind",  wayPoint.kind);
+				jsonObject.put("lat", wayPoint.latitude);
+				jsonObject.put("lng", wayPoint.longitude);
+			} else if(wayPoint.kind.equals("jump")) {
+				jsonObject.put("kind",  wayPoint.kind);
+				jsonObject.put("lat", wayPoints.get((int)wayPoint.latitude-1).latitude);
+				jsonObject.put("lng", wayPoints.get((int)wayPoint.latitude-1).longitude+0.00005);
+			} else if(wayPoint.kind.equals("rtl")) {
+				jsonObject.put("kind",  wayPoint.kind);
+				jsonObject.put("lat", Network.getUav().homeLat);
+				jsonObject.put("lng", Network.getUav().homeLng+0.00005);
+			} else if(wayPoint.kind.equals("roi")) {
+				jsonObject.put("kind",  wayPoint.kind);
+				jsonObject.put("lat", wayPoint.latitude);
+				jsonObject.put("lng", wayPoint.longitude);
+			}
+			jsonArray.put(jsonObject);
+		}
+		String strMissionArr = jsonArray.toString();
+		Platform.runLater(() -> {
+			jsproxy.call("setMission", strMissionArr);
+		});
+	}
+	public void setFence(List<FencePoint> fencePoints) {
+		JSONArray jsonArray = new JSONArray();
+		for(FencePoint fencePoint : fencePoints) {
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("idx", fencePoint.idx);
+			jsonObject.put("count", fencePoint.count);
+			jsonObject.put("lat", fencePoint.lat);
+			jsonObject.put("lng", fencePoint.lng);
+			jsonArray.put(jsonObject);
+		}
+		String strFenceArr = jsonArray.toString();
+		Platform.runLater(() -> {
+			jsproxy.call("setFence", strFenceArr);
+		});	
 	}
 }

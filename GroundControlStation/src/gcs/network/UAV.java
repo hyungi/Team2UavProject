@@ -197,7 +197,7 @@ public class UAV implements Cloneable {
 				fencePoints = new ArrayList<FencePoint>();
 			}
 			
-//			AppMainController.instance2.viewStatus((UAV)this.clone());
+			AppMainController.instance2.viewStatus((UAV)this.clone());
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
