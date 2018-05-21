@@ -294,7 +294,8 @@ public class AppMainController implements Initializable{
 	               loginBorderPane.setVisible(false);
 	            }
 	        };
-	      thread.start();
+//	      thread.start();
+	        mainBorderPane.setVisible(true);
 		}else {
 			labelConnect.setText("IP 또는 Port를 입력해주세요");
 		}
