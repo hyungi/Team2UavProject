@@ -94,57 +94,6 @@
                            <center>
                               <TableView fx:id="tableView" prefWidth="850.0" style="-fx-background-color: #222222;" BorderPane.alignment="CENTER" />
                            </center>
-                           <right>
-                              <AnchorPane prefWidth="350.0" BorderPane.alignment="CENTER">
-                                 <children>
-                                    <Label layoutX="21.0" layoutY="6.0" text="Mission" textFill="WHITE">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Button fx:id="btnMissionGoto" layoutX="19.0" layoutY="32.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Go to">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Button>
-                                    <Button fx:id="btnMissionRead" layoutX="129.0" layoutY="71.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Read">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Button>
-                                    <Button fx:id="btnMissionUpload" layoutX="238.0" layoutY="32.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Upload">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Button>
-                                    <Button fx:id="btnMissionDownload" layoutX="238.0" layoutY="71.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Download">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Button>
-                                    <Button fx:id="btnMissionSet" layoutX="19.0" layoutY="71.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Set">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Button>
-                                    <Button fx:id="btnMissionJump" layoutX="18.0" layoutY="130.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Rump">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Button>
-                                    <Button fx:id="btnMissionLoi" layoutX="129.0" layoutY="130.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Loi">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Button>
-                                    <Button layoutX="238.0" layoutY="130.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="M​odification">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Button>
-                                 </children>
-                              </AnchorPane>
-                           </right>
                            <left>
                               <VBox prefHeight="200.0" prefWidth="400.0" BorderPane.alignment="CENTER">
                                  <children>
@@ -153,11 +102,8 @@
                                           <BorderPane prefHeight="200.0" prefWidth="300.0">
                                              <top>
                                                 <Label text="Fence" textFill="WHITE" BorderPane.alignment="CENTER_LEFT">
-                                                   <font>
-                                                      <Font name="Aharoni Bold" size="12.0" />
-                                                   </font>
                                                    <padding>
-                                                      <Insets left="23.0" />
+                                                      <Insets left="24.0" />
                                                    </padding>
                                                 </Label>
                                              </top>
@@ -189,7 +135,7 @@
                                                             <Insets left="3.0" />
                                                          </GridPane.margin>
                                                       </Button>
-                                                      <Button fx:id="btnFenceDownload" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Download" GridPane.columnIndex="2">
+                                                      <Button fx:id="btnFenceDownload" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Activate" GridPane.columnIndex="2">
                                                          <font>
                                                             <Font name="Aharoni Bold" size="12.0" />
                                                          </font>
@@ -205,7 +151,7 @@
                                                             <Insets left="3.0" />
                                                          </GridPane.margin>
                                                       </Button>
-                                                      <Button fx:id="btnFenceActivate" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Activate" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                      <Button fx:id="btnFenceActivate" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Download" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                          <font>
                                                             <Font name="Aharoni Bold" size="12.0" />
                                                          </font>
@@ -236,11 +182,7 @@
                                           </BorderPane>
                                           <BorderPane prefHeight="200.0" prefWidth="80.0">
                                              <top>
-                                                <Label text="No-fly zone" textFill="WHITE" BorderPane.alignment="CENTER">
-                                                   <font>
-                                                      <Font name="Aharoni Bold" size="12.0" />
-                                                   </font>
-                                                </Label>
+                                                <Label text="No-fly zone" textFill="WHITE" BorderPane.alignment="CENTER_LEFT" />
                                              </top>
                                              <center>
                                                 <GridPane prefHeight="89.0" prefWidth="70.0" BorderPane.alignment="CENTER">
@@ -274,7 +216,7 @@
                                           </BorderPane>
                                        </children>
                                        <VBox.margin>
-                                          <Insets top="10.0" />
+                                          <Insets top="3.0" />
                                        </VBox.margin>
                                     </HBox>
                                     <HBox prefHeight="100.0" prefWidth="200.0">
@@ -283,7 +225,7 @@
                                              <top>
                                                 <Label text="Cargo" textFill="WHITE" BorderPane.alignment="CENTER_LEFT">
                                                    <BorderPane.margin>
-                                                      <Insets left="23.0" />
+                                                      <Insets left="24.0" />
                                                    </BorderPane.margin>
                                                 </Label>
                                              </top>
@@ -311,12 +253,80 @@
                                           <BorderPane prefHeight="200.0" prefWidth="200.0" />
                                        </children>
                                        <padding>
-                                          <Insets top="20.0" />
+                                          <Insets top="15.0" />
                                        </padding>
                                     </HBox>
                                  </children>
                               </VBox>
                            </left>
+                           <right>
+                              <BorderPane maxHeight="-Infinity" prefHeight="150.0" prefWidth="326.0" BorderPane.alignment="CENTER_RIGHT">
+                                 <center>
+                                    <GridPane alignment="CENTER" maxWidth="-Infinity" prefHeight="131.0" prefWidth="350.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <Button fx:id="btnMissionModify" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Modification" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                             <GridPane.margin>
+                                                <Insets top="20.0" />
+                                             </GridPane.margin>
+                                          </Button>
+                                          <Button fx:id="btnMissionDownload" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Download" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                          <Button fx:id="btnMissionRead" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Read" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Button fx:id="btnMissionDelete" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Delete " GridPane.rowIndex="1">
+                                             <GridPane.margin>
+                                                <Insets />
+                                             </GridPane.margin>
+                                          </Button>
+                                          <Button fx:id="btnMissionUpload" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Upload" GridPane.columnIndex="2" />
+                                          <Button fx:id="btnMissionSet" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Set" GridPane.columnIndex="1" />
+                                          <Button fx:id="btnMissionLoi" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Loi" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                             <GridPane.margin>
+                                                <Insets top="20.0" />
+                                             </GridPane.margin>
+                                          </Button>
+                                          <Button fx:id="btnMissionJump" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Jump" GridPane.rowIndex="2">
+                                             <GridPane.margin>
+                                                <Insets top="20.0" />
+                                             </GridPane.margin>
+                                          </Button>
+                                          <Button fx:id="btnMissionGoto" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Go to">
+                                             <GridPane.margin>
+                                                <Insets />
+                                             </GridPane.margin>
+                                          </Button>
+                                       </children>
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="59.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <BorderPane.margin>
+                                          <Insets top="5.0" />
+                                       </BorderPane.margin>
+                                       <padding>
+                                          <Insets right="10.0" />
+                                       </padding>
+                                    </GridPane>
+                                 </center>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <top>
+                                    <Label text="Mission" textFill="WHITE" BorderPane.alignment="CENTER_LEFT">
+                                       <BorderPane.margin>
+                                          <Insets />
+                                       </BorderPane.margin>
+                                    </Label>
+                                 </top>
+                                 <BorderPane.margin>
+                                    <Insets bottom="35.0" />
+                                 </BorderPane.margin>
+                              </BorderPane>
+                           </right>
                         </BorderPane>
                      </children>
                   </VBox>
