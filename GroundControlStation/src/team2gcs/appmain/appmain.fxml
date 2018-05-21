@@ -94,73 +94,6 @@
                            <center>
                               <TableView fx:id="tableView" prefWidth="850.0" style="-fx-background-color: #222222;" BorderPane.alignment="CENTER" />
                            </center>
-                           <left>
-                              <AnchorPane prefWidth="400.0" BorderPane.alignment="CENTER">
-                                 <children>
-                                    <Label layoutX="18.0" layoutY="6.0" text="Fence" textFill="WHITE">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Button fx:id="btnFenceUpload" layoutX="102.0" layoutY="32.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="upload">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Button>
-                                    <Button fx:id="btnFenceDownload" layoutX="185.0" layoutY="32.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="download">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Button>
-                                    <Button fx:id="btnFenceActivate" layoutX="102.0" layoutY="72.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="activate">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Button>
-                                    <Button fx:id="btnFenceDeactivate" layoutX="185.0" layoutY="72.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="deactivate">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Button>
-                                    <Button fx:id="btnFenceDelete" layoutX="18.0" layoutY="72.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="all delete">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Button>
-                                    <Button fx:id="btnFenceSet" layoutX="18.0" layoutY="32.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="set">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Button>
-                                    <Label layoutX="293.0" layoutY="6.0" text="No-fly zone" textFill="WHITE">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Button fx:id="btnNoflyzoneSet" layoutX="292.0" layoutY="32.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="set">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Button>
-                                    <Button fx:id="btnNoflyzoneDelete" layoutX="292.0" layoutY="72.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="delete">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Button>
-                                    <Button fx:id="btnCargoWP" layoutX="18.0" layoutY="152.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Cargo WP">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Button>
-                                    <Label layoutX="18.0" layoutY="128.0" text="Cargo" textFill="WHITE">
-                                       <font>
-                                          <Font name="Aharoni Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Separator layoutX="14.0" layoutY="118.0" prefHeight="3.0" prefWidth="374.0" />
-                                 </children>
-                              </AnchorPane>
-                           </left>
                            <right>
                               <AnchorPane prefWidth="350.0" BorderPane.alignment="CENTER">
                                  <children>
@@ -212,6 +145,178 @@
                                  </children>
                               </AnchorPane>
                            </right>
+                           <left>
+                              <VBox prefHeight="200.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <HBox prefHeight="104.0" prefWidth="189.0">
+                                       <children>
+                                          <BorderPane prefHeight="200.0" prefWidth="300.0">
+                                             <top>
+                                                <Label text="Fence" textFill="WHITE" BorderPane.alignment="CENTER_LEFT">
+                                                   <font>
+                                                      <Font name="Aharoni Bold" size="12.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="23.0" />
+                                                   </padding>
+                                                </Label>
+                                             </top>
+                                             <center>
+                                                <GridPane maxWidth="-Infinity" prefHeight="89.0" prefWidth="260.0" BorderPane.alignment="CENTER">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Button fx:id="btnFenceUpload" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Upload" GridPane.columnIndex="1">
+                                                         <font>
+                                                            <Font name="Aharoni Bold" size="12.0" />
+                                                         </font>
+                                                         <GridPane.margin>
+                                                            <Insets left="5.0" />
+                                                         </GridPane.margin>
+                                                      </Button>
+                                                      <Button fx:id="btnFenceSet" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Set">
+                                                         <font>
+                                                            <Font name="Aharoni Bold" size="12.0" />
+                                                         </font>
+                                                         <GridPane.margin>
+                                                            <Insets left="3.0" />
+                                                         </GridPane.margin>
+                                                      </Button>
+                                                      <Button fx:id="btnFenceDownload" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Download" GridPane.columnIndex="2">
+                                                         <font>
+                                                            <Font name="Aharoni Bold" size="12.0" />
+                                                         </font>
+                                                         <GridPane.margin>
+                                                            <Insets left="5.0" right="3.0" />
+                                                         </GridPane.margin>
+                                                      </Button>
+                                                      <Button fx:id="btnFenceDelete" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text=" Delete All" GridPane.rowIndex="1">
+                                                         <font>
+                                                            <Font name="Aharoni Bold" size="12.0" />
+                                                         </font>
+                                                         <GridPane.margin>
+                                                            <Insets left="3.0" />
+                                                         </GridPane.margin>
+                                                      </Button>
+                                                      <Button fx:id="btnFenceActivate" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Activate" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                         <font>
+                                                            <Font name="Aharoni Bold" size="12.0" />
+                                                         </font>
+                                                         <GridPane.margin>
+                                                            <Insets left="5.0" />
+                                                         </GridPane.margin>
+                                                      </Button>
+                                                      <Button fx:id="btnFenceDeactivate" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Deactivate" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                         <font>
+                                                            <Font name="Aharoni Bold" size="12.0" />
+                                                         </font>
+                                                         <GridPane.margin>
+                                                            <Insets left="5.0" right="3.0" />
+                                                         </GridPane.margin>
+                                                      </Button>
+                                                   </children>
+                                                   <BorderPane.margin>
+                                                      <Insets top="5.0" />
+                                                   </BorderPane.margin>
+                                                </GridPane>
+                                             </center>
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <padding>
+                                                <Insets top="5.0" />
+                                             </padding>
+                                          </BorderPane>
+                                          <BorderPane prefHeight="200.0" prefWidth="80.0">
+                                             <top>
+                                                <Label text="No-fly zone" textFill="WHITE" BorderPane.alignment="CENTER">
+                                                   <font>
+                                                      <Font name="Aharoni Bold" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                             </top>
+                                             <center>
+                                                <GridPane prefHeight="89.0" prefWidth="70.0" BorderPane.alignment="CENTER">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="80.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Button fx:id="btnNoflyzoneSet" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Set">
+                                                         <font>
+                                                            <Font name="Aharoni Bold" size="12.0" />
+                                                         </font>
+                                                      </Button>
+                                                      <Button fx:id="btnNoflyzoneDelete" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Delete" GridPane.rowIndex="1">
+                                                         <font>
+                                                            <Font name="Aharoni Bold" size="12.0" />
+                                                         </font>
+                                                      </Button>
+                                                   </children>
+                                                   <BorderPane.margin>
+                                                      <Insets top="5.0" />
+                                                   </BorderPane.margin>
+                                                </GridPane>
+                                             </center>
+                                             <padding>
+                                                <Insets top="5.0" />
+                                             </padding>
+                                          </BorderPane>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <BorderPane prefHeight="98.0" prefWidth="194.0">
+                                             <top>
+                                                <Label text="Cargo" textFill="WHITE" BorderPane.alignment="CENTER_LEFT">
+                                                   <BorderPane.margin>
+                                                      <Insets left="23.0" />
+                                                   </BorderPane.margin>
+                                                </Label>
+                                             </top>
+                                             <center>
+                                                <GridPane alignment="CENTER" prefHeight="81.0" prefWidth="142.0" BorderPane.alignment="CENTER">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Button fx:id="btnCargoWP" mnemonicParsing="false" text="Cargo WP">
+                                                         <GridPane.margin>
+                                                            <Insets bottom="20.0" left="23.0" />
+                                                         </GridPane.margin>
+                                                      </Button>
+                                                   </children>
+                                                </GridPane>
+                                             </center>
+                                             <opaqueInsets>
+                                                <Insets />
+                                             </opaqueInsets>
+                                          </BorderPane>
+                                          <BorderPane prefHeight="200.0" prefWidth="200.0" />
+                                       </children>
+                                       <padding>
+                                          <Insets top="20.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </left>
                         </BorderPane>
                      </children>
                   </VBox>
@@ -323,34 +428,21 @@
                <center>
                   <HBox alignment="CENTER" prefHeight="51.0" prefWidth="492.0" spacing="10.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Label style="-fx-text-fill: white; -fx-background-color: black;" text="Control" textFill="WHITE">                           
-                           <HBox.margin>
-                              <Insets left="150.0" />
-                           </HBox.margin>
+                        <Label style="-fx-text-fill: white; -fx-background-color: black;" text="Control" textFill="WHITE">
                            <font>
                               <Font size="18.0" />
                            </font>
+                           <HBox.margin>
+                              <Insets left="150.0" />
+                           </HBox.margin>
                         </Label>
-                        <Button fx:id="armBtn" alignment="CENTER" prefHeight="87.0" prefWidth="59.0" style="-fx-background-radius: 0;" text="Arm">
-                        </Button>
-                        <Button fx:id="takeoffBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Take Off">
-                           
-                        </Button>
-                        <Button fx:id="landBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Land">
-                           
-                        </Button>
-                        <Button fx:id="loiterBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Loiter">
-                           
-                        </Button>
-                        <Button fx:id="rtlBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="RTL">
-                           
-                        </Button>
-                        <Button fx:id="btnMissionStart" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Mission Start">
-                           
-                        </Button>
-                        <Button fx:id="btnMissionStop" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Mission Stop">
-                           
-                        </Button>
+                        <Button fx:id="armBtn" alignment="CENTER" prefHeight="87.0" prefWidth="59.0" style="-fx-background-radius: 0;" text="Arm" />
+                        <Button fx:id="takeoffBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Take Off" />
+                        <Button fx:id="landBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Land" />
+                        <Button fx:id="loiterBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Loiter" />
+                        <Button fx:id="rtlBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="RTL" />
+                        <Button fx:id="btnMissionStart" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Mission Start" />
+                        <Button fx:id="btnMissionStop" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Mission Stop" />
                      </children>
                      <opaqueInsets>
                         <Insets />
