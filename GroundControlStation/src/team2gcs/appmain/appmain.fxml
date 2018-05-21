@@ -147,7 +147,7 @@
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnCargoWP" layoutX="18.0" layoutY="152.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="cargo WP">
+                                    <Button fx:id="btnCargoWP" layoutX="18.0" layoutY="152.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Cargo WP">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>

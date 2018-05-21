@@ -3,6 +3,21 @@
 	-fx-font-weight: bold;
 }
 
+.button {
+	-fx-background-color: black;
+	-fx-text-fill: white;
+}
+
+.button:hover{
+	-fx-background-color:white;
+	-fx-text-fill: black;
+}
+
+.button:pressed:hover{
+	-fx-background-color:white;
+	-fx-text-fill: black;
+}
+
 #leftVbox {
 	-fx-background-color: rgba(127, 127, 127, 0.5);
 }

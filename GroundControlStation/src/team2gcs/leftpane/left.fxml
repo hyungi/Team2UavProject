@@ -8,12 +8,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<VBox fx:id="leftVbox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team2gcs.leftpane.leftPaneController">
+<VBox fx:id="leftVbox" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team2gcs.leftpane.leftPaneController">
    <padding>
   		<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 	</padding>
    <children>
-      <BorderPane maxHeight="-Infinity" opacity="0.8" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #222222; -fx-background-radius: 8;">
+      <BorderPane opacity="0.8" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #222222; -fx-background-radius: 8;">
          <center>
             <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
@@ -89,7 +89,7 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </VBox.margin>
       </BorderPane>
-      <StackPane VBox.vgrow="ALWAYS">
+      <StackPane>
          <children>
             <BorderPane fx:id="sensorDetailBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.8" prefHeight="80.0" prefWidth="370.0" style="-fx-background-color: #222222; -fx-background-radius: 8;" StackPane.alignment="TOP_CENTER">
                <center>
@@ -201,7 +201,7 @@
                   </HBox>
                </top>
                <StackPane.margin>
-                  <Insets top="8.0" />
+                  <Insets top="5.0" />
                </StackPane.margin>
             </BorderPane>
             <BorderPane fx:id="sensorBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.8" prefHeight="200.0" prefWidth="370.0" style="-fx-background-color: #222222; -fx-background-radius: 8;" visible="false" StackPane.alignment="TOP_CENTER">
@@ -274,7 +274,7 @@
                   </HBox>
                </top>
                <StackPane.margin>
-                  <Insets top="8.0" />
+                  <Insets top="5.0" />
                </StackPane.margin>
             </BorderPane>
          </children>
