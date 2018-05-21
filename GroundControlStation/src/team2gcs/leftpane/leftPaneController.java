@@ -13,10 +13,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import team2gcs.appmain.AppMain;
 
 public class leftPaneController implements Initializable{
@@ -30,12 +33,11 @@ public class leftPaneController implements Initializable{
    	@FXML private Label yawLabel;
    	@FXML private Label sensorLabel;
    	@FXML private Label sensorDetailLabel;
-   	@FXML private Canvas hudCanvas;
+   	@FXML private Circle circle;
    	@FXML private Canvas hudLineCanvas;
-   	@FXML private Canvas yawCircleCanvas;
+   	@FXML private Canvas yawCanvas;
    	private GraphicsContext ctx1;
    	private GraphicsContext ctx2;
-   	private GraphicsContext ctx3;
    	private double roll = 0;
    	private double pitch = 0;
    	private double yaw = 0;
@@ -48,11 +50,6 @@ public class leftPaneController implements Initializable{
 		viewLoop.start();
  		initCanvasLayer();
 		initLeftPane();
-		try {
-			handleRPY();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	////////////////////////////////// 좌측 메뉴 ////////////////////////////////
@@ -61,57 +58,45 @@ public class leftPaneController implements Initializable{
    		public void handle(long now) {
 			ctx1.clearRect(0, 0, 150, 150); 
 			ctx2.clearRect(0, 0, 150, 150);
-			ctx3.clearRect(0, 0, 150, 150);
 			
-			hudDraw();
-			hudLine();
+			drawHud();
+			drawHudLine();
+			try {
+				handleRPY();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			rollLabel.setText("   Roll:	" + roll);
+			pitchLabel.setText("   Pitch:	" + pitch);
+			yawLabel.setText("   Yaw:	" + yaw);
   		} 
    	}
 	
 	private void initCanvasLayer() {
-   		ctx1 = hudCanvas.getGraphicsContext2D();
-   		ctx2 = hudLineCanvas.getGraphicsContext2D();
-   		ctx3 = yawCircleCanvas.getGraphicsContext2D();
+   		ctx1 = hudLineCanvas.getGraphicsContext2D();
+   		ctx2 = yawCanvas.getGraphicsContext2D();
    	}   
 	
-   	private void hudDraw() {
-   	//밑상자 50-pitch*1.15
-    	ctx2.setFill(Color.rgb(75, 187, 161));
-    	ctx2.fillRect(-50, -50, 200, 200);
-   		//위상자
-   		ctx2.setFill(Color.rgb(12, 143, 217));
-    	ctx2.fillRect(-50, -50, 200, 100-pitch*1.15);
+   	private void drawHud() {
+		ImagePattern img = new ImagePattern(new Image(getClass().getResourceAsStream("../images/hudBg1.png")), 0, -pitch, 100, 300, false);
+	   	circle.setFill(img);
     	
-    	//yaw
-    	ctx3.setFill(Color.WHITE);
-    	ctx3.fillOval(10, 10, 30, 30);
-    	ctx3.setFill(Color.rgb(12, 143, 217));
-    	ctx3.fillOval(21.5+15*Math.cos(yaw*0.01735-Math.PI/2),20.5+15*Math.sin(yaw*0.01735-Math.PI/2), 8, 8);
-
-    	
-//    	2안
-    	//큰원
-//    	ctx.setFill(Color.rgb(36, 35, 35));
-//    	ctx.fillOval(20, 25, 110, 110);
-    	//위반원
-//    	ctx.fillArc(25, 30, 100-Math.abs(pitch)*0.3, 100-pitch*2.18, 0, 180, ArcType.OPEN);
-    	//아래반원
-//    	ctx.fillArc(25, 30-pitch*2.18, 100-Math.abs(pitch)*0.3, 100+pitch*2.18, 0, -180, ArcType.OPEN);
-    	//yaw원
-//    	ctx2.setFill(Color.WHITE);
-//    	ctx2.fillOval(70+50*Math.cos(yaw*0.01735-Math.PI/2),75+50*Math.sin(yaw*0.01735-Math.PI/2), 10, 10);
+	    	//yaw
+	    	ctx2.setFill(Color.WHITE);
+	    	ctx2.fillOval(45.5+39.5*Math.cos(yaw*0.01745-Math.PI/2),45.5+39.5*Math.sin(yaw*0.01745-Math.PI/2), 10, 10);
    	}
    	
-   	public void hudLine() {
+   	public void drawHudLine() {
 		ctx1.setLineWidth(1);
 		ctx1.setStroke(Color.WHITE);
 		ctx1.strokeLine(30, 50-pitch*1.1, 70, 50-pitch*1.1);
 		
 		for(int i=5; i<15-pitch; i+=5) {
-			ctx1.strokeLine(40, 50-(i*1.8+pitch*1.1), 60, 50-(i*1.8+pitch*1.1));
+			ctx1.strokeLine(40, 50-(i*1.6+pitch*1.1), 60, 50-(i*1.6+pitch*1.05));
 		}
 		for(int i=5; i<15+pitch; i+=5) {
-			ctx1.strokeLine(40, 50+(i*1.8-pitch*1.1), 60, 50+(i*1.8-pitch*1.1));
+			ctx1.strokeLine(40, 50+(i*1.6-pitch*1.1), 60, 50+(i*1.6-pitch*1.05));
 		}
 	}
 	
@@ -129,22 +114,24 @@ public class leftPaneController implements Initializable{
 				} else if(event.getCode() == KeyCode.A) {
 					if(roll>= -21) {
 						roll--;
-						hudCanvas.setRotate(roll);
+						hudLineCanvas.setRotate(roll);
+						circle.setRotate(roll);
 						System.out.println(roll);
 					}
 				} else if(event.getCode() == KeyCode.D) {
 					if(roll < 21) {
 						roll++;
-						hudCanvas.setRotate(roll);
+						hudLineCanvas.setRotate(roll);
+						circle.setRotate(roll);
 						System.out.println(roll);
 					}
 				} else if(event.getCode() == KeyCode.S) {
-					if(pitch > -30) {
+					if(pitch > -10) {
 						pitch--;
 						System.out.println(pitch);
 					}
 				} else if(event.getCode() == KeyCode.W) {
-					if(pitch < 30) {
+					if(pitch < 10) {
 						pitch++;
 						System.out.println(pitch);
 					}
@@ -184,5 +171,4 @@ public class leftPaneController implements Initializable{
 		pitch = uav.pitch;
 		yaw = uav.yaw;
 	}
-
 }
