@@ -61,7 +61,7 @@
             <StackPane BorderPane.alignment="CENTER">
                <children>
                   <WebView fx:id="webView" prefHeight="-1.0" prefWidth="-1.0" />
-                  <VBox fx:id="leftPane" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="400.0" StackPane.alignment="TOP_LEFT" />
+                  <VBox fx:id="leftPane" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="400.0" StackPane.alignment="TOP_LEFT" />
                   <HBox fx:id="rightMovePane" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" opacity="0.9" style="-fx-background-color: transparent;" translateX="550.0" StackPane.alignment="CENTER_RIGHT">
                      <children>
                         <AnchorPane fx:id="openRight" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35" prefWidth="200" style="-fx-background-color: #222222; -fx-background-radius: 5 5 0 0; -fx-rotate: -90;" translateX="-117.0">
@@ -344,12 +344,15 @@
                         <Label fx:id="currtimeLabel" text="Label" textFill="WHITE" BorderPane.alignment="CENTER_RIGHT">
                            <BorderPane.margin>
                               <Insets right="20.0" />
-                           </BorderPane.margin></Label>
+                           </BorderPane.margin>
+                           <font>
+                              <Font size="20.0" />
+                           </font></Label>
                      </center>
                   </BorderPane>
-                  <HBox fx:id="smallTopPane" alignment="CENTER_LEFT" prefHeight="90.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;">
-                     <children>
-                        <VBox alignment="CENTER_LEFT" maxWidth="-Infinity" prefHeight="90.0" prefWidth="191.0" HBox.hgrow="ALWAYS">
+                  <BorderPane maxWidth="1.7976931348623157E308" prefHeight="90.0" style="-fx-background-color: #FFFFFF;">
+                     <left>
+                        <VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="90.0" BorderPane.alignment="CENTER">
                            <children>
                               <ImageView fx:id="logoImage" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -361,78 +364,130 @@
                               </ImageView>
                            </children>
                         </VBox>
-                        <ImageView fx:id="logoImage1" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/그림1.png" />
-                           </image>
-                           <HBox.margin>
-                              <Insets left="300.0" />
-                           </HBox.margin>
-                        </ImageView>
-                        <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0">
+                     </left>
+                     <center>
+                        <HBox alignment="CENTER" spacing="5.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Label prefHeight="19.0" prefWidth="100.0" text="Home">
+                              <ImageView fx:id="logoImage1" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/그림1.png" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </ImageView>
+                              <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                                 <children>
+                                    <Label prefWidth="100.0" text="Home">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="homeLabel" prefWidth="105.0" text="Label">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </VBox>
+                              <ImageView fx:id="logoImage2" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/그림2.png" />
+                                 </image>
+                              </ImageView>
+                              <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                                 <children>
+                                    <Label prefWidth="100.0" text="Location">
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="locationLabel" prefWidth="105.0" text="Label">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font></Label>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </VBox>
+                              <ImageView fx:id="logoImage3" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/그림3.png" />
+                                 </image>
+                              </ImageView>
+                              <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                                 <children>
+                                    <Label prefWidth="100.0" text="Battery">
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="batteryLabel" prefWidth="105.0" text="Label">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font></Label>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </VBox>
+                              <ImageView fx:id="logoImage31" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/그림4.png" />
+                                 </image>
+                              </ImageView>
+                              <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                                 <children>
+                                    <Label prefWidth="100.0" text="Signal">
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="signalLabel" prefWidth="105.0" text="Label">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font></Label>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </center>
+                     <right>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <ImageView fx:id="connButton" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/connect.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="signalLabel1" text="connected" textFill="#25972f">
                                  <font>
-                                    <Font name="Agency FB" size="15.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label fx:id="homeLabel" prefHeight="51.0" prefWidth="105.0" text="Label">
-                                 <font>
-                                    <Font name="Agency FB" size="15.0" />
+                                    <Font name="System Bold" size="16.0" />
                                  </font>
                               </Label>
                            </children>
                         </VBox>
-                        <ImageView fx:id="logoImage2" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/그림2.png" />
-                           </image>
-                        </ImageView>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label prefHeight="19.0" prefWidth="100.0" text="Location">
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label fx:id="locationLabel" prefHeight="51.0" prefWidth="105.0" text="Label" />
-                           </children>
-                        </VBox>
-                        <ImageView fx:id="logoImage3" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/그림3.png" />
-                           </image>
-                        </ImageView>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label prefHeight="19.0" prefWidth="100.0" text="Battery">
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label fx:id="batteryLabel" prefHeight="51.0" prefWidth="105.0" text="Label" />
-                           </children>
-                        </VBox>
-                        <ImageView fx:id="logoImage31" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/그림4.png" />
-                           </image>
-                        </ImageView>
-                        <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label prefHeight="19.0" prefWidth="100.0" text="Signal">
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Label fx:id="signalLabel" prefHeight="51.0" prefWidth="105.0" text="Label" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
+                     </right>
+                  </BorderPane>
                </children>
             </VBox>
          </top>
