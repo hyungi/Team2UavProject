@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.ResourceBundle;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import gcs.mission.FencePoint;
 import gcs.mission.WayPoint;
 import gcs.network.Network;
+import gcs.network.UAV;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -34,10 +37,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.util.Duration;
 import netscape.javascript.JSObject;
+import team2gcs.leftpane.leftPaneController;
 
 public class AppMainController implements Initializable{
 	public static AppMainController instance2;
@@ -87,10 +93,30 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnMissionGoto;
 	@FXML private Button btnMissionJump;
 	@FXML private Button btnMissionLoi;
-
+	@FXML private Button armBtn;
+	@FXML private Button takeoffBtn;
+	@FXML private Button landBtn;
+	@FXML private Button rtlBtn;
+	@FXML private Button loiterBtn;
+	@FXML private Button btnMissionStart;
+	@FXML private Button btnMissionStop;
+	
+	//펜스
+	@FXML private Button btnFenceSet;
+	@FXML private Button btnFenceUpload;
+	@FXML private Button btnFenceDownload;
+	@FXML private Button btnFenceActivate;
+	@FXML private Button btnFenceDeactivate;
+	@FXML private Button btnFenceDelete;
+	
+	//비행금지구역
+	@FXML private Button btnNoflyzoneSet;
+	@FXML private Button btnNoflyzoneDelete;
+	//화물
+	@FXML private Button btnCargoWP;
 	
 	//미션 테이블 뷰
-	@FXML private TableView tableView;
+	@FXML private TableView<WayPoint> tableView;
      
    	// Pane을 움직이기 위해 Double 속성값을 사용 -> Listener를 등록가능
    	private DoubleProperty bottomPaneLocation 
@@ -112,8 +138,8 @@ public class AppMainController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		instance2 = this;
-		mainBorderPane.setVisible(true);
-		loginBorderPane.setVisible(false);
+		mainBorderPane.setVisible(false);
+		loginBorderPane.setVisible(true);
 		
 		initWebView();
 		initTableView();
@@ -156,8 +182,6 @@ public class AppMainController implements Initializable{
 		String inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
 		currtimeLabel.setText(inTime);
 	}
-	
-
 
 ////////////////////////////////// Slide Menu 관련 ////////////////////////////////
 	public void initSlide() {
@@ -177,11 +201,9 @@ public class AppMainController implements Initializable{
 	}
    
    // 각 전체 Pane의 위치를 property 값 만큼 변경(SlidePane 메소드를 통해 차례로 변경된 값이 적용됨)
-	private void updateVBox() {   bottomMovePane.setTranslateY(bottomPaneLocation.get());}
+	private void updateVBox() { bottomMovePane.setTranslateY(bottomPaneLocation.get());}
    
-	private void updateHBox() {
-		rightMovePane.setTranslateX(rightPaneLocation.get());
-	}
+	private void updateHBox() {	rightMovePane.setTranslateX(rightPaneLocation.get());}
 	
 	// animate 메소드는 현재 상태를 파악하여 어느위치로 이동시켜야되는지 slidePane에게 전달해준다.
 	private void animateRightPane() {
@@ -236,6 +258,7 @@ public class AppMainController implements Initializable{
 		if(newValue == State.SUCCEEDED) {
 			Platform.runLater(() -> {
 				try {
+					webEngine.executeScript("console.log = function(message) { jsproxy.java.log(message); };");
 					jsproxy = (JSObject) webEngine.executeScript("jsproxy");
 					jsproxy.setMember("java", AppMainController.this);
 					//setMapSize();
@@ -244,7 +267,7 @@ public class AppMainController implements Initializable{
 				}
 			});
 		}
-	};	
+	};
   
 
 	//로그인 버튼////////////////////////////////////////////////////////////////////////////////////////
@@ -252,14 +275,13 @@ public class AppMainController implements Initializable{
 		btnConnect.setOnAction((event)->{handleConnect(event);});
 		btnCancle.setOnAction((event)->{handleCancle(event);});
 	}
+	
 	//로그인화면 연결 버튼 이벤트 처리
 	public void handleConnect(ActionEvent event) {
 		//ip,port 보내기
 		ip=txtIP.getText();
 		port=txtPort.getText();
-		System.out.println(ip);
-		System.out.println(port);
-		
+
 		if(!ip.equals(null)&&!port.equals(null)) {
 			Network.connect();
 			Thread thread = new Thread(){
@@ -286,7 +308,8 @@ public class AppMainController implements Initializable{
 	               loginBorderPane.setVisible(false);
 	            }
 	        };
-	      thread.start();
+//	      thread.start();
+	        mainBorderPane.setVisible(true);
 		}else {
 			labelConnect.setText("IP 또는 Port를 입력해주세요");
 		}
@@ -303,11 +326,96 @@ public class AppMainController implements Initializable{
 	public void initMissionButton() {
 		btnMissionSet.setOnAction((event)->{handleMissionSet(event);});
 		btnMissionRead.setOnAction((event)->{handleMissionRead(event);});
-//		btnMissionUpload.setOnAction((event)->{handleMissionUpload(event);});
-//		btnMissionDownload.setOnAction((event)->{handleMissionDownload(event);});
-//		btnMissionGoto.setOnAction((event)->{handleMissionGoto(event);});
-//		btnMissionJump.setOnAction((event)->{handleMissionJump(event);});
-//		btnMissionLoi.setOnAction((event)->{handleMissionLoi(event);});
+		btnMissionUpload.setOnAction((event)->{handleMissionUpload(event);});
+		btnMissionDownload.setOnAction((event)->{handleMissionDownload(event);});
+		btnMissionGoto.setOnAction((event)->{handleMissionGoto(event);});
+		btnMissionJump.setOnAction((event)->{handleMissionJump(event);});
+		btnMissionLoi.setOnAction((event)->{handleMissionLoi(event);});
+		armBtn.setOnAction((event)->{handleArm(event);});
+		takeoffBtn.setOnAction((event)->{handleTakeoff(event);});
+		landBtn.setOnAction((event)->{handleLand(event);});
+		loiterBtn.setOnAction((event)->{handleLoiter(event);});
+		rtlBtn.setOnAction((event)->{handleRtl(event);});
+		btnFenceSet.setOnAction((event)->{handleFenceSet(event);});
+		btnFenceUpload.setOnAction((event)->{handleFenceUpload(event);});
+		btnFenceDownload.setOnAction((event)->{handleFenceDownload(event);});
+		btnFenceActivate.setOnAction((event)->{handleFenceActivate(event);});
+		btnFenceDeactivate.setOnAction((event)->{handleFenceDeactivate(event);});
+		btnFenceDelete.setOnAction((event)->{handleFenceDelete(event);});
+		btnNoflyzoneSet.setOnAction((event)->{handleNoflyzoneSet(event);});
+		btnNoflyzoneDelete.setOnAction((event)->{handleNoflyzoneDelete(event);});
+		btnCargoWP.setOnAction((event)->{handleCargoWP(event);});
+		btnMissionStart.setOnAction((event)->{handleMissionStart(event);});
+		btnMissionStop.setOnAction((event)->{handleMissionStop(event);});
+		
+	}
+	//미션 시작 정지
+	public void handleMissionStart(ActionEvent event) {
+		Network.getUav().missionStart();
+		Platform.runLater(() -> {
+			jsproxy.call("missionStart");
+		});
+	}
+	public void handleMissionStop(ActionEvent event) {
+		Network.getUav().missionStop();
+		Platform.runLater(() -> {
+			jsproxy.call("missionStop");
+		});
+	}
+	//펜스 이벤트 처리
+	public void handleFenceSet(ActionEvent event) {
+		Platform.runLater(() -> {
+			jsproxy.call("fenceMake");
+		});
+	}
+	public void handleFenceUpload(ActionEvent event) {
+		jsproxy.call("fenceUpload");
+	}
+	public void handleFenceDownload(ActionEvent event) {
+		Network.getUav().fenceDownload();
+	}
+	public void handleFenceActivate(ActionEvent event) {
+		Network.getUav().fenceEnable();
+	}
+	public void handleFenceDeactivate(ActionEvent event) {
+		Network.getUav().fenceDisable();
+	}
+	public void handleFenceDelete(ActionEvent event) {
+		Network.getUav().fenceClear();
+		jsproxy.call("fenceClear");
+	}
+	//비햄금지구역 이벤트 처리
+	public void handleNoflyzoneSet(ActionEvent event) {
+		System.out.println("비행금지구역SET");
+
+	}
+	public void handleNoflyzoneDelete(ActionEvent event) {
+		System.out.println("비행금지구역삭제");
+
+	}
+	//화물운송 WP 이벤트 처
+	public void handleCargoWP(ActionEvent event) {
+		System.out.println("화물운송WP");
+	}
+	
+	//Arm, Takeoff, Land, Roiter, Rtl
+	public void handleArm(ActionEvent event) {
+		Network.getUav().arm();
+	}
+	public void handleTakeoff(ActionEvent event) {
+		Network.getUav().takeoff(10);//나중에 숫자입력으로 바꾸
+	}
+	public void handleLand(ActionEvent event) {
+		Network.getUav().land();	
+	}
+	public void handleLoiter(ActionEvent event) {
+		System.out.println("로이터 모드 실행 그러나 코딩 안함");
+	}
+	public void handleRtl(ActionEvent event) {
+		Network.getUav().rtl();
+		Platform.runLater(() -> {
+			jsproxy.call("rtlStart");
+		});
 	}
 	
 	//미션생성 이벤트 처리
@@ -316,6 +424,7 @@ public class AppMainController implements Initializable{
 			jsproxy.call("missionMake");
 		});
 	}
+
 	//미션읽기
 	public void handleMissionRead(ActionEvent event) {
 		Platform.runLater(() -> {
@@ -329,22 +438,95 @@ public class AppMainController implements Initializable{
 			for(int i=0; i<jsonArray.length(); i++) {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
 				WayPoint wayPoint = new WayPoint();
-				wayPoint.no = jsonObject.getInt("no");
+	 			wayPoint.no = jsonObject.getInt("no");
 				wayPoint.kind = jsonObject.getString("kind"); //all is "waypoint";
-				wayPoint.lat = jsonObject.getDouble("lat");
-				wayPoint.lng = jsonObject.getDouble("lng");
-				wayPoint.alt = 10;
+				wayPoint.latitude = jsonObject.getDouble("lat");
+				wayPoint.longitude = jsonObject.getDouble("lng");
+				wayPoint.altitude = 10;
 				list.add(wayPoint);
 			}
 			setTableViewItems(list);
 		});
 	}
 	public void setTableViewItems(List<WayPoint> list) {
-		tableView.getItems().clear();
+ 		tableView.getItems().clear();
 		tableView.setItems(FXCollections.observableArrayList(list));
 	}
 	
+	//미션 업로드
+	public void handleMissionUpload(ActionEvent event) {
+		List<WayPoint> list = tableView.getItems();
+		Network.getUav().missionUpload(list);
+	}
 	
+	//미션 다운로드
+	public void handleMissionDownload(ActionEvent event) {
+		Network.getUav().missionDownload();
+	}
+	
+	//미션 바로가기
+	public void handleMissionGoto(ActionEvent event) {
+		Platform.runLater(() -> {
+			jsproxy.call("gotoMake");
+		});
+	}
+	
+	//미션 점프
+	public void handleMissionJump(ActionEvent event) {
+		addJump();
+	}
+	private void addJump() {
+		WayPoint waypoint = new WayPoint();
+		waypoint.kind = "jump";
+		
+		int selectedIndex = tableView.getSelectionModel().getSelectedIndex();
+		WayPoint wp = tableView.getItems().get(selectedIndex);
+		
+		if(selectedIndex < tableView.getItems().size()-1) {
+			tableView.getItems().add(selectedIndex+1, waypoint);
+		} else {
+			tableView.getItems().add(waypoint);
+		}
+		for(int i=0; i<tableView.getItems().size(); i++) {
+			wp = tableView.getItems().get(i);
+			wp.no = i+1;
+		}
+	}
+	
+	//미션 Lio
+	public void handleMissionLoi(ActionEvent event) {
+		roiMake();
+	}
+	private void roiMake() {
+		int selectedIndex = tableView.getSelectionModel().getSelectedIndex();
+		
+		WayPoint wp = tableView.getItems().get(selectedIndex);
+		wp = tableView.getItems().get(selectedIndex+1);
+		
+		Platform.runLater(() -> {
+			jsproxy.call("roiMake", selectedIndex);
+		});
+	}
+	
+	public void addROI(String data) {
+		Platform.runLater(() -> {
+			WayPoint waypoint = new WayPoint();
+			waypoint.kind = "roi";
+			JSONObject jsonObject = new JSONObject(data);
+			waypoint.latitude = jsonObject.getDouble("lat");
+			waypoint.longitude = jsonObject.getDouble("lng");
+			int selectedIndex = tableView.getSelectionModel().getSelectedIndex();
+			if(selectedIndex != tableView.getItems().size()-1) {
+				tableView.getItems().add(selectedIndex+1, waypoint);
+			} else {
+				tableView.getItems().add(waypoint);
+			}
+			for(int i=0; i<tableView.getItems().size(); i++) {
+				WayPoint wp = tableView.getItems().get(i);
+				wp.no = i+1;
+			}
+		});
+	}		
 	
 	//테이블뷰 설정////////////////////////////////////////////////////////////////////////////////////////////////////////
 	private void initTableView() {
@@ -363,21 +545,21 @@ public class AppMainController implements Initializable{
 		tableView.getColumns().add(column2);
 		
 		TableColumn<WayPoint, Double> column3 = new TableColumn<WayPoint, Double>("Latitude");
-		column3.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("lat"));
+		column3.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("latitude"));
 		column3.setPrefWidth(200);
 		column3.setSortable(false);
 		column3.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column3);
 		
 		TableColumn<WayPoint, Double> column4 = new TableColumn<WayPoint, Double>("Longitude");
-		column4.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("lng"));
+		column4.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("longitude"));
 		column4.setPrefWidth(200);
 		column4.setSortable(false);
 		column4.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column4);
 		
 		TableColumn<WayPoint, Double> column5 = new TableColumn<WayPoint, Double>("Altitude");
-		column5.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("alt"));
+		column5.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("altitude"));
 		column5.setPrefWidth(200);
 		column5.setSortable(false);
 		column5.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
@@ -410,5 +592,96 @@ public class AppMainController implements Initializable{
 		column9.setSortable(false);
 		column9.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column9);
+	}
+	
+	public void viewStatus(UAV uav) {
+		try {
+			leftPaneController.instance.setStatus(uav);
+			setStatus(uav);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void setStatus(UAV uav) {
+		Platform.runLater(() -> {
+			if(uav.homeLat != 0.0) {
+				jsproxy.call("setHomeLocation", uav.homeLat, uav.homeLng);
+			}
+			jsproxy.call("setUavLocation", uav.latitude, uav.longitude, uav.heading);
+			
+			if(uav.wayPoints.size() != 0) {
+				setMission(uav.wayPoints);
+			} 
+			
+			jsproxy.call("setNextWaypointNo", uav.nextWaypointNo);			
+			if(Network.getUav().mode.equals("AUTO")) {
+				for(int i=0; i<tableView.getItems().size(); i++) {
+					WayPoint wp = tableView.getItems().get(i);
+					if(wp.no == uav.nextWaypointNo) {
+						tableView.getSelectionModel().select(wp);
+					}
+				}
+			}
+			
+			if(uav.fenceEnable == 0) {
+				btnFenceActivate.setGraphic(new Circle(5, Color.rgb(0x35, 0x35, 0x35)));
+			} else {
+				btnFenceActivate.setGraphic(new Circle(5, Color.RED)); 
+			}
+			
+			if(uav.fencePoints.size() != 0) {
+				setFence(uav.fencePoints);
+			}
+		});
+	}
+	
+	public void setMission(List<WayPoint> wayPoints) {
+		setTableViewItems(wayPoints);
+		JSONArray jsonArray = new JSONArray();
+		for(WayPoint wayPoint : wayPoints) {
+			JSONObject jsonObject = new JSONObject();
+			if(wayPoint.kind.equals("takeoff")) {
+				jsonObject.put("kind",  wayPoint.kind);
+				jsonObject.put("lat", Network.getUav().homeLat);
+				jsonObject.put("lng", Network.getUav().homeLng);
+			} else if(wayPoint.kind.equals("waypoint")) {
+				jsonObject.put("kind",  wayPoint.kind);
+				jsonObject.put("lat", wayPoint.latitude);
+				jsonObject.put("lng", wayPoint.longitude);
+			} else if(wayPoint.kind.equals("jump")) {
+				jsonObject.put("kind",  wayPoint.kind);
+				jsonObject.put("lat", wayPoints.get((int)wayPoint.latitude-1).latitude);
+				jsonObject.put("lng", wayPoints.get((int)wayPoint.latitude-1).longitude+0.00005);
+			} else if(wayPoint.kind.equals("rtl")) {
+				jsonObject.put("kind",  wayPoint.kind);
+				jsonObject.put("lat", Network.getUav().homeLat);
+				jsonObject.put("lng", Network.getUav().homeLng+0.00005);
+			} else if(wayPoint.kind.equals("roi")) {
+				jsonObject.put("kind",  wayPoint.kind);
+				jsonObject.put("lat", wayPoint.latitude);
+				jsonObject.put("lng", wayPoint.longitude);
+			}
+			jsonArray.put(jsonObject);
+		}
+		String strMissionArr = jsonArray.toString();
+		Platform.runLater(() -> {
+			jsproxy.call("setMission", strMissionArr);
+		});
+	}
+	public void setFence(List<FencePoint> fencePoints) {
+		JSONArray jsonArray = new JSONArray();
+		for(FencePoint fencePoint : fencePoints) {
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("idx", fencePoint.idx);
+			jsonObject.put("count", fencePoint.count);
+			jsonObject.put("lat", fencePoint.lat);
+			jsonObject.put("lng", fencePoint.lng);
+			jsonArray.put(jsonObject);
+		}
+		String strFenceArr = jsonArray.toString();
+		Platform.runLater(() -> {
+			jsproxy.call("setFence", strFenceArr);
+		});	
 	}
 }

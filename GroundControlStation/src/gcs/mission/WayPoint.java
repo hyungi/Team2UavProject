@@ -7,9 +7,9 @@ public class WayPoint {
 	public String kind;
 	public int repeat;
 	public int next;
-	public double lat;
-	public double lng;
-	public double alt;
+	public double latitude;
+	public double longitude;
+	public double altitude;
 	public int jump;
 	public int jumpnum;
 	public double waitingTime;
@@ -47,23 +47,23 @@ public class WayPoint {
 	public void setNext(int next) {
 		this.next = next;
 	}
-	public double getLat() {
-		return lat;
+	public double getLatitude() {
+		return latitude;
 	}
-	public void setLat(double lat) {
-		this.lat = lat;
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
 	}
-	public double getLng() {
-		return lng;
+	public double getLongitude() {
+		return longitude;
 	}
-	public void setLng(double lng) {
-		this.lng = lng;
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
-	public double getAlt() {
-		return alt;
+	public double getAltitude() {
+		return altitude;
 	}
-	public void setAlt(double alt) {
-		this.alt = alt;
+	public void setAltitude(double altitude) {
+		this.altitude = altitude;
 	}
 	public int getJump() {
 		return jump;

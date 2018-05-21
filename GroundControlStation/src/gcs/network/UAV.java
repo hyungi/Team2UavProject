@@ -35,7 +35,7 @@ public class UAV implements Cloneable {
 	public double homeLat;
 	public double homeLng;
 	public double rangeFinderDistance;
-	public double opticalFlowQuality;	
+	public double opticalFlowQuality;
 	
 	public int nextWaypointNo;
 	public List<WayPoint> wayPoints;
@@ -149,18 +149,18 @@ public class UAV implements Cloneable {
 				wp.no = i+1;
 				wp.kind = jo.getString("kind");
 				if(wp.kind.equals("takeoff")) {
-					wp.alt = jo.getDouble("alt");
+					wp.altitude = jo.getDouble("alt");
 				} else if(wp.kind.equals("waypoint")) {
-					wp.lat = jo.getDouble("lat");
-					wp.lng = jo.getDouble("lng");
-					wp.alt = jo.getDouble("alt");
+ 					wp.latitude = jo.getDouble("lat");
+					wp.longitude = jo.getDouble("lng");
+					wp.altitude = jo.getDouble("alt");
 				} else if(wp.kind.equals("rtl")) {
 				} else if(wp.kind.equals("jump")) {
-					wp.lat = jo.getDouble("lat");
-					wp.lng = jo.getDouble("lng");
+					wp.latitude = jo.getDouble("lat");
+					wp.longitude = jo.getDouble("lng");
 				} else if(wp.kind.equals("roi")) {
-					wp.lat = jo.getDouble("lat");
-					wp.lng = jo.getDouble("lng");
+					wp.latitude = jo.getDouble("lat");
+					wp.latitude = jo.getDouble("lng");
 				}
 				listWayPoint.add(wp);
 			}
@@ -197,7 +197,7 @@ public class UAV implements Cloneable {
 				fencePoints = new ArrayList<FencePoint>();
 			}
 			
-//			AppMainController.instance2.viewStatus((UAV)this.clone());
+			AppMainController.instance2.viewStatus((UAV)this.clone());
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -275,9 +275,9 @@ public class UAV implements Cloneable {
 		for(WayPoint wp : list) {
 			JSONObject jo = new JSONObject();
 			jo.put("kind", wp.kind);
-			jo.put("lat", wp.lat);
-			jo.put("lng", wp.lng);
-			jo.put("alt", wp.alt);
+			jo.put("lat", wp.latitude);
+			jo.put("lng", wp.longitude);
+			jo.put("alt", wp.altitude);
 			jsonArray.put(jo);
 		}
 		root.put("waypoints", jsonArray);
