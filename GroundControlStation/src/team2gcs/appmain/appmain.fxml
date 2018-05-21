@@ -97,114 +97,114 @@
                            <left>
                               <AnchorPane prefWidth="400.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Label layoutX="18.0" layoutY="17.0" text="Fence" textFill="WHITE">
+                                    <Label layoutX="18.0" layoutY="6.0" text="Fence" textFill="WHITE">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Button fx:id="btnFenceUpload" layoutX="102.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="upload">
+                                    <Button fx:id="btnFenceUpload" layoutX="102.0" layoutY="32.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="upload">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnFenceDownload" layoutX="185.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="download">
+                                    <Button fx:id="btnFenceDownload" layoutX="185.0" layoutY="32.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="download">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnFenceActivate" layoutX="102.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="activate">
+                                    <Button fx:id="btnFenceActivate" layoutX="102.0" layoutY="72.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="activate">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnFenceDeactivate" layoutX="185.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="deactivate">
+                                    <Button fx:id="btnFenceDeactivate" layoutX="185.0" layoutY="72.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="deactivate">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnFenceDelete" layoutX="18.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="all delete">
+                                    <Button fx:id="btnFenceDelete" layoutX="18.0" layoutY="72.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="all delete">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnFenceSet" layoutX="18.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="set">
+                                    <Button fx:id="btnFenceSet" layoutX="18.0" layoutY="32.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="set">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Label layoutX="293.0" layoutY="17.0" text="no-fly zone" textFill="WHITE">
+                                    <Label layoutX="293.0" layoutY="6.0" text="No-fly zone" textFill="WHITE">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Button fx:id="btnNoflyzoneSet" layoutX="292.0" layoutY="37.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="set">
+                                    <Button fx:id="btnNoflyzoneSet" layoutX="292.0" layoutY="32.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="set">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnNoflyzoneDelete" layoutX="292.0" layoutY="77.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="delete">
+                                    <Button fx:id="btnNoflyzoneDelete" layoutX="292.0" layoutY="72.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="delete">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnCargoWP" layoutX="18.0" layoutY="145.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="cargo WP">
+                                    <Button fx:id="btnCargoWP" layoutX="18.0" layoutY="152.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Cargo WP">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Label layoutX="18.0" layoutY="127.0" text="cargo" textFill="WHITE">
+                                    <Label layoutX="18.0" layoutY="128.0" text="Cargo" textFill="WHITE">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Separator layoutX="14.0" layoutY="119.0" prefHeight="2.0" prefWidth="365.0" />
+                                    <Separator layoutX="14.0" layoutY="118.0" prefHeight="3.0" prefWidth="374.0" />
                                  </children>
                               </AnchorPane>
                            </left>
                            <right>
                               <AnchorPane prefWidth="350.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Label layoutX="21.0" layoutY="15.0" text="mission" textFill="WHITE">
+                                    <Label layoutX="21.0" layoutY="6.0" text="Mission" textFill="WHITE">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Button fx:id="btnMissionGoto" layoutX="20.0" layoutY="36.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="go to">
+                                    <Button fx:id="btnMissionGoto" layoutX="19.0" layoutY="32.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Go to">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnMissionRead" layoutX="130.0" layoutY="75.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="read">
+                                    <Button fx:id="btnMissionRead" layoutX="129.0" layoutY="71.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Read">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnMissionUpload" layoutX="239.0" layoutY="36.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="upload">
+                                    <Button fx:id="btnMissionUpload" layoutX="238.0" layoutY="32.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Upload">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnMissionDownload" layoutX="239.0" layoutY="75.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="download">
+                                    <Button fx:id="btnMissionDownload" layoutX="238.0" layoutY="71.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Download">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnMissionSet" layoutX="20.0" layoutY="75.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="set">
+                                    <Button fx:id="btnMissionSet" layoutX="19.0" layoutY="71.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Set">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnMissionJump" layoutX="19.0" layoutY="132.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="jump">
+                                    <Button fx:id="btnMissionJump" layoutX="18.0" layoutY="130.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Rump">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnMissionLoi" layoutX="130.0" layoutY="132.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Loi">
+                                    <Button fx:id="btnMissionLoi" layoutX="129.0" layoutY="130.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Loi">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button layoutX="239.0" layoutY="132.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="m​odification">
+                                    <Button layoutX="238.0" layoutY="130.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="M​odification">
                                        <font>
                                           <Font name="Aharoni Bold" size="12.0" />
                                        </font>
@@ -218,57 +218,27 @@
                </children>
             </StackPane>
          </center>
-         <bottom>
-            <BorderPane maxHeight="80.0" minHeight="80.0" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #000000;" BorderPane.alignment="CENTER">
-               <center>
-                  <HBox alignment="CENTER" prefHeight="51.0" prefWidth="492.0" spacing="10.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Label text="Control" textFill="WHITE">
-                           <padding>
-                              <Insets right="10.0" />
-                           </padding>
-                        </Label>
-                        <Button fx:id="armBtn" mnemonicParsing="false" text="Arm" />
-                        <Button fx:id="takeoffBtn" mnemonicParsing="false" text="Take Off" />
-                        <Button fx:id="landBtn" mnemonicParsing="false" text="Land" />
-                        <Button fx:id="loiterBtn" mnemonicParsing="false" text="Loiter" />
-                        <Button fx:id="rtlBtn" mnemonicParsing="false" text="RTL" />
-                        <Button fx:id="btnMissionStart" mnemonicParsing="false" text="Mission Start" />
-                        <Button fx:id="btnMissionStop" mnemonicParsing="false" text="Mission Stop" />
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </HBox>
-               </center>
-               <right>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="77.0" text="Status" textFill="WHITE" />
-                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="151.0" text="0" textFill="WHITE" />
-                     </children>
-                  </HBox>
-               </right>
-            </BorderPane>
-         </bottom>
          <top>
             <VBox prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
                   <BorderPane prefHeight="30.0" prefWidth="200.0">
                      <center>
-                        <Label fx:id="currtimeLabel" text="Label" textFill="WHITE" BorderPane.alignment="CENTER_RIGHT" />
+                        <Label fx:id="currtimeLabel" text="Label" textFill="WHITE" BorderPane.alignment="CENTER_RIGHT">
+                           <BorderPane.margin>
+                              <Insets right="20.0" />
+                           </BorderPane.margin></Label>
                      </center>
                   </BorderPane>
-                  <HBox fx:id="smallTopPane" alignment="CENTER" prefHeight="90.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;">
+                  <HBox fx:id="smallTopPane" alignment="CENTER_LEFT" prefHeight="90.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;">
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                        <VBox alignment="CENTER_LEFT" maxWidth="-Infinity" prefHeight="90.0" prefWidth="191.0" HBox.hgrow="ALWAYS">
                            <children>
                               <ImageView fx:id="logoImage" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/droneFive.png" />
                                  </image>
                                  <VBox.margin>
-                                    <Insets top="15.0" />
+                                    <Insets left="15.0" />
                                  </VBox.margin>
                               </ImageView>
                            </children>
@@ -278,7 +248,7 @@
                               <Image url="@../images/그림1.png" />
                            </image>
                            <HBox.margin>
-                              <Insets left="200.0" />
+                              <Insets left="300.0" />
                            </HBox.margin>
                         </ImageView>
                         <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0">
@@ -348,6 +318,55 @@
                </children>
             </VBox>
          </top>
+         <bottom>
+            <BorderPane maxHeight="80.0" minHeight="80.0" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #000000;" BorderPane.alignment="CENTER">
+               <center>
+                  <HBox alignment="CENTER" prefHeight="51.0" prefWidth="492.0" spacing="10.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label style="-fx-text-fill: white; -fx-background-color: black;" text="Control" textFill="WHITE">                           
+                           <HBox.margin>
+                              <Insets left="150.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="armBtn" alignment="CENTER" prefHeight="87.0" prefWidth="59.0" style="-fx-background-radius: 0;" text="Arm">
+                        </Button>
+                        <Button fx:id="takeoffBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Take Off">
+                           
+                        </Button>
+                        <Button fx:id="landBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Land">
+                           
+                        </Button>
+                        <Button fx:id="loiterBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Loiter">
+                           
+                        </Button>
+                        <Button fx:id="rtlBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="RTL">
+                           
+                        </Button>
+                        <Button fx:id="btnMissionStart" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Mission Start">
+                           
+                        </Button>
+                        <Button fx:id="btnMissionStop" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Mission Stop">
+                           
+                        </Button>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+               </center>
+               <right>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="77.0" text="Status" textFill="WHITE" />
+                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="151.0" text="0" textFill="WHITE" />
+                     </children>
+                  </HBox>
+               </right>
+            </BorderPane>
+         </bottom>
       </BorderPane>
    </children>
 </StackPane>

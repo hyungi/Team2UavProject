@@ -3,6 +3,34 @@
 	-fx-font-weight: bold;
 }
 
+.button {
+	-fx-background-color: black;
+	-fx-text-fill: white;
+}
+
+.button:hover {
+	-fx-background-color: white;
+	-fx-text-fill: black;
+}
+
+.table-view .filler{
+	-fx-background-color: #222222;
+}
+
+.table-view .column-header {
+	-fx-background-color: #222222;
+}
+
+.table-view .column-header .label {
+	-fx-background-color: transparent;
+	-fx-text-fill: white;
+}
+
+.table-view .column-header .label:hover {
+	-fx-background-color: white;
+	-fx-text-fill: black;
+}
+
 #leftVbox {
 	-fx-background-color: rgba(127, 127, 127, 0.5);
 }
