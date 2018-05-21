@@ -4,10 +4,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import gcs.mission.WayPoint;
 import gcs.network.Network;
 import javafx.animation.KeyFrame;
@@ -30,6 +28,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -51,14 +51,13 @@ public class AppMainController implements Initializable{
 	// 좌측
 	@FXML private VBox leftPane;
 	// 우측
-	@FXML private VBox rightPane;
-	
+	@FXML private VBox rightPane;	
 	// 아래 버튼 & Pane & 둘을 가지고있는 VBox & control 값
 	@FXML private AnchorPane openBottom;
 	@FXML private BorderPane missionPane;
 	@FXML private VBox bottomMovePane;
 	@FXML private Label bottomOpenLabel;
-	private boolean bottomControl = true;
+	private boolean bottomControl = true;	
 	// 우측 버튼 & Pane & 둘을 가지고있는 HBox & control 값
 	@FXML private AnchorPane openRight;
 	@FXML private AnchorPane viewPane;
@@ -67,7 +66,7 @@ public class AppMainController implements Initializable{
 	@FXML private VBox cameraVbox;
 	@FXML private VBox statusVbox;
 	@FXML private Label labelConnect;
-	private boolean rightControl = true;
+	private boolean rightControl = true;	
 	//맵
 	@FXML WebView webView;
 	private WebEngine webEngine;
@@ -105,6 +104,10 @@ public class AppMainController implements Initializable{
 	@FXML private Label locationLabel;
 	@FXML private Label batteryLabel;
 	@FXML private Label signalLabel;
+	@FXML private ImageView mqttButton;
+	@FXML private ImageView uavButton;
+	private boolean mqttStatus = true;
+	private boolean uavStatus = false;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -121,13 +124,14 @@ public class AppMainController implements Initializable{
 		initSlide();
 		initTop();
 		heightSize = webView.getHeight();
-		System.out.println("앱메인에서 :: "+heightSize);
 		try {
 			Parent leftRoot = FXMLLoader.load(getClass().getResource("../leftpane/left.fxml"));
 			Parent rightRoot = FXMLLoader.load(getClass().getResource("../rightpane/right.fxml"));
 			leftPane.getChildren().add(leftRoot);
 			rightPane.getChildren().add(rightRoot);
 		}catch (Exception e) {}
+		mainBorderPane.setVisible(false);
+		loginBorderPane.setVisible(true);
 	}
 
 //////////////////////////////////Top Menu 관련 ////////////////////////////////
@@ -137,6 +141,15 @@ public class AppMainController implements Initializable{
 		locationLabel.setText("12m");
 		batteryLabel.setText("12m");
 		signalLabel.setText("12m");	
+		// 연결 이벤트 클릭 관리
+		uavButton.setOnMouseClicked((event)->{
+			if(connectState) {
+				mainBorderPane.setVisible(false);
+				loginBorderPane.setVisible(true);
+				Network.getUav().disconnect();
+				connectState = false;
+			}
+		});
 	}
 	
 	public void currTime() {

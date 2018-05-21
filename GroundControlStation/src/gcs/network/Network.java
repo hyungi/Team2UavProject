@@ -1,7 +1,6 @@
 package gcs.network;
 
 import team2gcs.appmain.AppMainController;
-import team2gcs.login.LoginController;
 
 public class Network {
 	public static String mqttIp = AppMainController.ip;
