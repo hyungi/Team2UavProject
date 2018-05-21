@@ -103,6 +103,7 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnFenceActivate;
 	@FXML private Button btnFenceDeactivate;
 	@FXML private Button btnFenceDelete;
+	
 	//비행금지구역
 	@FXML private Button btnNoflyzoneSet;
 	@FXML private Button btnNoflyzoneDelete;

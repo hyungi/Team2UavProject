@@ -8,6 +8,20 @@
 	-fx-text-fill: white;
 }
 
+.table-view .column-header {
+	-fx-background-color: #222222;
+}
+
+.table-view .column-header .label {
+	-fx-background-color: transparent;
+	-fx-text-fill: white;
+}
+
+.table-view .column-header .label:hover {
+	-fx-background-color: white;
+	-fx-text-fill: black;
+}
+
 .button:hover{
 	-fx-background-color:white;
 	-fx-text-fill: black;
