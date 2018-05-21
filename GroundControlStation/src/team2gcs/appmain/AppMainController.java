@@ -110,9 +110,6 @@ public class AppMainController implements Initializable{
 	//화물
 	@FXML private Button btnCargoWP;
 	
-	
-
-	
 	//미션 테이블 뷰
 	@FXML private TableView<WayPoint> tableView;
      
@@ -166,8 +163,6 @@ public class AppMainController implements Initializable{
 		String inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
 		currtimeLabel.setText(inTime);
 	}
-	
-
 
 ////////////////////////////////// Slide Menu 관련 ////////////////////////////////
 	public void initSlide() {
@@ -263,6 +258,7 @@ public class AppMainController implements Initializable{
 		btnConnect.setOnAction((event)->{handleConnect(event);});
 		btnCancle.setOnAction((event)->{handleCancle(event);});
 	}
+	
 	//로그인화면 연결 버튼 이벤트 처리
 	public void handleConnect(ActionEvent event) {
 		//ip,port 보내기
@@ -513,8 +509,6 @@ public class AppMainController implements Initializable{
 			}
 		});
 	}		
-	
-	
 	
 	//테이블뷰 설정////////////////////////////////////////////////////////////////////////////////////////////////////////
 	private void initTableView() {

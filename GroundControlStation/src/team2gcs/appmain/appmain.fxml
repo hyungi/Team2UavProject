@@ -323,18 +323,34 @@
                <center>
                   <HBox alignment="CENTER" prefHeight="51.0" prefWidth="492.0" spacing="10.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Label text="Control" textFill="WHITE">
-                           <padding>
-                              <Insets right="10.0" />
-                           </padding>
+                        <Label style="-fx-text-fill: white; -fx-background-color: black;" text="Control" textFill="WHITE">                           
+                           <HBox.margin>
+                              <Insets left="150.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
                         </Label>
-                        <Button fx:id="armBtn" mnemonicParsing="false" text="Arm" />
-                        <Button fx:id="takeoffBtn" mnemonicParsing="false" text="Take Off" />
-                        <Button fx:id="landBtn" mnemonicParsing="false" text="Land" />
-                        <Button fx:id="loiterBtn" mnemonicParsing="false" text="Loiter" />
-                        <Button fx:id="rtlBtn" mnemonicParsing="false" text="RTL" />
-                        <Button fx:id="btnMissionStart" mnemonicParsing="false" text="Mission Start" />
-                        <Button fx:id="btnMissionStop" mnemonicParsing="false" text="Mission Stop" />
+                        <Button fx:id="armBtn" alignment="CENTER" prefHeight="87.0" prefWidth="59.0" style="-fx-background-radius: 0;" text="Arm">
+                        </Button>
+                        <Button fx:id="takeoffBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Take Off">
+                           
+                        </Button>
+                        <Button fx:id="landBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Land">
+                           
+                        </Button>
+                        <Button fx:id="loiterBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Loiter">
+                           
+                        </Button>
+                        <Button fx:id="rtlBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="RTL">
+                           
+                        </Button>
+                        <Button fx:id="btnMissionStart" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Mission Start">
+                           
+                        </Button>
+                        <Button fx:id="btnMissionStop" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Mission Stop">
+                           
+                        </Button>
                      </children>
                      <opaqueInsets>
                         <Insets />
