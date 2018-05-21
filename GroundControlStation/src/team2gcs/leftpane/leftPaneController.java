@@ -2,6 +2,8 @@ package team2gcs.leftpane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import gcs.network.UAV;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -14,9 +16,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import team2gcs.appmain.AppMain;
-import team2gcs.appmain.AppMainController;
 
 public class leftPaneController implements Initializable{
+	public static leftPaneController instance;
 	//좌측 메뉴
 	@FXML private VBox leftVbox;
 	@FXML private Label rollLabel;
@@ -26,12 +28,13 @@ public class leftPaneController implements Initializable{
 	@FXML private Canvas hudLineCanvas;
 	private GraphicsContext ctx;
 	private GraphicsContext ctx2;
-	private int roll = 0;
-	private int pitch = 0;
-	private int yaw = 0;
+	private double roll = 0;
+	private double pitch = 0;
+	private double yaw = 0;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		instance = this;
 		leftVbox.setPrefHeight(818);
 		ViewLoop viewLoop = new ViewLoop();
 		viewLoop.start();
@@ -126,6 +129,12 @@ public class leftPaneController implements Initializable{
 	private void initCanvasLayer() {
 		ctx = hudCanvas.getGraphicsContext2D();
 		ctx2 = hudLineCanvas.getGraphicsContext2D();
+	}
+	
+	public void setStatus(UAV uav) {
+		roll = uav.roll;
+		pitch = uav.pitch;
+		yaw = uav.yaw;
 	}
 
 }
