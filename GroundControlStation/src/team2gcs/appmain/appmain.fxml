@@ -12,51 +12,88 @@
 
 <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team2gcs.appmain.AppMainController">
    <children>
-      <BorderPane fx:id="loginBorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="731.25" prefWidth="1300.0" style="-fx-background-color: #222222;">
-         <center>
-            <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <BorderPane fx:id="loginBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="imgView" blendMode="DARKEN" fitHeight="1800.0" fitWidth="3200.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/bgbg.png" />
+               </image>
+            </ImageView>
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="460.0" prefWidth="350.0" style="-fx-background-color: black; -fx-opacity: 0.3;" />
+            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="460.0" prefWidth="350.0" style="-fx-opacity: 1;">
                <children>
-                  <ImageView fitHeight="768.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_RIGHT">
+                  <ImageView fitHeight="78.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/bg.png" />
+                        <Image url="@../images/logo_white.png" />
                      </image>
-                  </ImageView>
-                  <AnchorPane maxHeight="300.0" maxWidth="400.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #666666; -fx-background-radius: 8;">
-                     <children>
-                        <TextField fx:id="txtIP" alignment="CENTER" layoutX="132.0" layoutY="120.0" promptText="MQTT Broker IP" style="-fx-background-color: #666666;" />
-                        <TextField fx:id="txtPort" alignment="CENTER" layoutX="130.0" layoutY="152.0" promptText="MQTT Broker Port" style="-fx-background-color: #666666;" />
-                        <Button fx:id="btnConnect" layoutX="131.0" layoutY="229.0" mnemonicParsing="false" text="Connect" textFill="#5e5e5e">
-                           <font>
-                              <Font name="Aharoni Bold" size="12.0" />
-                           </font></Button>
-                        <ImageView fitHeight="66.0" fitWidth="137.0" layoutX="149.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/droneFive.png" />
-                           </image>
-                        </ImageView>
-                        <Separator layoutX="131.0" layoutY="143.0" prefHeight="2.0" prefWidth="138.0" />
-                        <Separator layoutX="130.0" layoutY="177.0" prefHeight="2.0" prefWidth="138.0" />
-                        <Button fx:id="btnCancle" layoutX="214.0" layoutY="229.0" mnemonicParsing="false" text="Cancel" textFill="#5e5e5e">
-                           <font>
-                              <Font name="Aharoni Bold" size="12.0" />
-                           </font></Button>
-                        <Label fx:id="labelConnect" alignment="CENTER" layoutX="65.0" layoutY="190.0" prefHeight="24.0" prefWidth="272.0" textFill="WHITE">
-                           <font>
-                              <Font name="Aharoni Bold" size="12.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-                  <ImageView fitHeight="570.0" fitWidth="564.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;" StackPane.alignment="TOP_LEFT">
-                     <image>
-                        <Image url="@../images/bg.png" />
-                     </image>
-                  </ImageView>
+                     <VBox.margin>
+                        <Insets bottom="50.0" />
+                     </VBox.margin></ImageView>
+                        <Label fx:id="loginLabel" alignment="CENTER" prefHeight="17.0" prefWidth="229.0" textFill="WHITE" />
+                  <TextField fx:id="txtIP" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="240.0" promptText="MQTT Broker IP" style="-fx-background-color: #515253; -fx-opacity: 0.8; -fx-background-radius: 20;">
+                     <VBox.margin>
+                        <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="txtPort" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="240.0" promptText="MQTT Broker Port" style="-fx-background-color: #515253; -fx-opacity: 0.8; -fx-background-radius: 20;" />
+                  <Button fx:id="btnConnect" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="240.0" style="-fx-background-radius: 20; -fx-background-color: #73a856;" text="CONECT" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="btnCancle" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="240.0" style="-fx-background-color: transparent;" text="Want to Exit?" textFill="#ffffffb2">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
                </children>
-            </StackPane>
-         </center>
-      </BorderPane>
+            </VBox>
+         </children>
+      </StackPane>
+   </center>
+</BorderPane>
       <BorderPane fx:id="mainBorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="731.25" prefWidth="1300.0" style="-fx-background-color: #000000;">
+         <bottom>
+            <BorderPane maxHeight="80.0" minHeight="80.0" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #000000;" BorderPane.alignment="CENTER">
+               <center>
+                  <HBox alignment="CENTER" prefHeight="51.0" prefWidth="492.0" spacing="10.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label style="-fx-text-fill: white; -fx-background-color: black;" text="Control" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="150.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Button fx:id="armBtn" alignment="CENTER" prefHeight="87.0" prefWidth="59.0" style="-fx-background-radius: 0;" text="Arm" />
+                        <Button fx:id="takeoffBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Take Off" />
+                        <Button fx:id="landBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Land" />
+                        <Button fx:id="loiterBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Loiter" />
+                        <Button fx:id="rtlBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="RTL" />
+                        <Button fx:id="btnMissionStart" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Mission Start" />
+                        <Button fx:id="btnMissionStop" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Mission Stop" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+               </center>
+               <right>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="77.0" text="Status" textFill="WHITE" />
+                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="151.0" text="0" textFill="WHITE" />
+                     </children>
+                  </HBox>
+               </right>
+            </BorderPane>
+         </bottom>
          <center>
             <StackPane BorderPane.alignment="CENTER">
                <children>
@@ -95,7 +132,8 @@
                               <TableView fx:id="tableView" prefWidth="850.0" style="-fx-background-color: #222222;" BorderPane.alignment="CENTER">
                                  <BorderPane.margin>
                                     <Insets right="20.0" />
-                                 </BorderPane.margin></TableView>
+                                 </BorderPane.margin>
+                              </TableView>
                            </center>
                            <left>
                               <VBox prefHeight="200.0" prefWidth="400.0" BorderPane.alignment="CENTER">
@@ -103,24 +141,8 @@
                                     <HBox prefHeight="104.0" prefWidth="189.0">
                                        <children>
                                           <BorderPane prefHeight="200.0" prefWidth="300.0">
-                                             <top>
-                                                <Label text="Fence" textFill="WHITE" BorderPane.alignment="CENTER_LEFT">
-                                                   <padding>
-                                                      <Insets left="24.0" />
-                                                   </padding>
-                                                </Label>
-                                             </top>
                                              <center>
                                                 <GridPane maxWidth="-Infinity" prefHeight="89.0" prefWidth="260.0" BorderPane.alignment="CENTER">
-                                                  <columnConstraints>
-                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                  </columnConstraints>
-                                                  <rowConstraints>
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                  </rowConstraints>
                                                    <children>
                                                       <Button fx:id="btnFenceUpload" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Upload" GridPane.columnIndex="1">
                                                          <font>
@@ -171,31 +193,37 @@
                                                          </GridPane.margin>
                                                       </Button>
                                                    </children>
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
                                                    <BorderPane.margin>
                                                       <Insets top="5.0" />
                                                    </BorderPane.margin>
                                                 </GridPane>
                                              </center>
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
                                              <padding>
                                                 <Insets top="5.0" />
                                              </padding>
+                                             <top>
+                                                <Label text="Fence" textFill="WHITE" BorderPane.alignment="CENTER_LEFT">
+                                                   <padding>
+                                                      <Insets left="24.0" />
+                                                   </padding>
+                                                </Label>
+                                             </top>
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
                                           </BorderPane>
                                           <BorderPane prefHeight="200.0" prefWidth="80.0">
-                                             <top>
-                                                <Label text="No-fly zone" textFill="WHITE" BorderPane.alignment="CENTER_LEFT" />
-                                             </top>
                                              <center>
                                                 <GridPane prefHeight="89.0" prefWidth="70.0" BorderPane.alignment="CENTER">
-                                                  <columnConstraints>
-                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="80.0" />
-                                                  </columnConstraints>
-                                                  <rowConstraints>
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                  </rowConstraints>
                                                    <children>
                                                       <Button fx:id="btnNoflyzoneSet" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Set">
                                                          <font>
@@ -208,6 +236,13 @@
                                                          </font>
                                                       </Button>
                                                    </children>
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="80.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
                                                    <BorderPane.margin>
                                                       <Insets top="5.0" />
                                                    </BorderPane.margin>
@@ -216,6 +251,9 @@
                                              <padding>
                                                 <Insets top="5.0" />
                                              </padding>
+                                             <top>
+                                                <Label text="No-fly zone" textFill="WHITE" BorderPane.alignment="CENTER_LEFT" />
+                                             </top>
                                           </BorderPane>
                                        </children>
                                        <VBox.margin>
@@ -224,6 +262,7 @@
                                     </HBox>
                                     <HBox prefHeight="100.0" prefWidth="200.0">
                                        <children>
+<<<<<<< HEAD
                                           <BorderPane prefHeight="82.0" prefWidth="310.0">
                                              <top>
                                                 <Label text="Cargo" textFill="WHITE" BorderPane.alignment="CENTER_LEFT">
@@ -232,8 +271,12 @@
                                                    </BorderPane.margin>
                                                 </Label>
                                              </top>
+=======
+                                          <BorderPane prefHeight="98.0" prefWidth="194.0">
+>>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
                                              <center>
                                                 <GridPane alignment="CENTER" prefHeight="81.0" prefWidth="142.0" BorderPane.alignment="CENTER">
+<<<<<<< HEAD
                                                   <columnConstraints>
                                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="112.0" />
                                                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="97.0" minWidth="10.0" prefWidth="87.0" />
@@ -242,6 +285,8 @@
                                                   <rowConstraints>
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
                                                   </rowConstraints>
+=======
+>>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
                                                    <children>
                                                       <Button fx:id="btnCargoWP" mnemonicParsing="false" text="Cargo WP">
                                                          <GridPane.margin>
@@ -251,11 +296,24 @@
                                                       <Button fx:id="btnCargoStart" mnemonicParsing="false" text="Cargo Start" GridPane.columnIndex="1" />
                                                       <Button fx:id="btnCargoStop" mnemonicParsing="false" text="Cargo Stop" GridPane.columnIndex="2" />
                                                    </children>
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
                                                 </GridPane>
                                              </center>
                                              <opaqueInsets>
                                                 <Insets />
                                              </opaqueInsets>
+                                             <top>
+                                                <Label text="Cargo" textFill="WHITE" BorderPane.alignment="CENTER_LEFT">
+                                                   <BorderPane.margin>
+                                                      <Insets left="24.0" />
+                                                   </BorderPane.margin>
+                                                </Label>
+                                             </top>
                                           </BorderPane>
                                        </children>
                                        <padding>
@@ -305,6 +363,9 @@
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                        </columnConstraints>
+                                       <padding>
+                                          <Insets right="10.0" />
+                                       </padding>
                                        <rowConstraints>
                                           <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="59.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
@@ -313,9 +374,6 @@
                                        <BorderPane.margin>
                                           <Insets top="5.0" />
                                        </BorderPane.margin>
-                                       <padding>
-                                          <Insets right="10.0" />
-                                       </padding>
                                     </GridPane>
                                  </center>
                                  <opaqueInsets>
@@ -345,29 +403,16 @@
                   <BorderPane prefHeight="30.0" prefWidth="200.0">
                      <center>
                         <Label fx:id="currtimeLabel" text="Label" textFill="WHITE" BorderPane.alignment="CENTER_RIGHT">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
                            <BorderPane.margin>
                               <Insets right="20.0" />
                            </BorderPane.margin>
-                           <font>
-                              <Font size="20.0" />
-                           </font></Label>
+                        </Label>
                      </center>
                   </BorderPane>
                   <BorderPane maxWidth="1.7976931348623157E308" prefHeight="90.0" style="-fx-background-color: #FFFFFF;">
-                     <left>
-                        <VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="90.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <ImageView fx:id="logoImage" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/droneFive.png" />
-                                 </image>
-                                 <VBox.margin>
-                                    <Insets left="15.0" />
-                                 </VBox.margin>
-                              </ImageView>
-                           </children>
-                        </VBox>
-                     </left>
                      <center>
                         <HBox alignment="CENTER" spacing="5.0" BorderPane.alignment="CENTER">
                            <children>
@@ -407,17 +452,18 @@
                               <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                                  <children>
                                     <Label prefWidth="100.0" text="Location">
-                                       <VBox.margin>
-                                          <Insets top="20.0" />
-                                       </VBox.margin>
                                        <font>
                                           <Font size="20.0" />
                                        </font>
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
                                     </Label>
                                     <Label fx:id="locationLabel" prefWidth="105.0" text="Label">
                                        <font>
                                           <Font size="16.0" />
-                                       </font></Label>
+                                       </font>
+                                    </Label>
                                  </children>
                                  <HBox.margin>
                                     <Insets left="5.0" />
@@ -431,17 +477,18 @@
                               <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                                  <children>
                                     <Label prefWidth="100.0" text="Battery">
-                                       <VBox.margin>
-                                          <Insets top="20.0" />
-                                       </VBox.margin>
                                        <font>
                                           <Font size="20.0" />
                                        </font>
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
                                     </Label>
                                     <Label fx:id="batteryLabel" prefWidth="105.0" text="Label">
                                        <font>
                                           <Font size="16.0" />
-                                       </font></Label>
+                                       </font>
+                                    </Label>
                                  </children>
                                  <HBox.margin>
                                     <Insets left="5.0" />
@@ -455,17 +502,18 @@
                               <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                                  <children>
                                     <Label prefWidth="100.0" text="Signal">
-                                       <VBox.margin>
-                                          <Insets top="20.0" />
-                                       </VBox.margin>
                                        <font>
                                           <Font size="20.0" />
                                        </font>
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
                                     </Label>
                                     <Label fx:id="signalLabel" prefWidth="105.0" text="Label">
                                        <font>
                                           <Font size="16.0" />
-                                       </font></Label>
+                                       </font>
+                                    </Label>
                                  </children>
                                  <HBox.margin>
                                     <Insets left="5.0" />
@@ -474,6 +522,20 @@
                            </children>
                         </HBox>
                      </center>
+                     <left>
+                        <VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="90.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <ImageView fx:id="logoImage" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/logo_black.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets left="15.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                           </children>
+                        </VBox>
+                     </left>
                      <right>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                            <children>
@@ -494,6 +556,7 @@
                </children>
             </VBox>
          </top>
+<<<<<<< HEAD
          <bottom>
             <BorderPane maxHeight="80.0" minHeight="80.0" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #000000;" BorderPane.alignment="CENTER">
                <center>
@@ -530,6 +593,8 @@
                </right>
             </BorderPane>
          </bottom>
+=======
+>>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
       </BorderPane>
    </children>
 </StackPane>

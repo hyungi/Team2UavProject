@@ -82,9 +82,11 @@ public class AppMainController implements Initializable{
 	@FXML private TextField txtPort;
 	@FXML private Button btnConnect;
 	@FXML private Button btnCancle;
+	@FXML private Label loginLabel;
 	public static String ip;
 	public static String port;
 	public static boolean connectState=false;
+	
 	//미션부분
 	@FXML private Button btnMissionSet;
 	@FXML private Button btnMissionRead;
@@ -148,8 +150,7 @@ public class AppMainController implements Initializable{
 		initTableView();
 		initMissionButton();
 		initLoginButton();
-
-
+		
 		initSlide();
 		initTop();
 		heightSize = webView.getHeight();
@@ -286,36 +287,13 @@ public class AppMainController implements Initializable{
 		if(btnConnect.getText().equals("Connect")) {
 			if(!ip.equals("")&&!port.equals("")) {
 				Network.connect();
-				Thread thread = new Thread(){
-		            @Override
-		            public void run() {
-		               while(!connectState) {
-		                   try{
-		                	   Platform.runLater(()->{
-		                           labelConnect.setText("Connect.");
-		                       });   
-		                       Thread.sleep(500);
-		                       Platform.runLater(()->{
-		                           labelConnect.setText("Connect..");
-		                       });   
-		                       Thread.sleep(500);
-		                       Platform.runLater(()->{
-		                           labelConnect.setText("Connect...");
-	 	                       });
-		                       Thread.sleep(500);
-		                   }
-		                   catch(Exception e){}
-		                }
-		               mainBorderPane.setVisible(true);
-		               loginBorderPane.setVisible(false);
-		            }
-		        };
-//		      thread.start();
-		        mainBorderPane.setVisible(true);
-			}else {
-				labelConnect.setText("IP 또는 Port를 입력해주세요");
-			}
-		} else {
+				mainBorderPane.setVisible(true);
+				loginBorderPane.setVisible(false);
+	
+			} else {
+				loginLabel.setText("Broker IP와 Port 모두 입력하세요.");
+			} 
+		}else {
 			Network.getUav().disconnect();
 		}
 		
