@@ -5,5 +5,8 @@
 	<classpathentry kind="lib" path="lib/org.eclipse.paho.client.mqttv3-1.2.0.jar"/>
 	<classpathentry kind="lib" path="lib/json-20180130.jar" sourcepath="C:/Users/Administrator/.m2/repository/org/json/json/20180130/json-20180130-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/pi4j-core.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-device.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-gpio-extension.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

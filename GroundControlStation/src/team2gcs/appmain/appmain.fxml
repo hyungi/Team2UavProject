@@ -138,7 +138,7 @@
                                                             <Insets left="3.0" />
                                                          </GridPane.margin>
                                                       </Button>
-                                                      <Button fx:id="btnFenceDownload" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Activate" GridPane.columnIndex="2">
+                                                      <Button fx:id="btnFenceDownload" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Download" GridPane.columnIndex="2">
                                                          <font>
                                                             <Font name="Aharoni Bold" size="12.0" />
                                                          </font>
@@ -154,7 +154,7 @@
                                                             <Insets left="3.0" />
                                                          </GridPane.margin>
                                                       </Button>
-                                                      <Button fx:id="btnFenceActivate" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Download" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                      <Button fx:id="btnFenceActivate" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Activate" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                          <font>
                                                             <Font name="Aharoni Bold" size="12.0" />
                                                          </font>
@@ -224,7 +224,7 @@
                                     </HBox>
                                     <HBox prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <BorderPane prefHeight="98.0" prefWidth="194.0">
+                                          <BorderPane prefHeight="82.0" prefWidth="310.0">
                                              <top>
                                                 <Label text="Cargo" textFill="WHITE" BorderPane.alignment="CENTER_LEFT">
                                                    <BorderPane.margin>
@@ -235,10 +235,12 @@
                                              <center>
                                                 <GridPane alignment="CENTER" prefHeight="81.0" prefWidth="142.0" BorderPane.alignment="CENTER">
                                                   <columnConstraints>
-                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="112.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="97.0" minWidth="10.0" prefWidth="87.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="138.0" minWidth="10.0" prefWidth="111.0" />
                                                   </columnConstraints>
                                                   <rowConstraints>
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
                                                   </rowConstraints>
                                                    <children>
                                                       <Button fx:id="btnCargoWP" mnemonicParsing="false" text="Cargo WP">
@@ -246,6 +248,8 @@
                                                             <Insets bottom="20.0" left="23.0" />
                                                          </GridPane.margin>
                                                       </Button>
+                                                      <Button fx:id="btnCargoStart" mnemonicParsing="false" text="Cargo Start" GridPane.columnIndex="1" />
+                                                      <Button fx:id="btnCargoStop" mnemonicParsing="false" text="Cargo Stop" GridPane.columnIndex="2" />
                                                    </children>
                                                 </GridPane>
                                              </center>
@@ -253,7 +257,6 @@
                                                 <Insets />
                                              </opaqueInsets>
                                           </BorderPane>
-                                          <BorderPane prefHeight="200.0" prefWidth="200.0" />
                                        </children>
                                        <padding>
                                           <Insets top="15.0" />
@@ -504,13 +507,13 @@
                               <Insets left="150.0" />
                            </HBox.margin>
                         </Label>
-                        <Button fx:id="armBtn" alignment="CENTER" prefHeight="87.0" prefWidth="59.0" style="-fx-background-radius: 0;" text="Arm" />
-                        <Button fx:id="takeoffBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Take Off" />
-                        <Button fx:id="landBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Land" />
-                        <Button fx:id="loiterBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Loiter" />
-                        <Button fx:id="rtlBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="RTL" />
-                        <Button fx:id="btnMissionStart" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Mission Start" />
-                        <Button fx:id="btnMissionStop" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Mission Stop" />
+                        <Button fx:id="armBtn" alignment="CENTER" prefHeight="80.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Arm" />
+                        <Button fx:id="takeoffBtn" alignment="CENTER" prefHeight="87.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Take Off" />
+                        <Button fx:id="landBtn" alignment="CENTER" prefHeight="87.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Land" />
+                        <Button fx:id="loiterBtn" alignment="CENTER" prefHeight="87.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Loiter" />
+                        <Button fx:id="rtlBtn" alignment="CENTER" prefHeight="87.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="RTL" />
+                        <Button fx:id="btnMissionStart" alignment="CENTER" prefHeight="87.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Mission Start" />
+                        <Button fx:id="btnMissionStop" alignment="CENTER" prefHeight="87.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Mission Stop" />
                      </children>
                      <opaqueInsets>
                         <Insets />
@@ -521,7 +524,7 @@
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
                         <Label alignment="CENTER" prefHeight="19.0" prefWidth="77.0" text="Status" textFill="WHITE" />
-                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="151.0" text="0" textFill="WHITE" />
+                        <Label fx:id="alt" alignment="CENTER" prefHeight="19.0" prefWidth="151.0" text="0" textFill="WHITE" />
                      </children>
                   </HBox>
                </right>

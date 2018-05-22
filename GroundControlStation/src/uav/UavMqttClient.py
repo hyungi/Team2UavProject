@@ -11,6 +11,12 @@ import paho.mqtt.client as mqtt
 import time
 import threading
 import simplejson
+import com.pi4j.io.gpio.GpioController;
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.pi4j.io.gpio.Pin;
+import com.pi4j.io.gpio.PinState;
+import com.pi4j.io.gpio.RaspiPin;
 
 #예외 발생시 예외 내용 출력을 위해 True로 설정----------------------
 debug = True
