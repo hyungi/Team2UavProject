@@ -84,7 +84,7 @@ public class leftPaneController implements Initializable{
     	
 	    	//yaw
 	    	ctx2.setFill(Color.WHITE);
-	    	ctx2.fillOval(45.5+39.5*Math.cos(yaw*0.01745-Math.PI/2),45.5+39.5*Math.sin(yaw*0.01745-Math.PI/2), 10, 10);
+	    	ctx2.fillOval(45.25+39.85*Math.cos(yaw*0.01745-Math.PI/2),45.25+39.85*Math.sin(yaw*0.01745-Math.PI/2), 10, 10);
    	}
    	
    	public void drawHudLine() {

@@ -71,7 +71,7 @@ public class AppMainController implements Initializable{
 	@FXML private Label rightOpenLabel;
 	@FXML private VBox cameraVbox;
 	@FXML private VBox statusVbox;
-	@FXML private Label labelConnect;
+//	@FXML private Label labelConnect;
 	private boolean rightControl = true;	
 	//맵
 	@FXML WebView webView;
@@ -82,9 +82,11 @@ public class AppMainController implements Initializable{
 	@FXML private TextField txtPort;
 	@FXML private Button btnConnect;
 	@FXML private Button btnCancle;
+	@FXML private Label loginLabel;
 	public static String ip;
 	public static String port;
 	public static boolean connectState=false;
+	
 	//미션부분
 	@FXML private Button btnMissionSet;
 	@FXML private Button btnMissionRead;
@@ -142,7 +144,6 @@ public class AppMainController implements Initializable{
 		initTableView();
 		initMissionButton();
 		initLoginButton();
-
 
 		initSlide();
 		initTop();
@@ -279,36 +280,12 @@ public class AppMainController implements Initializable{
 
 		if(!ip.equals("")&&!port.equals("")) {
 			Network.connect();
-			Thread thread = new Thread(){
-	            @Override
-	            public void run() {
-	               while(!connectState) {
-	                   try{
-	                	   Platform.runLater(()->{
-	                           labelConnect.setText("Connect.");
-	                       });   
-	                       Thread.sleep(500);
-	                       Platform.runLater(()->{
-	                           labelConnect.setText("Connect..");
-	                       });   
-	                       Thread.sleep(500);
-	                       Platform.runLater(()->{
-	                           labelConnect.setText("Connect...");
- 	                       });
-	                       Thread.sleep(500);
-	                   }
-	                   catch(Exception e){}
-	                }
-	               mainBorderPane.setVisible(true);
-	               loginBorderPane.setVisible(false);
-	            }
-	        };
-//	      thread.start();
-	        mainBorderPane.setVisible(true);
-		}else {
-			labelConnect.setText("IP 또는 Port를 입력해주세요");
+			mainBorderPane.setVisible(true);
+			loginBorderPane.setVisible(false);
+
+		} else {
+			loginLabel.setText("Broker IP와 Port 모두 입력하세요.");
 		}
-		
 	}
 	// 로그인화면 취소 버튼 이벤트처리
 	public void handleCancle(ActionEvent event) {
