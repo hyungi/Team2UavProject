@@ -13,11 +13,7 @@ var map = {
 			map.googlemap = new google.maps.Map(document.getElementById('map'), {
 				zoom: 3,
 				center: {lat:37.313778, lng:127.109004},
-		        mapTypeControlOptions: {
-		            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-		            position: google.maps.ControlPosition.TOP_CENTER
-		        },
-//				mapTypeId : "roadmap",
+				//mapTypeId : "roadmap",
 				mapTypeId : "satellite",
 				zoomControl: false,
 				streetViewControl: false,

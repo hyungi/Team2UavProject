@@ -71,7 +71,7 @@ public class AppMainController implements Initializable{
 	@FXML private Label rightOpenLabel;
 	@FXML private VBox cameraVbox;
 	@FXML private VBox statusVbox;
-//	@FXML private Label labelConnect;
+	@FXML private Label labelConnect;
 	private boolean rightControl = true;	
 	//맵
 	@FXML WebView webView;
@@ -116,6 +116,8 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnNoflyzoneDelete;
 	//화물
 	@FXML private Button btnCargoWP;
+	@FXML private Button btnCargoStart;
+	@FXML private Button btnCargoStop;
 	
 	//미션 테이블 뷰
 	@FXML private TableView<WayPoint> tableView;
@@ -134,6 +136,10 @@ public class AppMainController implements Initializable{
 	@FXML private Label signalLabel;
 	@FXML private ImageView connButton;
 	
+	
+	//Test
+	@FXML private Label alt;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		instance2 = this;
@@ -144,7 +150,7 @@ public class AppMainController implements Initializable{
 		initTableView();
 		initMissionButton();
 		initLoginButton();
-
+		
 		initSlide();
 		initTop();
 		heightSize = webView.getHeight();
@@ -289,6 +295,7 @@ public class AppMainController implements Initializable{
 		} else {
 			loginLabel.setText("Broker IP와 Port 모두 입력하세요.");
 		}
+		
 	}
 	// 로그인화면 취소 버튼 이벤트처리
 	public void handleCancle(ActionEvent event) {
@@ -307,6 +314,7 @@ public class AppMainController implements Initializable{
 		btnMissionJump.setOnAction((event)->{handleMissionJump(event);});
 		btnMissionLoi.setOnAction((event)->{handleMissionLoi(event);});
 		armBtn.setOnAction((event)->{handleArm(event);});
+		armBtn.setGraphic(new Circle(5, Color.rgb(0x35, 0x35, 0x35)));
 		takeoffBtn.setOnAction((event)->{handleTakeoff(event);});
 		landBtn.setOnAction((event)->{handleLand(event);});
 		loiterBtn.setOnAction((event)->{handleLoiter(event);});
@@ -319,10 +327,23 @@ public class AppMainController implements Initializable{
 		btnFenceDelete.setOnAction((event)->{handleFenceDelete(event);});
 		btnNoflyzoneSet.setOnAction((event)->{handleNoflyzoneSet(event);});
 		btnNoflyzoneDelete.setOnAction((event)->{handleNoflyzoneDelete(event);});
-		btnCargoWP.setOnAction((event)->{handleCargoWP(event);});
 		btnMissionStart.setOnAction((event)->{handleMissionStart(event);});
 		btnMissionStop.setOnAction((event)->{handleMissionStop(event);});
+		btnCargoWP.setOnAction((event)->{handleCargoWP(event);});
+		btnCargoStart.setOnAction((event)->{handleCargoStart(event);});
+		btnCargoStop.setOnAction((event)->{handleCargoStop(event);});
 		
+	}
+	//화물 부착 시작,끝
+	public void handleCargoStart(ActionEvent event) {
+		Platform.runLater(() -> {
+			jsproxy.call("missionStart");
+		});
+	}
+	public void handleCargoStop(ActionEvent event) {
+		Platform.runLater(() -> {
+			jsproxy.call("missionStart");
+		});
 	}
 	//미션 시작 정지
 	public void handleMissionStart(ActionEvent event) {
@@ -571,15 +592,16 @@ public class AppMainController implements Initializable{
 	
 	public void viewStatus(UAV uav) {
 		try {
-			leftPaneController.instance.setStatus(uav);
 			setStatus(uav);
+			leftPaneController.instance.setStatus(uav);
+			setMissionStatus(uav);
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void setStatus(UAV uav) {
-		Platform.runLater(() -> {
+	public void setMissionStatus(UAV uav) {
+		Platform.runLater(() -> {			
 			if(uav.homeLat != 0.0) {
 				jsproxy.call("setHomeLocation", uav.homeLat, uav.homeLng);
 				homeLabel.setText("lat "+uav.homeLat+"\n"+"lng "+uav.homeLng);
@@ -587,10 +609,12 @@ public class AppMainController implements Initializable{
 			jsproxy.call("setUavLocation", uav.latitude, uav.longitude, uav.heading);
 			
 			if(uav.wayPoints.size() != 0) {
+				System.out.println("가져온 미션 수:" + uav.wayPoints.size());
 				setMission(uav.wayPoints);
 			} 
 			
 			jsproxy.call("setNextWaypointNo", uav.nextWaypointNo);			
+			
 			if(Network.getUav().mode.equals("AUTO")) {
 				for(int i=0; i<tableView.getItems().size(); i++) {
 					WayPoint wp = tableView.getItems().get(i);
@@ -608,6 +632,23 @@ public class AppMainController implements Initializable{
 			
 			if(uav.fencePoints.size() != 0) {
 				setFence(uav.fencePoints);
+			}
+		});
+	}
+	public void setStatus(UAV uav) {
+		Platform.runLater(() -> {
+			if(uav.connected) {
+				btnConnect.setText("Disconnect");
+				alt.setText(String.valueOf(uav.altitude));
+				if(uav.armed) {
+					armBtn.setText("Disarm");
+					armBtn.setGraphic(new Circle(5, Color.RED)); 
+				} else {
+					armBtn.setText("Arm");
+					armBtn.setGraphic(new Circle(5, Color.rgb(0x35, 0x35, 0x35)));
+				}
+			} else {
+				btnConnect.setText("Connect");
 			}
 		});
 	}

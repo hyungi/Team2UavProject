@@ -12,6 +12,7 @@ import time
 import threading
 import simplejson
 
+
 #예외 발생시 예외 내용 출력을 위해 True로 설정----------------------
 debug = True
 
