@@ -86,6 +86,7 @@ public class UAV implements Cloneable {
 
 					AppMainController.connectState = true;
 				} catch (Exception e) {
+					System.out.println("들어옸니");
 					UAV.this.disconnect();
 				}
 			}
@@ -99,6 +100,7 @@ public class UAV implements Cloneable {
 			//AppMainController.instance2.setStatus(new UAV());
 			mqttClient.disconnect();
 			mqttClient.close();
+			System.out.println("종료");
 		} catch (Exception e) {
 		}
 		connected = false;
@@ -130,6 +132,9 @@ public class UAV implements Cloneable {
 			groundSpeed = jsonObject.getDouble("groundspeed");
 			homeLat = jsonObject.getDouble("homeLat");
 			homeLng = jsonObject.getDouble("homeLng");
+			
+			AppMainController.instance2.batterySet(batteryLevel);
+			AppMainController.instance2.locationSet(latitude, longitude);
 			
 			try {
 				rangeFinderDistance = jsonObject.getDouble("rangefinder_distance");
