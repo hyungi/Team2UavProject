@@ -19,6 +19,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
 import team2gcs.appmain.AppMain;
 
@@ -31,76 +32,141 @@ public class leftPaneController implements Initializable{
    	@FXML private Label rollLabel;
    	@FXML private Label pitchLabel;
    	@FXML private Label yawLabel;
+   	@FXML private Label armedLabel;
+   	@FXML private Label modeLabel;
+   	@FXML private Label airSpeedLabel;
+   	@FXML private Label groundSpeedLabel;
+   	@FXML private Label distWPLabel;
+   	@FXML private Label altitudeLabel;
+   	@FXML private Label detailModeLabel;
+   	@FXML private Label detailAirSpeedLabel;
+   	@FXML private Label detailGroundSpeedLabel;
+   	@FXML private Label detailAltitudeLabel;
+   	@FXML private Label detailDistWPLabel;
+   	@FXML private Label detailDistHomeLabel;
+   	@FXML private Label detailTimeAirLabel;
+   	@FXML private Label detailFenceLabel;
+   	@FXML private Label detailMissionLabel;
+   	@FXML private Label detailNoFlyLabel;
+   	@FXML private Label detailVoltageLabel;
    	@FXML private Label sensorLabel;
    	@FXML private Label sensorDetailLabel;
    	@FXML private Circle circle;
    	@FXML private Canvas hudLineCanvas;
    	@FXML private Canvas yawCanvas;
+   	@FXML private Canvas myYawLineCanvas;
+   	@FXML private Canvas myYawChangeCanvas;
    	private GraphicsContext ctx1;
    	private GraphicsContext ctx2;
+   	private GraphicsContext ctx3;
+   	private GraphicsContext ctx4;
    	private double roll = 0;
    	private double pitch = 0;
    	private double yaw = 0;
+   	private double airSpeed = 0;
+   	private double groundSpeed = 0;
+   	private double altitude = 0;
+   	private double distWP = 0;
+   	private double distHome = 0;
+   	private double timeAir = 0;
+   	private double voltage = 0;
+   	private String mode = "";
+   	private boolean armed = false;
+   	private boolean fenceData = false;
+   	private boolean missionData = false;
+   	private boolean noFlyData = false;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		instance = this;
-		leftVbox.setPrefHeight(300);
 		ViewLoop viewLoop = new ViewLoop();
 		viewLoop.start();
  		initCanvasLayer();
 		initLeftPane();
+		try {
+			handleRPY();
+		} catch (Exception e) {}
 	}
 	
-	////////////////////////////////// 좌측 메뉴 ////////////////////////////////
+   	private void initLeftPane() {
+		ViewLoop viewLoop = new ViewLoop();
+		viewLoop.start();
+		initCanvasLayer();
+		sensorLabelEvent();
+   	}
 	class ViewLoop extends AnimationTimer {
 		@Override
    		public void handle(long now) {
-			ctx1.clearRect(0, 0, 150, 150); 
-			ctx2.clearRect(0, 0, 150, 150);
+			ctx1.clearRect(0, 0, hudLineCanvas.getWidth(), hudLineCanvas.getHeight()); 
+			ctx2.clearRect(0, 0, yawCanvas.getWidth(), yawCanvas.getHeight());
+			ctx3.clearRect(0, 0, myYawLineCanvas.getWidth(), myYawLineCanvas.getHeight()); 
+			ctx4.clearRect(0, 0, myYawChangeCanvas.getWidth(), myYawChangeCanvas.getHeight());
 			
 			drawHud();
 			drawHudLine();
+			drawMyYaw();
+			setRollStatus();
+			setStatus();
 			try {
-				handleRPY();
+//				handleRPY();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			rollLabel.setText("   Roll:	" + roll);
-			pitchLabel.setText("   Pitch:	" + pitch);
-			yawLabel.setText("   Yaw:	" + yaw);
   		} 
    	}
 	
 	private void initCanvasLayer() {
    		ctx1 = hudLineCanvas.getGraphicsContext2D();
    		ctx2 = yawCanvas.getGraphicsContext2D();
+   		ctx3 = myYawLineCanvas.getGraphicsContext2D();
+   	   	ctx4 = myYawChangeCanvas.getGraphicsContext2D();
    	}   
 	
    	private void drawHud() {
-		ImagePattern img = new ImagePattern(new Image(getClass().getResourceAsStream("../images/hudBg1.png")), 0, -pitch, 100, 300, false);
+		ImagePattern img = new ImagePattern(new Image(getClass().getResourceAsStream("../images/hudBg1.png")), 0, pitch*2, 100, 300, false);
 	   	circle.setFill(img);
     	
-	    	//yaw
-	    	ctx2.setFill(Color.WHITE);
-	    	ctx2.fillOval(45.25+39.85*Math.cos(yaw*0.01745-Math.PI/2),45.25+39.85*Math.sin(yaw*0.01745-Math.PI/2), 10, 10);
+    	//yaw
+    	ctx2.setFill(Color.WHITE);
+    	ctx2.fillOval(88+(65*Math.cos(yaw*0.017468-Math.PI/2)), 109+(65*Math.sin(yaw*0.017468-Math.PI/2)), 15, 15);
    	}
-   	
+
    	public void drawHudLine() {
 		ctx1.setLineWidth(1);
 		ctx1.setStroke(Color.WHITE);
-		ctx1.strokeLine(30, 50-pitch*1.1, 70, 50-pitch*1.1);
+		ctx1.strokeLine(30, 70+pitch*2, 110, 70+pitch*2);
 		
-		for(int i=5; i<15-pitch; i+=5) {
-			ctx1.strokeLine(40, 50-(i*1.6+pitch*1.1), 60, 50-(i*1.6+pitch*1.05));
+		for(int i=5; i<25-pitch; i+=5) {
+			ctx1.strokeLine((i%2==0)?40:50, 70+(i*1.75+pitch*2), (i%2==0)?100:90, 70+(i*1.75+pitch*2));
+			
 		}
-		for(int i=5; i<15+pitch; i+=5) {
-			ctx1.strokeLine(40, 50+(i*1.6-pitch*1.1), 60, 50+(i*1.6-pitch*1.05));
+		for(int i=5; i<25+pitch; i+=5) {
+			ctx1.strokeLine((i%2==0)?40:50, 70-(i*1.75-pitch*2), (i%2==0)?100:90, 70-(i*1.75-pitch*2));
 		}
 	}
-	
-	private void handleRPY() throws Exception {
+   	
+   	public void drawMyYaw() {
+//   		ctx3 = myYawLineCanvas.getGraphicsContext2D();
+//   	   	ctx4 = myYawChangeCanvas.getGraphicsContext2D();
+   		ctx3.setStroke(Color.WHITE);
+   		ctx3.setLineWidth(2);
+   		ctx3.strokeLine(30, 20, 160, 20);
+   		ctx3.strokeLine(30, 28, 30, 20);
+   		ctx3.strokeLine(160, 28, 160, 20);
+//   		ctx3.strokeArc(20, 15, 150, 120, 20, 140, ArcType.OPEN);
+   		for(int i=5; i<=60; i+=5) {
+   			ctx3.strokeLine(95+i, (i%2==0)?33:28, 95+i, 20);
+   	   		ctx3.strokeLine(95-i, (i%2==0)?33:28, 95-i, 20);
+   		}
+   		
+   		double xPoints[] = {95, 102, 88};
+   		double yPoints[] = {25, 38, 38};
+   		ctx4.setStroke(Color.WHITE);
+   		ctx4.strokePolygon(xPoints, yPoints, 3);
+   	}
+   	
+   	private void handleRPY() throws Exception {
 		Platform.runLater(() -> {
 			AppMain.tempScene.setOnKeyPressed((event) -> {
 				if(event.getCode() == KeyCode.Q) {
@@ -126,12 +192,12 @@ public class leftPaneController implements Initializable{
 						System.out.println(roll);
 					}
 				} else if(event.getCode() == KeyCode.S) {
-					if(pitch > -10) {
+					if(pitch > -25) {
 						pitch--;
 						System.out.println(pitch);
 					}
 				} else if(event.getCode() == KeyCode.W) {
-					if(pitch < 10) {
+					if(pitch < 25) {
 						pitch++;
 						System.out.println(pitch);
 					}
@@ -139,13 +205,6 @@ public class leftPaneController implements Initializable{
 			});
 		});
 	} 
-	
-   	private void initLeftPane() {
-		ViewLoop viewLoop = new ViewLoop();
-		viewLoop.start();
-		initCanvasLayer();
-		sensorLabelEvent();
-   	}
    	
    	private void sensorLabelEvent() {
 		sensorLabel.setOnMouseClicked(new EventHandler<Event>() {
@@ -166,9 +225,52 @@ public class leftPaneController implements Initializable{
 		});
    	}
 	
-	public void setStatus(UAV uav) {
+	public void getRollStatus(UAV uav) {
 		roll = uav.roll;
 		pitch = uav.pitch;
-		yaw = uav.yaw;
+		if(uav.yaw < 0) yaw = uav.yaw+360;
+		else yaw = uav.yaw;
+		armed = uav.armed;
+	}
+	
+	public void setRollStatus() {
+		rollLabel.setText(String.format("%.4f",roll));
+		pitchLabel.setText(String.format("%.4f",pitch));
+		yawLabel.setText(String.format("%.4f",yaw));
+		if(armed == true) {
+			armedLabel.setStyle("-fx-text-fill: red;");
+			armedLabel.setText("Armed");
+		} else if(armed == false) {
+			armedLabel.setStyle("-fx-text-fill: white;");
+			armedLabel.setText("DisArmed");
+		}
+		hudLineCanvas.setRotate(roll);
+		circle.setRotate(roll);
+	}
+	
+	public void getStatus(UAV uav) {
+		mode = uav.mode;
+		airSpeed = uav.airSpeed;
+		groundSpeed = uav.groundSpeed;
+		altitude = uav.altitude;
+		//distWP
+		voltage = uav.batteryVoltage;
+		
+	}
+	
+	public void setStatus() {
+		//간단 모드
+		modeLabel.setText(mode);
+		airSpeedLabel.setText(String.format("%.4f", airSpeed));
+		groundSpeedLabel.setText(String.format("%.4f", groundSpeed));
+		altitudeLabel.setText(String.format("%.2f", altitude));
+		
+		//상세모드
+		detailModeLabel.setText(mode);
+		detailAirSpeedLabel.setText(String.format("%.6f", airSpeed));
+		detailGroundSpeedLabel.setText(String.format("%.6f", groundSpeed));
+		detailAltitudeLabel.setText(String.format("%.2f", altitude));
+		
+		detailVoltageLabel.setText(String.format("%.4f", voltage));
 	}
 }

@@ -15,5 +15,4 @@ public class rightPaneController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		rightVbox.setPrefHeight(818);
 	}
-
 }
