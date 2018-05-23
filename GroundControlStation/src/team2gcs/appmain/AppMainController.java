@@ -136,8 +136,10 @@ public class AppMainController implements Initializable{
 
    	//상단 라벨
    	@FXML private Label currtimeLabel;
-	@FXML private Label homeLabel;
-	@FXML private Label locationLabel;
+	@FXML private Label homeLatLabel;
+	@FXML private Label homeLngLabel;
+	@FXML private Label locationLatLabel;
+	@FXML private Label locationLngLabel;
 	@FXML private Label batteryLabel;
 	@FXML private Label signalLabel;
 	@FXML private ImageView connButton;
@@ -167,12 +169,18 @@ public class AppMainController implements Initializable{
 			rightPane.getChildren().add(rightRoot);
 		}catch (Exception e) {}
 	}
+	
+	public void loginKeyAction() {
+		
+	}
 
 //////////////////////////////////Top Menu 관련 ////////////////////////////////
 	public void initTop() {
 	//	currTime();
-		homeLabel.setText("init");
-		locationLabel.setText("init");
+		homeLatLabel.setText("init");
+		homeLngLabel.setText("init");
+		locationLngLabel.setText("init");
+		locationLatLabel.setText("init");
 		batteryLabel.setText("init");
 		signalLabel.setText("init");	
 		// 연결 이벤트 클릭 관리
@@ -304,19 +312,16 @@ public class AppMainController implements Initializable{
 			});
 		}
 	};
-  
-
 	//로그인 버튼////////////////////////////////////////////////////////////////////////////////////////
 	public void initLoginButton() {
 		btnConnect.setOnAction((event)->{handleConnect(event);});
 		btnCancle.setOnAction((event)->{handleCancle(event);});
 	}
-	
 	//로그인화면 연결 버튼 이벤트 처리
 	public void handleConnect(ActionEvent event) {
 		//ip,port 보내기
 		ip=txtIP.getText();
-		port=txtPort.getText();		
+		port=txtPort.getText();
 
 		if(!ip.equals("")&&!port.equals("")) {
 			Network.connect();
@@ -622,18 +627,20 @@ public class AppMainController implements Initializable{
 	public void viewStatus(UAV uav) {
 		try {
 			setStatus(uav);
-			leftPaneController.instance.setStatus(uav);
+			leftPaneController.instance.getRollStatus(uav);
+			leftPaneController.instance.getStatus(uav);
 			setMissionStatus(uav);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-	public void setMissionStatus(UAV uav) {
-		Platform.runLater(() -> {			
+	public void setMissionStatus(UAV uav) {		
+		Platform.runLater(() -> {
 			if(uav.homeLat != 0.0) {
 				jsproxy.call("setHomeLocation", uav.homeLat, uav.homeLng);
-				homeLabel.setText("lat "+uav.homeLat+"\n"+"lng "+uav.homeLng);
+				homeLatLabel.setText(String.format("Lat:	%.6f", uav.homeLat));
+				homeLngLabel.setText(String.format("Lng:	%.6f", uav.homeLng));	
 			}
 			jsproxy.call("setUavLocation", uav.latitude, uav.longitude, uav.heading);
 			
@@ -753,7 +760,8 @@ public class AppMainController implements Initializable{
 	}
 	public void locationSet(double lat, double lng) {
 		Platform.runLater(()->{
-			locationLabel.setText("lat "+lat+"\n"+"lng "+lng);
+			locationLatLabel.setText("Lat:	" + lat);
+			locationLngLabel.setText("Lng:	" + lng);
 		});
 	}
 }

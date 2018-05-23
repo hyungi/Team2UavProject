@@ -17,7 +17,7 @@ import simplejson
 debug = True
 
 # #Autopilot(FC-펌웨어)과 연결----------------------------------jdh------------------------------
-vehicle = connect('udp:192.168.3.16:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
+vehicle = connect('udp:192.168.3.177:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
 # # vehicle = connect('/dev/ttyS0',wait_ready = True,baud57600) #라즈베리파이에서 실행시 
 
 #Autopilot과 연결-----------------------------------------

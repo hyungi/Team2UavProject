@@ -104,7 +104,7 @@ var map = {
 			              stylers: [{color: '#17263c'}]
 			            }
 			          ],
-//			    disableDefaultUI:true,
+			    disableDefaultUI:true,
 //				zoomControl: true,
 				streetViewControl: false,
 				rotateControl: false,
