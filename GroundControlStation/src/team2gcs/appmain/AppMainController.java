@@ -289,12 +289,22 @@ public class AppMainController implements Initializable{
 			try{Thread.sleep(500);}catch(Exception e) {}
 			System.out.println("들어옴 %%  "+connectState);
 			if(connectState) {
+		
+
+		if(!ip.equals("")&&!port.equals("")) {
+			Network.connect();
+			if(connectState) {
 				mainBorderPane.setVisible(true);
 				loginBorderPane.setVisible(false);
 			}
 		} else {
 			loginLabel.setText("Broker IP와 Port 모두 입력하세요.");
 		}
+			}
+		} else {
+			loginLabel.setText("Broker IP와 Port 모두 입력하세요.");
+		} 
+
 		
 	}
 	// 로그인화면 취소 버튼 이벤트처리
@@ -601,7 +611,8 @@ public class AppMainController implements Initializable{
 		}
 	}
 	public void setMissionStatus(UAV uav) {
-		Platform.runLater(() -> {			
+		Platform.runLater(() -> {
+			
 			if(uav.homeLat != 0.0) {
 				jsproxy.call("setHomeLocation", uav.homeLat, uav.homeLng);
 				homeLabel.setText("lat "+uav.homeLat+"\n"+"lng "+uav.homeLng);
@@ -638,7 +649,7 @@ public class AppMainController implements Initializable{
 	public void setStatus(UAV uav) {
 		Platform.runLater(() -> {
 			if(uav.connected) {
-				btnConnect.setText("Disconnect");
+				btnConnect.setText("DISCONNECT");
 				alt.setText(String.valueOf(uav.altitude));
 				if(uav.armed) {
 					armBtn.setText("Disarm");
@@ -648,7 +659,7 @@ public class AppMainController implements Initializable{
 					armBtn.setGraphic(new Circle(5, Color.rgb(0x35, 0x35, 0x35)));
 				}
 			} else {
-				btnConnect.setText("Connect");
+				btnConnect.setText("CONNECT");
 			}
 		});
 	}
