@@ -54,8 +54,6 @@ public class leftPaneController implements Initializable{
    	@FXML private Circle circle;
    	@FXML private Canvas hudLineCanvas;
    	@FXML private Canvas yawCanvas;
-   	@FXML private Canvas myYawLineCanvas;
-   	@FXML private Canvas myYawChangeCanvas;
    	private GraphicsContext ctx1;
    	private GraphicsContext ctx2;
    	private GraphicsContext ctx3;
@@ -99,28 +97,17 @@ public class leftPaneController implements Initializable{
    		public void handle(long now) {
 			ctx1.clearRect(0, 0, hudLineCanvas.getWidth(), hudLineCanvas.getHeight()); 
 			ctx2.clearRect(0, 0, yawCanvas.getWidth(), yawCanvas.getHeight());
-			ctx3.clearRect(0, 0, myYawLineCanvas.getWidth(), myYawLineCanvas.getHeight()); 
-			ctx4.clearRect(0, 0, myYawChangeCanvas.getWidth(), myYawChangeCanvas.getHeight());
 			
 			drawHud();
 			drawHudLine();
-			drawMyYaw();
 			setRollStatus();
 			setStatus();
-			try {
-//				handleRPY();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
   		} 
    	}
 	
 	private void initCanvasLayer() {
    		ctx1 = hudLineCanvas.getGraphicsContext2D();
    		ctx2 = yawCanvas.getGraphicsContext2D();
-   		ctx3 = myYawLineCanvas.getGraphicsContext2D();
-   	   	ctx4 = myYawChangeCanvas.getGraphicsContext2D();
    	}   
 	
    	private void drawHud() {
@@ -129,7 +116,7 @@ public class leftPaneController implements Initializable{
     	
     	//yaw
     	ctx2.setFill(Color.WHITE);
-    	ctx2.fillOval(88+(65*Math.cos(yaw*0.017468-Math.PI/2)), 109+(65*Math.sin(yaw*0.017468-Math.PI/2)), 15, 15);
+    	ctx2.fillOval(88+(65*Math.cos(yaw*0.017468-Math.PI/2)), 92+(65*Math.sin(yaw*0.017468-Math.PI/2)), 15, 15);
    	}
 
    	public void drawHudLine() {
@@ -146,64 +133,44 @@ public class leftPaneController implements Initializable{
 		}
 	}
    	
-   	public void drawMyYaw() {
-//   		ctx3 = myYawLineCanvas.getGraphicsContext2D();
-//   	   	ctx4 = myYawChangeCanvas.getGraphicsContext2D();
-   		ctx3.setStroke(Color.WHITE);
-   		ctx3.setLineWidth(2);
-   		ctx3.strokeLine(30, 20, 160, 20);
-   		ctx3.strokeLine(30, 28, 30, 20);
-   		ctx3.strokeLine(160, 28, 160, 20);
-//   		ctx3.strokeArc(20, 15, 150, 120, 20, 140, ArcType.OPEN);
-   		for(int i=5; i<=60; i+=5) {
-   			ctx3.strokeLine(95+i, (i%2==0)?33:28, 95+i, 20);
-   	   		ctx3.strokeLine(95-i, (i%2==0)?33:28, 95-i, 20);
-   		}
-   		
-   		double xPoints[] = {95, 102, 88};
-   		double yPoints[] = {25, 38, 38};
-   		ctx4.setStroke(Color.WHITE);
-   		ctx4.strokePolygon(xPoints, yPoints, 3);
-   	}
-   	
    	private void handleRPY() throws Exception {
-		Platform.runLater(() -> {
-			AppMain.tempScene.setOnKeyPressed((event) -> {
-				if(event.getCode() == KeyCode.Q) {
-					yaw--;
-					System.out.println(yaw);
-					if(yaw == -1) yaw = 359;
-				} else if(event.getCode() == KeyCode.E) {
-					yaw++;
-					System.out.println(yaw);
-					if(yaw == 360) yaw = 0;
-				} else if(event.getCode() == KeyCode.A) {
-					if(roll>= -21) {
-						roll--;
-						hudLineCanvas.setRotate(roll);
-						circle.setRotate(roll);
-						System.out.println(roll);
-					}
-				} else if(event.getCode() == KeyCode.D) {
-					if(roll < 21) {
-						roll++;
-						hudLineCanvas.setRotate(roll);
-						circle.setRotate(roll);
-						System.out.println(roll);
-					}
-				} else if(event.getCode() == KeyCode.S) {
-					if(pitch > -25) {
-						pitch--;
-						System.out.println(pitch);
-					}
-				} else if(event.getCode() == KeyCode.W) {
-					if(pitch < 25) {
-						pitch++;
-						System.out.println(pitch);
-					}
-				}
-			});
-		});
+//		Platform.runLater(() -> {
+//			AppMain.tempScene.setOnKeyPressed((event) -> {
+//				if(event.getCode() == KeyCode.Q) {
+//					yaw--;
+//					System.out.println(yaw);
+//					if(yaw == -1) yaw = 359;
+//				} else if(event.getCode() == KeyCode.E) {
+//					yaw++;
+//					System.out.println(yaw);
+//					if(yaw == 360) yaw = 0;
+//				} else if(event.getCode() == KeyCode.A) {
+//					if(roll>= -21) {
+//						roll--;
+//						hudLineCanvas.setRotate(roll);
+//						circle.setRotate(roll);
+//						System.out.println(roll);
+//					}
+//				} else if(event.getCode() == KeyCode.D) {
+//					if(roll < 21) {
+//						roll++;
+//						hudLineCanvas.setRotate(roll);
+//						circle.setRotate(roll);
+//						System.out.println(roll);
+//					}
+//				} else if(event.getCode() == KeyCode.S) {
+//					if(pitch > -25) {
+//						pitch--;
+//						System.out.println(pitch);
+//					}
+//				} else if(event.getCode() == KeyCode.W) {
+//					if(pitch < 25) {
+//						pitch++;
+//						System.out.println(pitch);
+//					}
+//				}
+//			});
+//		});
 	} 
    	
    	private void sensorLabelEvent() {
@@ -255,7 +222,6 @@ public class leftPaneController implements Initializable{
 		altitude = uav.altitude;
 		//distWP
 		voltage = uav.batteryVoltage;
-		
 	}
 	
 	public void setStatus() {

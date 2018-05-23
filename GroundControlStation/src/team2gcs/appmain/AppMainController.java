@@ -604,8 +604,8 @@ public class AppMainController implements Initializable{
 	public void viewStatus(UAV uav) {
 		try {
 			setStatus(uav);
-//			leftPaneController.instance.getRollStatus(uav);
-//			leftPaneController.instance.getStatus(uav);
+			leftPaneController.instance.getRollStatus(uav);
+			leftPaneController.instance.getStatus(uav);
 			setMissionStatus(uav);
 			
 		} catch(Exception e) {
