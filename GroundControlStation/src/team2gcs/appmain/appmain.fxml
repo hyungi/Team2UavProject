@@ -98,7 +98,48 @@
             <StackPane BorderPane.alignment="CENTER">
                <children>
                   <WebView fx:id="webView" prefHeight="-1.0" prefWidth="-1.0" />
-                  <VBox fx:id="leftPane" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="400.0" StackPane.alignment="TOP_LEFT" />
+                  <HBox maxWidth="-Infinity" StackPane.alignment="TOP_LEFT">
+                     <children>
+                        <VBox fx:id="leftPane" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="400.0" />
+                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" spacing="10.0">
+                           <children>
+                              <HBox alignment="CENTER" opacity="0.8" prefHeight="30.0" prefWidth="80.0" spacing="4.0" style="-fx-background-color: #222222; -fx-background-radius: 10;">
+                                 <children>
+                                    <Label fx:id="mapButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="MAP" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label maxHeight="1.7976931348623157E308" maxWidth="1.0" minHeight="1.0" prefHeight="1.0" prefWidth="1.0" style="-fx-background-color: #FFFFFF;" textFill="WHITE" />
+                                    <Label fx:id="satButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="SAT" textFill="WHITE">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.8" prefHeight="80.0" prefWidth="30.0" spacing="4.0" style="-fx-background-color: #222222; -fx-background-radius: 10;">
+                                 <children>
+                                    <Label fx:id="plusButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="+" textFill="WHITE">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </Label>
+                                    <Label maxHeight="1.0" maxWidth="1.7976931348623157E308" minHeight="1.0" prefHeight="1.0" prefWidth="1.0" style="-fx-background-color: #FFFFFF;" />
+                                    <Label fx:id="minusButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="-" textFill="WHITE">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="10.0" top="5.0" />
+                           </HBox.margin>
+                        </VBox>
+                     </children>
+                  </HBox>
                   <HBox fx:id="rightMovePane" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" opacity="0.9" style="-fx-background-color: transparent;" translateX="550.0" StackPane.alignment="CENTER_RIGHT">
                      <children>
                         <AnchorPane fx:id="openRight" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35" prefWidth="200" style="-fx-background-color: #222222; -fx-background-radius: 5 5 0 0; -fx-rotate: -90;" translateX="-117.0">

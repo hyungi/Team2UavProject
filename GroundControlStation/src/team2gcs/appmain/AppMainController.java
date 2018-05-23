@@ -56,6 +56,12 @@ public class AppMainController implements Initializable{
 	
 	// 좌측
 	@FXML private VBox leftPane;
+	@FXML private Label mapButton;
+	@FXML private Label satButton;
+	@FXML private Label plusButton;
+	@FXML private Label minusButton;
+	private int zoom = 18;
+	
 	// 우측
 	@FXML private VBox rightPane;	
 	// 아래 버튼 & Pane & 둘을 가지고있는 VBox & control 값
@@ -178,6 +184,34 @@ public class AppMainController implements Initializable{
 				connectState = false;
 			}
 		});
+		mapButton.setOnMouseClicked((event)->{
+			Platform.runLater(() -> {
+				jsproxy.call("setMapType",0);
+			});
+		});
+		satButton.setOnMouseClicked((event)->{
+			Platform.runLater(() -> {
+				jsproxy.call("setMapType",1);
+			});
+		});
+		plusButton.setOnMouseClicked((event)->{
+			if(zoom != 19) {
+				Platform.runLater(() -> {
+					jsproxy.call("setMapZoom",++zoom);
+				});
+			}
+		});
+		minusButton.setOnMouseClicked((event)->{
+			if(zoom != 3) {
+				Platform.runLater(() -> {
+					jsproxy.call("setMapZoom",--zoom);
+				});
+			}
+		});
+	}
+	
+	public void setZoomSliderValue(int zoom) {
+		this.zoom = zoom;
 	}
 	
 	public void currTime() {
@@ -282,30 +316,15 @@ public class AppMainController implements Initializable{
 	public void handleConnect(ActionEvent event) {
 		//ip,port 보내기
 		ip=txtIP.getText();
-		port=txtPort.getText();
+		port=txtPort.getText();		
 
 		if(!ip.equals("")&&!port.equals("")) {
 			Network.connect();
-			try{Thread.sleep(500);}catch(Exception e) {}
-			System.out.println("들어옴 %%  "+connectState);
-			if(connectState) {
-		
-
-		if(!ip.equals("")&&!port.equals("")) {
-			Network.connect();
-			if(connectState) {
-				mainBorderPane.setVisible(true);
-				loginBorderPane.setVisible(false);
-			}
+			mainBorderPane.setVisible(true);
+			loginBorderPane.setVisible(false);
 		} else {
 			loginLabel.setText("Broker IP와 Port 모두 입력하세요.");
-		}
-			}
-		} else {
-			loginLabel.setText("Broker IP와 Port 모두 입력하세요.");
-		} 
-
-		
+		}		
 	}
 	// 로그인화면 취소 버튼 이벤트처리
 	public void handleCancle(ActionEvent event) {
@@ -611,8 +630,7 @@ public class AppMainController implements Initializable{
 		}
 	}
 	public void setMissionStatus(UAV uav) {
-		Platform.runLater(() -> {
-			
+		Platform.runLater(() -> {			
 			if(uav.homeLat != 0.0) {
 				jsproxy.call("setHomeLocation", uav.homeLat, uav.homeLng);
 				homeLabel.setText("lat "+uav.homeLat+"\n"+"lng "+uav.homeLng);

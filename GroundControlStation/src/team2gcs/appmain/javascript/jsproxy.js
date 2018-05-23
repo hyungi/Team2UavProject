@@ -6,6 +6,7 @@ var jsproxy = {
 	//지도 확대/축소 설정
 	//일반지도(zoom 범위: 0~22)
 	//위성사진(zoom 범위: 0~19)
+	// 3~18까지
 	setMapZoom: function(zoom) {
 		try {
 			map.googlemap.setZoom(zoom);
@@ -16,13 +17,24 @@ var jsproxy = {
 	//-------------------------------------------------------
 	//지도 상에서 마우스휠로 확대/축소할 경우 MapViewController.java의 zoomSlider의 value 변경
 	//jsproxy.js -> MapViewController.java
-//	setZoomSliderValue: function(zoom) {
-//		try {
-//			jsproxy.java.setZoomSliderValue(zoom);
-//		} catch(err) {
-//			console.log(">> [jsproxy.setZoomSliderValue()] " + err);
-//		}
-//	},			
+	setZoomSliderValue: function(zoom) {
+		try {
+			jsproxy.java.setZoomSliderValue(zoom);
+		} catch(err) {
+			console.log(">> [jsproxy.setZoomSliderValue()] " + err);
+		}
+	},
+	setMapType: function(position){
+		try{
+			if(position == 1){
+				map.googlemap.setMapTypeId("satellite")
+			}else{
+				map.googlemap.setMapTypeId("roadmap")
+			}
+		}catch(err){
+			console.log(">> [jsproxy.setMapType()] " + err);
+		}
+	},
 	//-------------------------------------------------------
 	//처음 이륙 위치
 	//GPS가 Fix되어야 됨
