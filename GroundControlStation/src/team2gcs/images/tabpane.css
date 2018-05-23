@@ -1,0 +1,16 @@
+#tabpane{
+	-fx-background-color:#000000;
+	
+}
+.tab{
+	-fx-background-color:#000000;
+	
+}
+
+.tab:selected{
+	-fx-background-color:#727272;
+}
+
+.tab:focused{
+	-fx-focus-color:transparent;
+}
