@@ -37,15 +37,13 @@
                <children>
                   <Circle fx:id="circle" fill="#ffffff00" radius="65.0" stroke="BLACK" strokeType="INSIDE" style="-fx-stroke-width: 0;">
                      <StackPane.margin>
-                        <Insets top="35.0" />
+                        <Insets />
                      </StackPane.margin></Circle>
                   <Canvas fx:id="hudLineCanvas" height="140.0" width="140.0">
                      <StackPane.margin>
-                        <Insets top="35.0" />
+                        <Insets />
                      </StackPane.margin></Canvas>
                   <Canvas fx:id="yawCanvas" height="200.0" width="190.0" />
-                  <Canvas fx:id="myYawLineCanvas" height="100.0" width="190.0" StackPane.alignment="TOP_CENTER" />
-                  <Canvas fx:id="myYawChangeCanvas" height="100.0" width="190.0" StackPane.alignment="TOP_CENTER" />
                </children>
             </StackPane>
          </center>
