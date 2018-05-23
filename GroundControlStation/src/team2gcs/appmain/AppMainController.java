@@ -26,6 +26,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -41,6 +42,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import netscape.javascript.JSObject;
 import team2gcs.leftpane.leftPaneController;
@@ -76,7 +79,7 @@ public class AppMainController implements Initializable{
 	//맵
 	@FXML WebView webView;
 	private WebEngine webEngine;
-	private JSObject jsproxy;
+	public JSObject jsproxy;
 	//로그인부분
 	@FXML private TextField txtIP;
 	@FXML private TextField txtPort;
@@ -85,7 +88,7 @@ public class AppMainController implements Initializable{
 	@FXML private Label loginLabel;
 	public static String ip;
 	public static String port;
-	public static boolean connectState=false;
+	public static boolean connectState;
 	
 	//미션부분
 	@FXML private Button btnMissionSet;
@@ -256,20 +259,20 @@ public class AppMainController implements Initializable{
 		webEngine.load(getClass().getResource("javascript/map.html").toExternalForm());
 	}
 	
-	private ChangeListener<State> webEngineLoadStateListener = (observable, oldValue, newValue) -> {
-		if(newValue == State.SUCCEEDED) {
-			Platform.runLater(() -> {
-				try {
-					webEngine.executeScript("console.log = function(message) { jsproxy.java.log(message); };");
-					jsproxy = (JSObject) webEngine.executeScript("jsproxy");
-					jsproxy.setMember("java", AppMainController.this);
-					//setMapSize();
-				} catch(Exception e) {
-					e.printStackTrace();
-				}
-			});
-		}
-	};
+   private ChangeListener<State> webEngineLoadStateListener = (observable, oldValue, newValue) -> {
+	      if(newValue == State.SUCCEEDED) {
+	         Platform.runLater(() -> {
+	            try {
+	               webEngine.executeScript("console.log = function(message) { jsproxy.java.log(message); };");
+	               jsproxy = (JSObject) webEngine.executeScript("jsproxy");
+	               jsproxy.setMember("java", AppMainController.this);
+	               //setMapSize();
+	            } catch(Exception e) {
+	               e.printStackTrace();
+	            }
+	         });
+	      }
+	   };
   
 
 	//로그인 버튼////////////////////////////////////////////////////////////////////////////////////////
@@ -285,27 +288,14 @@ public class AppMainController implements Initializable{
 		port=txtPort.getText();
 
 		if(!ip.equals("")&&!port.equals("")) {
-			Network.connect();
-			try{Thread.sleep(500);}catch(Exception e) {}
-			System.out.println("들어옴 %%  "+connectState);
-			if(connectState) {
-		
 
-		if(!ip.equals("")&&!port.equals("")) {
-			Network.connect();
-			if(connectState) {
+		 		Network.connect();
 				mainBorderPane.setVisible(true);
 				loginBorderPane.setVisible(false);
-			}
-		} else {
-			loginLabel.setText("Broker IP와 Port 모두 입력하세요.");
-		}
-			}
-		} else {
-			loginLabel.setText("Broker IP와 Port 모두 입력하세요.");
-		} 
 
-		
+		} else {
+			loginLabel.setText("Broker IP와 Port 모두 입력하세요.");
+		}	
 	}
 	// 로그인화면 취소 버튼 이벤트처리
 	public void handleCancle(ActionEvent event) {
@@ -392,8 +382,20 @@ public class AppMainController implements Initializable{
 	}
 	//비햄금지구역 이벤트 처리
 	public void handleNoflyzoneSet(ActionEvent event) {
-		System.out.println("비행금지구역SET");
-
+		try {
+			Stage dialog = new Stage();
+			dialog.setTitle("NoFlyZone");
+			dialog.initModality(Modality.APPLICATION_MODAL);
+			dialog.initOwner(AppMain.instance.primaryStage);
+			Parent parent = FXMLLoader.load(getClass().getResource("../noflyzone/noflyzone.fxml"));
+			Scene scene = new Scene(parent);
+			scene.getStylesheets().add(getClass().getResource("../images/app.css").toExternalForm());
+			dialog.setScene(scene);
+			dialog.setResizable(false);
+			dialog.show();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	public void handleNoflyzoneDelete(ActionEvent event) {
 		System.out.println("비행금지구역삭제");
@@ -620,7 +622,6 @@ public class AppMainController implements Initializable{
 			jsproxy.call("setUavLocation", uav.latitude, uav.longitude, uav.heading);
 			
 			if(uav.wayPoints.size() != 0) {
-				System.out.println("가져온 미션 수:" + uav.wayPoints.size());
 				setMission(uav.wayPoints);
 			} 
 			
@@ -649,7 +650,6 @@ public class AppMainController implements Initializable{
 	public void setStatus(UAV uav) {
 		Platform.runLater(() -> {
 			if(uav.connected) {
-				btnConnect.setText("DISCONNECT");
 				alt.setText(String.valueOf(uav.altitude));
 				if(uav.armed) {
 					armBtn.setText("Disarm");
@@ -658,8 +658,6 @@ public class AppMainController implements Initializable{
 					armBtn.setText("Arm");
 					armBtn.setGraphic(new Circle(5, Color.rgb(0x35, 0x35, 0x35)));
 				}
-			} else {
-				btnConnect.setText("CONNECT");
 			}
 		});
 	}
