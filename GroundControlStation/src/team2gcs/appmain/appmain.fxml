@@ -32,12 +32,12 @@
                         <Insets bottom="50.0" />
                      </VBox.margin></ImageView>
                         <Label fx:id="loginLabel" alignment="CENTER" prefHeight="17.0" prefWidth="229.0" textFill="WHITE" />
-                  <TextField fx:id="txtIP" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="240.0" promptText="MQTT Broker IP" style="-fx-background-color: #515253; -fx-opacity: 0.8; -fx-background-radius: 20;">
+                  <TextField fx:id="txtIP" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="240.0" promptText="MQTT Broker IP" style="-fx-background-color: #515253; -fx-opacity: 0.8; -fx-background-radius: 20;" text="192.168.3.177">
                      <VBox.margin>
                         <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField fx:id="txtPort" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="240.0" promptText="MQTT Broker Port" style="-fx-background-color: #515253; -fx-opacity: 0.8; -fx-background-radius: 20;" />
+                  <TextField fx:id="txtPort" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="240.0" promptText="MQTT Broker Port" style="-fx-background-color: #515253; -fx-opacity: 0.8; -fx-background-radius: 20;" text="1883" />
                   <Button fx:id="btnConnect" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="240.0" style="-fx-background-radius: 20; -fx-background-color: #73a856;" text="CONECT" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
@@ -58,47 +58,11 @@
    </center>
 </BorderPane>
       <BorderPane fx:id="mainBorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="731.25" prefWidth="1300.0" style="-fx-background-color: #000000;">
-         <bottom>
-            <BorderPane maxHeight="80.0" minHeight="80.0" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #000000;" BorderPane.alignment="CENTER">
-               <center>
-                  <HBox alignment="CENTER" prefHeight="51.0" prefWidth="492.0" spacing="10.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Label style="-fx-text-fill: white; -fx-background-color: black;" text="Control" textFill="WHITE">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets left="150.0" />
-                           </HBox.margin>
-                        </Label>
-                        <Button fx:id="armBtn" alignment="CENTER" prefHeight="87.0" prefWidth="59.0" style="-fx-background-radius: 0;" text="Arm" />
-                        <Button fx:id="takeoffBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Take Off" />
-                        <Button fx:id="landBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Land" />
-                        <Button fx:id="loiterBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Loiter" />
-                        <Button fx:id="rtlBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="RTL" />
-                        <Button fx:id="btnMissionStart" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Mission Start" />
-                        <Button fx:id="btnMissionStop" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Mission Stop" />
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </HBox>
-               </center>
-               <right>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="77.0" text="Status" textFill="WHITE" />
-                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="151.0" text="0" textFill="WHITE" />
-                     </children>
-                  </HBox>
-               </right>
-            </BorderPane>
-         </bottom>
          <center>
             <StackPane BorderPane.alignment="CENTER">
                <children>
                   <WebView fx:id="webView" prefHeight="-1.0" prefWidth="-1.0" />
-                  <VBox fx:id="leftPane" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="400.0" StackPane.alignment="TOP_LEFT" />
+                  <VBox fx:id="leftPane" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="1000.0" prefWidth="400.0" StackPane.alignment="TOP_LEFT" />
                   <HBox fx:id="rightMovePane" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" opacity="0.9" style="-fx-background-color: transparent;" translateX="550.0" StackPane.alignment="CENTER_RIGHT">
                      <children>
                         <AnchorPane fx:id="openRight" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35" prefWidth="200" style="-fx-background-color: #222222; -fx-background-radius: 5 5 0 0; -fx-rotate: -90;" translateX="-117.0">
@@ -378,7 +342,7 @@
             </StackPane>
          </center>
          <top>
-            <VBox prefWidth="100.0" BorderPane.alignment="CENTER">
+            <VBox maxHeight="-Infinity" prefHeight="120.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
                   <BorderPane prefHeight="30.0" prefWidth="200.0">
                      <center>
@@ -401,116 +365,130 @@
                                     <Image url="@../images/그림1.png" />
                                  </image>
                                  <HBox.margin>
-                                    <Insets />
+                                    <Insets left="10.0" />
                                  </HBox.margin>
                               </ImageView>
-                              <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                              <Label alignment="CENTER" prefWidth="80.0" text="Home">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Label>
+                              <VBox maxHeight="-Infinity" prefHeight="50.0" prefWidth="160.0">
                                  <children>
-                                    <Label prefWidth="100.0" text="Home">
+                                    <Label fx:id="homeLatLabel" prefHeight="20.0" prefWidth="154.0" text="Label">
                                        <font>
-                                          <Font size="20.0" />
+                                          <Font size="16.0" />
                                        </font>
                                        <VBox.margin>
-                                          <Insets top="20.0" />
+                                          <Insets bottom="4.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="homeLabel" prefWidth="105.0" text="Label">
+                                    <Label fx:id="homeLngLabel" prefHeight="20.0" prefWidth="154.0" text="Label">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
                                     </Label>
                                  </children>
                                  <HBox.margin>
-                                    <Insets left="5.0" />
+                                    <Insets right="10.0" />
                                  </HBox.margin>
+                                 <padding>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </padding>
                               </VBox>
                               <ImageView fx:id="logoImage2" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/그림2.png" />
                                  </image>
                               </ImageView>
-                              <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                              <Label prefWidth="100.0" text="Location">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="12.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <VBox maxHeight="-Infinity" prefHeight="50.0" prefWidth="160.0">
                                  <children>
-                                    <Label prefWidth="100.0" text="Location">
+                                    <Label fx:id="locationLatLabel" maxHeight="-Infinity" prefHeight="20.0" prefWidth="154.0" text="Label">
                                        <font>
-                                          <Font size="20.0" />
+                                          <Font size="16.0" />
                                        </font>
                                        <VBox.margin>
-                                          <Insets top="20.0" />
+                                          <Insets bottom="4.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="locationLabel" prefWidth="105.0" text="Label">
+                                    <Label fx:id="locationLngLabel" maxHeight="-Infinity" prefHeight="20.0" prefWidth="154.0" text="Label">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
                                     </Label>
                                  </children>
+                                 <padding>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </padding>
                                  <HBox.margin>
-                                    <Insets left="5.0" />
+                                    <Insets right="10.0" />
                                  </HBox.margin>
                               </VBox>
                               <ImageView fx:id="logoImage3" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/그림3.png" />
                                  </image>
-                              </ImageView>
-                              <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
-                                 <children>
-                                    <Label prefWidth="100.0" text="Battery">
-                                       <font>
-                                          <Font size="20.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets top="20.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <Label fx:id="batteryLabel" prefWidth="105.0" text="Label">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
                                  <HBox.margin>
-                                    <Insets left="5.0" />
+                                    <Insets left="10.0" />
                                  </HBox.margin>
-                              </VBox>
+                              </ImageView>
+                              <Label prefHeight="26.0" prefWidth="85.0" text="Battery">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="12.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="batteryLabel" prefHeight="20.0" prefWidth="70.0" text="Label">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </Label>
                               <ImageView fx:id="logoImage31" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/그림4.png" />
                                  </image>
                               </ImageView>
-                              <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
-                                 <children>
-                                    <Label prefWidth="100.0" text="Signal">
-                                       <font>
-                                          <Font size="20.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets top="20.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <Label fx:id="signalLabel" prefWidth="105.0" text="Label">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
+                              <Label prefHeight="26.0" prefWidth="76.0" text="Signal">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
                                  <HBox.margin>
-                                    <Insets left="5.0" />
+                                    <Insets left="12.0" />
                                  </HBox.margin>
-                              </VBox>
+                              </Label>
+                              <Label fx:id="signalLabel" prefWidth="105.0" text="Label">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </Label>
                            </children>
                         </HBox>
                      </center>
                      <left>
                         <VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="90.0" BorderPane.alignment="CENTER">
                            <children>
-                              <ImageView fx:id="logoImage" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="logoImage" fitHeight="76.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/logo_black.png" />
                                  </image>
                                  <VBox.margin>
-                                    <Insets left="15.0" />
+                                    <Insets left="20.0" />
                                  </VBox.margin>
                               </ImageView>
                            </children>
@@ -543,19 +521,47 @@
                      <children>
                         <Label style="-fx-text-fill: white; -fx-background-color: black;" text="Control" textFill="WHITE">
                            <font>
-                              <Font size="18.0" />
+                              <Font size="24.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="150.0" />
                            </HBox.margin>
                         </Label>
-                        <Button fx:id="armBtn" alignment="CENTER" prefHeight="87.0" prefWidth="59.0" style="-fx-background-radius: 0;" text="Arm" />
-                        <Button fx:id="takeoffBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Take Off" />
-                        <Button fx:id="landBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Land" />
-                        <Button fx:id="loiterBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Loiter" />
-                        <Button fx:id="rtlBtn" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="RTL" />
-                        <Button fx:id="btnMissionStart" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Mission Start" />
-                        <Button fx:id="btnMissionStop" alignment="CENTER" prefHeight="87.0" style="-fx-background-radius: 0;" text="Mission Stop" />
+                        <Button fx:id="armBtn" alignment="CENTER" prefHeight="80.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Arm">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="takeoffBtn" alignment="CENTER" prefHeight="87.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Take Off">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="landBtn" alignment="CENTER" prefHeight="87.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Land">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="loiterBtn" alignment="CENTER" prefHeight="87.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Loiter">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="rtlBtn" alignment="CENTER" prefHeight="87.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="RTL">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnMissionStart" alignment="CENTER" prefHeight="87.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Mission Start">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnMissionStop" alignment="CENTER" prefHeight="87.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Mission Stop">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Button>
                      </children>
                      <opaqueInsets>
                         <Insets />
