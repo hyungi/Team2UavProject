@@ -80,13 +80,12 @@ public class UAV implements Cloneable {
 						}
 					});
 					MqttConnectOptions mco = new MqttConnectOptions();
-					mco.setConnectionTimeout(3);
+					mco.setConnectionTimeout(5);
 					mqttClient.connect(mco);
 					mqttClient.subscribe(Network.uavPubTopic);
 
 					AppMainController.connectState = true;
 				} catch (Exception e) {
-					System.out.println("들어옸니");
 					UAV.this.disconnect();
 				}
 			}

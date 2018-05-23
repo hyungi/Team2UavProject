@@ -16,16 +16,16 @@ import simplejson
 debug = True
 
 #Autopilot과 연결-----------------------------------------
-vehicle = connect("udp:172.30.1.23:14560", wait_ready=True)
-#vehicle = connect("udp:192.168.3.18:14560", wait_ready=True)
+#vehicle = connect("udp:172.30.1.23:14560", wait_ready=True)
+vehicle = connect("udp:192.168.3.217:14560", wait_ready=True)
 #vehicle = connect("/dev/ttyS0", wait_ready=True, baud=57600)
 
 #MQTT Broker와 연결하기 위한 정보-----------------------------
 #mqtt_ip = "106.253.56.122"
 mqtt_ip = "localhost"
 mqtt_port = 1883
-uav_pub_topic = "/uav/pub"
-uav_sub_topic = "/uav/sub"
+uav_pub_topic = "/uav2/pub"
+uav_sub_topic = "/uav2/sub"
 
 #MQTT Broker와 연결---------------------------------------    
 mqtt_client = None
