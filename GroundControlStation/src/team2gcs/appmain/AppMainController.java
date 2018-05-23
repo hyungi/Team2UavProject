@@ -59,7 +59,7 @@ public class AppMainController implements Initializable{
 	
 	// 좌측
 	@FXML private VBox leftPane;
-	// 우측
+	// 우측f
 	@FXML private VBox rightPane;	
 	// 아래 버튼 & Pane & 둘을 가지고있는 VBox & control 값
 	@FXML private AnchorPane openBottom;
@@ -343,14 +343,10 @@ public class AppMainController implements Initializable{
 	}
 	//화물 부착 시작,끝
 	public void handleCargoStart(ActionEvent event) {
-		Platform.runLater(() -> {
-			jsproxy.call("missionStart");
-		});
+
 	}
 	public void handleCargoStop(ActionEvent event) {
-		Platform.runLater(() -> {
-			jsproxy.call("missionStart");
-		});
+
 	}
 	//미션 시작 정지
 	public void handleMissionStart(ActionEvent event) {
