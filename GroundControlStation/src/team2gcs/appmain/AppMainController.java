@@ -165,10 +165,10 @@ public class AppMainController implements Initializable{
 //////////////////////////////////Top Menu 관련 ////////////////////////////////
 	public void initTop() {
 	//	currTime();
-		homeLabel.setText("12m");
-		locationLabel.setText("12m");
-		batteryLabel.setText("12m");
-		signalLabel.setText("12m");	
+		homeLabel.setText("init");
+		locationLabel.setText("init");
+		batteryLabel.setText("init");
+		signalLabel.setText("init");	
 		// 연결 이벤트 클릭 관리
 		connButton.setOnMouseClicked((event)->{
 			if(connectState) {
@@ -283,6 +283,12 @@ public class AppMainController implements Initializable{
 		//ip,port 보내기
 		ip=txtIP.getText();
 		port=txtPort.getText();
+
+		if(!ip.equals("")&&!port.equals("")) {
+			Network.connect();
+			try{Thread.sleep(500);}catch(Exception e) {}
+			System.out.println("들어옴 %%  "+connectState);
+			if(connectState) {
 		
 
 		if(!ip.equals("")&&!port.equals("")) {
@@ -290,6 +296,10 @@ public class AppMainController implements Initializable{
 			if(connectState) {
 				mainBorderPane.setVisible(true);
 				loginBorderPane.setVisible(false);
+			}
+		} else {
+			loginLabel.setText("Broker IP와 Port 모두 입력하세요.");
+		}
 			}
 		} else {
 			loginLabel.setText("Broker IP와 Port 모두 입력하세요.");
@@ -466,15 +476,6 @@ public class AppMainController implements Initializable{
 			jsproxy.call("gotoMake");
 		});
 	}
-	public void gotoStart(String data) {
-		Platform.runLater(() -> {
-			JSONObject jsonObject = new JSONObject(data);
-			double latitude = jsonObject.getDouble("lat");
-			double longitude = jsonObject.getDouble("lng");
-			double altitude = 10;
-			Network.getUav().gotoStart(latitude, longitude, altitude);
-		});
-	}
 	
 	//미션 점프
 	public void handleMissionJump(ActionEvent event) {
@@ -611,10 +612,10 @@ public class AppMainController implements Initializable{
 	}
 	public void setMissionStatus(UAV uav) {
 		Platform.runLater(() -> {
-
 			
 			if(uav.homeLat != 0.0) {
 				jsproxy.call("setHomeLocation", uav.homeLat, uav.homeLng);
+				homeLabel.setText("lat "+uav.homeLat+"\n"+"lng "+uav.homeLng);
 			}
 			jsproxy.call("setUavLocation", uav.latitude, uav.longitude, uav.heading);
 			
@@ -710,5 +711,31 @@ public class AppMainController implements Initializable{
 		Platform.runLater(() -> {
 			jsproxy.call("setFence", strFenceArr);
 		});	
+	}
+	
+	public void log(String message) {
+		System.out.println(message);
+	}
+	
+	///////////////////////////// 미션 관련 //////////////////////////////////////
+	public void gotoStart(String data) {
+		Platform.runLater(() -> {
+			JSONObject jsonObject = new JSONObject(data);
+			double latitude = jsonObject.getDouble("lat");
+			double longitude = jsonObject.getDouble("lng");
+			double altitude = 10;
+			Network.getUav().gotoStart(latitude, longitude, altitude);
+		});
+	}
+	
+	public void batterySet(double level) {
+		Platform.runLater(()->{
+			batteryLabel.setText(level+"%");
+		});
+	}
+	public void locationSet(double lat, double lng) {
+		Platform.runLater(()->{
+			locationLabel.setText("lat "+lat+"\n"+"lng "+lng);
+		});
 	}
 }

@@ -171,7 +171,7 @@ function UAV() {
 
 				map.googlemap.setCenter(map.uav.currLocation);
 				map.googlemap.setZoom(18);
-				jsproxy.setZoomSliderValue(18);
+//				jsproxy.setZoomSliderValue(18);
 			}
 		} catch(err) {
 			console.log(">> [uav.setHomeLocation()] " + err);

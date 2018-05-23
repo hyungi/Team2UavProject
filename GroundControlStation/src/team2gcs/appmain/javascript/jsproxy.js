@@ -16,13 +16,13 @@ var jsproxy = {
 	//-------------------------------------------------------
 	//지도 상에서 마우스휠로 확대/축소할 경우 MapViewController.java의 zoomSlider의 value 변경
 	//jsproxy.js -> MapViewController.java
-	setZoomSliderValue: function(zoom) {
-		try {
-			jsproxy.java.setZoomSliderValue(zoom);
-		} catch(err) {
-			console.log(">> [jsproxy.setZoomSliderValue()] " + err);
-		}
-	},			
+//	setZoomSliderValue: function(zoom) {
+//		try {
+//			jsproxy.java.setZoomSliderValue(zoom);
+//		} catch(err) {
+//			console.log(">> [jsproxy.setZoomSliderValue()] " + err);
+//		}
+//	},			
 	//-------------------------------------------------------
 	//처음 이륙 위치
 	//GPS가 Fix되어야 됨
