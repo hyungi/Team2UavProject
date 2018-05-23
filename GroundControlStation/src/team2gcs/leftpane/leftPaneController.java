@@ -211,8 +211,8 @@ public class leftPaneController implements Initializable{
 			armedLabel.setStyle("-fx-text-fill: white;");
 			armedLabel.setText("DisArmed");
 		}
-		hudLineCanvas.setRotate(roll);
-		circle.setRotate(roll);
+		hudLineCanvas.setRotate(roll*2);
+		circle.setRotate(roll*2);
 	}
 	
 	public void getStatus(UAV uav) {
