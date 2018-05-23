@@ -51,9 +51,18 @@
 	-fx-background-color: rgba(0, 0, 0, 0.6);
 }
 
-#rollLabel, #pitchLabel, #yawLabel, #armedLabel, #statusLabel, #rightStatusLabel, #rightCameraLabel {
+#rollLabel, #pitchLabel, #yawLabel, #armedLabel, #statusLabel {
 	-fx-background-color: black;
 	-fx-background-radius: 30;
+}
+
+#rightStatusBtn, #rightCameraBtn {
+	-fx-background-radius: 0;	
+}
+
+#rightStatusPane, #rightCameraPane {
+	-fx-background-color: black;
+	-fx-opacity: 0.8;	
 }
 
 .tab-pane {
