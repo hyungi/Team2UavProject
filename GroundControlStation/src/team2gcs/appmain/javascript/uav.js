@@ -484,7 +484,21 @@ function UAV() {
 		} catch(err) {
 			console.log(">> [uav.drawFencePolygon()] " + err);
 		}
-	};		
+	};
+	this.makeNoflyzone = function(x,y,r){
+		  this.makeNoflyzone = new google.maps.Circle({
+			map: map.googlemap,
+		    center: {lat:x, lng:y},
+		    zoom: 7,
+		    radius: r,
+		    strokeColor: "#0000FF",
+		    strokeOpacity: 0.9,
+		    strokeWeight: 2,
+		    fillColor: "#0000FF",
+		    fillOpacity: 0.5,
+			optimized: false
+		  });
+	};
 }
 
 

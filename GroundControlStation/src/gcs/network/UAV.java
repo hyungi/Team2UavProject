@@ -80,13 +80,12 @@ public class UAV implements Cloneable {
 						}
 					});
 					MqttConnectOptions mco = new MqttConnectOptions();
-					mco.setConnectionTimeout(3);
+					mco.setConnectionTimeout(5);
 					mqttClient.connect(mco);
 					mqttClient.subscribe(Network.uavPubTopic);
 
 					AppMainController.connectState = true;
 				} catch (Exception e) {
-					System.out.println("들어옸니");
 					UAV.this.disconnect();
 				}
 			}
@@ -225,7 +224,19 @@ public class UAV implements Cloneable {
 			thread.setDaemon(true);
 			thread.start();
 		}
-	}	
+	}
+	
+	public void cargo(String command) {
+		JSONObject jsonObject = new JSONObject();
+		if(command.equals("cargoStart")) {
+			jsonObject.put("command", "cargoStart");
+		}else {
+			jsonObject.put("command", "cargoStop");
+		}		
+		String strJson = jsonObject.toString();
+		send(strJson);
+		System.out.println(strJson);
+	}
 	
 	public void arm() {
 		JSONObject jsonObject = new JSONObject();

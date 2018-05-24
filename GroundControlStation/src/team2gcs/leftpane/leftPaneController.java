@@ -1,11 +1,11 @@
 package team2gcs.leftpane;
 
+import java.awt.Font;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import gcs.network.UAV;
 import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,13 +14,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import team2gcs.appmain.AppMain;
+import team2gcs.rightpane.rightPaneController;
 
 public class leftPaneController implements Initializable{
 	public static leftPaneController instance;
@@ -31,6 +30,24 @@ public class leftPaneController implements Initializable{
    	@FXML private Label rollLabel;
    	@FXML private Label pitchLabel;
    	@FXML private Label yawLabel;
+   	@FXML private Label armedLabel;
+   	@FXML private Label modeLabel;
+   	@FXML private Label airSpeedLabel;
+   	@FXML private Label groundSpeedLabel;
+   	@FXML private Label distWPLabel;
+   	@FXML private Label altitudeLabel;
+   	@FXML private Label statusLabel;
+   	@FXML private Label detailModeLabel;
+   	@FXML private Label detailAirSpeedLabel;
+   	@FXML private Label detailGroundSpeedLabel;
+   	@FXML private Label detailAltitudeLabel;
+   	@FXML private Label detailDistWPLabel;
+   	@FXML private Label detailDistHomeLabel;
+   	@FXML private Label detailTimeAirLabel;
+   	@FXML private Label detailFenceLabel;
+   	@FXML private Label detailMissionLabel;
+   	@FXML private Label detailNoFlyLabel;
+   	@FXML private Label detailVoltageLabel;
    	@FXML private Label sensorLabel;
    	@FXML private Label sensorDetailLabel;
    	@FXML private Circle circle;
@@ -38,38 +55,52 @@ public class leftPaneController implements Initializable{
    	@FXML private Canvas yawCanvas;
    	private GraphicsContext ctx1;
    	private GraphicsContext ctx2;
+   	private GraphicsContext ctx3;
+   	private GraphicsContext ctx4;
    	private double roll = 0;
    	private double pitch = 0;
    	private double yaw = 0;
+   	private double airSpeed = 0;
+   	private double groundSpeed = 0;
+   	private double altitude = 0;
+   	private double distWP = 0;
+   	private double distHome = 0;
+   	private double timeAir = 0;
+   	private double voltage = 0;
+   	private String mode = "";
+   	private boolean armed = false;
+   	private boolean fenceData = false;
+   	private boolean missionData = false;
+   	private boolean noFlyData = false;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		instance = this;
-		leftVbox.setPrefHeight(300);
 		ViewLoop viewLoop = new ViewLoop();
 		viewLoop.start();
  		initCanvasLayer();
 		initLeftPane();
+		try {
+			handleRPY();
+		} catch (Exception e) {}
 	}
 	
-	////////////////////////////////// 좌측 메뉴 ////////////////////////////////
+   	private void initLeftPane() {
+		ViewLoop viewLoop = new ViewLoop();
+		viewLoop.start();
+		initCanvasLayer();
+		sensorLabelEvent();
+   	}
 	class ViewLoop extends AnimationTimer {
 		@Override
    		public void handle(long now) {
-			ctx1.clearRect(0, 0, 150, 150); 
-			ctx2.clearRect(0, 0, 150, 150);
+			ctx1.clearRect(0, 0, hudLineCanvas.getWidth(), hudLineCanvas.getHeight()); 
+			ctx2.clearRect(0, 0, yawCanvas.getWidth(), yawCanvas.getHeight());
 			
 			drawHud();
 			drawHudLine();
-			try {
-				handleRPY();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			rollLabel.setText("   Roll:	" + roll);
-			pitchLabel.setText("   Pitch:	" + pitch);
-			yawLabel.setText("   Yaw:	" + yaw);
+			setRollStatus();
+			setStatus();
   		} 
    	}
 	
@@ -79,73 +110,67 @@ public class leftPaneController implements Initializable{
    	}   
 	
    	private void drawHud() {
-		ImagePattern img = new ImagePattern(new Image(getClass().getResourceAsStream("../images/hudBg1.png")), 0, -pitch, 100, 300, false);
+		ImagePattern img = new ImagePattern(new Image(getClass().getResourceAsStream("../images/hudBg1.png")), 0, pitch*2, 100, 300, false);
 	   	circle.setFill(img);
     	
-	    	//yaw
-	    	ctx2.setFill(Color.WHITE);
-	    	ctx2.fillOval(45.25+39.85*Math.cos(yaw*0.01745-Math.PI/2),45.25+39.85*Math.sin(yaw*0.01745-Math.PI/2), 10, 10);
+    	//yaw
+    	ctx2.setFill(Color.WHITE);
+    	ctx2.fillOval(82.5+(65*Math.cos(yaw*0.017468-Math.PI/2)), 82+(65*Math.sin(yaw*0.017468-Math.PI/2)), 15, 15);
    	}
-   	
+
    	public void drawHudLine() {
 		ctx1.setLineWidth(1);
 		ctx1.setStroke(Color.WHITE);
-		ctx1.strokeLine(30, 50-pitch*1.1, 70, 50-pitch*1.1);
+		ctx1.strokeLine(30, 70+pitch*2, 110, 70+pitch*2);
 		
-		for(int i=5; i<15-pitch; i+=5) {
-			ctx1.strokeLine(40, 50-(i*1.6+pitch*1.1), 60, 50-(i*1.6+pitch*1.05));
+		for(int i=5; i<25-pitch; i+=5) {
+			ctx1.strokeLine((i%2==0)?40:50, 70+(i*1.75+pitch*2), (i%2==0)?100:90, 70+(i*1.75+pitch*2));
+			
 		}
-		for(int i=5; i<15+pitch; i+=5) {
-			ctx1.strokeLine(40, 50+(i*1.6-pitch*1.1), 60, 50+(i*1.6-pitch*1.05));
+		for(int i=5; i<25+pitch; i+=5) {
+			ctx1.strokeLine((i%2==0)?40:50, 70-(i*1.75-pitch*2), (i%2==0)?100:90, 70-(i*1.75-pitch*2));
 		}
 	}
-	
-	private void handleRPY() throws Exception {
-		Platform.runLater(() -> {
-			AppMain.tempScene.setOnKeyPressed((event) -> {
-				if(event.getCode() == KeyCode.Q) {
-					yaw--;
-					System.out.println(yaw);
-					if(yaw == -1) yaw = 359;
-				} else if(event.getCode() == KeyCode.E) {
-					yaw++;
-					System.out.println(yaw);
-					if(yaw == 360) yaw = 0;
-				} else if(event.getCode() == KeyCode.A) {
-					if(roll>= -21) {
-						roll--;
-						hudLineCanvas.setRotate(roll);
-						circle.setRotate(roll);
-						System.out.println(roll);
-					}
-				} else if(event.getCode() == KeyCode.D) {
-					if(roll < 21) {
-						roll++;
-						hudLineCanvas.setRotate(roll);
-						circle.setRotate(roll);
-						System.out.println(roll);
-					}
-				} else if(event.getCode() == KeyCode.S) {
-					if(pitch > -10) {
-						pitch--;
-						System.out.println(pitch);
-					}
-				} else if(event.getCode() == KeyCode.W) {
-					if(pitch < 10) {
-						pitch++;
-						System.out.println(pitch);
-					}
-				}
-			});
-		});
+   	
+   	private void handleRPY() throws Exception {
+//		Platform.runLater(() -> {
+//			AppMain.tempScene.setOnKeyPressed((event) -> {
+//				if(event.getCode() == KeyCode.Q) {
+//					yaw--;
+//					System.out.println(yaw);
+//					if(yaw == -1) yaw = 359;
+//				} else if(event.getCode() == KeyCode.E) {
+//					yaw++;
+//					System.out.println(yaw);
+//					if(yaw == 360) yaw = 0;
+//				} else if(event.getCode() == KeyCode.A) {
+//					if(roll>= -21) {
+//						roll--;
+//						hudLineCanvas.setRotate(roll);
+//						circle.setRotate(roll);
+//						System.out.println(roll);
+//					}
+//				} else if(event.getCode() == KeyCode.D) {
+//					if(roll < 21) {
+//						roll++;
+//						hudLineCanvas.setRotate(roll);
+//						circle.setRotate(roll);
+//						System.out.println(roll);
+//					}
+//				} else if(event.getCode() == KeyCode.S) {
+//					if(pitch > -25) {
+//						pitch--;
+//						System.out.println(pitch);
+//					}
+//				} else if(event.getCode() == KeyCode.W) {
+//					if(pitch < 25) {
+//						pitch++;
+//						System.out.println(pitch);
+//					}
+//				}
+//			});
+//		});
 	} 
-	
-   	private void initLeftPane() {
-		ViewLoop viewLoop = new ViewLoop();
-		viewLoop.start();
-		initCanvasLayer();
-		sensorLabelEvent();
-   	}
    	
    	private void sensorLabelEvent() {
 		sensorLabel.setOnMouseClicked(new EventHandler<Event>() {
@@ -166,9 +191,57 @@ public class leftPaneController implements Initializable{
 		});
    	}
 	
-	public void setStatus(UAV uav) {
+	public void getRollStatus(UAV uav) {
 		roll = uav.roll;
 		pitch = uav.pitch;
-		yaw = uav.yaw;
+		if(uav.yaw < 0) yaw = uav.yaw+360;
+		else yaw = uav.yaw;
+		armed = uav.armed;
+	}
+	
+	public void setRollStatus() {
+		rollLabel.setText(String.format("%.4f",roll));
+		pitchLabel.setText(String.format("%.4f",pitch));
+		yawLabel.setText(String.format("%.4f",yaw));
+		if(armed == true) {
+			armedLabel.setStyle("-fx-text-fill: red;");
+			armedLabel.setText("Armed");
+		} else if(armed == false) {
+			armedLabel.setStyle("-fx-text-fill: white;");
+			armedLabel.setText("DisArmed");
+		}
+		hudLineCanvas.setRotate(roll*2);
+		circle.setRotate(roll*2);
+	}
+	
+	public void getStatus(UAV uav) {
+		mode = uav.mode;
+		airSpeed = uav.airSpeed;
+		groundSpeed = uav.groundSpeed;
+		altitude = uav.altitude;
+		//distWP
+		voltage = uav.batteryVoltage;
+	}
+	
+	public void setStatus() {
+		//간단 모드
+		modeLabel.setText(mode);
+		airSpeedLabel.setText(String.format("%.4f", airSpeed));
+		groundSpeedLabel.setText(String.format("%.4f", groundSpeed));
+		altitudeLabel.setText(String.format("%.2f", altitude));
+		
+		//상세모드
+		detailModeLabel.setText(mode);
+		detailAirSpeedLabel.setText(String.format("%.6f", airSpeed));
+		detailGroundSpeedLabel.setText(String.format("%.6f", groundSpeed));
+		detailAltitudeLabel.setText(String.format("%.2f", altitude));
+		
+		detailVoltageLabel.setText(String.format("%.4f", voltage));
+	}
+	
+	public void setStatusLabels(String message) {
+//		statusLabel.setStyle("-fx-font-weight: bold;");
+		statusLabel.setText(message);
+//		rightPaneController.instance.setTxtArea(message);
 	}
 }

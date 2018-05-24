@@ -15,13 +15,104 @@ var map = {
 				center: {lat:37.313778, lng:127.109004},
 				//mapTypeId : "roadmap",
 				mapTypeId : "satellite",
-				zoomControl: false,
+				//지도&위성 버튼 옵션
+//				mapTypeControlOptions: {
+//			        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+//			        position: google.maps.ControlPosition.TOP_CENTER,
+//			    },
+//			    zoomControlOptions: {
+//			        position: google.maps.ControlPosition.LEFT_BOTTOM
+//			    },
+				// night Mode
+				styles: [
+			            {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+			            {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+			            {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+			            {
+			              featureType: 'administrative.locality',
+			              elementType: 'labels.text.fill',
+			              stylers: [{color: '#d59563'}]
+			            },
+			            {
+			              featureType: 'poi',
+			              elementType: 'labels.text.fill',
+			              stylers: [{color: '#d59563'}]
+			            },
+			            {
+			              featureType: 'poi.park',
+			              elementType: 'geometry',
+			              stylers: [{color: '#263c3f'}]
+			            },
+			            {
+			              featureType: 'poi.park',
+			              elementType: 'labels.text.fill',
+			              stylers: [{color: '#6b9a76'}]
+			            },
+			            {
+			              featureType: 'road',
+			              elementType: 'geometry',
+			              stylers: [{color: '#38414e'}]
+			            },
+			            {
+			              featureType: 'road',
+			              elementType: 'geometry.stroke',
+			              stylers: [{color: '#212a37'}]
+			            },
+			            {
+			              featureType: 'road',
+			              elementType: 'labels.text.fill',
+			              stylers: [{color: '#9ca5b3'}]
+			            },
+			            {
+			              featureType: 'road.highway',
+			              elementType: 'geometry',
+			              stylers: [{color: '#746855'}]
+			            },
+			            {
+			              featureType: 'road.highway',
+			              elementType: 'geometry.stroke',
+			              stylers: [{color: '#1f2835'}]
+			            },
+			            {
+			              featureType: 'road.highway',
+			              elementType: 'labels.text.fill',
+			              stylers: [{color: '#f3d19c'}]
+			            },
+			            {
+			              featureType: 'transit',
+			              elementType: 'geometry',
+			              stylers: [{color: '#2f3948'}]
+			            },
+			            {
+			              featureType: 'transit.station',
+			              elementType: 'labels.text.fill',
+			              stylers: [{color: '#d59563'}]
+			            },
+			            {
+			              featureType: 'water',
+			              elementType: 'geometry',
+			              stylers: [{color: '#17263c'}]
+			            },
+			            {
+			              featureType: 'water',
+			              elementType: 'labels.text.fill',
+			              stylers: [{color: '#515c6d'}]
+			            },
+			            {
+			              featureType: 'water',
+			              elementType: 'labels.text.stroke',
+			              stylers: [{color: '#17263c'}]
+			            }
+			          ],
+			    disableDefaultUI:true,
+//				zoomControl: true,
 				streetViewControl: false,
 				rotateControl: false,
 				fullscreenControl: false
 			});
 			
 			//지도 상에서 마우스 휠도 확대/축소할 경우 MapViewController.java의 zoomSlider의 value 변경
+			//Slider 제거 -> zoom value 바꾸는 걸로 바꿈
 			document.getElementById('map').addEventListener("wheel", function() {
 				jsproxy.setZoomSliderValue(map.googlemap.getZoom());
 			});				
