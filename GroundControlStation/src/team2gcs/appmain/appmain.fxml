@@ -271,7 +271,7 @@
                                              <center>
                                                 <GridPane alignment="CENTER" prefHeight="81.0" prefWidth="142.0" BorderPane.alignment="CENTER">
                                                    <children>
-                                                      <Button fx:id="btnCargoWP" mnemonicParsing="false" text="Cargo WP">
+                                                      <Button fx:id="btnMode" mnemonicParsing="false" text="Cargo WP">
                                                          <GridPane.margin>
                                                             <Insets bottom="20.0" left="23.0" />
                                                          </GridPane.margin>

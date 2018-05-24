@@ -21,18 +21,13 @@ debug = True
 #vehicle = connect("udp:192.168.3.89:14560", wait_ready=True) #컴퓨터에서 테스트 실행시
 #vehicle = connect('/dev/ttyS0',wait_ready = True,baud57600) #라즈베리파이에서 실행시 
 # #Autopilot(FC-펌웨어)과 연결----------------------------------jdh------------------------------
-<<<<<<< HEAD
-vehicle = connect('udp:127.0.0.1:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
-=======
->>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
 
-<<<<<<< HEAD
-#vehicle = connect('udp:192.168.3.217:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
-=======
+vehicle = connect('udp:127.0.0.1:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
+
+
 vehicle = connect('udp:127.0.0.1:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
 #vehicle = connect('udp:192.168.3.217:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
 
->>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
 # # vehicle = connect('/dev/ttyS0',wait_ready = True,baud57600) #라즈베리파이에서 실행시 
 
 #Autopilot과 연결-----------------------------------------
@@ -598,9 +593,13 @@ def on_message(client, userdata, msg):
         elif command == "gcs_connect": gcs_connect(json_dict)
         elif command == "cargoStart": cargoStart()
         elif command == "cargoStop": cargoStop()
+        elif command == "st": st()
     except Exception as e:
         if debug: print(">>>", type(e), "on_message():", e)
-        
+#------------------------------------------------------
+def st():
+	if vehicle.armed: return
+    vehicle.mode = VehicleMode("STABILIZE")
 #------------------------------------------------------
 def cargoStart():
     gpio.output(23,1)

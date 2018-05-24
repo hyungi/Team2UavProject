@@ -384,4 +384,10 @@ public class UAV implements Cloneable {
 		};
 		thread.start();
 	}
+	public void st() {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("command", "st");
+		String strJson = jsonObject.toString();
+		send(strJson);
+	}
 }

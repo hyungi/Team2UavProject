@@ -130,7 +130,6 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnNoflyzoneSet;
 	@FXML private Button btnNoflyzoneDelete;
 	//화물
-	@FXML private Button btnCargoWP;
 	@FXML private Button btnCargoStart;
 	@FXML private Button btnCargoStop;
 	
@@ -153,6 +152,8 @@ public class AppMainController implements Initializable{
 	@FXML private Label signalLabel;
 	@FXML private ImageView connButton;
 	int a=0;
+	
+	@FXML private Button btnMode;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -374,10 +375,12 @@ public class AppMainController implements Initializable{
 		btnNoflyzoneDelete.setOnAction((event)->{handleNoflyzoneDelete(event);});
 		btnMissionStart.setOnAction((event)->{handleMissionStart(event);});
 		btnMissionStop.setOnAction((event)->{handleMissionStop(event);});
-		btnCargoWP.setOnAction((event)->{handleCargoWP(event);});
 		btnCargoStart.setOnAction((event)->{handleCargoStart(event);});
 		btnCargoStop.setOnAction((event)->{handleCargoStop(event);});
-		
+		btnMode.setOnAction((event)->{handleMode(event);});
+	}
+	public void handleMode(ActionEvent event) {
+		Network.getUav().st();
 	}
 	//화물 부착 시작,끝
 	public void handleCargoStart(ActionEvent event) {
@@ -467,10 +470,6 @@ public class AppMainController implements Initializable{
 		System.out.println("비행금지구역삭제");
 		leftPaneController.instance.setStatusLabels("No-fly zone deleted.");
 	}
-	//화물운송 WP 이벤트 처
-	public void handleCargoWP(ActionEvent event) {
-		System.out.println("화물운송WP");
-	}
 	
 	//Arm, Takeoff, Land, Roiter, Rtl
 	public void handleArm(ActionEvent event) {
@@ -515,6 +514,7 @@ public class AppMainController implements Initializable{
 		leftPaneController.instance.setStatusLabels("Mission read.");
 	}
 	public void getMissionResponse(String data) {
+		a = Integer.valueOf(txtAlt.getText());
 		Platform.runLater(() -> {
 			List<WayPoint> list = new ArrayList<WayPoint>();			
 			JSONArray jsonArray = new JSONArray(data);
@@ -802,11 +802,12 @@ public class AppMainController implements Initializable{
 	
 	///////////////////////////// 미션 관련 //////////////////////////////////////
 	public void gotoStart(String data) {
+		a = Integer.valueOf(txtAlt.getText());
 		Platform.runLater(() -> {
 			JSONObject jsonObject = new JSONObject(data);
 			double latitude = jsonObject.getDouble("lat");
 			double longitude = jsonObject.getDouble("lng");
-			double altitude = 10;
+			double altitude = a;
 			Network.getUav().gotoStart(latitude, longitude, altitude);
 			
 		});
