@@ -21,9 +21,18 @@ debug = True
 #vehicle = connect("udp:192.168.3.89:14560", wait_ready=True) #컴퓨터에서 테스트 실행시
 #vehicle = connect('/dev/ttyS0',wait_ready = True,baud57600) #라즈베리파이에서 실행시 
 # #Autopilot(FC-펌웨어)과 연결----------------------------------jdh------------------------------
+<<<<<<< HEAD
 vehicle = connect('udp:127.0.0.1:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
+=======
+>>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
 
+<<<<<<< HEAD
 #vehicle = connect('udp:192.168.3.217:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
+=======
+vehicle = connect('udp:127.0.0.1:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
+#vehicle = connect('udp:192.168.3.217:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
+
+>>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
 # # vehicle = connect('/dev/ttyS0',wait_ready = True,baud57600) #라즈베리파이에서 실행시 
 
 #Autopilot과 연결-----------------------------------------
@@ -112,6 +121,7 @@ def send_data():
                 send_statustext_info(data)            
                 send_mission_info(data)
                 send_fence_info(data)
+                gcs_fail_safe()
                 
                 json = simplejson.JSONEncoder().encode(data)
                 mqtt_client.publish(uav_pub_topic, json)
@@ -585,6 +595,7 @@ def on_message(client, userdata, msg):
         elif command == "fence_upload": fence_upload(json_dict)
         elif command == "fence_download": fence_download(json_dict)
         elif command == "fence_clear": fence_clear(json_dict)
+        elif command == "gcs_connect": gcs_connect(json_dict)
         elif command == "cargoStart": cargoStart()
         elif command == "cargoStop": cargoStop()
     except Exception as e:
@@ -710,6 +721,32 @@ def fence_download(json_dict):
 def fence_clear(json_dict):
     vehicle.parameters["FENCE_TOTAL"] = 0
     vehicle.parameters["FENCE_ENABLE"] = 0  
+#------------------------------------------------------
+count = 0
+def gcs_connect(json_dict):
+    global gcs_fail_safe_request
+    global count
+    status = json_dict["status"]
+    if status == "true":
+        gcs_fail_safe_request = True
+        count = 0
+      
 #------------------------------------------------------ 
+gcs_fail_safe_request = False    
+def gcs_fail_safe():
+    global gcs_fail_safe_request
+    global count
+    try:
+        if gcs_fail_safe_request == True:
+            print("connecting")
+            count = count + 1
+            print(count)
+        if count > 20:
+            if not vehicle.armed: return
+            vehicle.mode = VehicleMode("RTL")
+            gcs_fail_safe_request = False
+    except Exception as e:
+        if debug: print(">>>", type(e), "gcs_fail_safe():", e)
+#------------------------------------------------------
 if __name__ == "__main__":
     connect_mqtt()

@@ -22,6 +22,9 @@ public class WayPoint {
 	}
 	public void setButton(Button button) {
 		this.button = button;
+		this.button.setOnAction((event)->{
+			System.out.println("okay");
+		});
 	}
 	public int getNo() {
 		return no;

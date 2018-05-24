@@ -254,5 +254,8 @@ var jsproxy = {
 		} catch(err) {
 			console.log(">> [jsproxy.makeNoFlyZone()] " + err);
 		}	
+	},
+	missionClear: function(){
+		
 	}
 };

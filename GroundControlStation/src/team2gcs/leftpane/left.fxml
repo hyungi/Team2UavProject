@@ -222,7 +222,7 @@
                                     <Insets left="20.0" top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="140.0" style="-fx-background-radius: 8;" text="Distance to WP" textFill="WHITE">
+                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="140.0" style="-fx-background-radius: 8;" text="Distance to Home" textFill="WHITE">
                                  <font>
                                     <Font name="Aharoni Bold" size="14.0" />
                                  </font>
@@ -230,7 +230,7 @@
                                     <Insets left="20.0" top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="140.0" style="-fx-background-radius: 8;" text="Distance to Home" textFill="WHITE">
+                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="140.0" style="-fx-background-radius: 8;" text="Time in Mission" textFill="WHITE">
                                  <font>
                                     <Font name="Aharoni Bold" size="14.0" />
                                  </font>
@@ -310,12 +310,12 @@
                                     <Insets left="10.0" top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label fx:id="detailDistHomeLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="33.0" prefWidth="182.0" textFill="WHITE">
+                              <Label fx:id="detailMissionTimeLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="33.0" prefWidth="182.0" textFill="WHITE">
                                  <VBox.margin>
                                     <Insets left="10.0" top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label fx:id="detailTimeAirLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="33.0" prefWidth="182.0" textFill="WHITE">
+                              <Label fx:id="detailAirTimeLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="33.0" prefWidth="182.0" textFill="WHITE">
                                  <VBox.margin>
                                     <Insets left="10.0" top="10.0" />
                                  </VBox.margin>
@@ -412,7 +412,7 @@
                                     <Insets left="20.0" top="15.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Dist to WP" textFill="WHITE">
+                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Time in Mission" textFill="WHITE">
                                  <font>
                                     <Font name="Aharoni Bold" size="20.0" />
                                  </font>
@@ -462,7 +462,7 @@
                                     <Insets left="30.0" top="15.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label fx:id="distWPLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="150.0" style="-fx-background-radius: 8;" text="Dist to WP" textFill="WHITE">
+                              <Label fx:id="missionTimeLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="150.0" style="-fx-background-radius: 8;" text="00:00:00" textFill="WHITE">
                                  <font>
                                     <Font name="Aharoni Bold" size="20.0" />
                                  </font>
