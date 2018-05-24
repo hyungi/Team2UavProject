@@ -22,6 +22,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -29,6 +30,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -44,6 +46,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.Duration;
 import netscape.javascript.JSObject;
 import team2gcs.leftpane.leftPaneController;
@@ -104,6 +107,8 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnMissionGoto;
 	@FXML private Button btnMissionJump;
 	@FXML private Button btnMissionLoi;
+	@FXML private Button btnMissionDelete;
+	@FXML private Button btnMissionRTL;
 	@FXML private Button armBtn;
 	@FXML private Button takeoffBtn;
 	@FXML private Button landBtn;
@@ -111,6 +116,7 @@ public class AppMainController implements Initializable{
 	@FXML private Button loiterBtn;
 	@FXML private Button btnMissionStart;
 	@FXML private Button btnMissionStop;
+	@FXML private TextField txtAlt;
 	
 	//펜스
 	@FXML private Button btnFenceSet;
@@ -146,6 +152,7 @@ public class AppMainController implements Initializable{
 	@FXML private Label batteryLabel;
 	@FXML private Label signalLabel;
 	@FXML private ImageView connButton;
+	int a=0;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -349,6 +356,8 @@ public class AppMainController implements Initializable{
 		btnMissionGoto.setOnAction((event)->{handleMissionGoto(event);});
 		btnMissionJump.setOnAction((event)->{handleMissionJump(event);});
 		btnMissionLoi.setOnAction((event)->{handleMissionLoi(event);});
+		btnMissionDelete.setOnAction((event)->{handleMissionDelete(event);});
+		btnMissionRTL.setOnAction((event)->{handleMissionRTL(event);});
 		armBtn.setOnAction((event)->{handleArm(event);});
 		armBtn.setGraphic(new Circle(5, Color.rgb(0x35, 0x35, 0x35)));
 		takeoffBtn.setOnAction((event)->{handleTakeoff(event);});
@@ -377,7 +386,23 @@ public class AppMainController implements Initializable{
 	public void handleCargoStop(ActionEvent event) {
 
 	}
-	
+	//미션 삭제
+	public void handleMissionDelete(ActionEvent event) {
+
+	}
+	//미션 RTL 추가
+	public void handleMissionRTL(ActionEvent event) {
+
+		WayPoint waypoint = new WayPoint();
+		waypoint.kind = "rtl";
+		waypoint.latitude = Network.getUav().homeLat;
+		waypoint.longitude = Network.getUav().homeLng;
+		tableView.getItems().add(waypoint);
+		waypoint.no = tableView.getItems().size();
+		Platform.runLater(() -> {
+			jsproxy.call("addRTL");
+		});
+	}
 	//미션 시작 정지
 	public void handleMissionStart(ActionEvent event) {
 		Network.getUav().missionStart();
@@ -421,7 +446,7 @@ public class AppMainController implements Initializable{
 		jsproxy.call("fenceClear");
 		leftPaneController.instance.setStatusLabels("Fence deleted.");
 	}
-	//비햄금지구역 이벤트 처리
+	//비행금지구역 이벤트 처리
 	public void handleNoflyzoneSet(ActionEvent event) {
 		try {
 			Stage dialog = new Stage();
@@ -454,7 +479,8 @@ public class AppMainController implements Initializable{
 		else if(armBtn.getText().equals("Arm")) leftPaneController.instance.setStatusLabels("UAV armed.");
 	}
 	public void handleTakeoff(ActionEvent event) {
-		Network.getUav().takeoff(10);//나중에 숫자입력으로 바꾸
+		a = Integer.valueOf(txtAlt.getText());
+		Network.getUav().takeoff(a);//나중에 숫자입력으로 바꾸
 		leftPaneController.instance.setStatusLabels("UAV take off.");
 	}
 	public void handleLand(ActionEvent event) {
@@ -499,7 +525,7 @@ public class AppMainController implements Initializable{
 				wayPoint.kind = jsonObject.getString("kind"); //all is "waypoint";
 				wayPoint.latitude = jsonObject.getDouble("lat");
 				wayPoint.longitude = jsonObject.getDouble("lng");
-				wayPoint.altitude = 10;
+				wayPoint.altitude = a;
 				list.add(wayPoint);
 			}
 			setTableViewItems(list);
@@ -655,6 +681,7 @@ public class AppMainController implements Initializable{
 		column9.setSortable(false);
 		column9.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column9);
+
 	}
 	
 	public void viewStatus(UAV uav) {

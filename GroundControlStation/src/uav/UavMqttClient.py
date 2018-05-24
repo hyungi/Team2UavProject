@@ -104,6 +104,7 @@ def send_data():
                 send_statustext_info(data)            
                 send_mission_info(data)
                 send_fence_info(data)
+                gcs_fail_safe()
                 
                 json = simplejson.JSONEncoder().encode(data)
                 mqtt_client.publish(uav_pub_topic, json)
@@ -577,6 +578,7 @@ def on_message(client, userdata, msg):
         elif command == "fence_upload": fence_upload(json_dict)
         elif command == "fence_download": fence_download(json_dict)
         elif command == "fence_clear": fence_clear(json_dict)
+        elif command == "gcs_connect": gcs_connect(json_dict)
     except Exception as e:
         if debug: print(">>>", type(e), "on_message():", e)    
 #------------------------------------------------------  
@@ -691,6 +693,32 @@ def fence_download(json_dict):
 def fence_clear(json_dict):
     vehicle.parameters["FENCE_TOTAL"] = 0
     vehicle.parameters["FENCE_ENABLE"] = 0  
+#------------------------------------------------------
+count = 0
+def gcs_connect(json_dict):
+    global gcs_fail_safe_request
+    global count
+    status = json_dict["status"]
+    if status == "true":
+        gcs_fail_safe_request = True
+        count = 0
+      
 #------------------------------------------------------ 
+gcs_fail_safe_request = False    
+def gcs_fail_safe():
+    global gcs_fail_safe_request
+    global count
+    try:
+        if gcs_fail_safe_request == True:
+            print("connecting")
+            count = count + 1
+            print(count)
+        if count > 20:
+            if not vehicle.armed: return
+            vehicle.mode = VehicleMode("RTL")
+            gcs_fail_safe_request = False
+    except Exception as e:
+        if debug: print(">>>", type(e), "gcs_fail_safe():", e)
+#------------------------------------------------------
 if __name__ == "__main__":
     connect_mqtt()
