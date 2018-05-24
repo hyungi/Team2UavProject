@@ -34,14 +34,14 @@ public class leftPaneController implements Initializable{
    	@FXML private Label modeLabel;
    	@FXML private Label airSpeedLabel;
    	@FXML private Label groundSpeedLabel;
-   	@FXML private Label distWPLabel;
+   	@FXML private Label missionTimeLabel;
    	@FXML private Label altitudeLabel;
    	@FXML private Label statusLabel;
    	@FXML private Label detailModeLabel;
    	@FXML private Label detailAirSpeedLabel;
    	@FXML private Label detailGroundSpeedLabel;
    	@FXML private Label detailAltitudeLabel;
-   	@FXML private Label detailDistWPLabel;
+   	@FXML private Label detailMissionTimeLabel;
    	@FXML private Label detailDistHomeLabel;
    	@FXML private Label detailTimeAirLabel;
    	@FXML private Label detailFenceLabel;
@@ -55,8 +55,6 @@ public class leftPaneController implements Initializable{
    	@FXML private Canvas yawCanvas;
    	private GraphicsContext ctx1;
    	private GraphicsContext ctx2;
-   	private GraphicsContext ctx3;
-   	private GraphicsContext ctx4;
    	private double roll = 0;
    	private double pitch = 0;
    	private double yaw = 0;
@@ -67,7 +65,7 @@ public class leftPaneController implements Initializable{
    	private double distHome = 0;
    	private double timeAir = 0;
    	private double voltage = 0;
-   	private String mode = "";
+   	private String mode = "DisArmed";
    	private boolean armed = false;
    	private boolean fenceData = false;
    	private boolean missionData = false;
@@ -215,7 +213,7 @@ public class leftPaneController implements Initializable{
 	}
 	
 	public void getStatus(UAV uav) {
-		mode = uav.mode;
+		if(uav.connected) mode = uav.mode;
 		airSpeed = uav.airSpeed;
 		groundSpeed = uav.groundSpeed;
 		altitude = uav.altitude;

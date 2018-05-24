@@ -68,7 +68,7 @@ public class AppMainController implements Initializable{
 	@FXML private Label minusButton;
 	private int zoom = 18;
 	
-	// 우측f
+	// 우측
 	@FXML private VBox rightPane;	
 	// 아래 버튼 & Pane & 둘을 가지고있는 VBox & control 값
 	@FXML private AnchorPane openBottom;
@@ -183,12 +183,13 @@ public class AppMainController implements Initializable{
 //////////////////////////////////Top Menu 관련 ////////////////////////////////
 	public void initTop() {
 	//	currTime();
-		homeLatLabel.setText("init");
-		homeLngLabel.setText("init");
-		locationLngLabel.setText("init");
-		locationLatLabel.setText("init");
-		batteryLabel.setText("init");
-		signalLabel.setText("init");	
+		homeLatLabel.setText("DisArmed");
+		homeLngLabel.setText("DisArmed");
+		locationLngLabel.setText("DisConnected");
+		locationLatLabel.setText("DisConnected");
+		batteryLabel.setText("DisConnected");
+		signalLabel.setText("No signal");
+		
 		// 연결 이벤트 클릭 관리
 		connButton.setOnMouseClicked((event)->{
 			if(connectState) {
@@ -341,7 +342,6 @@ public class AppMainController implements Initializable{
 		}
 		leftPaneController.instance.setStatusLabels("MQTT broker connected.");
 	}
-	
 	// 로그인화면 취소 버튼 이벤트처리
 	public void handleCancle(ActionEvent event) {
 		System.exit(0);
@@ -381,10 +381,10 @@ public class AppMainController implements Initializable{
 	}
 	//화물 부착 시작,끝
 	public void handleCargoStart(ActionEvent event) {
-
+		Network.getUav().cargo("cargoStart");
 	}
 	public void handleCargoStop(ActionEvent event) {
-
+		Network.getUav().cargo("cargoStop");
 	}
 	//미션 삭제
 	public void handleMissionDelete(ActionEvent event) {
@@ -416,7 +416,7 @@ public class AppMainController implements Initializable{
 		Platform.runLater(() -> {
 			jsproxy.call("missionStop");
 		});
-		leftPaneController.instance.setStatusLabels("Mission stoped.");
+		leftPaneController.instance.setStatusLabels("Mission stopped.");
 	}
 	//펜스 이벤트 처리
 	public void handleFenceSet(ActionEvent event) {
@@ -465,7 +465,7 @@ public class AppMainController implements Initializable{
 	}
 	public void handleNoflyzoneDelete(ActionEvent event) {
 		System.out.println("비행금지구역삭제");
-		leftPaneController.instance.setStatusLabels("Delete No-fly zone.");
+		leftPaneController.instance.setStatusLabels("No-fly zone deleted.");
 	}
 	//화물운송 WP 이벤트 처
 	public void handleCargoWP(ActionEvent event) {
