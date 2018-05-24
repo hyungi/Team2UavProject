@@ -93,14 +93,6 @@ var jsproxy = {
 			console.log(">> [jsproxy.rtl()] " + err);
 		}
 	},
-	//-------------------------------------------------------
-	makeNoFlyZone: function(lat, lng, radius){
-		try {
-			map.uav.makeNoflyzone(lat, lng, radius);
-		} catch(err) {
-			console.log(">> [jsproxy.makeNoFlyZone()] " + err);
-		}	
-	},
 	//------------------------------------------------------
 	missionMake: function() {
 		try {
@@ -254,5 +246,13 @@ var jsproxy = {
 		} catch(err) {
 			console.log(">> [jsproxy.setFence()] " + err);
 		}
+	},
+	//-------------------------------------------------------
+	makeNoFlyZone: function(x,y,r){
+		try {
+			map.uav.makeNoflyzone(x,y,r);
+		} catch(err) {
+			console.log(">> [jsproxy.makeNoFlyZone()] " + err);
+		}	
 	}
 };

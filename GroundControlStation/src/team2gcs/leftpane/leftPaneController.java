@@ -1,11 +1,11 @@
 package team2gcs.leftpane;
 
+import java.awt.Font;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import gcs.network.UAV;
 import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,14 +14,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
-import team2gcs.appmain.AppMain;
+import team2gcs.rightpane.rightPaneController;
 
 public class leftPaneController implements Initializable{
 	public static leftPaneController instance;
@@ -38,6 +36,7 @@ public class leftPaneController implements Initializable{
    	@FXML private Label groundSpeedLabel;
    	@FXML private Label distWPLabel;
    	@FXML private Label altitudeLabel;
+   	@FXML private Label statusLabel;
    	@FXML private Label detailModeLabel;
    	@FXML private Label detailAirSpeedLabel;
    	@FXML private Label detailGroundSpeedLabel;
@@ -116,7 +115,7 @@ public class leftPaneController implements Initializable{
     	
     	//yaw
     	ctx2.setFill(Color.WHITE);
-    	ctx2.fillOval(88+(65*Math.cos(yaw*0.017468-Math.PI/2)), 92+(65*Math.sin(yaw*0.017468-Math.PI/2)), 15, 15);
+    	ctx2.fillOval(82.5+(65*Math.cos(yaw*0.017468-Math.PI/2)), 82+(65*Math.sin(yaw*0.017468-Math.PI/2)), 15, 15);
    	}
 
    	public void drawHudLine() {
@@ -238,5 +237,11 @@ public class leftPaneController implements Initializable{
 		detailAltitudeLabel.setText(String.format("%.2f", altitude));
 		
 		detailVoltageLabel.setText(String.format("%.4f", voltage));
+	}
+	
+	public void setStatusLabels(String message) {
+//		statusLabel.setStyle("-fx-font-weight: bold;");
+		statusLabel.setText(message);
+//		rightPaneController.instance.setTxtArea(message);
 	}
 }
