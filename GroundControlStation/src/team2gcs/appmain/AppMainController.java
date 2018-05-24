@@ -375,14 +375,10 @@ public class AppMainController implements Initializable{
 	}
 	//화물 부착 시작,끝
 	public void handleCargoStart(ActionEvent event) {
-		Platform.runLater(() -> {
-			jsproxy.call("missionStart");
-		});
+		Network.getUav().cargo("cargoStart");
 	}
 	public void handleCargoStop(ActionEvent event) {
-		Platform.runLater(() -> {
-			jsproxy.call("missionStart");
-		});
+		Network.getUav().cargo("cargoStop");
 	}
 	//미션 시작 정지
 	public void handleMissionStart(ActionEvent event) {
