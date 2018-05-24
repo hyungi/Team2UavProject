@@ -16,12 +16,12 @@ import simplejson
 #예외 발생시 예외 내용 출력을 위해 True로 설정----------------------
 debug = True
 
-# #Autopilot(FC-펌웨어)과 연결----------------------------------jdh------------------------------
-vehicle = connect('udp:192.168.3.16:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
-# # vehicle = connect('/dev/ttyS0',wait_ready = True,baud57600) #라즈베리파이에서 실행시 
+# #Autopilot(FC-펌웨어)과 연결----------------------------------------------------------------
+vehicle = connect("udp:192.168.3.89:14560", wait_ready=True) #컴퓨터에서 테스트 실행시
+#vehicle = connect('/dev/ttyS0',wait_ready = True,baud57600) #라즈베리파이에서 실행시 
 
 #Autopilot과 연결-----------------------------------------
-# vehicle = connect("udp:192.168.3.217:14560", wait_ready=True)
+#vehicle = connect("udp:192.168.3.217:14560", wait_ready=True)
 # #vehicle = connect("/dev/ttyS0", wait_ready=True, baud=57600)
 
 #MQTT Broker와 연결하기 위한 정보-----------------------------
