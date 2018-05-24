@@ -176,12 +176,13 @@ public class AppMainController implements Initializable{
 //////////////////////////////////Top Menu 관련 ////////////////////////////////
 	public void initTop() {
 	//	currTime();
-		homeLatLabel.setText("init");
-		homeLngLabel.setText("init");
-		locationLngLabel.setText("init");
-		locationLatLabel.setText("init");
-		batteryLabel.setText("init");
-		signalLabel.setText("init");	
+		homeLatLabel.setText("DisArmed");
+		homeLngLabel.setText("DisArmed");
+		locationLngLabel.setText("DisConnected");
+		locationLatLabel.setText("DisConnected");
+		batteryLabel.setText("DisConnected");
+		signalLabel.setText("No signal");
+		
 		// 연결 이벤트 클릭 관리
 		connButton.setOnMouseClicked((event)->{
 			if(connectState) {
@@ -391,7 +392,7 @@ public class AppMainController implements Initializable{
 		Platform.runLater(() -> {
 			jsproxy.call("missionStop");
 		});
-		leftPaneController.instance.setStatusLabels("Mission stoped.");
+		leftPaneController.instance.setStatusLabels("Mission stopped.");
 	}
 	//펜스 이벤트 처리
 	public void handleFenceSet(ActionEvent event) {
@@ -440,7 +441,7 @@ public class AppMainController implements Initializable{
 	}
 	public void handleNoflyzoneDelete(ActionEvent event) {
 		System.out.println("비행금지구역삭제");
-		leftPaneController.instance.setStatusLabels("Delete No-fly zone.");
+		leftPaneController.instance.setStatusLabels("No-fly zone deleted.");
 	}
 	//화물운송 WP 이벤트 처
 	public void handleCargoWP(ActionEvent event) {
