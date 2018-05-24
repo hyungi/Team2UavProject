@@ -65,7 +65,7 @@ public class AppMainController implements Initializable{
 	@FXML private Label minusButton;
 	private int zoom = 18;
 	
-	// 우측f
+	// 우측
 	@FXML private VBox rightPane;	
 	// 아래 버튼 & Pane & 둘을 가지고있는 VBox & control 값
 	@FXML private AnchorPane openBottom;
@@ -335,7 +335,6 @@ public class AppMainController implements Initializable{
 		}
 		leftPaneController.instance.setStatusLabels("MQTT broker connected.");
 	}
-	
 	// 로그인화면 취소 버튼 이벤트처리
 	public void handleCancle(ActionEvent event) {
 		System.exit(0);
@@ -373,12 +372,11 @@ public class AppMainController implements Initializable{
 	}
 	//화물 부착 시작,끝
 	public void handleCargoStart(ActionEvent event) {
-
+		Network.getUav().cargo("cargoStart");
 	}
 	public void handleCargoStop(ActionEvent event) {
-
+		Network.getUav().cargo("cargoStop");
 	}
-	
 	//미션 시작 정지
 	public void handleMissionStart(ActionEvent event) {
 		Network.getUav().missionStart();
