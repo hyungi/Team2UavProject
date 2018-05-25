@@ -22,7 +22,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -30,7 +29,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -46,7 +44,6 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import javafx.util.Duration;
 import netscape.javascript.JSObject;
 import team2gcs.leftpane.leftPaneController;
@@ -59,6 +56,7 @@ public class AppMainController implements Initializable{
 	@FXML private AnchorPane bottomPane;
 	@FXML private BorderPane mainBorderPane;
 	@FXML private BorderPane loginBorderPane;
+	String disconnected = "UAV disconnected";
 	
 	// 좌측
 	@FXML private VBox leftPane;
@@ -160,7 +158,6 @@ public class AppMainController implements Initializable{
 		instance2 = this;
 		mainBorderPane.setVisible(false);
 		loginBorderPane.setVisible(true);
-		
 		initWebView();
 		initTableView();
 		initMissionButton();
@@ -188,7 +185,7 @@ public class AppMainController implements Initializable{
 		homeLngLabel.setText("DisArmed");
 		locationLngLabel.setText("DisConnected");
 		locationLatLabel.setText("DisConnected");
-		batteryLabel.setText("DisConnected");
+		batteryLabel.setText("0%");
 		signalLabel.setText("No signal");
 		
 		// 연결 이벤트 클릭 관리
@@ -412,14 +409,17 @@ public class AppMainController implements Initializable{
 		Platform.runLater(() -> {
 			jsproxy.call("missionStart");
 		});
+		if(Network.getUav().connected) 
 		leftPaneController.instance.setStatusLabels("Mission started.");
+		else leftPaneController.instance.setStatusLabels(disconnected);
 	}
 	public void handleMissionStop(ActionEvent event) {
 		Network.getUav().missionStop();
 		Platform.runLater(() -> {
 			jsproxy.call("missionStop");
 		});
-		leftPaneController.instance.setStatusLabels("Mission stopped.");
+		if(Network.getUav().connected) leftPaneController.instance.setStatusLabels("Mission stopped.");
+		else leftPaneController.instance.setStatusLabels(disconnected);
 	}
 	//펜스 이벤트 처리
 	public void handleFenceSet(ActionEvent event) {
@@ -480,22 +480,26 @@ public class AppMainController implements Initializable{
 	public void handleTakeoff(ActionEvent event) {
 		a = Integer.valueOf(txtAlt.getText());
 		Network.getUav().takeoff(a);//나중에 숫자입력으로 바꾸
-		leftPaneController.instance.setStatusLabels("UAV take off.");
+		if(Network.getUav().connected) leftPaneController.instance.setStatusLabels("UAV take off.");
+		else leftPaneController.instance.setStatusLabels(disconnected);
 	}
 	public void handleLand(ActionEvent event) {
 		Network.getUav().land();	
-		leftPaneController.instance.setStatusLabels("UAV land.");
+		if(Network.getUav().connected) leftPaneController.instance.setStatusLabels("UAV land.");
+		else leftPaneController.instance.setStatusLabels(disconnected);
 	}
 	public void handleLoiter(ActionEvent event) {
 		System.out.println("로이터 모드 실행 그러나 코딩 안함");
-		leftPaneController.instance.setStatusLabels("UAV loiter mode.");
+		if(Network.getUav().connected) leftPaneController.instance.setStatusLabels("UAV loiter mode.");
+		else leftPaneController.instance.setStatusLabels(disconnected);
 	}
 	public void handleRtl(ActionEvent event) {
 		Network.getUav().rtl();
 		Platform.runLater(() -> {
 			jsproxy.call("rtlStart");
 		});
-		leftPaneController.instance.setStatusLabels("UAV rtl mode.");
+		if(Network.getUav().connected) leftPaneController.instance.setStatusLabels("UAV rtl mode.");
+		else leftPaneController.instance.setStatusLabels(disconnected);
 	}
 	
 	//미션생성 이벤트 처리
@@ -811,7 +815,7 @@ public class AppMainController implements Initializable{
 			Network.getUav().gotoStart(latitude, longitude, altitude);
 			
 		});
-		leftPaneController.instance.setStatusLabels("Go to Start.");
+		leftPaneController.instance.setStatusLabels("Go to!");
 	}
 	
 	public void batterySet(double level) {
@@ -819,6 +823,7 @@ public class AppMainController implements Initializable{
 			batteryLabel.setText(level+"%");
 		});
 	}
+	
 	public void locationSet(double lat, double lng) {
 		Platform.runLater(()->{
 			locationLatLabel.setText("Lat:	" + lat);

@@ -558,7 +558,7 @@
          <bottom>
             <BorderPane maxHeight="80.0" minHeight="80.0" prefHeight="80.0" style="-fx-background-color: #000000;" BorderPane.alignment="CENTER">
                <center>
-                  <HBox alignment="CENTER" prefHeight="51.0" prefWidth="492.0" spacing="10.0" BorderPane.alignment="CENTER">
+                  <HBox alignment="CENTER" prefHeight="51.0" prefWidth="492.0" spacing="1.0" BorderPane.alignment="CENTER">
                      <children>
                         <Label style="-fx-text-fill: white; -fx-background-color: black;" text="Control" textFill="WHITE">
                            <font>

@@ -69,7 +69,3 @@
 	-fx-background-color: black;
 	-fx-opacity: 0.8;	
 }
-
-.tab-pane {
-    -fx-tab-min-width: 175px;
-}
