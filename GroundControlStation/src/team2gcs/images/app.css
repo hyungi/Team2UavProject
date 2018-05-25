@@ -1,3 +1,12 @@
+.text-field-table-cell .text-field {
+   -fx-border-color:red;
+   -fx-text-fill: black;
+}
+
+.table-view .table-cell{
+    -fx-alignment: center;
+}
+
 .button {
 	-fx-background-color: black;
 	-fx-text-fill: white;

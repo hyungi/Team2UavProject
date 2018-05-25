@@ -33,6 +33,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -388,15 +389,17 @@ public class AppMainController implements Initializable{
 	}
 	//미션 삭제
 	public void handleMissionDelete(ActionEvent event) {
-
+		list.clear();
+		setTableViewItems(list);
+		setMission(list);
 	}
 	//미션 RTL 추가
 	public void handleMissionRTL(ActionEvent event) {
 
 		WayPoint waypoint = new WayPoint();
 		waypoint.kind = "rtl";
-		waypoint.latitude = Network.getUav().homeLat;
-		waypoint.longitude = Network.getUav().homeLng;
+		waypoint.setLat(Network.getUav().homeLat +"");
+		waypoint.setLng(Network.getUav().homeLng+"");
 		tableView.getItems().add(waypoint);
 		waypoint.no = tableView.getItems().size();
 		Platform.runLater(() -> {
@@ -517,19 +520,30 @@ public class AppMainController implements Initializable{
 		});
 		leftPaneController.instance.setStatusLabels("Mission read.");
 	}
+	
+	// List를 계속 관리하기 위해서 Field 영역으로 가져옴
+	List<WayPoint> list = new ArrayList<>();
 	public void getMissionResponse(String data) {
 		a = Integer.valueOf(txtAlt.getText());
-		Platform.runLater(() -> {
-			List<WayPoint> list = new ArrayList<WayPoint>();			
+		list.clear();
+		Platform.runLater(() -> {	
 			JSONArray jsonArray = new JSONArray(data);
 			for(int i=0; i<jsonArray.length(); i++) {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
 				WayPoint wayPoint = new WayPoint();
 	 			wayPoint.no = jsonObject.getInt("no");
 				wayPoint.kind = jsonObject.getString("kind"); //all is "waypoint";
-				wayPoint.latitude = jsonObject.getDouble("lat");
-				wayPoint.longitude = jsonObject.getDouble("lng");
+				wayPoint.setLat(jsonObject.getDouble("lat")+"");
+				wayPoint.setLng(jsonObject.getDouble("lng")+"");
 				wayPoint.altitude = a;
+				wayPoint.getButton().setOnAction((event)->{
+					list.remove(wayPoint.no-1);
+					for(WayPoint wp : list) {
+						if(wp.no>wayPoint.no) wp.no--;
+					}
+					setTableViewItems(list);
+					setMission(list);
+				});
 				list.add(wayPoint);
 			}
 			setTableViewItems(list);
@@ -605,8 +619,8 @@ public class AppMainController implements Initializable{
 			WayPoint waypoint = new WayPoint();
 			waypoint.kind = "roi";
 			JSONObject jsonObject = new JSONObject(data);
-			waypoint.latitude = jsonObject.getDouble("lat");
-			waypoint.longitude = jsonObject.getDouble("lng");
+			waypoint.setLat(jsonObject.getDouble("lat")+"");
+			waypoint.setLng(jsonObject.getDouble("lng")+"");
 			int selectedIndex = tableView.getSelectionModel().getSelectedIndex();
 			if(selectedIndex != tableView.getItems().size()-1) {
 				tableView.getItems().add(selectedIndex+1, waypoint);
@@ -623,6 +637,7 @@ public class AppMainController implements Initializable{
 	
 	//테이블뷰 설정////////////////////////////////////////////////////////////////////////////////////////////////////////
 	private void initTableView() {
+		tableView.setEditable(true);
 		TableColumn<WayPoint, Integer> column1 = new TableColumn<WayPoint, Integer>("No");
 		column1.setCellValueFactory(new PropertyValueFactory<WayPoint, Integer>("no"));
 		column1.setPrefWidth(50);
@@ -633,19 +648,33 @@ public class AppMainController implements Initializable{
 		TableColumn<WayPoint, String> column2 = new TableColumn<WayPoint, String>("Command");
 		column2.setCellValueFactory(new PropertyValueFactory<WayPoint, String>("kind"));
 		column2.setPrefWidth(200);
-		column2.setSortable(false);
+		column2.setSortable(false);		
 		column2.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column2);
 		
-		TableColumn<WayPoint, Double> column3 = new TableColumn<WayPoint, Double>("Latitude");
-		column3.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("latitude"));
+		TableColumn<WayPoint, String> column3 = new TableColumn<WayPoint, String>("Latitude");
+		column3.setCellValueFactory(new PropertyValueFactory<WayPoint, String>("lat"));
+		column3.setEditable(true);
+		column3.setCellFactory(TextFieldTableCell.forTableColumn());
+		column3.setOnEditCommit((target)->{
+			target.getTableView().getItems().get(
+					target.getTablePosition().getRow()).setLat(target.getNewValue());
+			setMission(list);
+		});
 		column3.setPrefWidth(200);
 		column3.setSortable(false);
 		column3.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column3);
 		
-		TableColumn<WayPoint, Double> column4 = new TableColumn<WayPoint, Double>("Longitude");
-		column4.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("longitude"));
+		TableColumn<WayPoint, String> column4 = new TableColumn<WayPoint, String>("Longitude");
+		column4.setCellValueFactory(new PropertyValueFactory<WayPoint, String>("lng"));
+		column4.setEditable(true);
+		column4.setCellFactory(TextFieldTableCell.forTableColumn());
+		column4.setOnEditCommit((target)->{
+			target.getTableView().getItems().get(
+					target.getTablePosition().getRow()).setLng(target.getNewValue());
+			setMission(list);
+		});
 		column4.setPrefWidth(200);
 		column4.setSortable(false);
 		column4.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
@@ -685,7 +714,6 @@ public class AppMainController implements Initializable{
 		column9.setSortable(false);
 		column9.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column9);
-
 	}
 	
 	public void viewStatus(UAV uav) {
@@ -759,20 +787,21 @@ public class AppMainController implements Initializable{
 				jsonObject.put("lng", Network.getUav().homeLng);
 			} else if(wayPoint.kind.equals("waypoint")) {
 				jsonObject.put("kind",  wayPoint.kind);
-				jsonObject.put("lat", wayPoint.latitude);
-				jsonObject.put("lng", wayPoint.longitude);
+				jsonObject.put("lat", Double.parseDouble(wayPoint.getLat()));
+				jsonObject.put("lng", Double.parseDouble(wayPoint.getLng()));
 			} else if(wayPoint.kind.equals("jump")) {
 				jsonObject.put("kind",  wayPoint.kind);
-				jsonObject.put("lat", wayPoints.get((int)wayPoint.latitude-1).latitude);
-				jsonObject.put("lng", wayPoints.get((int)wayPoint.latitude-1).longitude+0.00005);
+//				jump 주석처리
+//				jsonObject.put("lat", wayPoints.get((int)wayPoint.latitude-1).latitude);
+//				jsonObject.put("lng", wayPoints.get((int)wayPoint.latitude-1).longitude+0.00005);
 			} else if(wayPoint.kind.equals("rtl")) {
 				jsonObject.put("kind",  wayPoint.kind);
 				jsonObject.put("lat", Network.getUav().homeLat);
 				jsonObject.put("lng", Network.getUav().homeLng+0.00005);
 			} else if(wayPoint.kind.equals("roi")) {
 				jsonObject.put("kind",  wayPoint.kind);
-				jsonObject.put("lat", wayPoint.latitude);
-				jsonObject.put("lng", wayPoint.longitude);
+				jsonObject.put("lat", Double.parseDouble(wayPoint.getLat()));
+				jsonObject.put("lng", Double.parseDouble(wayPoint.getLng()));
 			}
 			jsonArray.put(jsonObject);
 		}

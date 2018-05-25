@@ -1,5 +1,6 @@
 package gcs.mission;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Button;
 
 public class WayPoint {
@@ -7,24 +8,39 @@ public class WayPoint {
 	public String kind;
 	public int repeat;
 	public int next;
-	public double latitude;
-	public double longitude;
+   	public SimpleStringProperty lat 
+   	= new SimpleStringProperty();
+   	public SimpleStringProperty lng 
+   	= new SimpleStringProperty();
 	public double altitude;
 	public int jump;
 	public int jumpnum;
 	public double waitingTime;
 	private Button button = new Button("x");
 	
-	
-	
+
+	public String getLat() {
+		return lat.get();
+	}
+
+	public void setLat(String lat) {
+		this.lat.set(lat);
+	}
+
+	public String getLng() {
+		return lng.get();
+	}
+
+	public void setLng(String lng) {
+		this.lng.set(lng);
+	}
+
 	public Button getButton() {
 		return button;
 	}
+	
 	public void setButton(Button button) {
 		this.button = button;
-		this.button.setOnAction((event)->{
-			System.out.println("okay");
-		});
 	}
 	public int getNo() {
 		return no;
@@ -50,18 +66,6 @@ public class WayPoint {
 	public void setNext(int next) {
 		this.next = next;
 	}
-	public double getLatitude() {
-		return latitude;
-	}
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-	public double getLongitude() {
-		return longitude;
-	}
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
 	public double getAltitude() {
 		return altitude;
 	}
@@ -85,7 +89,6 @@ public class WayPoint {
 	}
 	public void setWaitingTime(double waitingTime) {
 		this.waitingTime = waitingTime;
-	}
-	
+	}	
 	
 }
