@@ -83,7 +83,7 @@ public class UAV implements Cloneable {
 					mco.setConnectionTimeout(5);
 					mqttClient.connect(mco);
 					mqttClient.subscribe(Network.uavPubTopic);
-
+					gcsHeartBeat();
 					AppMainController.connectState = true;
 				} catch (Exception e) {
 					UAV.this.disconnect();
@@ -361,6 +361,32 @@ public class UAV implements Cloneable {
 	public void fenceClear() {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("command", "fence_clear");
+		String strJson = jsonObject.toString();
+		send(strJson);
+	}
+	public void gcsHeartBeat() {
+		Thread thread = new Thread() {
+			@Override
+			public void run() {
+				while(true) {
+					try {
+						JSONObject jsonObject = new JSONObject();
+						jsonObject.put("command", "gcs_connect");
+						jsonObject.put("status", "true");
+						String strJson = jsonObject.toString();
+						send(strJson);
+						Thread.sleep(1000);
+					}catch(Exception e) {
+						
+					}
+				}
+			}
+		};
+		thread.start();
+	}
+	public void st() {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("command", "st");
 		String strJson = jsonObject.toString();
 		send(strJson);
 	}

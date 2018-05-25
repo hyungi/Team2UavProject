@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<StackPane fx:id="rightStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+   <children>
+      <Label fx:id="rightStatusLabel" id="rightStatusLabel" alignment="CENTER" prefHeight="146.0" prefWidth="340.0" text="Label" />
+      <Button fx:id="statusCloseBtn" id="statusCloseBtn" alignment="CENTER_RIGHT" mnemonicParsing="false" text="X">
+         <StackPane.margin>
+            <Insets bottom="30.0" left="315.0" />
+         </StackPane.margin>
+      </Button>
+   </children>
+</StackPane>

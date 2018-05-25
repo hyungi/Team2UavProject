@@ -56,6 +56,7 @@ public class AppMainController implements Initializable{
 	@FXML private AnchorPane bottomPane;
 	@FXML private BorderPane mainBorderPane;
 	@FXML private BorderPane loginBorderPane;
+	String disconnected = "UAV disconnected";
 	
 	// 좌측
 	@FXML private VBox leftPane;
@@ -104,6 +105,8 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnMissionGoto;
 	@FXML private Button btnMissionJump;
 	@FXML private Button btnMissionLoi;
+	@FXML private Button btnMissionDelete;
+	@FXML private Button btnMissionRTL;
 	@FXML private Button armBtn;
 	@FXML private Button takeoffBtn;
 	@FXML private Button landBtn;
@@ -111,6 +114,7 @@ public class AppMainController implements Initializable{
 	@FXML private Button loiterBtn;
 	@FXML private Button btnMissionStart;
 	@FXML private Button btnMissionStop;
+	@FXML private TextField txtAlt;
 	
 	//펜스
 	@FXML private Button btnFenceSet;
@@ -124,7 +128,6 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnNoflyzoneSet;
 	@FXML private Button btnNoflyzoneDelete;
 	//화물
-	@FXML private Button btnCargoWP;
 	@FXML private Button btnCargoStart;
 	@FXML private Button btnCargoStop;
 	
@@ -146,13 +149,15 @@ public class AppMainController implements Initializable{
 	@FXML private Label batteryLabel;
 	@FXML private Label signalLabel;
 	@FXML private ImageView connButton;
+	int a=0;
+	
+	@FXML private Button btnMode;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		instance2 = this;
 		mainBorderPane.setVisible(false);
 		loginBorderPane.setVisible(true);
-		
 		initWebView();
 		initTableView();
 		initMissionButton();
@@ -176,12 +181,13 @@ public class AppMainController implements Initializable{
 //////////////////////////////////Top Menu 관련 ////////////////////////////////
 	public void initTop() {
 	//	currTime();
-		homeLatLabel.setText("init");
-		homeLngLabel.setText("init");
-		locationLngLabel.setText("init");
-		locationLatLabel.setText("init");
-		batteryLabel.setText("init");
-		signalLabel.setText("init");	
+		homeLatLabel.setText("DisArmed");
+		homeLngLabel.setText("DisArmed");
+		locationLngLabel.setText("DisConnected");
+		locationLatLabel.setText("DisConnected");
+		batteryLabel.setText("0%");
+		signalLabel.setText("No signal");
+		
 		// 연결 이벤트 클릭 관리
 		connButton.setOnMouseClicked((event)->{
 			if(connectState) {
@@ -348,6 +354,8 @@ public class AppMainController implements Initializable{
 		btnMissionGoto.setOnAction((event)->{handleMissionGoto(event);});
 		btnMissionJump.setOnAction((event)->{handleMissionJump(event);});
 		btnMissionLoi.setOnAction((event)->{handleMissionLoi(event);});
+		btnMissionDelete.setOnAction((event)->{handleMissionDelete(event);});
+		btnMissionRTL.setOnAction((event)->{handleMissionRTL(event);});
 		armBtn.setOnAction((event)->{handleArm(event);});
 		armBtn.setGraphic(new Circle(5, Color.rgb(0x35, 0x35, 0x35)));
 		takeoffBtn.setOnAction((event)->{handleTakeoff(event);});
@@ -364,10 +372,12 @@ public class AppMainController implements Initializable{
 		btnNoflyzoneDelete.setOnAction((event)->{handleNoflyzoneDelete(event);});
 		btnMissionStart.setOnAction((event)->{handleMissionStart(event);});
 		btnMissionStop.setOnAction((event)->{handleMissionStop(event);});
-		btnCargoWP.setOnAction((event)->{handleCargoWP(event);});
 		btnCargoStart.setOnAction((event)->{handleCargoStart(event);});
 		btnCargoStop.setOnAction((event)->{handleCargoStop(event);});
-		
+		btnMode.setOnAction((event)->{handleMode(event);});
+	}
+	public void handleMode(ActionEvent event) {
+		Network.getUav().st();
 	}
 	//화물 부착 시작,끝
 	public void handleCargoStart(ActionEvent event) {
@@ -376,20 +386,40 @@ public class AppMainController implements Initializable{
 	public void handleCargoStop(ActionEvent event) {
 		Network.getUav().cargo("cargoStop");
 	}
+	//미션 삭제
+	public void handleMissionDelete(ActionEvent event) {
+
+	}
+	//미션 RTL 추가
+	public void handleMissionRTL(ActionEvent event) {
+
+		WayPoint waypoint = new WayPoint();
+		waypoint.kind = "rtl";
+		waypoint.latitude = Network.getUav().homeLat;
+		waypoint.longitude = Network.getUav().homeLng;
+		tableView.getItems().add(waypoint);
+		waypoint.no = tableView.getItems().size();
+		Platform.runLater(() -> {
+			jsproxy.call("addRTL");
+		});
+	}
 	//미션 시작 정지
 	public void handleMissionStart(ActionEvent event) {
 		Network.getUav().missionStart();
 		Platform.runLater(() -> {
 			jsproxy.call("missionStart");
 		});
+		if(Network.getUav().connected) 
 		leftPaneController.instance.setStatusLabels("Mission started.");
+		else leftPaneController.instance.setStatusLabels(disconnected);
 	}
 	public void handleMissionStop(ActionEvent event) {
 		Network.getUav().missionStop();
 		Platform.runLater(() -> {
 			jsproxy.call("missionStop");
 		});
-		leftPaneController.instance.setStatusLabels("Mission stopped.");
+		if(Network.getUav().connected) leftPaneController.instance.setStatusLabels("Mission stopped.");
+		else leftPaneController.instance.setStatusLabels(disconnected);
 	}
 	//펜스 이벤트 처리
 	public void handleFenceSet(ActionEvent event) {
@@ -419,7 +449,7 @@ public class AppMainController implements Initializable{
 		jsproxy.call("fenceClear");
 		leftPaneController.instance.setStatusLabels("Fence deleted.");
 	}
-	//비햄금지구역 이벤트 처리
+	//비행금지구역 이벤트 처리
 	public void handleNoflyzoneSet(ActionEvent event) {
 		try {
 			Stage dialog = new Stage();
@@ -438,11 +468,7 @@ public class AppMainController implements Initializable{
 	}
 	public void handleNoflyzoneDelete(ActionEvent event) {
 		System.out.println("비행금지구역삭제");
-		leftPaneController.instance.setStatusLabels("No-fly zone Deleted.");
-	}
-	//화물운송 WP 이벤트 처
-	public void handleCargoWP(ActionEvent event) {
-		System.out.println("화물운송WP");
+		leftPaneController.instance.setStatusLabels("No-fly zone deleted.");
 	}
 	
 	//Arm, Takeoff, Land, Roiter, Rtl
@@ -452,23 +478,28 @@ public class AppMainController implements Initializable{
 		else if(armBtn.getText().equals("Arm")) leftPaneController.instance.setStatusLabels("UAV armed.");
 	}
 	public void handleTakeoff(ActionEvent event) {
-		Network.getUav().takeoff(10);//나중에 숫자입력으로 바꾸
-		leftPaneController.instance.setStatusLabels("UAV take off.");
+		a = Integer.valueOf(txtAlt.getText());
+		Network.getUav().takeoff(a);//나중에 숫자입력으로 바꾸
+		if(Network.getUav().connected) leftPaneController.instance.setStatusLabels("UAV take off.");
+		else leftPaneController.instance.setStatusLabels(disconnected);
 	}
 	public void handleLand(ActionEvent event) {
 		Network.getUav().land();	
-		leftPaneController.instance.setStatusLabels("UAV land.");
+		if(Network.getUav().connected) leftPaneController.instance.setStatusLabels("UAV land.");
+		else leftPaneController.instance.setStatusLabels(disconnected);
 	}
 	public void handleLoiter(ActionEvent event) {
 		System.out.println("로이터 모드 실행 그러나 코딩 안함");
-		leftPaneController.instance.setStatusLabels("UAV loiter mode.");
+		if(Network.getUav().connected) leftPaneController.instance.setStatusLabels("UAV loiter mode.");
+		else leftPaneController.instance.setStatusLabels(disconnected);
 	}
 	public void handleRtl(ActionEvent event) {
 		Network.getUav().rtl();
 		Platform.runLater(() -> {
 			jsproxy.call("rtlStart");
 		});
-		leftPaneController.instance.setStatusLabels("UAV rtl mode.");
+		if(Network.getUav().connected) leftPaneController.instance.setStatusLabels("UAV rtl mode.");
+		else leftPaneController.instance.setStatusLabels(disconnected);
 	}
 	
 	//미션생성 이벤트 처리
@@ -487,6 +518,7 @@ public class AppMainController implements Initializable{
 		leftPaneController.instance.setStatusLabels("Mission read.");
 	}
 	public void getMissionResponse(String data) {
+		a = Integer.valueOf(txtAlt.getText());
 		Platform.runLater(() -> {
 			List<WayPoint> list = new ArrayList<WayPoint>();			
 			JSONArray jsonArray = new JSONArray(data);
@@ -497,7 +529,7 @@ public class AppMainController implements Initializable{
 				wayPoint.kind = jsonObject.getString("kind"); //all is "waypoint";
 				wayPoint.latitude = jsonObject.getDouble("lat");
 				wayPoint.longitude = jsonObject.getDouble("lng");
-				wayPoint.altitude = 10;
+				wayPoint.altitude = a;
 				list.add(wayPoint);
 			}
 			setTableViewItems(list);
@@ -653,6 +685,7 @@ public class AppMainController implements Initializable{
 		column9.setSortable(false);
 		column9.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column9);
+
 	}
 	
 	public void viewStatus(UAV uav) {
@@ -773,15 +806,16 @@ public class AppMainController implements Initializable{
 	
 	///////////////////////////// 미션 관련 //////////////////////////////////////
 	public void gotoStart(String data) {
+		a = Integer.valueOf(txtAlt.getText());
 		Platform.runLater(() -> {
 			JSONObject jsonObject = new JSONObject(data);
 			double latitude = jsonObject.getDouble("lat");
 			double longitude = jsonObject.getDouble("lng");
-			double altitude = 10;
+			double altitude = a;
 			Network.getUav().gotoStart(latitude, longitude, altitude);
 			
 		});
-		leftPaneController.instance.setStatusLabels("Go to Start.");
+		leftPaneController.instance.setStatusLabels("Go to!");
 	}
 	
 	public void batterySet(double level) {
@@ -789,6 +823,7 @@ public class AppMainController implements Initializable{
 			batteryLabel.setText(level+"%");
 		});
 	}
+	
 	public void locationSet(double lat, double lng) {
 		Platform.runLater(()->{
 			locationLatLabel.setText("Lat:	" + lat);

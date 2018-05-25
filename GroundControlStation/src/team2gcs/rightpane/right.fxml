@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -16,8 +17,17 @@
       </HBox>
       <StackPane prefHeight="801.0" prefWidth="350.0">
          <children>
-            <BorderPane fx:id="rightStatusPane" prefHeight="557.0" prefWidth="350.0" />
-            <BorderPane fx:id="rightCameraPane" prefHeight="200.0" prefWidth="200.0" />
+            <BorderPane fx:id="rightStatusPane" prefHeight="557.0" prefWidth="350.0">
+               <center>
+                  <ListView fx:id="rightStatusListView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #222222;" BorderPane.alignment="CENTER" />
+               </center></BorderPane>
+            <BorderPane fx:id="rightCameraPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+               <top>
+                  <Label text="camera pane" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font size="23.0" />
+                     </font></Label>
+               </top></BorderPane>
          </children>
       </StackPane>
    </children>

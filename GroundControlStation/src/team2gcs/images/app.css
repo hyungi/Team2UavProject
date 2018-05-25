@@ -8,6 +8,11 @@
 	-fx-text-fill: black;
 }
 
+.button:focused{
+	-fx-background-color: white;
+	-fx-text-fill: black;
+}
+
 #btnCancle:hover {
 	-fx-text-fill: white;
 }
@@ -63,8 +68,4 @@
 #rightStatusPane, #rightCameraPane {
 	-fx-background-color: black;
 	-fx-opacity: 0.8;	
-}
-
-.tab-pane {
-    -fx-tab-min-width: 175px;
 }
