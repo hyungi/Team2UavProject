@@ -159,7 +159,7 @@
       </BorderPane>
       <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="550.0">
          <children>
-            <BorderPane fx:id="sensorDetailBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.8" prefHeight="500.0" prefWidth="370.0" style="-fx-background-color: #222222; -fx-background-radius: 8;" StackPane.alignment="TOP_CENTER">
+            <BorderPane fx:id="sensorDetailBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.8" prefHeight="500.0" prefWidth="370.0" style="-fx-background-color: #222222; -fx-background-radius: 8;" visible="false" StackPane.alignment="TOP_CENTER">
                <top>
                   <HBox maxHeight="-Infinity" prefHeight="41.0" prefWidth="370.0" spacing="115.0" style="-fx-background-color: black; -fx-opacity: 0.7; -fx-background-radius: 8 8 0 0;" BorderPane.alignment="CENTER">
                      <children>
@@ -349,7 +349,7 @@
                   </HBox>
                </center>
             </BorderPane>
-            <BorderPane fx:id="sensorBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.8" prefHeight="500.0" prefWidth="370.0" style="-fx-background-color: #222222; -fx-background-radius: 8;" visible="false" StackPane.alignment="TOP_CENTER">
+            <BorderPane fx:id="sensorBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.8" prefHeight="500.0" prefWidth="370.0" style="-fx-background-color: #222222; -fx-background-radius: 8;" StackPane.alignment="TOP_CENTER">
                <top>
                   <HBox maxHeight="-Infinity" prefHeight="41.0" prefWidth="370.0" spacing="180.0" style="-fx-background-color: black; -fx-opacity: 0.7; -fx-background-radius: 8 8 0 0;" BorderPane.alignment="CENTER">
                      <children>
