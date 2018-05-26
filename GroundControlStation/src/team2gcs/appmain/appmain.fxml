@@ -151,7 +151,7 @@
                                           </BorderPane>
                                           <BorderPane fx:id="rightCameraPane" prefHeight="798.0" prefWidth="350.0" visible="false">
                                              <top>
-                                                <Button fx:id="rightDeleteBtn1" mnemonicParsing="false" prefHeight="47.0" prefWidth="350.0" style="-fx-background-radius: 0;" text="Camera" BorderPane.alignment="CENTER" />
+                                                <Button fx:id="" mnemonicParsing="false" prefHeight="47.0" prefWidth="350.0" style="-fx-background-radius: 0;" text="Camera" BorderPane.alignment="CENTER" />
                                              </top>
                                           </BorderPane>
                                        </children>
