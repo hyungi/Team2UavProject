@@ -26,6 +26,11 @@
 	-fx-text-fill: white;
 }
 
+#rightDeleteBtn:focused {
+	-fx-background-color: black;
+	-fx-text-fill: white;
+}
+
 .text-input {
 	-fx-text-fill: white;
 }
@@ -77,4 +82,39 @@
 #rightStatusPane, #rightCameraPane {
 	-fx-background-color: black;
 	-fx-opacity: 0.8;	
+}
+
+#rightStatusLabel {
+	-fx-background-color: white;
+	-fx-text-fill: black;
+}
+
+#rightStatusLabel:hover {
+	-fx-background-color: white;
+	-fx-text-fill: black;
+}
+
+#rightCameraLabel {
+	-fx-background-color: black;
+	-fx-text-fill: white;
+}
+
+#rightCameraLabel:hover {
+	-fx-background-color: white;
+	-fx-text-fill: black;
+}
+
+.list-view {
+	-fx-background-color: black;
+	-fx-border-color: transparent;
+}
+
+.list-cell {
+	-fx-background-color: black;
+	-fx-text-fill: white;
+}
+
+.list-cell:hover {
+	-fx-background-color: white;
+	-fx-text-fill: black;
 }
