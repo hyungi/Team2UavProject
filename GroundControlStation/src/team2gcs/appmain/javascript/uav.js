@@ -485,8 +485,9 @@ function UAV() {
 			console.log(">> [uav.drawFencePolygon()] " + err);
 		}
 	};
+	var circleDraw;
 	this.makeNoflyzone = function(x,y,r){
-		  this.makeNoflyzone = new google.maps.Circle({
+		  	this.circleDraw = new google.maps.Circle({
 			map: map.googlemap,
 		    center: {lat:x, lng:y},
 		    zoom: 7,
@@ -498,6 +499,9 @@ function UAV() {
 		    fillOpacity: 0.5,
 			optimized: false
 		  });
+	};
+	this.deleteNoflyzone = function(){
+		this.circleDraw.setMap(null);
 	};
 }
 

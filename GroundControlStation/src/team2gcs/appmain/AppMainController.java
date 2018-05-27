@@ -472,6 +472,9 @@ public class AppMainController implements Initializable{
 	public void handleNoflyzoneDelete(ActionEvent event) {
 		System.out.println("비행금지구역삭제");
 		leftPaneController.instance.setStatusLabels("No-fly zone deleted.");
+		Platform.runLater(() -> {
+			jsproxy.call("deleteNoFlyZone");
+		});
 	}
 	
 	//Arm, Takeoff, Land, Roiter, Rtl

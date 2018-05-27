@@ -255,6 +255,13 @@ var jsproxy = {
 			console.log(">> [jsproxy.makeNoFlyZone()] " + err);
 		}	
 	},
+	deleteNoFlyZone: function(){
+		try {
+			map.uav.deleteNoflyzone();
+		} catch(err) {
+			console.log(">> [jsproxy.deleteNoFlyZone()] " + err);
+		}	
+	},
 	missionClear: function(){
 		
 	}

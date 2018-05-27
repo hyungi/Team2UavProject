@@ -30,9 +30,9 @@ mqtt_ip = "106.253.56.122"
 mqtt_port = 1883
 uav_pub_topic = "/uav2/pub"
 uav_sub_topic = "/uav2/sub"
-gpio.setmode(gpio.BOARD)
 # gpio.setup(23,gpio.OUT)
 # gpio.setup(24,gpio.OUT)
+gpio.setmode(gpio.BOARD)
 gpio.setup(16,gpio.OUT)
 gpio.setup(18,gpio.OUT)
 
