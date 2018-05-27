@@ -267,7 +267,7 @@
                                     </HBox>
                                     <HBox prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <BorderPane prefHeight="98.0" prefWidth="194.0">
+                                          <BorderPane prefHeight="82.0" prefWidth="276.0">
                                              <center>
                                                 <GridPane alignment="CENTER" prefHeight="81.0" prefWidth="142.0" BorderPane.alignment="CENTER">
                                                    <children>
