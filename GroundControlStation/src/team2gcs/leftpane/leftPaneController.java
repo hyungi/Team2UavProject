@@ -1,6 +1,5 @@
 package team2gcs.leftpane;
 
-import java.awt.Font;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -19,7 +18,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import team2gcs.rightpane.rightPaneController;
 
 public class leftPaneController implements Initializable{
 	public static leftPaneController instance;

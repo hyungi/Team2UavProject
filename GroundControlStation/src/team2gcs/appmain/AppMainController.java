@@ -181,9 +181,7 @@ public class AppMainController implements Initializable{
 		heightSize = webView.getHeight();
 		try {
 			Parent leftRoot = FXMLLoader.load(getClass().getResource("../leftpane/left.fxml"));
-//			Parent rightRoot = FXMLLoader.load(getClass().getResource("../rightpane/right.fxml"));
 			leftPane.getChildren().add(leftRoot);
-//			rightPane.getChildren().add(rightRoot);
 		}catch (Exception e) {}
 	}
 	
@@ -481,6 +479,9 @@ public class AppMainController implements Initializable{
 	public void handleNoflyzoneDelete(ActionEvent event) {
 		System.out.println("비행금지구역삭제");
 		statusMessage("No-fly zone deleted.");
+		Platform.runLater(() -> {
+			jsproxy.call("deleteNoFlyZone");
+		});
 	}
 	
 	//Arm, Takeoff, Land, Roiter, Rtl
@@ -767,7 +768,6 @@ public class AppMainController implements Initializable{
 			}
 		});
 	}
-	
 	public void setStatus(UAV uav) {
 		Platform.runLater(() -> {
 			if(uav.connected) {
@@ -839,7 +839,7 @@ public class AppMainController implements Initializable{
 		System.out.println(message);
 	}
 	
-///////////////////////////// 미션 관련 //////////////////////////////////////
+	///////////////////////////// 미션 관련 //////////////////////////////////////
 	public void gotoStart(String data) {
 		a = Integer.valueOf(txtAlt.getText());
 		Platform.runLater(() -> {

@@ -33,7 +33,6 @@ public class NoFlyZoneController implements Initializable{
 		btnOk.setOnAction((event)->{handleOk(event);});
 	}
 	public void handleOk(ActionEvent event) {
-		
 		try {
 			x = Integer.valueOf(txtNFZLat.getText());
 			y = Integer.valueOf(txtNFZLng.getText());
