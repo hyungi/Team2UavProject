@@ -155,16 +155,16 @@ public class UAV implements Cloneable {
 				if(wp.kind.equals("takeoff")) {
 					wp.altitude = jo.getDouble("alt");
 				} else if(wp.kind.equals("waypoint")) {
- 					wp.latitude = jo.getDouble("lat");
-					wp.longitude = jo.getDouble("lng");
+ 					wp.setLat(jo.getDouble("lat")+"");
+					wp.setLng(jo.getDouble("lng")+"");
 					wp.altitude = jo.getDouble("alt");
 				} else if(wp.kind.equals("rtl")) {
 				} else if(wp.kind.equals("jump")) {
-					wp.latitude = jo.getDouble("lat");
-					wp.longitude = jo.getDouble("lng");
+ 					wp.setLat(jo.getDouble("lat")+"");
+					wp.setLng(jo.getDouble("lng")+"");
 				} else if(wp.kind.equals("roi")) {
-					wp.latitude = jo.getDouble("lat");
-					wp.latitude = jo.getDouble("lng");
+ 					wp.setLat(jo.getDouble("lat")+"");
+					wp.setLng(jo.getDouble("lng")+"");
 				}
 				listWayPoint.add(wp);
 			}
@@ -291,8 +291,8 @@ public class UAV implements Cloneable {
 		for(WayPoint wp : list) {
 			JSONObject jo = new JSONObject();
 			jo.put("kind", wp.kind);
-			jo.put("lat", wp.latitude);
-			jo.put("lng", wp.longitude);
+			jo.put("lat", Double.parseDouble(wp.getLat()));
+			jo.put("lng", Double.parseDouble(wp.getLng()));
 			jo.put("alt", wp.altitude);
 			jsonArray.put(jo);
 		}

@@ -17,21 +17,12 @@ import RPi.GPIO as gpio
 #예외 발생시 예외 내용 출력을 위해 True로 설정----------------------
 debug = True
 
-# #Autopilot(FC-펌웨어)과 연결----------------------------------------------------------------
-#vehicle = connect("udp:192.168.3.89:14560", wait_ready=True) #컴퓨터에서 테스트 실행시
-#vehicle = connect('/dev/ttyS0',wait_ready = True,baud57600) #라즈베리파이에서 실행시 
 # #Autopilot(FC-펌웨어)과 연결----------------------------------jdh------------------------------
-
 vehicle = connect('udp:127.0.0.1:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
-
-
-vehicle = connect('udp:127.0.0.1:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
-#vehicle = connect('udp:192.168.3.217:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
-
 # # vehicle = connect('/dev/ttyS0',wait_ready = True,baud57600) #라즈베리파이에서 실행시 
 
 #Autopilot과 연결-----------------------------------------
-#vehicle = connect("udp:192.168.3.217:14560", wait_ready=True)
+# vehicle = connect("udp:192.168.3.217:14560", wait_ready=True)
 # #vehicle = connect("/dev/ttyS0", wait_ready=True, baud=57600)
 
 #MQTT Broker와 연결하기 위한 정보-----------------------------
@@ -40,8 +31,10 @@ mqtt_port = 1883
 uav_pub_topic = "/uav2/pub"
 uav_sub_topic = "/uav2/sub"
 gpio.setmode(gpio.BOARD)
-gpio.setup(23,gpio.OUT)
-gpio.setup(24,gpio.OUT)
+# gpio.setup(23,gpio.OUT)
+# gpio.setup(24,gpio.OUT)
+gpio.setup(16,gpio.OUT)
+gpio.setup(18,gpio.OUT)
 
 #MQTT Broker와 연결---------------------------------------    
 mqtt_client = None
@@ -593,21 +586,21 @@ def on_message(client, userdata, msg):
         elif command == "gcs_connect": gcs_connect(json_dict)
         elif command == "cargoStart": cargoStart()
         elif command == "cargoStop": cargoStop()
-        elif command == "st": st()
     except Exception as e:
         if debug: print(">>>", type(e), "on_message():", e)
-#------------------------------------------------------
-def st():
-	if vehicle.armed: return
-    vehicle.mode = VehicleMode("STABILIZE")
+        
 #------------------------------------------------------
 def cargoStart():
-    gpio.output(23,1)
-    gpio.output(24,1)
+#     gpio.output(23,1)
+#     gpio.output(24,1)
+    gpio.output(16,1)
+    gpio.output(18,1)
     
 def cargoStop():
-    gpio.output(23,0)
-    gpio.output(24,0)
+#     gpio.output(23,0)
+#     gpio.output(24,0)
+    gpio.output(16,0)
+    gpio.output(18,0)
 #------------------------------------------------------  
 def arm(json_dict):
     if vehicle.armed: return
