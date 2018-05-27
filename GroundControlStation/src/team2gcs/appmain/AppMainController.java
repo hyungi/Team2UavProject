@@ -177,12 +177,11 @@ public class AppMainController implements Initializable{
 		
 		initSlide();
 		initTop();
+		initRightPane();
 		heightSize = webView.getHeight();
 		try {
 			Parent leftRoot = FXMLLoader.load(getClass().getResource("../leftpane/left.fxml"));
-			Parent rightRoot = FXMLLoader.load(getClass().getResource("../rightpane/right.fxml"));
 			leftPane.getChildren().add(leftRoot);
-			rightPane.getChildren().add(rightRoot);
 		}catch (Exception e) {}
 	}
 	
