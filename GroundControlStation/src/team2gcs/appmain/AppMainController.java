@@ -163,6 +163,9 @@ public class AppMainController implements Initializable{
 	@FXML private ImageView connButton;
 	int a=0;
 	
+	//임시 버튼
+	@FXML private Button circleWP;
+	
 	@FXML private Button btnMode;
 	
 	// noFly 변수
@@ -391,6 +394,36 @@ public class AppMainController implements Initializable{
 		btnCargoStart.setOnAction((event)->{handleCargoStart(event);});
 		btnCargoStop.setOnAction((event)->{handleCargoStop(event);});
 		btnMode.setOnAction((event)->{handleMode(event);});
+		circleWP.setOnAction((event)->{handleCircleWP(event);});
+	}
+	public void handleCircleWP(ActionEvent event) {
+		a = Integer.valueOf(txtAlt.getText());
+		list.clear();
+		Platform.runLater(() -> {	
+
+			for(int i=1; i<19; i++) {
+
+				WayPoint wayPoint = new WayPoint();
+	 			wayPoint.no = i;
+				wayPoint.kind = "waypoint";
+				wayPoint.setLat(37+33*Math.cos(Math.PI/180*(i-1)*5)/111000 +"");
+				wayPoint.setLng(127+33*Math.sin(Math.PI/180*(i-1)*5)/88800+"");
+				wayPoint.altitude = a;
+				wayPoint.getButton().setOnAction((event2)->{
+					list.remove(wayPoint.no-1);
+					for(WayPoint wp : list) {
+						if(wp.no>wayPoint.no) wp.no--;
+					}
+					setTableViewItems(list);
+					setMission(list);
+				});
+				list.add(wayPoint);
+
+			}
+			setTableViewItems(list);
+		});
+
+
 	}
 	public void handleMode(ActionEvent event) {
 		Network.getUav().st();

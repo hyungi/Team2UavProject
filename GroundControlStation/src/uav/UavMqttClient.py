@@ -28,9 +28,11 @@ mqtt_ip = "192.168.3.217"
 mqtt_port = 1883
 uav_pub_topic = "/uav2/pub"
 uav_sub_topic = "/uav2/sub"
+
 #gpio.setmode(gpio.BOARD)
 #gpio.setup(16,gpio.OUT)
 #gpio.setup(18,gpio.OUT)
+
 
 #MQTT Broker와 연결---------------------------------------    
 mqtt_client = None
