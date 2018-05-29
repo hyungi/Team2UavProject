@@ -182,7 +182,7 @@ public class CameraStream {
                             httpURLConnection = (HttpURLConnection) url.openConnection();
                             httpURLConnection.setConnectTimeout(1000);
                             httpURLConnection.connect();
-                            connected = true;
+                            connected = true; 
                             
                             Hashtable httpHeaders = StreamSplit.readHeaders(httpURLConnection);
                             String contentType = (String) httpHeaders.get("content-type");
