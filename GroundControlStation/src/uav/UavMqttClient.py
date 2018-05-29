@@ -29,11 +29,9 @@ mqtt_ip = "192.168.3.177"
 mqtt_port = 1883
 uav_pub_topic = "/uav2/pub"
 uav_sub_topic = "/uav2/sub"
-
 #gpio.setmode(gpio.BOARD)
 #gpio.setup(16,gpio.OUT)
 #gpio.setup(18,gpio.OUT)
-
 
 #MQTT Broker와 연결---------------------------------------    
 mqtt_client = None
@@ -112,8 +110,8 @@ def send_data():
                 
                 json = simplejson.JSONEncoder().encode(data)
                 mqtt_client.publish(uav_pub_topic, json)
-                time.sleep(2)
-                print(json)
+#                 time.sleep(5)
+#                 print(json)
                 
             time.sleep(0.1)
         except Exception as e:

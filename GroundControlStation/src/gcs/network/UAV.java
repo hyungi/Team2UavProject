@@ -35,12 +35,12 @@ public class UAV implements Cloneable {
 	public double groundSpeed;	
 	public double homeLat;
 	public double homeLng;
+	public static int nextWP;
 	public double rangeFinderDistance;
 	public double opticalFlowQuality;
 	
 	public int nextWaypointNo;
 	public List<WayPoint> wayPoints;
-	
 	public double fenceEnable;
 	public double fenceType;
 	public double fenceAction;
@@ -132,8 +132,7 @@ public class UAV implements Cloneable {
 			groundSpeed = jsonObject.getDouble("groundspeed");
 			homeLat = jsonObject.getDouble("homeLat");
 			homeLng = jsonObject.getDouble("homeLng");
-			
-			
+			nextWP = jsonObject.getInt("next_waypoint_no");
 			if(armed) AppMainController.instance2.statusMessage("UAV Armed.");
 			else if(!armed) AppMainController.instance2.statusMessage("UAV Disarmed.");
 			

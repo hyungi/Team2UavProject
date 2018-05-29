@@ -59,6 +59,13 @@ public class AppMainController implements Initializable{
 	@FXML private AnchorPane bottomPane;
 	@FXML private BorderPane mainBorderPane;
 	@FXML private BorderPane loginBorderPane;
+	String inTime;
+	public static String missionTime;
+	public static String takeoffTime;
+	int takeoffH = 0, takeoffM = 0, takeoffS = 0;
+	int missionH = 0, missionM = 0, missionS = 0;
+	public static boolean missionStart = false;
+	public static boolean takeoffStart = false;
 	
 	// 좌측
 	@FXML private VBox leftPane;
@@ -76,8 +83,8 @@ public class AppMainController implements Initializable{
 	@FXML private Label rightCameraLabel;
 	@FXML private Button rightDeleteBtn;
 	@FXML private ListView<String> statusListView;
-	public static List<String> statusList = new ArrayList<String>();
-	String messageTemp = "";
+	List<String> statusList = new ArrayList<String>();
+	String messageTemp = "messageTemp";
 	
 	// 아래 버튼 & Pane & 둘을 가지고있는 VBox & control 값
 	@FXML private AnchorPane openBottom;
@@ -164,7 +171,6 @@ public class AppMainController implements Initializable{
 	
 	//임시 버튼
 	@FXML private Button circleWP;
-	
 	@FXML private Button btnMode;
 	
 	@Override
@@ -176,7 +182,7 @@ public class AppMainController implements Initializable{
 		initTableView();
 		initMissionButton();
 		initLoginButton();
-		
+
 		initSlide();
 		initTop();
 		initRightPane();
@@ -189,15 +195,12 @@ public class AppMainController implements Initializable{
 
 //////////////////////////////////Top Menu 관련 ////////////////////////////////
 	public void initTop() {
-	//	currTime();
-
-		homeLatLabel.setText("DisArmed");
-		homeLngLabel.setText("DisArmed");
-		locationLngLabel.setText("DisConnected");
-		locationLatLabel.setText("DisConnected");
+		homeLatLabel.setText("Disarmed");
+		homeLngLabel.setText("Disarmed");
+		locationLngLabel.setText("Disconnected");
+		locationLatLabel.setText("Disconnected");
 		batteryLabel.setText("0%");
 		signalLabel.setText("No signal");
-		
 		// 연결 이벤트 클릭 관리
 		connButton.setOnMouseClicked((event)->{
 			if(connectState) {
@@ -238,8 +241,39 @@ public class AppMainController implements Initializable{
 	}
 	
 	public void currTime() {
-		String inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
+		inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
 		currtimeLabel.setText(inTime);
+		missionTime();
+		takeoffTime();
+	}
+	
+	public void missionTime() {
+		if(missionStart) {
+			missionS++;
+			if(missionS==60) {
+				missionM++; 
+				missionS = 00;
+			} if(missionM==60) {
+				missionH++;
+				missionM = 00;
+			}
+			missionTime = String.format("%02d:%02d:%02d", missionH, missionM, missionS);
+		}
+	}
+	
+	public void takeoffTime() {
+		System.out.println(takeoffStart);
+		if(takeoffStart) {
+			takeoffS++;
+			if(takeoffS==60) {
+				takeoffM++; 
+				takeoffS = 00;
+			} if(takeoffM==60) {
+				takeoffH++;
+				takeoffM = 00;
+			}
+		}
+		takeoffTime = String.format("%02d:%02d:%02d", takeoffH, takeoffM, takeoffS);
 	}
 
 ////////////////////////////////// Slide Menu 관련 ////////////////////////////////
@@ -365,9 +399,7 @@ public class AppMainController implements Initializable{
 		btnMissionLoi.setOnAction((event)->{handleMissionLoi(event);});
 		btnMissionDelete.setOnAction((event)->{handleMissionDelete(event);});
 		btnMissionRTL.setOnAction((event)->{handleMissionRTL(event);});
-		armBtn.setOnAction((event)->{try {
-			handleArm(event);
-		} catch (Exception e) {	}});
+		armBtn.setOnAction((event)->{try {handleArm(event);} catch (Exception e) {}});
 		armBtn.setGraphic(new Circle(5, Color.rgb(0x35, 0x35, 0x35)));
 		takeoffBtn.setOnAction((event)->{handleTakeoff(event);});
 		landBtn.setOnAction((event)->{handleLand(event);});
@@ -394,7 +426,6 @@ public class AppMainController implements Initializable{
 		Platform.runLater(() -> {	
 
 			for(int i=1; i<19; i++) {
-
 				WayPoint wayPoint = new WayPoint();
 	 			wayPoint.no = i;
 				wayPoint.kind = "waypoint";
@@ -410,7 +441,6 @@ public class AppMainController implements Initializable{
 					setMission(list);
 				});
 				list.add(wayPoint);
-
 			}
 			setTableViewItems(list);
 		});
@@ -432,6 +462,7 @@ public class AppMainController implements Initializable{
 		list.clear();
 		setTableViewItems(list);
 		setMission(list);
+		statusMessage("Mission deleted.");
 	}
 	//미션 RTL 추가
 	public void handleMissionRTL(ActionEvent event) {
@@ -453,12 +484,14 @@ public class AppMainController implements Initializable{
 			jsproxy.call("missionStart");
 		}); 
 		statusMessage("Mission started.");
+		missionStart = true;
 	}
 	public void handleMissionStop(ActionEvent event) {
 		Network.getUav().missionStop();
 		Platform.runLater(() -> {
 			jsproxy.call("missionStop");
 		});
+		missionStart = false;
 		statusMessage("Mission stopped.");
 	}
 	//펜스 이벤트 처리
@@ -521,10 +554,12 @@ public class AppMainController implements Initializable{
 	public void handleTakeoff(ActionEvent event) {
 		a = Integer.valueOf(txtAlt.getText());
 		Network.getUav().takeoff(a);//나중에 숫자입력으로 바꾸
+		takeoffStart = true;
 		statusMessage("UAV take off.");
 	}
 	public void handleLand(ActionEvent event) {
-		Network.getUav().land();	
+		Network.getUav().land();
+		takeoffStart = false;
 		statusMessage("UAV land.");
 	}
 	public void handleLoiter(ActionEvent event) {
@@ -556,7 +591,7 @@ public class AppMainController implements Initializable{
 	}
 	
 	// List를 계속 관리하기 위해서 Field 영역으로 가져옴
-	List<WayPoint> list = new ArrayList<>();
+	public static List<WayPoint> list = new ArrayList<>();
 	public void getMissionResponse(String data) {
 		a = Integer.valueOf(txtAlt.getText());
 		list.clear();
@@ -753,10 +788,16 @@ public class AppMainController implements Initializable{
 	public void viewStatus(UAV uav) {
 		try {
 			setStatus(uav);
+			setMissionStatus(uav);
 			leftPaneController.instance.getRollStatus(uav);
 			leftPaneController.instance.getStatus(uav);
-			setMissionStatus(uav);
-			
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					leftPaneController.instance.setRollStatus();
+					leftPaneController.instance.setStatus();
+				}
+			});
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -955,7 +996,7 @@ public class AppMainController implements Initializable{
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				String inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
+				inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
 				if(!Network.getUav().connected && !statusList.contains("   UAV Disconnected.")){
 					leftPaneController.instance.setStatusLabels("UAV Disconnected.");
 					statusList.add("   UAV Disconnected.");

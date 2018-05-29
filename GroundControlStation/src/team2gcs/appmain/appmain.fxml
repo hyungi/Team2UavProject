@@ -447,14 +447,14 @@
                               </ImageView>
                               <Label alignment="CENTER" prefWidth="80.0" text="Home">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font name="Aharoni Bold" size="20.0" />
                                  </font>
                               </Label>
                               <VBox maxHeight="-Infinity" prefHeight="50.0" prefWidth="160.0">
                                  <children>
                                     <Label fx:id="homeLatLabel" prefHeight="20.0" prefWidth="154.0" text="Label">
                                        <font>
-                                          <Font size="16.0" />
+                                          <Font name="Aharoni Bold" size="17.0" />
                                        </font>
                                        <VBox.margin>
                                           <Insets bottom="4.0" />
@@ -462,7 +462,7 @@
                                     </Label>
                                     <Label fx:id="homeLngLabel" prefHeight="20.0" prefWidth="154.0" text="Label">
                                        <font>
-                                          <Font size="16.0" />
+                                          <Font name="Aharoni Bold" size="17.0" />
                                        </font>
                                     </Label>
                                  </children>
@@ -480,7 +480,7 @@
                               </ImageView>
                               <Label prefWidth="100.0" text="Location">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font name="Aharoni Bold" size="20.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets left="12.0" />
@@ -490,7 +490,7 @@
                                  <children>
                                     <Label fx:id="locationLatLabel" maxHeight="-Infinity" prefHeight="20.0" prefWidth="154.0" text="Label">
                                        <font>
-                                          <Font size="16.0" />
+                                          <Font name="Aharoni Bold" size="16.0" />
                                        </font>
                                        <VBox.margin>
                                           <Insets bottom="4.0" />
@@ -498,7 +498,7 @@
                                     </Label>
                                     <Label fx:id="locationLngLabel" maxHeight="-Infinity" prefHeight="20.0" prefWidth="154.0" text="Label">
                                        <font>
-                                          <Font size="16.0" />
+                                          <Font name="Aharoni Bold" size="16.0" />
                                        </font>
                                     </Label>
                                  </children>
@@ -519,7 +519,7 @@
                               </ImageView>
                               <Label prefHeight="26.0" prefWidth="85.0" text="Battery">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font name="Aharoni Bold" size="20.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets left="12.0" />
@@ -527,7 +527,7 @@
                               </Label>
                               <Label fx:id="batteryLabel" prefHeight="20.0" prefWidth="70.0" text="Label">
                                  <font>
-                                    <Font size="16.0" />
+                                    <Font name="Aharoni Bold" size="16.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets right="10.0" />
@@ -540,7 +540,7 @@
                               </ImageView>
                               <Label prefHeight="26.0" prefWidth="76.0" text="Signal">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font name="Aharoni Bold" size="20.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets left="12.0" />
@@ -548,7 +548,7 @@
                               </Label>
                               <Label fx:id="signalLabel" prefWidth="105.0" text="Label">
                                  <font>
-                                    <Font size="16.0" />
+                                    <Font name="Aharoni Bold" size="16.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets right="10.0" />
