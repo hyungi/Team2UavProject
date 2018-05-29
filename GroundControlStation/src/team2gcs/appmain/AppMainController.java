@@ -2,7 +2,6 @@ package team2gcs.appmain;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -10,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import gcs.mission.FencePoint;
+import gcs.mission.Noflyzone;
 import gcs.mission.WayPoint;
 import gcs.network.Network;
 import gcs.network.UAV;
@@ -73,7 +73,7 @@ public class AppMainController implements Initializable{
 	// 우측
 	@FXML private VBox rightPane;	
 	@FXML private BorderPane rightStatusPane;
-	@FXML private BorderPane rightCameraPane;
+	@FXML private AnchorPane rightCameraPane;
 	@FXML private Label rightStatusLabel;
 	@FXML private Label rightCameraLabel;
 	@FXML private Button rightDeleteBtn;
@@ -165,6 +165,9 @@ public class AppMainController implements Initializable{
 	
 	@FXML private Button btnMode;
 	
+	// noFly 변수
+	public double nX, nY, nR;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		instance2 = this;
@@ -181,7 +184,9 @@ public class AppMainController implements Initializable{
 		heightSize = webView.getHeight();
 		try {
 			Parent leftRoot = FXMLLoader.load(getClass().getResource("../leftpane/left.fxml"));
+			Parent cameraRoot = FXMLLoader.load(getClass().getResource("../camera/viewer/mjpgstreamviewer.fxml"));
 			leftPane.getChildren().add(leftRoot);
+			rightCameraPane.getChildren().add(cameraRoot);
 		}catch (Exception e) {}
 	}
 	
@@ -551,6 +556,25 @@ public class AppMainController implements Initializable{
 					setMission(list);
 				});
 				list.add(wayPoint);
+			}
+			if(nX != 0.0 || nY != 0.0) {
+				for(int i=0; i<list.size()-1; i++) {
+					double x1 = Double.parseDouble(list.get(i).getLng());
+					double y1 = Double.parseDouble(list.get(i).getLat());
+					double x2 = Double.parseDouble(list.get(i+1).getLng());
+					double y2 = Double.parseDouble(list.get(i+1).getLat());
+					if(Noflyzone.ifNoflyzone(nX, nY, x1, y1, x2, y2) <= nR) {
+						if(Noflyzone.waypoint(x1, y1, x2, y2, nR, nX, nY)) {
+							for(int j=0;j<Noflyzone.X.length;j++) {
+								WayPoint wayPoint = new WayPoint();
+								wayPoint.no = i+1+j;
+								wayPoint.setLng(Noflyzone.X[j]+"");
+								wayPoint.setLat(Noflyzone.Yp[i]+"");
+								wayPoint.altitude = a;
+							}
+						}
+					}
+				}
 			}
 			setTableViewItems(list);
 		});

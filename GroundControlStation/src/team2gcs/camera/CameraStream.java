@@ -27,7 +27,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class CamStream {
+public class CameraStream {
 
     private String serverURI;
     private String mqttBrokerURI;
@@ -46,28 +46,28 @@ public class CamStream {
     private MqttClient mqttClient;
 
     public Thread thread;
-
-    //CamPublisher("http://192.168.3.50:50005/?action=stream", canvas);
-    public CamStream(String serverURI, Canvas canvas) {
-        this.serverURI = serverURI;
-        this.canvas = canvas;
-        this.gc = canvas.getGraphicsContext2D();
-    }
-
-    //CamPublisher("http://192.168.3.50:50005/?action=stream", "tcp://192.168.3.20:1883", "/uav0/camera");
-    public CamStream(String serverURI, String mqttBrokerURI, String topic) throws Exception {
+    
+    //CamPublisher("http://192.168.3.xxx:50005/?action=stream", "tcp://192.168.3.xxx:1883", "/uav/camera");
+    public CameraStream(String serverURI, String mqttBrokerURI, String topic) throws Exception {
         this.serverURI = serverURI;
         this.mqttBrokerURI = mqttBrokerURI;
         this.topic = topic;
-    }
+    }    
 
-    //CamPublisher("http://192.168.3.50:50005/?action=stream", "tcp://192.168.3.20:1883", "/uav0/camera");
-    public CamStream(String mqttBrokerURI, String topic, Canvas canvas) throws Exception {
+    //CamPublisher("http://192.168.3.xxx:50005/?action=stream", "tcp://192.168.3.xxx:1883", "/uav/camera");
+    public CameraStream(String mqttBrokerURI, String topic, Canvas canvas) throws Exception {
         this.mqttBrokerURI = mqttBrokerURI;
         this.topic = topic;
         this.canvas = canvas;
         this.gc = canvas.getGraphicsContext2D();
     }
+    
+    //CamPublisher("http://192.168.3.xxx:50005/?action=stream", canvas);
+    public CameraStream(String serverURI, Canvas canvas) {
+        this.serverURI = serverURI;
+        this.canvas = canvas;
+        this.gc = canvas.getGraphicsContext2D();
+    }    
     
     public void stop() {
     	try {
@@ -92,13 +92,14 @@ public class CamStream {
                             MqttConnectOptions options = new MqttConnectOptions();
                             options.setConnectionTimeout(1000);
                             mqttClient.connect(options);
+                            
                             url = new URL(serverURI);
                             URLConnection conn = url.openConnection();
                             httpURLConnection = (HttpURLConnection) url.openConnection();
                             httpURLConnection.setConnectTimeout(1000);
                             httpURLConnection.connect();
                             connected = true;
-                            System.out.println("Start...");
+                            
                             Hashtable httpHeaders = StreamSplit.readHeaders(httpURLConnection);
                             String contentType = (String) httpHeaders.get("content-type");
                             int bidx = contentType.indexOf("boundary=");
@@ -106,6 +107,7 @@ public class CamStream {
                             dataInputStream = new DataInputStream(new BufferedInputStream(httpURLConnection.getInputStream()));
                             streamSplit = new StreamSplit(dataInputStream);
                             streamSplit.skipToBoundary(boundary);
+                            
                             while (true) {
                                 Hashtable partHeaders = streamSplit.readHeaders();
                                 byte[] imageBytes = streamSplit.readToBoundary(boundary);
@@ -114,8 +116,7 @@ public class CamStream {
                             }
                         } catch (Exception e) {
                             try {
-                                System.out.println("Reconnect...");
-                                CamStream.this.stop();
+                                CameraStream.this.stop();
                             } catch(Exception e2) {}
                         }
                     }
@@ -160,11 +161,9 @@ public class CamStream {
                             mqttClient.connect(options);
                             mqttClient.subscribe(topic);
                             connected = true;
-                            System.out.println("Start...");
                         } catch(Exception e) {
                             try {
-                                System.out.println("Reconnect...");
-                                CamStream.this.stop();
+                                CameraStream.this.stop();
                             } catch(Exception e2) {}
                         }
                     }
@@ -184,7 +183,7 @@ public class CamStream {
                             httpURLConnection.setConnectTimeout(1000);
                             httpURLConnection.connect();
                             connected = true;
-                            System.out.println("Start...");
+                            
                             Hashtable httpHeaders = StreamSplit.readHeaders(httpURLConnection);
                             String contentType = (String) httpHeaders.get("content-type");
                             int bidx = contentType.indexOf("boundary=");
@@ -192,6 +191,7 @@ public class CamStream {
                             dataInputStream = new DataInputStream(new BufferedInputStream(httpURLConnection.getInputStream()));
                             streamSplit = new StreamSplit(dataInputStream);
                             streamSplit.skipToBoundary(boundary);
+                            
                             while (true) {
                                 Hashtable partHeaders = streamSplit.readHeaders();
                                 byte[] imageBytes = streamSplit.readToBoundary(boundary);
@@ -201,8 +201,7 @@ public class CamStream {
                             }
                         } catch (Exception e) {
                             try {
-                                System.out.println("Reconnect...");
-                                CamStream.this.stop();
+                                CameraStream.this.stop();
                             } catch(Exception e2) {}
                         }
                     }
