@@ -57,7 +57,7 @@ public class AppMainController implements Initializable{
 	// child들의 높이 조정을 위해
 	public static double heightSize;
 	//공용
-	@FXML private AnchorPane bottomPane;
+
 	@FXML private BorderPane mainBorderPane;
 	@FXML private BorderPane loginBorderPane;
 	String inTime;
@@ -95,12 +95,8 @@ public class AppMainController implements Initializable{
 	private boolean bottomControl = true;	
 	// 우측 버튼 & Pane & 둘을 가지고있는 HBox & control 값
 	@FXML private AnchorPane openRight;
-	@FXML private AnchorPane viewPane;
 	@FXML private HBox rightMovePane;
-	@FXML private Label rightOpenLabel;
-	@FXML private VBox cameraVbox;
-	@FXML private VBox statusVbox;
-	@FXML private Label labelConnect;
+	@FXML private Label rightOpenLabel;;
 	private boolean rightControl = true;	
 	//맵
 	@FXML WebView webView;
@@ -498,6 +494,7 @@ public class AppMainController implements Initializable{
 			jsproxy.call("missionStop");
 		});
 		missionStart = false;
+		missionH = 0; missionM = 0; missionS = 0;
 		statusMessage("Mission stopped.");
 	}
 	//펜스 이벤트 처리

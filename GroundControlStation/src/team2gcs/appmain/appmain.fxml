@@ -134,7 +134,6 @@
                                     </Label>
                                  </children>
                               </HBox>
-                              <VBox prefHeight="719.0" prefWidth="350.0" VBox.vgrow="ALWAYS">
                               <VBox maxHeight="1.7976931348623157E308" prefWidth="350.0" VBox.vgrow="ALWAYS">
                                  <children>
                                     <StackPane prefHeight="695.0" prefWidth="350.0">

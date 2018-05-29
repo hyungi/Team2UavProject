@@ -133,6 +133,7 @@ public class UAV implements Cloneable {
 			homeLat = jsonObject.getDouble("homeLat");
 			homeLng = jsonObject.getDouble("homeLng");
 			nextWP = jsonObject.getInt("next_waypoint_no");
+			
 			if(armed) AppMainController.instance2.statusMessage("UAV Armed.");
 			else if(!armed) AppMainController.instance2.statusMessage("UAV Disarmed.");
 			
