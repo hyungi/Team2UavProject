@@ -12,6 +12,7 @@ public class Network {
 	public static void connect() {
 		uav = new UAV();
 		uav.connect();
+		
 	}
 	
 	public static void disconnect() {

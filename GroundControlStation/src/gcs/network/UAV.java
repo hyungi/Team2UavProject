@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import gcs.mission.FencePoint;
 import gcs.mission.WayPoint;
+import javafx.application.Platform;
 import team2gcs.appmain.AppMainController;
 
 public class UAV implements Cloneable {
@@ -131,6 +132,10 @@ public class UAV implements Cloneable {
 			groundSpeed = jsonObject.getDouble("groundspeed");
 			homeLat = jsonObject.getDouble("homeLat");
 			homeLng = jsonObject.getDouble("homeLng");
+			
+			
+			if(armed) AppMainController.instance2.statusMessage("UAV Armed.");
+			else if(!armed) AppMainController.instance2.statusMessage("UAV Disarmed.");
 			
 			AppMainController.instance2.batterySet(batteryLevel);
 			AppMainController.instance2.locationSet(latitude, longitude);

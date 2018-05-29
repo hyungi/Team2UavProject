@@ -2,7 +2,6 @@ package team2gcs.appmain;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -60,7 +59,6 @@ public class AppMainController implements Initializable{
 	@FXML private AnchorPane bottomPane;
 	@FXML private BorderPane mainBorderPane;
 	@FXML private BorderPane loginBorderPane;
-	String disconnected = "UAV disconnected";
 	
 	// 좌측
 	@FXML private VBox leftPane;
@@ -78,7 +76,8 @@ public class AppMainController implements Initializable{
 	@FXML private Label rightCameraLabel;
 	@FXML private Button rightDeleteBtn;
 	@FXML private ListView<String> statusListView;
-	List<String> statusList = new ArrayList<String>();
+	public static List<String> statusList = new ArrayList<String>();
+	String messageTemp = "";
 	
 	// 아래 버튼 & Pane & 둘을 가지고있는 VBox & control 값
 	@FXML private AnchorPane openBottom;
@@ -184,14 +183,11 @@ public class AppMainController implements Initializable{
 			leftPane.getChildren().add(leftRoot);
 		}catch (Exception e) {}
 	}
-	
-	public void loginKeyAction() {
-		
-	}
 
 //////////////////////////////////Top Menu 관련 ////////////////////////////////
 	public void initTop() {
 	//	currTime();
+
 		homeLatLabel.setText("DisArmed");
 		homeLngLabel.setText("DisArmed");
 		locationLngLabel.setText("DisConnected");
@@ -349,7 +345,6 @@ public class AppMainController implements Initializable{
 		} else {
 			loginLabel.setText("Broker IP와 Port 모두 입력하세요.");
 		}
-		statusMessage("MQTT broker connected.");
 	}
 	// 로그인화면 취소 버튼 이벤트처리
 	public void handleCancle(ActionEvent event) {
@@ -367,7 +362,9 @@ public class AppMainController implements Initializable{
 		btnMissionLoi.setOnAction((event)->{handleMissionLoi(event);});
 		btnMissionDelete.setOnAction((event)->{handleMissionDelete(event);});
 		btnMissionRTL.setOnAction((event)->{handleMissionRTL(event);});
-		armBtn.setOnAction((event)->{handleArm(event);});
+		armBtn.setOnAction((event)->{try {
+			handleArm(event);
+		} catch (Exception e) {	}});
 		armBtn.setGraphic(new Circle(5, Color.rgb(0x35, 0x35, 0x35)));
 		takeoffBtn.setOnAction((event)->{handleTakeoff(event);});
 		landBtn.setOnAction((event)->{handleLand(event);});
@@ -485,10 +482,8 @@ public class AppMainController implements Initializable{
 	}
 	
 	//Arm, Takeoff, Land, Roiter, Rtl
-	public void handleArm(ActionEvent event) {
+	public void handleArm(ActionEvent event) throws Exception {
 		Network.getUav().arm();
-		if(armBtn.getText().equals("Disarm")) statusMessage("UAV disarmed.");
-		else if(armBtn.getText().equals("Arm")) statusMessage("UAV armed.");
 	}
 	public void handleTakeoff(ActionEvent event) {
 		a = Integer.valueOf(txtAlt.getText());
@@ -849,6 +844,32 @@ public class AppMainController implements Initializable{
 			double altitude = a;
 			Network.getUav().gotoStart(latitude, longitude, altitude);
 			
+			String gotoLat = String.format("%.7f", latitude);
+			String gotoLng = String.format("%.7f", longitude);
+			String uavLat = String.valueOf(Network.getUav().latitude);
+			String uavLng = String.valueOf(Network.getUav().longitude);
+//			System.out.println("gotoLat: " + gotoLat);
+//			System.out.println("gotoLng: " + gotoLng);
+//			System.out.println("uavLat: " + Network.getUav().latitude);
+//			System.out.println("uavLng: " + Network.getUav().longitude);
+			String finalLat = String.format("%.7f", Double.valueOf(gotoLat) - Double.valueOf(uavLat));
+			
+//			Thread thread = new Thread(new Runnable() {
+//				@Override
+//				public void run() {
+//					while(finalLat) {
+//						System.out.println(Math.abs(gotoLat - uavLat));
+//						System.out.println("gotoLat: " + gotoLat);
+//						System.out.println("UavLat: " + uavLat);
+//						if(Math.abs(gotoLat - uavLat) <  0.00001) {	
+//							statusMessage("고투 완료");
+//							System.out.println(Math.abs(gotoLat - uavLat));
+//							break;
+//						}
+//					}
+//				}
+//			});
+//			thread.start();
 		});
 		statusMessage("Go to!");
 	}
@@ -898,20 +919,39 @@ public class AppMainController implements Initializable{
 	
 ///////////////////////////// 메세지 //////////////////////////////////////
 	public void statusMessage(String message) {
-		String inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
-		if(Network.getUav().connected) {
-			leftPaneController.instance.setStatusLabels(message);
-			statusList.add("   " + inTime + "			" + message);
-			statusListView.setItems(FXCollections.observableArrayList(statusList));
-		} else if(!Network.getUav().connected && !statusList.contains("   UAV Disconnected.")){
-			leftPaneController.instance.setStatusLabels("UAV Disconnected.");
-			statusList.add("   UAV Disconnected.");
-			statusListView.setItems(FXCollections.observableArrayList(statusList));
-		}
-		else if(Network.getUav().connected && !statusList.contains("UAV Connected.")) {
-			leftPaneController.instance.setStatusLabels("UAV Connected.");
-			statusList.add("UAV Connected.");
-			statusListView.setItems(FXCollections.observableArrayList(statusList));
-		}
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				String inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
+				if(!Network.getUav().connected && !statusList.contains("   UAV Disconnected.")){
+					leftPaneController.instance.setStatusLabels("UAV Disconnected.");
+					statusList.add("   UAV Disconnected.");
+					statusListView.setItems(FXCollections.observableArrayList(statusList));
+				} else if(Network.getUav().connected){
+					if(message.equals("UAV Armed.")) {
+						if(!messageTemp.equals(message)) {
+							leftPaneController.instance.setStatusLabels(message);
+							statusList.add("   " + inTime + "			" + message);
+							statusListView.setItems(FXCollections.observableArrayList(statusList));
+							messageTemp = message;
+						}	
+					} else if(message.equals("UAV Disarmed.")) {
+						if(!messageTemp.equals(message)) {
+							if(list.size() > 0 && list.get(list.size()-1).equals("UAV Disarmed.")) {}
+							else {
+								leftPaneController.instance.setStatusLabels(message);
+								statusList.add("   " + inTime + "			" + message);
+								statusListView.setItems(FXCollections.observableArrayList(statusList));
+								messageTemp = message;
+							}
+						}
+					} else {
+						leftPaneController.instance.setStatusLabels(message);
+						statusList.add("   " + inTime + "			" + message);
+						statusListView.setItems(FXCollections.observableArrayList(statusList));
+					}
+				} 
+			}
+		});
 	}
 }

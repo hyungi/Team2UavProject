@@ -104,7 +104,7 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <HBox fx:id="rightMovePane" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" opacity="0.9" style="-fx-background-color: transparent;" translateX="550.0" StackPane.alignment="CENTER_RIGHT">
+                  <HBox fx:id="rightMovePane" alignment="CENTER_RIGHT" maxWidth="-Infinity" opacity="0.9" prefHeight="1200.0" style="-fx-background-color: transparent;" translateX="550.0" StackPane.alignment="CENTER_RIGHT">
                      <children>
                         <AnchorPane fx:id="openRight" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35" prefWidth="200" style="-fx-background-color: #222222; -fx-background-radius: 5 5 0 0; -fx-rotate: -90;" translateX="-117.0">
                            <children>
@@ -118,32 +118,32 @@
                               <Insets />
                            </HBox.margin>
                         </AnchorPane>
-                        <VBox fx:id="rightPane" maxHeight="1.7976931348623157E308" prefWidth="350.0" translateX="-200.0">
+                        <VBox fx:id="rightPane" prefHeight="900.0" prefWidth="350.0" translateX="-200.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <HBox prefHeight="163.0" prefWidth="350.0" spacing="1.0">
+                              <HBox prefHeight="53.0" prefWidth="350.0" spacing="1.0" VBox.vgrow="ALWAYS">
                                  <children>
-                                    <Label fx:id="rightStatusLabel" alignment="CENTER" prefHeight="75.0" prefWidth="175.0" text="Status">
+                                    <Label fx:id="rightStatusLabel" alignment="CENTER" prefHeight="80.0" prefWidth="174.5" style="-fx-background-color: white; -fx-text-fill: black;" text="Status" HBox.hgrow="ALWAYS">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="rightCameraLabel" alignment="CENTER" prefHeight="75.0" prefWidth="174.5" text="Camera">
+                                    <Label fx:id="rightCameraLabel" alignment="CENTER" prefHeight="80.0" prefWidth="174.5" style="-fx-background-color: black; -fx-text-fill: white;" text="Camera" HBox.hgrow="ALWAYS">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
                                  </children>
                               </HBox>
-                              <VBox prefHeight="713.0" prefWidth="350.0" VBox.vgrow="ALWAYS">
+                              <VBox prefHeight="719.0" prefWidth="350.0" VBox.vgrow="ALWAYS">
                                  <children>
                                     <StackPane prefHeight="695.0" prefWidth="350.0">
                                        <children>
-                                          <BorderPane fx:id="rightStatusPane" prefHeight="798.0" prefWidth="350.0">
+                                          <BorderPane fx:id="rightStatusPane" prefHeight="610.0" prefWidth="350.0">
                                              <center>
-                                                <ListView fx:id="statusListView" prefHeight="654.0" prefWidth="350.0" BorderPane.alignment="CENTER" />
+                                                <ListView fx:id="statusListView" prefHeight="1500.0" prefWidth="350.0" BorderPane.alignment="CENTER" />
                                              </center>
                                              <top>
-                                                <Button fx:id="rightDeleteBtn" alignment="CENTER" mnemonicParsing="false" prefHeight="47.0" prefWidth="350.0" style="-fx-background-radius: 0;" text="Delete all" textAlignment="CENTER" BorderPane.alignment="CENTER">
+                                                <Button fx:id="rightDeleteBtn" alignment="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="350.0" style="-fx-background-radius: 0;" text="Delete all" textAlignment="CENTER" BorderPane.alignment="CENTER">
                                                    <font>
                                                       <Font size="16.0" />
                                                    </font></Button>

@@ -3,6 +3,7 @@ package team2gcs.leftpane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import gcs.network.Network;
 import gcs.network.UAV;
 import javafx.animation.AnimationTimer;
 import javafx.event.Event;
@@ -68,7 +69,6 @@ public class leftPaneController implements Initializable{
    	private boolean fenceData = false;
    	private boolean missionData = false;
    	private boolean noFlyData = false;
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		instance = this;
@@ -76,9 +76,6 @@ public class leftPaneController implements Initializable{
 		viewLoop.start();
  		initCanvasLayer();
 		initLeftPane();
-		try {
-			handleRPY();
-		} catch (Exception e) {}
 	}
 	
    	private void initLeftPane() {
@@ -236,8 +233,6 @@ public class leftPaneController implements Initializable{
 	}
 	
 	public void setStatusLabels(String message) {
-//		statusLabel.setStyle("-fx-font-weight: bold;");
 		statusLabel.setText(message);
-//		rightPaneController.instance.setTxtArea(message);
 	}
 }
