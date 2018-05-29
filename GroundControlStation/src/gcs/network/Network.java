@@ -7,6 +7,8 @@ public class Network {
 	public static String mqttPort = AppMainController.port;
 	public static String uavPubTopic = "/uav2/pub" ;
 	public static String uavSubTopic = "/uav2/sub" ;
+	public static String cameraTopicF = "/uav2/cameraFront";
+	public static String cameraTopicB = "/uav2/cameraBottom";
 	private static UAV uav;
 	
 	public static void connect() {

@@ -21,9 +21,9 @@ public class NoFlyZoneController implements Initializable{
 	@FXML private TextField txtNFZLat;
 	@FXML private TextField txtNFZLng;
 	@FXML private TextField txtNFZRadius;
-	private int x;
-	private int y;
-	private int r;
+	private double x;
+	private double y;
+	private double r;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -34,10 +34,13 @@ public class NoFlyZoneController implements Initializable{
 	}
 	public void handleOk(ActionEvent event) {
 		try {
-			x = Integer.valueOf(txtNFZLat.getText());
-			y = Integer.valueOf(txtNFZLng.getText());
-			r = Integer.valueOf(txtNFZRadius.getText());
+			x = Double.parseDouble(txtNFZLat.getText());
+			y = Double.parseDouble(txtNFZLng.getText());
+			r = Double.parseDouble(txtNFZRadius.getText());
 			Platform.runLater(()->{
+				AppMainController.instance2.nX = x;
+				AppMainController.instance2.nY = y;
+				AppMainController.instance2.nR = r;
 				AppMainController.instance2.jsproxy.call("makeNoFlyZone",x,y,r);
 			});
 

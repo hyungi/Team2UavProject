@@ -114,6 +114,7 @@ var jsproxy = {
 					kind: map.uav.missionMarkers[i].kind,
 					lat: map.uav.missionMarkers[i].getPosition().lat(),
 					lng: map.uav.missionMarkers[i].getPosition().lng()
+					
 				};
 				mission.push(json);
 			}
