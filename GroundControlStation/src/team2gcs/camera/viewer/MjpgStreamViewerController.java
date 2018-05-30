@@ -16,7 +16,6 @@ public class MjpgStreamViewerController implements Initializable {
         //httpView();
         mqttView();        
     }
-    
     private void httpView() {
         try {
             CameraStream camStream = new CameraStream("http://192.168.3.41:50005/?action=stream", canvas);
