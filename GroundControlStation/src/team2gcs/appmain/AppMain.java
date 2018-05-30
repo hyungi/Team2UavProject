@@ -11,7 +11,8 @@ public class AppMain extends Application{
 	//106.253.56.122
 	public static Scene tempScene;
 	public static AppMain instance;
-	public Stage primaryStage;
+	public static Stage primaryStage;
+	public static Stage altStage;
 	public Scene scene;
 	public String theme;
 

@@ -1,5 +1,6 @@
 package team2gcs.appmain;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -50,12 +53,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import netscape.javascript.JSObject;
+import team2gcs.altdialog.altdialogController;
 import team2gcs.leftpane.leftPaneController;
 
 public class AppMainController implements Initializable{
 	public static AppMainController instance2;
 	// child들의 높이 조정을 위해
 	public static double heightSize;
+	public static Stage altStage;
 	//공용
 
 	@FXML private BorderPane mainBorderPane;
@@ -164,7 +169,7 @@ public class AppMainController implements Initializable{
 	@FXML private Label batteryLabel;
 	@FXML private Label signalLabel;
 	@FXML private ImageView connButton;
-	int a=0;
+	int alt = 0;
 	
 	//임시 버튼
 	@FXML private Button circleWP;
@@ -264,7 +269,6 @@ public class AppMainController implements Initializable{
 	}
 	
 	public void takeoffTime() {
-		System.out.println(takeoffStart);
 		if(takeoffStart) {
 			takeoffS++;
 			if(takeoffS==60) {
@@ -403,7 +407,7 @@ public class AppMainController implements Initializable{
 		btnMissionRTL.setOnAction((event)->{handleMissionRTL(event);});
 		armBtn.setOnAction((event)->{try {handleArm(event);} catch (Exception e) {}});
 		armBtn.setGraphic(new Circle(5, Color.rgb(0x35, 0x35, 0x35)));
-		takeoffBtn.setOnAction((event)->{handleTakeoff(event);});
+		takeoffBtn.setOnAction((event)->{try {handleTakeoff(event);} catch (Exception e) {}});
 		landBtn.setOnAction((event)->{handleLand(event);});
 		loiterBtn.setOnAction((event)->{handleLoiter(event);});
 		rtlBtn.setOnAction((event)->{handleRtl(event);});
@@ -423,7 +427,7 @@ public class AppMainController implements Initializable{
 		circleWP.setOnAction((event)->{handleCircleWP(event);});
 	}
 	public void handleCircleWP(ActionEvent event) {
-		a = Integer.valueOf(txtAlt.getText());
+		alt = altdialogController.alt;
 		list.clear();
 		Platform.runLater(() -> {	
 
@@ -433,7 +437,7 @@ public class AppMainController implements Initializable{
 				wayPoint.kind = "waypoint";
 				wayPoint.setLat(37+33*Math.cos(Math.PI/180*(i-1)*5)/111000 +"");
 				wayPoint.setLng(127+33*Math.sin(Math.PI/180*(i-1)*5)/88800+"");
-				wayPoint.altitude = a;
+				wayPoint.altitude = alt;
 				wayPoint.getButton().setOnAction((event2)->{
 					list.remove(wayPoint.no-1);
 					for(WayPoint wp : list) {
@@ -468,7 +472,6 @@ public class AppMainController implements Initializable{
 	}
 	//미션 RTL 추가
 	public void handleMissionRTL(ActionEvent event) {
-
 		WayPoint waypoint = new WayPoint();
 		waypoint.kind = "rtl";
 		waypoint.setLat(Network.getUav().homeLat +"");
@@ -485,8 +488,10 @@ public class AppMainController implements Initializable{
 		Platform.runLater(() -> {
 			jsproxy.call("missionStart");
 		}); 
-		statusMessage("Mission started.");
-		missionStart = true;
+		if(list.size() > 0) {
+			statusMessage("Mission started.");
+			missionStart = true;
+		} else statusMessage("No Mission.");
 	}
 	public void handleMissionStop(ActionEvent event) {
 		Network.getUav().missionStop();
@@ -495,7 +500,8 @@ public class AppMainController implements Initializable{
 		});
 		missionStart = false;
 		missionH = 0; missionM = 0; missionS = 0;
-		statusMessage("Mission stopped.");
+		if(list.size() > 0) statusMessage("Mission stopped.");
+		else statusMessage("No Mission.");
 	}
 	//펜스 이벤트 처리
 	public void handleFenceSet(ActionEvent event) {
@@ -552,13 +558,18 @@ public class AppMainController implements Initializable{
 	
 	//Arm, Takeoff, Land, Roiter, Rtl
 	public void handleArm(ActionEvent event) throws Exception {
-		Network.getUav().arm();
+		Network.getUav().arm();	
 	}
-	public void handleTakeoff(ActionEvent event) {
-		a = Integer.valueOf(txtAlt.getText());
-		Network.getUav().takeoff(a);//나중에 숫자입력으로 바꾸
-		takeoffStart = true;
-		statusMessage("UAV take off.");
+	public void handleTakeoff(ActionEvent event) throws Exception {
+		altStage = new Stage();
+		altStage.setTitle("Altitude Setting.");
+		altStage.initModality(Modality.WINDOW_MODAL);
+		altStage.initOwner(AppMain.primaryStage);
+		Parent root = FXMLLoader.load(getClass().getResource("../altdialog/altdialog.fxml"));
+		Scene scene = new Scene(root);
+		altStage.setScene(scene);
+
+		altStage.show();
 	}
 	public void handleLand(ActionEvent event) {
 		Network.getUav().land();
@@ -596,7 +607,7 @@ public class AppMainController implements Initializable{
 	// List를 계속 관리하기 위해서 Field 영역으로 가져옴
 	public static List<WayPoint> list = new ArrayList<>();
 	public void getMissionResponse(String data) {
-		a = Integer.valueOf(txtAlt.getText());
+		alt = altdialogController.alt;
 		list.clear();
 		Platform.runLater(() -> {	
 			JSONArray jsonArray = new JSONArray(data);
@@ -607,7 +618,7 @@ public class AppMainController implements Initializable{
 				wayPoint.kind = jsonObject.getString("kind"); //all is "waypoint";
 				wayPoint.setLat(jsonObject.getDouble("lat")+"");
 				wayPoint.setLng(jsonObject.getDouble("lng")+"");
-				wayPoint.altitude = a;
+				wayPoint.altitude = alt;
 				wayPoint.getButton().setOnAction((event)->{
 					list.remove(wayPoint.no-1);
 					for(WayPoint wp : list) {
@@ -631,7 +642,7 @@ public class AppMainController implements Initializable{
 								wayPoint.no = i+1+j;
 								wayPoint.setLng(Noflyzone.X[j]+"");
 								wayPoint.setLat(Noflyzone.Yp[i]+"");
-								wayPoint.altitude = a;
+								wayPoint.altitude = alt;
 							}
 						}
 					}
@@ -932,40 +943,12 @@ public class AppMainController implements Initializable{
 	
 	///////////////////////////// 미션 관련 //////////////////////////////////////
 	public void gotoStart(String data) {
-		a = Integer.valueOf(txtAlt.getText());
 		Platform.runLater(() -> {
 			JSONObject jsonObject = new JSONObject(data);
 			double latitude = jsonObject.getDouble("lat");
 			double longitude = jsonObject.getDouble("lng");
-			double altitude = a;
+			double altitude = altdialogController.alt;
 			Network.getUav().gotoStart(latitude, longitude, altitude);
-			
-			String gotoLat = String.format("%.7f", latitude);
-			String gotoLng = String.format("%.7f", longitude);
-			String uavLat = String.valueOf(Network.getUav().latitude);
-			String uavLng = String.valueOf(Network.getUav().longitude);
-//			System.out.println("gotoLat: " + gotoLat);
-//			System.out.println("gotoLng: " + gotoLng);
-//			System.out.println("uavLat: " + Network.getUav().latitude);
-//			System.out.println("uavLng: " + Network.getUav().longitude);
-			String finalLat = String.format("%.7f", Double.valueOf(gotoLat) - Double.valueOf(uavLat));
-			
-//			Thread thread = new Thread(new Runnable() {
-//				@Override
-//				public void run() {
-//					while(finalLat) {
-//						System.out.println(Math.abs(gotoLat - uavLat));
-//						System.out.println("gotoLat: " + gotoLat);
-//						System.out.println("UavLat: " + uavLat);
-//						if(Math.abs(gotoLat - uavLat) <  0.00001) {	
-//							statusMessage("고투 완료");
-//							System.out.println(Math.abs(gotoLat - uavLat));
-//							break;
-//						}
-//					}
-//				}
-//			});
-//			thread.start();
 		});
 		statusMessage("Go to!");
 	}
