@@ -61,12 +61,12 @@ public class AppMainController implements Initializable{
 	@FXML private BorderPane mainBorderPane;
 	@FXML private BorderPane loginBorderPane;
 	String inTime;
-	public String missionTime;
-	public String takeoffTime;
+	public static String missionTime;
+	public static String takeoffTime;
 	int takeoffH = 0, takeoffM = 0, takeoffS = 0;
 	int missionH = 0, missionM = 0, missionS = 0;
-	public boolean missionStart = false;
-	public boolean takeoffStart = false;
+	public static boolean missionStart = false;
+	public static boolean takeoffStart = false;
 	
 	// 좌측
 	@FXML private VBox leftPane;
@@ -197,7 +197,6 @@ public class AppMainController implements Initializable{
 
 //////////////////////////////////Top Menu 관련 ////////////////////////////////
 	public void initTop() {
-		
 		homeLatLabel.setText("Disarmed");
 		homeLngLabel.setText("Disarmed");
 		locationLngLabel.setText("Disconnected");
@@ -265,6 +264,7 @@ public class AppMainController implements Initializable{
 	}
 	
 	public void takeoffTime() {
+		System.out.println(takeoffStart);
 		if(takeoffStart) {
 			takeoffS++;
 			if(takeoffS==60) {
@@ -484,20 +484,18 @@ public class AppMainController implements Initializable{
 		Network.getUav().missionStart();
 		Platform.runLater(() -> {
 			jsproxy.call("missionStart");
-		});
-		if(list.size() > 0) {
-			statusMessage("Mission started.");
-			missionStart = true;
-		} else statusMessage("No Mission.");
+		}); 
+		statusMessage("Mission started.");
+		missionStart = true;
 	}
 	public void handleMissionStop(ActionEvent event) {
 		Network.getUav().missionStop();
 		Platform.runLater(() -> {
 			jsproxy.call("missionStop");
 		});
-		statusMessage("Mission stopped.");
 		missionStart = false;
 		missionH = 0; missionM = 0; missionS = 0;
+		statusMessage("Mission stopped.");
 	}
 	//펜스 이벤트 처리
 	public void handleFenceSet(ActionEvent event) {
@@ -525,7 +523,7 @@ public class AppMainController implements Initializable{
 	public void handleFenceDelete(ActionEvent event) {
 		Network.getUav().fenceClear();
 		jsproxy.call("fenceClear");
-		statusMessage("Fence cleared.");
+		statusMessage("Fence deleted.");
 	}
 	//비행금지구역 이벤트 처리
 	public void handleNoflyzoneSet(ActionEvent event) {
@@ -557,12 +555,10 @@ public class AppMainController implements Initializable{
 		Network.getUav().arm();
 	}
 	public void handleTakeoff(ActionEvent event) {
-		if(Network.getUav().armed) {
-			a = Integer.valueOf(txtAlt.getText());
-			Network.getUav().takeoff(a);//나중에 숫자입력으로 바꾸
-			takeoffStart = true;
-			statusMessage("UAV take off.");
-		} else if(!Network.getUav().armed) statusMessage("Arm before takeoff.");
+		a = Integer.valueOf(txtAlt.getText());
+		Network.getUav().takeoff(a);//나중에 숫자입력으로 바꾸
+		takeoffStart = true;
+		statusMessage("UAV take off.");
 	}
 	public void handleLand(ActionEvent event) {
 		Network.getUav().land();
@@ -598,7 +594,7 @@ public class AppMainController implements Initializable{
 	}
 	
 	// List를 계속 관리하기 위해서 Field 영역으로 가져옴
-	public List<WayPoint> list = new ArrayList<>();
+	public static List<WayPoint> list = new ArrayList<>();
 	public void getMissionResponse(String data) {
 		a = Integer.valueOf(txtAlt.getText());
 		list.clear();
@@ -833,7 +829,7 @@ public class AppMainController implements Initializable{
 			if(uav.homeLat != 0.0) {
 				jsproxy.call("setHomeLocation", uav.homeLat, uav.homeLng);
 				homeLatLabel.setText(String.format("Lat:	%.6f", uav.homeLat));
-				homeLngLabel.setText(String.format("Lng:	%.6f", uav.homeLng));
+				homeLngLabel.setText(String.format("Lng:	%.6f", uav.homeLng));	
 			}
 			jsproxy.call("setUavLocation", uav.latitude, uav.longitude, uav.heading);
 			
@@ -943,6 +939,33 @@ public class AppMainController implements Initializable{
 			double longitude = jsonObject.getDouble("lng");
 			double altitude = a;
 			Network.getUav().gotoStart(latitude, longitude, altitude);
+			
+			String gotoLat = String.format("%.7f", latitude);
+			String gotoLng = String.format("%.7f", longitude);
+			String uavLat = String.valueOf(Network.getUav().latitude);
+			String uavLng = String.valueOf(Network.getUav().longitude);
+//			System.out.println("gotoLat: " + gotoLat);
+//			System.out.println("gotoLng: " + gotoLng);
+//			System.out.println("uavLat: " + Network.getUav().latitude);
+//			System.out.println("uavLng: " + Network.getUav().longitude);
+			String finalLat = String.format("%.7f", Double.valueOf(gotoLat) - Double.valueOf(uavLat));
+			
+//			Thread thread = new Thread(new Runnable() {
+//				@Override
+//				public void run() {
+//					while(finalLat) {
+//						System.out.println(Math.abs(gotoLat - uavLat));
+//						System.out.println("gotoLat: " + gotoLat);
+//						System.out.println("UavLat: " + uavLat);
+//						if(Math.abs(gotoLat - uavLat) <  0.00001) {	
+//							statusMessage("고투 완료");
+//							System.out.println(Math.abs(gotoLat - uavLat));
+//							break;
+//						}
+//					}
+//				}
+//			});
+//			thread.start();
 		});
 		statusMessage("Go to!");
 	}

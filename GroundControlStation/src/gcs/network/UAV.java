@@ -69,6 +69,7 @@ public class UAV implements Cloneable {
 						public void messageArrived(String topic, MqttMessage message) throws Exception {
 							strJson = new String(message.getPayload());
 							dataParsing(strJson);
+							System.out.println("!@");
 							connected = true;
 						}
 						@Override
