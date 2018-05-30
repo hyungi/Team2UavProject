@@ -1,7 +1,6 @@
 package team2gcs.leftpane;
 
 import java.net.URL;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 import gcs.network.Network;
@@ -24,6 +23,8 @@ import team2gcs.appmain.AppMainController;
 
 public class leftPaneController implements Initializable{
 	public static leftPaneController instance;
+	private AppMainController appMainController;
+	private UAV uav = Network.getUav();
 	// 좌측 메뉴
 	@FXML private BorderPane sensorBorderPane;
    	@FXML private BorderPane sensorDetailBorderPane;
@@ -86,6 +87,9 @@ public class leftPaneController implements Initializable{
 		viewLoop.start();
 		initCanvasLayer();
 		sensorLabelEvent();
+		
+        double distanceMeter = distance(37.504198, 127.047967, 37.501025, 127.037701, "meter");
+        System.out.println(distanceMeter);
    	}
 	class ViewLoop extends AnimationTimer {
 		@Override
@@ -138,7 +142,6 @@ public class leftPaneController implements Initializable{
 			public void handle(Event event) {
 				sensorDetailBorderPane.setVisible(false);
 				sensorBorderPane.setVisible(true);
-				System.out.println("-");
 			}
 		});
    	}
@@ -173,27 +176,26 @@ public class leftPaneController implements Initializable{
 			groundSpeed = uav.groundSpeed;
 			altitude = uav.altitude;
 			fenceEnable = uav.fenceEnable;
-			if(AppMainController.list.size() == 0) missionData = false;
-			else if(AppMainController.list.size() != 0) missionData = true;
-			System.out.println("list: " + AppMainController.list.size());
+			if(appMainController.list.size() == 0) missionData = false;
+			else if(appMainController.list.size() != 0) missionData = true;
 			voltage = uav.batteryVoltage;
-			missionTime = AppMainController.missionTime;
-			takeoffTime = AppMainController.takeoffTime;
+			missionTime = appMainController.missionTime;
+			takeoffTime = appMainController.takeoffTime;
 		}
 	}
 	
 	public void setStatus() {
 		//간단 모드
-		if(Network.getUav().connected) {
+		if(uav.connected) {
 			modeLabel.setText(mode);
 			airSpeedLabel.setText(String.format("%.4f", airSpeed));
 			groundSpeedLabel.setText(String.format("%.4f", groundSpeed));
 			altitudeLabel.setText(String.format("%.2f", altitude));
-			if(AppMainController.takeoffStart == true) takeoffTimeLabel.setText(takeoffTime);
-			else if(AppMainController.takeoffStart == false) takeoffTimeLabel.setText("UAV Landed.");
+			if(appMainController.takeoffStart == true) takeoffTimeLabel.setText(takeoffTime);
+			else if(appMainController.takeoffStart == false) takeoffTimeLabel.setText("UAV Landed.");
 			
 			//상세모드
-			if(Network.getUav().armed) {
+			if(uav.armed) {
 				detailModeLabel.setText(mode);
 				detailAirSpeedLabel.setText(String.format("%.6f", airSpeed));
 				detailGroundSpeedLabel.setText(String.format("%.6f", groundSpeed));
@@ -212,14 +214,16 @@ public class leftPaneController implements Initializable{
 					detailMissionLabel.setStyle("-fx-text-fill: red;");
 					detailMissionLabel.setText("Set.");
 				}
-				if(AppMainController.missionStart == true) {
+				if(appMainController.missionStart == true) {
 					detailMissionTimeLabel.setText(missionTime);
-					if(UAV.nextWP == AppMainController.list.size()) detailMissionTimeLabel.setText("Completed");
-				} else if(AppMainController.missionStart == false) detailMissionTimeLabel.setText("No Mission.");
-				if(AppMainController.takeoffStart == true) detailTakeoffTimeLabel.setText(takeoffTime);
-				else if(AppMainController.takeoffStart == false) detailTakeoffTimeLabel.setText("Landed.");
+					if(UAV.nextWP == appMainController.list.size()) detailMissionTimeLabel.setText("Completed");
+				} else if(appMainController.missionStart == false) detailMissionTimeLabel.setText("No Mission.");
+				if(appMainController.takeoffStart == true) detailTakeoffTimeLabel.setText(takeoffTime);
+				else if(appMainController.takeoffStart == false) detailTakeoffTimeLabel.setText("Landed.");
+				if(uav.homeLat > 0.0 && uav.latitude > 0.0) detailDistHomeLabel.setText(String.format("%.4f", distance(uav.homeLat, uav.homeLng, uav.latitude, uav.longitude, "meter")));
+				else detailDistHomeLabel.setText("Disarmed.");
 				detailVoltageLabel.setText(String.format("%.4f", voltage));
-			} else if(!Network.getUav().armed) {
+			} else if(uav.armed) {
 				detailModeLabel.setText("UAV Disarmed.");
 				detailAirSpeedLabel.setText(String.format("%.6f", airSpeed));
 				detailGroundSpeedLabel.setText(String.format("%.6f", groundSpeed));
@@ -230,4 +234,26 @@ public class leftPaneController implements Initializable{
 	public void setStatusLabels(String message) {
 		statusLabel.setText(message);
 	}
+	
+//	거리계산 
+    private double distance(double lat1, double lon1, double lat2, double lon2, String unit) { 
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+         
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+         
+        if (unit == "kilometer") dist = dist * 1.609344;
+        else if(unit == "meter") dist = dist * 1609.344;
+        return (dist);
+    }
+    
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+     
+    private double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
+    }
 }
