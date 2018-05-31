@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import gcs.mission.FencePoint;
+import gcs.mission.Noflyzone;
 import gcs.mission.WayPoint;
 import gcs.network.Network;
 import gcs.network.UAV;
@@ -50,6 +51,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import netscape.javascript.JSObject;
 import team2gcs.leftpane.leftPaneController;
+import team2gcs.noflyzone.NoFlyZoneController;
 
 public class AppMainController implements Initializable{
 	public static AppMainController instance2;
@@ -138,6 +140,7 @@ public class AppMainController implements Initializable{
 	//비행금지구역
 	@FXML private Button btnNoflyzoneSet;
 	@FXML private Button btnNoflyzoneDelete;
+	@FXML private Button btnNoflyzoneActivate;
 	//화물
 	@FXML private Button btnCargoStart;
 	@FXML private Button btnCargoStop;
@@ -164,8 +167,13 @@ public class AppMainController implements Initializable{
 	
 	//임시 버튼
 	@FXML private Button circleWP;
-	
 	@FXML private Button btnMode;
+	private int s;
+	private int e;
+	double angle1;
+	double angle2;
+	boolean rotation;
+	
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -388,21 +396,65 @@ public class AppMainController implements Initializable{
 		btnCargoStart.setOnAction((event)->{handleCargoStart(event);});
 		btnCargoStop.setOnAction((event)->{handleCargoStop(event);});
 		btnMode.setOnAction((event)->{handleMode(event);});
-		circleWP.setOnAction((event)->{handleCircleWP(event);});
+		//circleWP.setOnAction((event)->{handleCircleWP(event);});
+		btnNoflyzoneActivate.setOnAction((event)->{handleNoflyzoneActivate(event);});
 	}
-	public void handleCircleWP(ActionEvent event) {
+	
+	//활성화 버튼
+	public void handleNoflyzoneActivate(ActionEvent event) {
+		Noflyzone nfz = new Noflyzone();
+		for(int i=0;i<list.size()-1;i++) {
+			//WP1(x1,y1), WP2(x2,y2)
+			double x1 = Double.parseDouble(list.get(i).getLng());
+			double y1 = Double.parseDouble(list.get(i).getLat());
+			double x2 = Double.parseDouble(list.get(i+1).getLng());
+			double y2 = Double.parseDouble(list.get(i+1).getLat());
+			
+			System.out.println("11");
+			//noflyzone x,y,r이 입력 되였냐
+			if(NoFlyZoneController.instance.x!=0&&NoFlyZoneController.instance.y!=0&&NoFlyZoneController.instance.r!=0) {
+				System.out.println("22");
+				//noflyzone안에 wp선이 들어 오냐
+				if(true) {//nfz.ifNoflyzone(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,x1,y1,x2,y2)<=NoFlyZoneController.instance.r*1.1){
+					System.out.println("33");
+					// 시계 or 반시계
+					rotationCase(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,x1,y1,x2,y2);
+					System.out.println("44");
+					// 반시계 로 돈다면 여기
+					if(!rotation) {
+						System.out.println("55");
+						circleWP1(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2);
+						System.out.println("66");
+					// 시계 로 돈다면 여기
+					}else{
+						System.out.println("77");
+						circleWP2(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2);
+						System.out.println("88");
+					}
+				}
+			}
+		}
+	}
+	
+	// 시계 방향 돌면서 WP 찍기 nX=noflyzone X좌표, nY=noflyzone Y좌표, WP1(x1,y1), WP(x2,y2)
+	public void circleWP1(double nX,double nY, double nR,double x1,double y1,double x2,double y2) {
+		//a=alt값넣기 우리는 써서 넣음
 		a = Integer.valueOf(txtAlt.getText());
 		list.clear();
+		
 		Platform.runLater(() -> {	
-
-			for(int i=1; i<19; i++) {
-
+			int count=1;
+			
+			//10도 간격으로 WP리스트에 넣기
+			for(int i=s; i<e; i+=10) {
+				
 				WayPoint wayPoint = new WayPoint();
-	 			wayPoint.no = i;
+	 			wayPoint.no = count;
 				wayPoint.kind = "waypoint";
-				wayPoint.setLat(37+33*Math.cos(Math.PI/180*(i-1)*5)/111000 +"");
-				wayPoint.setLng(127+33*Math.sin(Math.PI/180*(i-1)*5)/88800+"");
+				wayPoint.setLat((nY+(nR*1.1)*Math.sin(Math.PI/180*i)/111189.57696002942)+"");
+				wayPoint.setLng((nX+(nR*1.1)*Math.cos(Math.PI/180*i)/88799.53629131494)+"");
 				wayPoint.altitude = a;
+				wayPoint.nfz=1;
 				wayPoint.getButton().setOnAction((event2)->{
 					list.remove(wayPoint.no-1);
 					for(WayPoint wp : list) {
@@ -412,13 +464,134 @@ public class AppMainController implements Initializable{
 					setMission(list);
 				});
 				list.add(wayPoint);
-
+				count++;
 			}
+			setMission(list);
 			setTableViewItems(list);
 		});
-
-
 	}
+	
+	public void circleWP2(double nX,double nY, double nR,double x1,double y1,double x2,double y2) {
+
+		a = Integer.valueOf(txtAlt.getText());
+		list.clear();
+		
+		Platform.runLater(() -> {	
+			int count=1;
+			
+			for(int i=s; i>e; i-=10) {
+				
+				WayPoint wayPoint = new WayPoint();
+	 			wayPoint.no = count;
+				wayPoint.kind = "waypoint";
+
+				wayPoint.setLat((nY+(nR*1.1)*Math.sin(Math.PI/180*i)/111189.57696002942)+"");
+				wayPoint.setLng((nX+(nR*1.1)*Math.cos(Math.PI/180*i)/88799.53629131494)+"");
+				wayPoint.altitude = a;
+				wayPoint.nfz=1;
+				wayPoint.getButton().setOnAction((event2)->{
+					list.remove(wayPoint.no-1);
+					for(WayPoint wp : list) {
+						if(wp.no>wayPoint.no) wp.no--;
+					}
+					setTableViewItems(list);
+					setMission(list);
+				});
+				list.add(wayPoint);
+				count++;
+			}
+			setMission(list);
+			setTableViewItems(list);
+		});
+	}
+	
+	public void rotationCase(double nX,double nY,double x1,double y1,double x2,double y2) {
+
+		if(angle(nX,nY,x1,y1)<0) {
+			angle1=360+angle(nX,nY,x1,y1);
+		}else {
+			angle1=angle(nX,nY,x1,y1);
+		}
+		if(angle(nX,nY,x2,y2)<0) {
+			angle2=360+angle(nX,nY,x2,y2);
+		}else {
+			angle2=angle(nX,nY,x2,y2);
+		}
+
+		if(angle1>=0&&angle1<=90) {
+			if(angle2>angle1&&angle2<180+angle1) {
+				rotation=false;
+				if(angle2<angle1){
+					angle2+=360;
+				}
+				s=(int)angle1;
+				e=(int)angle2;
+			}else {
+				if(angle2>angle1) {
+					angle2-=360;
+				}
+				rotation=true;
+				s=(int)angle1;
+				e=(int)angle2;
+			}
+		}else if(angle1>90&&angle1<=180) {
+			if(angle2>angle1&&angle2<180+angle1) {
+				rotation=false;
+				s=(int)angle1;
+				e=(int)angle2;
+			}else {
+				rotation=true;
+				if(angle2>angle1) {
+					angle2-=360;
+				}
+				s=(int)angle1;
+				e=(int)angle2;
+			}
+		}else if(angle1>180&&angle1<=270) {
+			if(angle2<angle1&&angle2>angle1-180) {
+				rotation=true;
+				s=(int)angle1;
+				e=(int)angle2;
+			}else {
+				rotation=false;
+				if(angle2<angle1) {
+					angle2+=360;
+				}
+				s=(int)angle1;
+				e=(int)angle2;
+			}
+		}else if(angle1>270&&angle1<360) {
+			if(angle2<angle1&&angle2>angle1-180) {
+				rotation=true;
+				s=(int)angle1;
+				e=(int)angle2;
+			}else {
+				rotation=false;
+				if(angle2<angle1) {
+					angle2+=360;
+				}
+				s=(int)angle1;
+				e=(int)angle2;
+			}
+		}
+	}
+	
+
+	
+	//각도
+	public double angle(double x1,double y1, double x2, double y2){
+		   x1=x1*88799.53629131494;
+		   x2=x2*88799.53629131494;
+		   y1=y1*111189.57696002942;
+		   y2=y2*111189.57696002942;
+		   double dx = x2 - x1;
+		   double dy = y2 - y1;
+		   
+		   double rad= Math.atan2(dy, dx);
+		   double degree = (rad*180)/Math.PI ;
+		   return degree;
+	}
+	
 	public void handleMode(ActionEvent event) {
 		Network.getUav().st();
 	}
@@ -514,6 +687,9 @@ public class AppMainController implements Initializable{
 		Platform.runLater(() -> {
 			jsproxy.call("deleteNoFlyZone");
 		});
+		NoFlyZoneController.instance.x=0;
+		NoFlyZoneController.instance.y=0;
+		NoFlyZoneController.instance.r=0;
 	}
 	
 	//Arm, Takeoff, Land, Roiter, Rtl

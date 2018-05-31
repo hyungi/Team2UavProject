@@ -16,14 +16,16 @@ import javafx.stage.Stage;
 import team2gcs.appmain.AppMainController;
 
 public class NoFlyZoneController implements Initializable{
+	public static NoFlyZoneController instance;
 
 	@FXML private Button btnOk;
 	@FXML private TextField txtNFZLat;
 	@FXML private TextField txtNFZLng;
 	@FXML private TextField txtNFZRadius;
-	private int x;
-	private int y;
-	private int r;
+	public static double x;
+	public static double y;
+	public static double r;
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -34,11 +36,11 @@ public class NoFlyZoneController implements Initializable{
 	}
 	public void handleOk(ActionEvent event) {
 		try {
-			x = Integer.valueOf(txtNFZLat.getText());
-			y = Integer.valueOf(txtNFZLng.getText());
-			r = Integer.valueOf(txtNFZRadius.getText());
+			x = Double.parseDouble(txtNFZLng.getText());
+			y = Double.parseDouble(txtNFZLat.getText());
+			r = Double.parseDouble(txtNFZRadius.getText());
 			Platform.runLater(()->{
-				AppMainController.instance2.jsproxy.call("makeNoFlyZone",x,y,r);
+				AppMainController.instance2.jsproxy.call("makeNoFlyZone",y,x,r);
 			});
 
 			}catch(Exception e) {}

@@ -8,6 +8,12 @@ public class Noflyzone {
 	
 	public double ifNoflyzone(double nX, double nY, double x1, double y1, double x2, double y2) {
 		//1번WP = (x1,y1) 다음WP(x2,y2) noflyzone(nX,nY)
+		x1=x1*111189.57696002942;
+		x2=x2*111189.57696002942;
+		y1=y1*88799.53629131494;
+		y2=y2*88799.53629131494;
+		nX=nX*111189.57696002942;
+		nY=nY*88799.53629131494;
 		a = (y1-y2)/(x1-x2);
 		b = -1;
 		c = -a*x1+y1;
@@ -23,7 +29,8 @@ public class Noflyzone {
 		return m/n; // 리턴값이 반지름 +2보다 작으면 새로운 웨이포인트 생성 아니면 그냥 ㄱㄱ
 	}
 	
-	public void waypoint(double x1, double y1, double x2, double y2, double nR) {
+	
+	/*public void waypoint(double x1, double y1, double x2, double y2, double nR) {
 		double[] X = new double[300];
 		double[] Yp = new double[300];
 		double[] Ym = new double[300];
@@ -58,13 +65,6 @@ public class Noflyzone {
 				}
 			}
 		}
-	}
-	public static void main(String[] args) {
-		double k = Math.sqrt(-1);
-		if(String.valueOf(k)=="NaN") {
-			System.out.println("11");
-			
-		}
-		System.out.println(k);
-	}	
+	}*/
+
 }
