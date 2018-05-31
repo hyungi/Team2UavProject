@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import team2gcs.appmain.AppMain;
 import team2gcs.appmain.AppMainController;
 
 public class leftPaneController implements Initializable{
@@ -188,7 +189,9 @@ public class leftPaneController implements Initializable{
 			altitudeLabel.setText(String.format("%.2f", altitude));
 			if(AppMainController.takeoffStart == true) takeoffTimeLabel.setText(takeoffTime);
 			else if(AppMainController.takeoffStart == false) takeoffTimeLabel.setText("UAV Landed.");
-			
+
+			if(distance(AppMainController.gotoLat, AppMainController.gotoLng, Network.getUav().latitude, Network.getUav().longitude, "meter" ) < 1 && !statusLabel.getText().equals("Go to Completed.")) AppMainController.instance2.statusMessage("Go to Completed.");
+
 			//상세모드
 			if(Network.getUav().armed) {
 				detailModeLabel.setText(mode);
@@ -211,7 +214,7 @@ public class leftPaneController implements Initializable{
 				}
 				if(AppMainController.missionStart == true) {
 					detailMissionTimeLabel.setText(missionTime);
-					if(UAV.nextWP == AppMainController.list.size()) detailMissionTimeLabel.setText("Completed");
+					if(UAV.nextWP == AppMainController.list.size()) detailMissionTimeLabel.setText("Completed.");
 				} else if(AppMainController.missionStart == false) detailMissionTimeLabel.setText("No Mission.");
 				if(AppMainController.takeoffStart == true) detailTakeoffTimeLabel.setText(takeoffTime);
 				else if(AppMainController.takeoffStart == false) detailTakeoffTimeLabel.setText("Landed.");
@@ -241,12 +244,12 @@ public class leftPaneController implements Initializable{
  
         return (dist);
     }
-    
-    private double deg2rad(double deg) {
+
+	private double deg2rad(double deg) {
         return (deg * Math.PI / 180.0);
     }
-     
-    private double rad2deg(double rad) {
+
+	private double rad2deg(double rad) {
         return (rad * 180 / Math.PI);
     }
 }
