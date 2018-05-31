@@ -9,7 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import gcs.mission.FencePoint;
-import gcs.mission.Noflyzone;
 import gcs.mission.WayPoint;
 import gcs.network.Network;
 import gcs.network.UAV;
@@ -54,6 +53,7 @@ import team2gcs.altdialog.altdialogController;
 import team2gcs.leftpane.leftPaneController;
 
 public class AppMainController implements Initializable{
+	private String test;
 	public static AppMainController instance2;
 	// child들의 높이 조정을 위해
 	public static double heightSize;
