@@ -507,6 +507,9 @@ public class AppMainController implements Initializable{
 		});
 		statusMessage("Fence data set.");
 	}
+	public void fenceUpload(String jsonFencePoints) {
+		Network.getUav().fenceUpload(jsonFencePoints);
+	}
 	public void handleFenceUpload(ActionEvent event) {
 		jsproxy.call("fenceUpload");
 		statusMessage("Fence data uploaded.");
