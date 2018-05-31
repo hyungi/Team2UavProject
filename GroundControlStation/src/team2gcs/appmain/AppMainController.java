@@ -1003,13 +1003,10 @@ public class AppMainController implements Initializable{
 						}
 					} else if(message.equals("UAV Disarmed.")) {
 						if(!messageTemp.equals(message)) {
-							if(list.size() > 0 && list.get(list.size()-1).equals("UAV Disarmed.")) {}
-							else {
-								leftPaneController.instance.setStatusLabels(message);
-								statusList.add("   " + inTime + "			" + message);
-								statusListView.setItems(FXCollections.observableArrayList(statusList));
-								messageTemp = message;
-							}
+                            leftPaneController.instance.setStatusLabels(message);
+                            statusList.add("   " + inTime + "			" + message);
+                            statusListView.setItems(FXCollections.observableArrayList(statusList));
+                            messageTemp = message;
 						}
 					} else {
 						leftPaneController.instance.setStatusLabels(message);
