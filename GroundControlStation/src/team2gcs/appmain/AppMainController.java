@@ -54,11 +54,13 @@ import team2gcs.leftpane.leftPaneController;
 import team2gcs.noflyzone.NoFlyZoneController;
 
 public class AppMainController implements Initializable{
+	private String test;
 	public static AppMainController instance2;
 	// child들의 높이 조정을 위해
 	public static double heightSize;
 	public static Stage altStage;
 	//공용
+
 	@FXML private BorderPane mainBorderPane;
 	@FXML private BorderPane loginBorderPane;
 	String inTime;
@@ -80,12 +82,13 @@ public class AppMainController implements Initializable{
 	// 우측
 	@FXML private VBox rightPane;	
 	@FXML private BorderPane rightStatusPane;
-	@FXML private BorderPane rightCameraPane;
+	@FXML private AnchorPane rightCameraPane;
 	@FXML private Label rightStatusLabel;
 	@FXML private Label rightCameraLabel;
 	@FXML private Button rightDeleteBtn;
-	@FXML private ListView<String> statusListView;
+	@FXML private ListView<String> statusListView; 
 	List<String> statusList = new ArrayList<String>();
+	String messageTemp = "messageTemp";
 	
 	// 아래 버튼 & Pane & 둘을 가지고있는 VBox & control 값
 	@FXML private AnchorPane openBottom;
@@ -95,10 +98,8 @@ public class AppMainController implements Initializable{
 	private boolean bottomControl = true;	
 	// 우측 버튼 & Pane & 둘을 가지고있는 HBox & control 값
 	@FXML private AnchorPane openRight;
-	@FXML private AnchorPane viewPane;
 	@FXML private HBox rightMovePane;
-	@FXML private Label rightOpenLabel;
-	@FXML private Label labelConnect;
+	@FXML private Label rightOpenLabel;;
 	private boolean rightControl = true;	
 	//맵
 	@FXML WebView webView;
@@ -188,19 +189,17 @@ public class AppMainController implements Initializable{
 		initTableView();
 		initMissionButton();
 		initLoginButton();
-		
+
 		initSlide();
 		initTop();
 		initRightPane();
 		heightSize = webView.getHeight();
 		try {
 			Parent leftRoot = FXMLLoader.load(getClass().getResource("../leftpane/left.fxml"));
+			Parent cameraRoot = FXMLLoader.load(getClass().getResource("../camera/viewer/mjpgstreamviewer.fxml"));
 			leftPane.getChildren().add(leftRoot);
+			rightCameraPane.getChildren().add(cameraRoot);
 		}catch (Exception e) {}
-	}
-	
-	public void loginKeyAction() {
-		
 	}
 
 //////////////////////////////////Top Menu 관련 ////////////////////////////////
@@ -1110,20 +1109,39 @@ public class AppMainController implements Initializable{
 	
 ///////////////////////////// 메세지 //////////////////////////////////////
 	public void statusMessage(String message) {
-		String inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
-		if(Network.getUav().connected) {
-			leftPaneController.instance.setStatusLabels(message);
-			statusList.add("   " + inTime + "			" + message);
-			statusListView.setItems(FXCollections.observableArrayList(statusList));
-		} else if(!Network.getUav().connected && !statusList.contains("   UAV Disconnected.")){
-			leftPaneController.instance.setStatusLabels("UAV Disconnected.");
-			statusList.add("   UAV Disconnected.");
-			statusListView.setItems(FXCollections.observableArrayList(statusList));
-		}
-		else if(Network.getUav().connected && !statusList.contains("UAV Connected.")) {
-			leftPaneController.instance.setStatusLabels("UAV Connected.");
-			statusList.add("UAV Connected.");
-			statusListView.setItems(FXCollections.observableArrayList(statusList));
-		}   
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
+				if(!Network.getUav().connected && !statusList.contains("   UAV Disconnected.")){
+					leftPaneController.instance.setStatusLabels("UAV Disconnected.");
+					statusList.add("   UAV Disconnected.");
+					statusListView.setItems(FXCollections.observableArrayList(statusList));
+				} else if(Network.getUav().connected){
+					if(message.equals("UAV Armed.")) {
+						if(!messageTemp.equals(message)) {
+							leftPaneController.instance.setStatusLabels(message);
+							statusList.add("   " + inTime + "			" + message);
+							statusListView.setItems(FXCollections.observableArrayList(statusList));
+							messageTemp = message;
+						}	
+					} else if(message.equals("UAV Disarmed.")) {
+						if(!messageTemp.equals(message)) {
+							if(list.size() > 0 && list.get(list.size()-1).equals("UAV Disarmed.")) {}
+							else {
+								leftPaneController.instance.setStatusLabels(message);
+								statusList.add("   " + inTime + "			" + message);
+								statusListView.setItems(FXCollections.observableArrayList(statusList));
+								messageTemp = message;
+							}
+						}
+					} else {
+						leftPaneController.instance.setStatusLabels(message);
+						statusList.add("   " + inTime + "			" + message);
+						statusListView.setItems(FXCollections.observableArrayList(statusList));
+					}
+				} 
+			}
+		});
 	}
 }
