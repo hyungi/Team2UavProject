@@ -57,11 +57,17 @@ public class AppMainController implements Initializable{
 	public static AppMainController instance2;
 	// child들의 높이 조정을 위해
 	public static double heightSize;
+	public static Stage altStage;
 	//공용
-	@FXML private AnchorPane bottomPane;
 	@FXML private BorderPane mainBorderPane;
 	@FXML private BorderPane loginBorderPane;
-	String disconnected = "UAV disconnected";
+	String inTime;
+	public static String missionTime;
+	public static String takeoffTime;
+	int takeoffH = 0, takeoffM = 0, takeoffS = 0;
+	int missionH = 0, missionM = 0, missionS = 0;
+	public static boolean missionStart = false;
+	public static boolean takeoffStart = false;
 	
 	// 좌측
 	@FXML private VBox leftPane;
@@ -736,7 +742,7 @@ public class AppMainController implements Initializable{
 	}
 	
 	// List를 계속 관리하기 위해서 Field 영역으로 가져옴
-	List<WayPoint> list = new ArrayList<>();
+	public static List<WayPoint> list = new ArrayList<>();
 	public void getMissionResponse(String data) {
 		a = Integer.valueOf(txtAlt.getText());
 		list.clear();
