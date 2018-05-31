@@ -113,7 +113,7 @@ public class AppMainController implements Initializable{
 	public static String ip;
 	public static String port;
 	public static boolean connectState;
-	
+	  
 	//미션부분
 	@FXML private Button btnMissionSet;
 	@FXML private Button btnMissionRead;
