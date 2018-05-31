@@ -139,17 +139,13 @@ public class CameraStream {
                             mqttClient.setCallback(new MqttCallback() {
                                 @Override
                                 public void messageArrived(String topic, MqttMessage message) throws Exception {
+                                	byte[] imageBytes = message.getPayload();
+                                	BufferedImage bufferdImage = ImageIO.read(new ByteArrayInputStream(imageBytes));
+                                    Image imgFx = SwingFXUtils.toFXImage(bufferdImage, null);
                                     Platform.runLater(new Runnable() {
                                         @Override
                                         public void run() {
-                                            try {
-                                            	byte[] imageBytes = message.getPayload();
-                                            	BufferedImage bufferdImage = ImageIO.read(new ByteArrayInputStream(imageBytes));
-                                                Image imgFx = SwingFXUtils.toFXImage(bufferdImage, null);
-                                                gc.drawImage(imgFx, 0, 0, imgFx.getWidth(), imgFx.getHeight(), 0, 0, canvas.getWidth(), canvas.getHeight());
-                                            } catch (IOException ex) {
-                                                ex.printStackTrace();
-                                            }
+                                        	gc.drawImage(imgFx, 0, 0, imgFx.getWidth(), imgFx.getHeight(), 0, 0, canvas.getWidth(), canvas.getHeight());
                                         }
                                     });
                                 }
