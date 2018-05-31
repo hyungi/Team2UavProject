@@ -88,7 +88,7 @@ public class AppMainController implements Initializable{
 	@FXML private Label rightStatusLabel;
 	@FXML private Label rightCameraLabel;
 	@FXML private Button rightDeleteBtn;
-	@FXML private ListView<String> statusListView;
+	@FXML private ListView<String> statusListView; 
 	List<String> statusList = new ArrayList<String>();
 	String messageTemp = "messageTemp";
 	
