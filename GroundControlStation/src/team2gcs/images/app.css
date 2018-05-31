@@ -1,3 +1,7 @@
+.root {
+	-fx-font-family: "NanumGothic";
+}
+
 .text-field-table-cell .text-field {
    -fx-border-color:red;
    -fx-text-fill: black;

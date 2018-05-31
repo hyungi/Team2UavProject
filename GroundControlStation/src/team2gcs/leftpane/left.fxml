@@ -51,7 +51,7 @@
             </StackPane>
          </center>
          <left>
-            <HBox prefHeight="209.0" prefWidth="180.0" BorderPane.alignment="CENTER">
+            <HBox prefHeight="209.0" prefWidth="189.0" BorderPane.alignment="CENTER">
                <children>
                   <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="209.0" prefWidth="120.0">
                      <children>
@@ -92,7 +92,7 @@
                         <Insets bottom="10.0" top="10.0" />
                      </padding>
                   </VBox>
-                  <VBox prefHeight="209.0" prefWidth="106.0">
+                  <VBox prefHeight="209.0" prefWidth="114.0">
                      <children>
                         <Label fx:id="rollLabel" alignment="CENTER" prefHeight="40.0" prefWidth="100.0" textFill="WHITE">
                            <VBox.margin>
@@ -159,7 +159,7 @@
       </BorderPane>
       <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="550.0">
          <children>
-            <BorderPane fx:id="sensorDetailBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.8" prefHeight="500.0" prefWidth="370.0" style="-fx-background-color: #222222; -fx-background-radius: 8;" visible="false" StackPane.alignment="TOP_CENTER">
+            <BorderPane fx:id="sensorDetailBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.8" prefHeight="500.0" prefWidth="370.0" style="-fx-background-color: #222222; -fx-background-radius: 8;" StackPane.alignment="TOP_CENTER">
                <top>
                   <HBox maxHeight="-Infinity" prefHeight="41.0" prefWidth="370.0" spacing="115.0" style="-fx-background-color: black; -fx-opacity: 0.7; -fx-background-radius: 8 8 0 0;" BorderPane.alignment="CENTER">
                      <children>
@@ -190,89 +190,89 @@
                      <children>
                         <VBox opacity="0.8" prefHeight="434.0" prefWidth="241.0" style="-fx-opacity: 0.8;">
                            <children>
-                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="Mode" textFill="WHITE">
+                              <Label maxWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="Mode" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="14.0" />
+                                    <Font name="NanumGothic" size="18.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="20.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="Air Speed" textFill="WHITE">
+                              <Label maxWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="Air Speed" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="14.0" />
+                                    <Font name="NanumGothic" size="18.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="20.0" top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="Ground Speed" textFill="WHITE">
+                              <Label maxWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="Ground Speed" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="14.0" />
+                                    <Font name="NanumGothic" size="18.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="20.0" top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="Altitude" textFill="WHITE">
+                              <Label maxWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="Altitude" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="14.0" />
+                                    <Font name="NanumGothic" size="18.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="20.0" top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="Distance to Home" textFill="WHITE">
+                              <Label maxWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="Distance to Home" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="14.0" />
+                                    <Font name="NanumGothic" size="18.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="20.0" top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="Time in Mission" textFill="WHITE">
+                              <Label maxWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="Time in Air" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="14.0" />
+                                    <Font name="NanumGothic" size="18.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="20.0" top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="Time in Air" textFill="WHITE">
+                              <Label maxWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="Time in Mission" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="14.0" />
+                                    <Font name="NanumGothic" size="18.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="20.0" top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="Fence " textFill="WHITE">
+                              <Label maxWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="Mission" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="14.0" />
+                                    <Font name="NanumGothic" size="18.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="20.0" top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="Mission" textFill="WHITE">
+                              <Label maxWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="Fence " textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="14.0" />
+                                    <Font name="NanumGothic" size="18.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="20.0" top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="No-Fly zone" textFill="WHITE">
+                              <Label maxWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="No-Fly zone" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="14.0" />
+                                    <Font name="NanumGothic" size="18.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="20.0" top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="Battery Voltage" textFill="WHITE">
+                              <Label maxWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" style="-fx-background-radius: 8;" text="Battery Voltage" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="14.0" />
+                                    <Font name="NanumGothic" size="18.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="20.0" top="10.0" />
@@ -285,60 +285,93 @@
                         </VBox>
                         <VBox prefHeight="380.0" prefWidth="228.0">
                            <children>
-                              <Label fx:id="detailModeLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="33.0" prefWidth="145.0" textFill="WHITE">
+                              <Label fx:id="detailModeLabel" maxWidth="-Infinity" prefHeight="28.0" prefWidth="152.0" textFill="WHITE">
                                  <VBox.margin>
-                                    <Insets left="10.0" />
+                                    <Insets left="15.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font name="NanumGothic" size="18.0" />
+                                 </font>
                               </Label>
-                              <Label fx:id="detailAirSpeedLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="33.0" prefWidth="145.0" textFill="WHITE">
+                              <Label fx:id="detailAirSpeedLabel" maxWidth="-Infinity" prefHeight="33.0" prefWidth="152.0" textFill="WHITE">
                                  <VBox.margin>
-                                    <Insets left="10.0" top="10.0" />
+                                    <Insets left="15.0" top="10.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font name="NanumGothic" size="18.0" />
+                                 </font>
                               </Label>
-                              <Label fx:id="detailGroundSpeedLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="33.0" prefWidth="145.0" textFill="WHITE">
+                              <Label fx:id="detailGroundSpeedLabel" maxWidth="-Infinity" prefHeight="33.0" prefWidth="152.0" textFill="WHITE">
                                  <VBox.margin>
-                                    <Insets left="10.0" top="10.0" />
+                                    <Insets left="15.0" top="10.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font name="NanumGothic" size="18.0" />
+                                 </font>
                               </Label>
-                              <Label fx:id="detailAltitudeLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="33.0" prefWidth="145.0" textFill="WHITE">
+                              <Label fx:id="detailAltitudeLabel" maxWidth="-Infinity" prefHeight="33.0" prefWidth="152.0" textFill="WHITE">
                                  <VBox.margin>
-                                    <Insets left="10.0" top="10.0" />
+                                    <Insets left="15.0" top="10.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font name="NanumGothic" size="18.0" />
+                                 </font>
                               </Label>
-                              <Label fx:id="detailDistWPLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="33.0" prefWidth="145.0" textFill="WHITE">
+                              <Label fx:id="detailDistHomeLabel" maxWidth="-Infinity" prefHeight="33.0" prefWidth="152.0" textFill="WHITE">
                                  <VBox.margin>
-                                    <Insets left="10.0" top="10.0" />
+                                    <Insets left="15.0" top="10.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font name="NanumGothic" size="18.0" />
+                                 </font>
                               </Label>
-                              <Label fx:id="detailMissionTimeLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="33.0" prefWidth="145.0" textFill="WHITE">
+                              <Label fx:id="detailTakeoffTimeLabel" maxWidth="-Infinity" prefHeight="33.0" prefWidth="152.0" textFill="WHITE">
                                  <VBox.margin>
-                                    <Insets left="10.0" top="10.0" />
+                                    <Insets left="15.0" top="10.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font name="NanumGothic" size="18.0" />
+                                 </font>
                               </Label>
-                              <Label fx:id="detailAirTimeLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="33.0" prefWidth="145.0" textFill="WHITE">
+                              <Label fx:id="detailMissionTimeLabel" maxWidth="-Infinity" prefHeight="33.0" prefWidth="152.0" textFill="WHITE">
                                  <VBox.margin>
-                                    <Insets left="10.0" top="10.0" />
+                                    <Insets left="15.0" top="10.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font name="NanumGothic" size="18.0" />
+                                 </font>
                               </Label>
-                              <Label fx:id="detailFenceLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="33.0" prefWidth="145.0" textFill="WHITE">
+                              <Label fx:id="detailMissionLabel" maxWidth="-Infinity" prefHeight="33.0" prefWidth="152.0" textFill="WHITE">
                                  <VBox.margin>
-                                    <Insets left="10.0" top="10.0" />
+                                    <Insets left="15.0" top="10.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font name="NanumGothic" size="18.0" />
+                                 </font>
                               </Label>
-                              <Label fx:id="detailMissionLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="33.0" prefWidth="145.0" textFill="WHITE">
+                              <Label fx:id="detailFenceLabel" maxWidth="-Infinity" prefHeight="33.0" prefWidth="152.0" textFill="WHITE">
                                  <VBox.margin>
-                                    <Insets left="10.0" top="10.0" />
+                                    <Insets left="15.0" top="10.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font name="NanumGothic" size="18.0" />
+                                 </font>
                               </Label>
-                              <Label fx:id="detailNoFlyLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="33.0" prefWidth="145.0" textFill="WHITE">
+                              <Label fx:id="detailNoFlyLabel" maxWidth="-Infinity" prefHeight="33.0" prefWidth="152.0" textFill="WHITE">
                                  <VBox.margin>
-                                    <Insets left="10.0" top="10.0" />
+                                    <Insets left="15.0" top="10.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font name="NanumGothic" size="18.0" />
+                                 </font>
                               </Label>
-                              <Label fx:id="detailVoltageLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="33.0" prefWidth="145.0" textFill="WHITE">
+                              <Label fx:id="detailVoltageLabel" maxWidth="-Infinity" prefHeight="33.0" prefWidth="152.0" textFill="WHITE">
                                  <VBox.margin>
-                                    <Insets left="10.0" top="10.0" />
+                                    <Insets left="10.0" top="6.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font name="NanumGothic" size="18.0" />
+                                 </font>
                               </Label>
                            </children>
                            <padding>
@@ -349,7 +382,7 @@
                   </HBox>
                </center>
             </BorderPane>
-            <BorderPane fx:id="sensorBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.8" prefHeight="500.0" prefWidth="370.0" style="-fx-background-color: #222222; -fx-background-radius: 8;" StackPane.alignment="TOP_CENTER">
+            <BorderPane fx:id="sensorBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.8" prefHeight="500.0" prefWidth="370.0" style="-fx-background-color: #222222; -fx-background-radius: 8;" visible="false" StackPane.alignment="TOP_CENTER">
                <top>
                   <HBox maxHeight="-Infinity" prefHeight="41.0" prefWidth="370.0" spacing="180.0" style="-fx-background-color: black; -fx-opacity: 0.7; -fx-background-radius: 8 8 0 0;" BorderPane.alignment="CENTER">
                      <children>
@@ -378,7 +411,7 @@
                <center>
                   <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <VBox opacity="0.8" prefHeight="434.0" prefWidth="397.0" style="-fx-opacity: 0.8;">
+                        <VBox opacity="0.8" prefHeight="434.0" prefWidth="362.0" style="-fx-opacity: 0.8;">
                            <children>
                               <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Mode" textFill="WHITE">
                                  <font>
@@ -412,9 +445,9 @@
                                     <Insets left="20.0" top="15.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="70.0" prefWidth="170.0" style="-fx-background-radius: 8;" text="Time in Mission" textFill="WHITE">
+                              <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="71.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Time in Air" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="20.0" />
+                                    <Font name="Aharoni Bold" size="18.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="20.0" top="15.0" />
@@ -430,44 +463,44 @@
                         </VBox>
                         <VBox prefHeight="379.0" prefWidth="390.0">
                            <children>
-                              <Label fx:id="modeLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="150.0" style="-fx-background-radius: 8;" text="Mode" textFill="WHITE">
+                              <Label fx:id="modeLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="170.0" style="-fx-background-radius: 8;" text="Mode" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="20.0" />
+                                    <Font name="Aharoni Bold" size="24.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets left="30.0" />
+                                    <Insets left="15.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label fx:id="altitudeLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="150.0" style="-fx-background-radius: 8;" text="Altitude" textFill="WHITE">
+                              <Label fx:id="altitudeLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="170.0" style="-fx-background-radius: 8;" text="Altitude" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="20.0" />
+                                    <Font name="Aharoni Bold" size="24.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets left="30.0" top="15.0" />
+                                    <Insets left="15.0" top="15.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label fx:id="airSpeedLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="150.0" style="-fx-background-radius: 8;" text="Air Speed" textFill="WHITE">
+                              <Label fx:id="airSpeedLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="170.0" style="-fx-background-radius: 8;" text="Air Speed" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="20.0" />
+                                    <Font name="Aharoni Bold" size="24.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets left="30.0" top="15.0" />
+                                    <Insets left="15.0" top="15.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label fx:id="groundSpeedLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="150.0" style="-fx-background-radius: 8;" text="Ground Speed" textFill="WHITE">
+                              <Label fx:id="groundSpeedLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="170.0" style="-fx-background-radius: 8;" text="Ground Speed" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="20.0" />
+                                    <Font name="Aharoni Bold" size="24.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets left="30.0" top="15.0" />
+                                    <Insets left="15.0" top="15.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label fx:id="missionTimeLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="150.0" style="-fx-background-radius: 8;" text="00:00:00" textFill="WHITE">
+                              <Label fx:id="takeoffTimeLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="170.0" style="-fx-background-radius: 8;" text="00:00:00" textFill="WHITE">
                                  <font>
                                     <Font name="Aharoni Bold" size="20.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets left="30.0" top="15.0" />
+                                    <Insets left="15.0" top="15.0" />
                                  </VBox.margin>
                               </Label>
                            </children>
