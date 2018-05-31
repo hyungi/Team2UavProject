@@ -470,7 +470,7 @@ public class AppMainController implements Initializable{
 			setTableViewItems(list);
 		});
 	}
-	
+	//반시계방향
 	public void circleWP2(double nX,double nY, double nR,double x1,double y1,double x2,double y2) {
 
 		a = Integer.valueOf(txtAlt.getText());
@@ -504,7 +504,7 @@ public class AppMainController implements Initializable{
 			setTableViewItems(list);
 		});
 	}
-	
+	//회전방향 case
 	public void rotationCase(double nX,double nY,double x1,double y1,double x2,double y2) {
 
 		if(angle(nX,nY,x1,y1)<0) {
