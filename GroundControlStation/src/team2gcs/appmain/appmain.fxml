@@ -149,7 +149,7 @@
                                                    </font></Button>
                                              </top>
                                           </BorderPane>
-                                          <AnchorPane fx:id="rightCameraPane" prefHeight="695.0" prefWidth="350.0" />
+                                          <AnchorPane fx:id="rightCameraPane" prefHeight="695.0" prefWidth="350.0" visible="false" />
                                        </children>
                                     </StackPane>
                                  </children>

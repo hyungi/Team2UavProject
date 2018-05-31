@@ -138,7 +138,6 @@ public class leftPaneController implements Initializable{
 			public void handle(Event event) {
 				sensorDetailBorderPane.setVisible(false);
 				sensorBorderPane.setVisible(true);
-				System.out.println("-");
 			}
 		});
    	}
@@ -175,7 +174,6 @@ public class leftPaneController implements Initializable{
 			fenceEnable = uav.fenceEnable;
 			if(AppMainController.list.size() == 0) missionData = false;
 			else if(AppMainController.list.size() != 0) missionData = true;
-			System.out.println("list: " + AppMainController.list.size());
 			voltage = uav.batteryVoltage;
 			missionTime = AppMainController.missionTime;
 			takeoffTime = AppMainController.takeoffTime;
@@ -218,6 +216,7 @@ public class leftPaneController implements Initializable{
 				} else if(AppMainController.missionStart == false) detailMissionTimeLabel.setText("No Mission.");
 				if(AppMainController.takeoffStart == true) detailTakeoffTimeLabel.setText(takeoffTime);
 				else if(AppMainController.takeoffStart == false) detailTakeoffTimeLabel.setText("Landed.");
+				if(Network.getUav().homeLat > 0.0 && Network.getUav().latitude > 0.0) detailDistHomeLabel.setText(String.format("%.4fm" , distance(Network.getUav().homeLat, Network.getUav().longitude, Network.getUav().latitude, Network.getUav().longitude, "meter")));
 				detailVoltageLabel.setText(String.format("%.4f", voltage));
 			} else if(!Network.getUav().armed) {
 				detailModeLabel.setText("UAV Disarmed.");
@@ -230,4 +229,25 @@ public class leftPaneController implements Initializable{
 	public void setStatusLabels(String message) {
 		statusLabel.setText(message);
 	}
+	private double distance(double lat1, double lon1, double lat2, double lon2, String unit) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+         
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+         
+        if (unit == "kilometer") dist = dist * 1.609344;
+        else if(unit == "meter") dist = dist * 1609.344;
+ 
+        return (dist);
+    }
+    
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+     
+    private double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
+    }
 }

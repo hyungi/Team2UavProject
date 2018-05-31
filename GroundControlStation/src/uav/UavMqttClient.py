@@ -111,7 +111,7 @@ def send_data():
                 json = simplejson.JSONEncoder().encode(data)
                 mqtt_client.publish(uav_pub_topic, json)
 #                 time.sleep(5)
-#                 print(json)
+                print(json)
                 
             time.sleep(0.1)
         except Exception as e:
