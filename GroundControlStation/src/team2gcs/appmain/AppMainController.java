@@ -50,6 +50,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import netscape.javascript.JSObject;
+import team2gcs.altdialog.altdialogController;
 import team2gcs.leftpane.leftPaneController;
 import team2gcs.noflyzone.NoFlyZoneController;
 
