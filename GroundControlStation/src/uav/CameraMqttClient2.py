@@ -1,8 +1,3 @@
-###########################################
-# pip install paho-mqtt
-# 'import cv2' need when it run in x-window
-###########################################
-
 import urllib 
 import numpy as np
 import paho.mqtt.client as mqtt
@@ -13,7 +8,7 @@ stream = None
 
 while True:
     try:
-        stream  =urllib.urlopen('http://localhost:50002/?action=stream')    
+        stream  =urllib.urlopen('http://localhost:50001/?action=stream')    
         mqttClient.connect('106.253.56.122', 1883);
         
         # Front
@@ -21,7 +16,7 @@ while True:
 
         while True:
             temp  =stream.read(1024)
-            
+             
             if temp=='':
                 raise Exception('mjpeg streamer stop')
             bytes+=temp
@@ -34,7 +29,7 @@ while True:
                 bytes= bytes[b+2:]
                 
                 #MQTT Publishing-------------------------------
-                mqttClient.publish('/uav2/cameraFront', jpg)
+                mqttClient.publish('/uav2/cameraBottom', jpg)
                 
     except:
         if stream is not None: stream.close()

@@ -11,7 +11,7 @@ import paho.mqtt.client as mqtt
 import time
 import threading
 import simplejson
-#import RPi.GPIO as gpio
+import RPi.GPIO as gpio
 
 
 #예외 발생시 예외 내용 출력을 위해 True로 설정----------------------
