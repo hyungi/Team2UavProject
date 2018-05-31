@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Hashtable;
+import java.util.StringTokenizer;
 
 import javax.imageio.ImageIO;
 
@@ -18,8 +19,8 @@ import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.json.JSONObject;
 
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
@@ -81,6 +82,7 @@ public class CameraStream {
     }
     
     public void start() {
+    	String strtopic = topic;
         if(mqttBrokerURI != null && canvas == null) {
             thread = new Thread() {
                 boolean connected;
@@ -125,11 +127,13 @@ public class CameraStream {
             thread.setDaemon(true);
             thread.start();
         } else if(mqttBrokerURI != null && canvas != null) {
+        	
             thread = new Thread() {
                 boolean connected;
                 @Override
                 public void run() {
                     while(!connected) {
+                    	
                         try {
                         	mqttClient = new MqttClient(mqttBrokerURI, MqttClient.generateClientId(), null);
                             mqttClient.setCallback(new MqttCallback() {

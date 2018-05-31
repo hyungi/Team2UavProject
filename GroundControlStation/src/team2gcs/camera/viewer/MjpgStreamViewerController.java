@@ -29,11 +29,12 @@ public class MjpgStreamViewerController implements Initializable {
         try {
 //        	CameraStream front = new CameraStream("tcp://192.168.3.16:1883", "/uav2/cameraFront", canvas);
 //        	CameraStream bottom = new CameraStream("tcp://192.168.3.16:1883", "/uav2/cameraBottom", canvas2);
-        	CameraStream front = new CameraStream("tcp://106.253.56.122:1883", "/uav2/cameraFront", canvas);
         	CameraStream bottom = new CameraStream("tcp://106.253.56.122:1883", "/uav2/cameraBottom", canvas2);
-        	
-            front.start();
-            bottom.start();
+        	CameraStream front = new CameraStream("tcp://106.253.56.122:1883", "/uav2/cameraFront", canvas);
+
+        	bottom.start();
+            //front.start();
+            
         } catch(Exception e) {
             e.printStackTrace();
         }
