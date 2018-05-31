@@ -1,6 +1,5 @@
 package team2gcs.appmain;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +28,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -116,7 +113,7 @@ public class AppMainController implements Initializable{
 	public static String ip;
 	public static String port;
 	public static boolean connectState;
-	
+	  
 	//미션부분
 	@FXML private Button btnMissionSet;
 	@FXML private Button btnMissionRead;
@@ -628,25 +625,6 @@ public class AppMainController implements Initializable{
 					setMission(list);
 				});
 				list.add(wayPoint);
-			}
-			if(nX != 0.0 || nY != 0.0) {
-				for(int i=0; i<list.size()-1; i++) {
-					double x1 = Double.parseDouble(list.get(i).getLng());
-					double y1 = Double.parseDouble(list.get(i).getLat());
-					double x2 = Double.parseDouble(list.get(i+1).getLng());
-					double y2 = Double.parseDouble(list.get(i+1).getLat());
-					if(Noflyzone.ifNoflyzone(nX, nY, x1, y1, x2, y2) <= nR) {
-						if(Noflyzone.waypoint(x1, y1, x2, y2, nR, nX, nY)) {
-							for(int j=0;j<Noflyzone.X.length;j++) {
-								WayPoint wayPoint = new WayPoint();
-								wayPoint.no = i+1+j;
-								wayPoint.setLng(Noflyzone.X[j]+"");
-								wayPoint.setLat(Noflyzone.Yp[i]+"");
-								wayPoint.altitude = alt;
-							}
-						}
-					}
-				}
 			}
 			setTableViewItems(list);
 		});

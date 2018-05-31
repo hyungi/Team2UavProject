@@ -17,7 +17,18 @@ public class WayPoint {
 	public int jumpnum;
 	public double waitingTime;
 	private Button button = new Button("x");
+	public int nfz;
 	
+	
+	
+
+	public int getNfz() {
+		return nfz;
+	}
+
+	public void setNfz(int nfz) {
+		this.nfz = nfz;
+	}
 
 	public String getLat() {
 		return lat.get();

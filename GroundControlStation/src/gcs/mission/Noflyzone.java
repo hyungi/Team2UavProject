@@ -4,13 +4,15 @@ public class Noflyzone {
 	private	static double a;
 	private static double b;
 	private static double c;
-	private final static int MARGIN = 3;
-	public static double[] X = new double[60];
-	public static double[] Yp = new double[60];
-	public static double[] Ym = new double[60];
 		
 	public static double ifNoflyzone(double nX, double nY, double x1, double y1, double x2, double y2) {
 		//1번WP = (x1,y1) 다음WP(x2,y2) noflyzone(nX,nY)
+		x1=x1*111189.57696002942;
+		x2=x2*111189.57696002942;
+		y1=y1*88799.53629131494;
+		y2=y2*88799.53629131494;
+		nX=nX*111189.57696002942;
+		nY=nY*88799.53629131494;
 		a = (y1-y2)/(x1-x2);
 		b = -1;
 		c = -a*x1+y1;
@@ -24,81 +26,4 @@ public class Noflyzone {
 		n = Math.sqrt(Math.pow(a, 2)+1);
 		return m/n; // 리턴값이 반지름 +3보다 작으면 새로운 웨이포인트 생성 아니면 그냥 ㄱㄱ
 	}
-	
-	public static boolean waypoint(double x1, double y1, double x2, double y2, double nR, double nX, double nY) {
-		// 오른쪽 돌기 -> 방정식에 y를 통해 x를 구하여 그게 중심보다 오른쪽이면
-		if(a>0) {
-			if((1/a)*(-b*nY-c) > nX) {
-				int count=0;
-				for(double i=0;i<x2-x1;i+=0.1) {
-					double root =Math.sqrt(Math.pow(nR+MARGIN, 2)-Math.pow(x1+i,2));
-					if(String.valueOf(root)!="NaN") {
-						if(a*(x1+i)+b*(root+y1)+c<=0) {
-							X[count] = x1+i;
-							Yp[count] = root+y1;
-							count++;
-							if(a*(x1+i)+b*(-root+y1)+c<=0) {
-								Ym[count-1] = -root+y1;
-							}
-						}
-					}
-				}
-			}else{
-				int count=0;
-				for(double i=0;i<x2-x1;i+=0.1) {
-					double root =Math.sqrt(Math.pow(nR+MARGIN, 2)-Math.pow(x1+i,2));
-					if(String.valueOf(root)!="NaN") {
-						if(a*(x1+i)+b*(root+y1)+c>=0) {
-							X[count] = x1+i;
-							Yp[count] = root+y1;
-							count++;
-							if(a*(x1+i)+b*(-root+y1)+c>=0) {
-								Ym[count-1] = -root+y1;
-							}
-						}
-					}
-				}
-			}
-		}else{
-			if((1/a)*(-b*nY-c) > nX) {
-				int count=0;
-				for(double i=0;i<x2-x1;i+=0.1) {
-					double root =Math.sqrt(Math.pow(nR+MARGIN, 2)-Math.pow(x1+i,2));
-					if(String.valueOf(root)!="NaN") {
-						if(a*(x1+i)+b*(root+y1)+c>=0) {
-							X[count] = x1+i;
-							Yp[count] = root+y1;
-							count++;
-							if(a*(x1+i)+b*(-root+y1)+c>=0) {
-								Ym[count-1] = -root+y1;
-							}
-						}
-					}
-				}
-			}else if((1/a)*(-b*nY-c) <= nX){
-				int count=0;
-				for(double i=0;i<x2-x1;i+=0.1) {
-					double root =Math.sqrt(Math.pow(nR+MARGIN, 2)-Math.pow(x1+i,2));
-					if(String.valueOf(root)!="NaN") {
-						if(a*(x1+i)+b*(root+y1)+c<=0) {
-							X[count] = x1+i;
-							Yp[count] = root+y1;
-							count++;
-							if(a*(x1+i)+b*(-root+y1)+c<=0) {
-								Ym[count-1] = -root+y1;
-							}
-						}
-					}
-				}
-			}
-		}		
-		return true;
-	}
-	public static void main(String[] args) {
-		double k = Math.sqrt(-1);
-		if(String.valueOf(k)=="NaN") {
-			System.out.println("11");
-		}
-		System.out.println(k);
-	}	
 }
