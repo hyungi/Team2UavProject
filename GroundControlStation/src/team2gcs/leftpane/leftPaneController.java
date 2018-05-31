@@ -1,7 +1,6 @@
 package team2gcs.leftpane;
 
 import java.net.URL;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 import gcs.network.Network;
