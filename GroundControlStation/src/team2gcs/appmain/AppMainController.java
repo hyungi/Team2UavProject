@@ -1120,6 +1120,6 @@ public class AppMainController implements Initializable{
 			leftPaneController.instance.setStatusLabels("UAV Connected.");
 			statusList.add("UAV Connected.");
 			statusListView.setItems(FXCollections.observableArrayList(statusList));
-		}
+		}   
 	}
 }
