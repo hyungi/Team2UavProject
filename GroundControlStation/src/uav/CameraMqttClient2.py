@@ -16,7 +16,7 @@ while True:
 
         while True:
             temp  =stream.read(1024)
-            
+             
             if temp=='':
                 raise Exception('mjpeg streamer stop')
             bytes+=temp
