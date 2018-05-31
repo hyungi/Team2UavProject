@@ -8,7 +8,5 @@
 	<classpathentry kind="lib" path="lib/pi4j-core.jar"/>
 	<classpathentry kind="lib" path="lib/pi4j-device.jar"/>
 	<classpathentry kind="lib" path="lib/pi4j-gpio-extension.jar"/>
-	<classpathentry kind="lib" path="lib/android-location-provider-0.9.4.jar"/>
-	<classpathentry kind="lib" path="lib/android-reactive-location-1.0-javadoc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

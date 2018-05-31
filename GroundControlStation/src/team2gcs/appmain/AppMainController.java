@@ -98,8 +98,6 @@ public class AppMainController implements Initializable{
 	@FXML private AnchorPane viewPane;
 	@FXML private HBox rightMovePane;
 	@FXML private Label rightOpenLabel;
-	@FXML private VBox cameraVbox;
-	@FXML private VBox statusVbox;
 	@FXML private Label labelConnect;
 	private boolean rightControl = true;	
 	//맵
@@ -176,9 +174,9 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnMode;
 	private int s;
 	private int e;
-	double angle1;
-	double angle2;
-	boolean rotation;
+	private double angle1;
+	private double angle2;
+	private boolean rotation;
 	
 	
 	@Override
