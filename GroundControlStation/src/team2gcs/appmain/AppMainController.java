@@ -146,6 +146,13 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnNoflyzoneSet;
 	@FXML private Button btnNoflyzoneDelete;
 	@FXML private Button btnNoflyzoneActivate;
+	private int s;
+	private int e;
+	private double angle1;
+	private double angle2;
+	private boolean rotation;
+	private int nono;
+	
 	//화물
 	@FXML private Button btnCargoStart;
 	@FXML private Button btnCargoStop;
@@ -170,14 +177,7 @@ public class AppMainController implements Initializable{
 	@FXML private ImageView connButton;
 	int a=0;
 	
-	//임시 버튼
-	@FXML private Button circleWP;
-	@FXML private Button btnMode;
-	private int s;
-	private int e;
-	private double angle1;
-	private double angle2;
-	private boolean rotation;
+
 	
 	
 	@Override
@@ -382,7 +382,7 @@ public class AppMainController implements Initializable{
 		btnMissionRTL.setOnAction((event)->{handleMissionRTL(event);});
 		armBtn.setOnAction((event)->{handleArm(event);});
 		armBtn.setGraphic(new Circle(5, Color.rgb(0x35, 0x35, 0x35)));
-		takeoffBtn.setOnAction((event)->{handleTakeoff(event);});
+		takeoffBtn.setOnAction((event)->{try{handleTakeoff(event);}catch(Exception e) {}});
 		landBtn.setOnAction((event)->{handleLand(event);});
 		loiterBtn.setOnAction((event)->{handleLoiter(event);});
 		rtlBtn.setOnAction((event)->{handleRtl(event);});
@@ -398,64 +398,82 @@ public class AppMainController implements Initializable{
 		btnMissionStop.setOnAction((event)->{handleMissionStop(event);});
 		btnCargoStart.setOnAction((event)->{handleCargoStart(event);});
 		btnCargoStop.setOnAction((event)->{handleCargoStop(event);});
-		btnMode.setOnAction((event)->{handleMode(event);});
-		//circleWP.setOnAction((event)->{handleCircleWP(event);});
 		btnNoflyzoneActivate.setOnAction((event)->{handleNoflyzoneActivate(event);});
 	}
+	boolean wait;
+	WayPoint tPoint;
+	WayPoint tPoint2;
 	
 	//활성화 버튼
 	public void handleNoflyzoneActivate(ActionEvent event) {
-		Noflyzone nfz = new Noflyzone();
+
 		for(int i=0;i<list.size()-1;i++) {
 			//WP1(x1,y1), WP2(x2,y2)
+			System.out.println("i ==== "+i);
+			System.out.println("리스트 사이즈1::::"+list.size());
+			tPoint = list.get(i);
+			tPoint2 = list.get(i+1);
 			double x1 = Double.parseDouble(list.get(i).getLng());
 			double y1 = Double.parseDouble(list.get(i).getLat());
 			double x2 = Double.parseDouble(list.get(i+1).getLng());
 			double y2 = Double.parseDouble(list.get(i+1).getLat());
 			
-			System.out.println("11");
 			//noflyzone x,y,r이 입력 되였냐
 			if(NoFlyZoneController.instance.x!=0&&NoFlyZoneController.instance.y!=0&&NoFlyZoneController.instance.r!=0) {
-				System.out.println("22");
+				System.out.println("리스트 사이즈2::::"+list.size());
 				//noflyzone안에 wp선이 들어 오냐
 				if(true) {//nfz.ifNoflyzone(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,x1,y1,x2,y2)<=NoFlyZoneController.instance.r*1.1){
-					System.out.println("33");
 					// 시계 or 반시계
+					System.out.println("리스트 사이즈3::::"+list.size());
 					rotationCase(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,x1,y1,x2,y2);
-					System.out.println("44");
 					// 반시계 로 돈다면 여기
 					if(!rotation) {
-						System.out.println("55");
-						circleWP1(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2);
-						System.out.println("66");
+						System.out.println("리스트 사이즈4::::"+list.size());
+						circleWP1(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2,i+2);
+						i+=(int)((e-s)/10) +1-5;
+						
 					// 시계 로 돈다면 여기
 					}else{
-						System.out.println("77");
-						circleWP2(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2);
-						System.out.println("88");
+						System.out.println("리스트 사이즈5::::"+list.size());
+						circleWP2(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2,i+2);
+						i += (int)((s-e+1)/10)+1-5;
 					}
 				}
 			}
+			System.out.println("리스트 사이즈::::"+list.size());
 		}
 	}
 	
 	// 시계 방향 돌면서 WP 찍기 nX=noflyzone X좌표, nY=noflyzone Y좌표, WP1(x1,y1), WP(x2,y2)
-	public void circleWP1(double nX,double nY, double nR,double x1,double y1,double x2,double y2) {
+	public void circleWP1(double nX,double nY, double nR,double x1,double y1,double x2,double y2,int no) {
+		System.out.println("리스트 사이즈6::::"+list.size());
 		//a=alt값넣기 우리는 써서 넣음
 		a = Integer.valueOf(txtAlt.getText());
+		List<WayPoint> beforeList = new ArrayList<>();
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getNo() <= tPoint.getNo())
+				beforeList.add(list.get(i));
+			else break;
+		}
+		List<WayPoint> afterList = new ArrayList<>();
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getNo() > tPoint.getNo())
+				afterList.add(list.get(i));
+		}
 		list.clear();
-		
-		Platform.runLater(() -> {	
-			int count=1;
-			
+		System.out.println("리스트 사이즈7::::"+list.size());
+			nono=no;
 			//10도 간격으로 WP리스트에 넣기
-			for(int i=s; i<e; i+=10) {
-				
+			for(int i=s; i<e; i+=10) {				
 				WayPoint wayPoint = new WayPoint();
-	 			wayPoint.no = count;
+	 			wayPoint.no = nono;
 				wayPoint.kind = "waypoint";
 				wayPoint.setLat((nY+(nR*1.1)*Math.sin(Math.PI/180*i)/111189.57696002942)+"");
-				wayPoint.setLng((nX+(nR*1.1)*Math.cos(Math.PI/180*i)/88799.53629131494)+"");
+				double xx = distance(nX, nY, nX+Math.cos(Math.PI/180*i), nY)/Math.cos(Math.PI/180*i);
+				if(xx<0) {
+					xx=-xx;
+				}
+				wayPoint.setLng((nX+(nR*1.1)*Math.cos(Math.PI/180*i)/xx)+"");
 				wayPoint.altitude = a;
 				wayPoint.nfz=1;
 				wayPoint.getButton().setOnAction((event2)->{
@@ -467,29 +485,64 @@ public class AppMainController implements Initializable{
 					setMission(list);
 				});
 				list.add(wayPoint);
-				count++;
+				nono+=1;
 			}
+			List<WayPoint> resultList = new ArrayList<>();
+			for(WayPoint wp: beforeList)
+				resultList.add(wp);
+			beforeList.clear();
+			list.remove(0);
+			list.remove(0);
+			list.remove(list.size()-1);
+			list.remove(list.size()-1);
+			list.remove(list.size()-1);
+			for(WayPoint wp: list) {
+				wp.setNo(wp.getNo()-3);
+				resultList.add(wp);
+			}
+			list.clear();
+			for(WayPoint wp: afterList) {
+				wp.setNo(wp.getNo()+(nono-no-1)-5);
+				resultList.add(wp);
+			}
+			afterList.clear();
+			list = resultList;
+			System.out.println("리스트 사이즈8::::"+list.size());
+		Platform.runLater(() -> {	
 			setMission(list);
 			setTableViewItems(list);
 		});
 	}
 	//반시계방향
-	public void circleWP2(double nX,double nY, double nR,double x1,double y1,double x2,double y2) {
-
+	public void circleWP2(double nX,double nY, double nR,double x1,double y1,double x2,double y2,int no) {
+		//a=alt값넣기 우리는 써서 넣음
 		a = Integer.valueOf(txtAlt.getText());
+		List<WayPoint> beforeList = new ArrayList<>();
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getNo() <= tPoint.getNo())
+				beforeList.add(list.get(i));
+			else break;
+		}
+		List<WayPoint> afterList = new ArrayList<>();
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getNo() >= tPoint2.getNo())
+				afterList.add(list.get(i));
+		}
 		list.clear();
 		
-		Platform.runLater(() -> {	
-			int count=1;
-			
+		
+		
+			int nono=no;
 			for(int i=s; i>e; i-=10) {
-				
 				WayPoint wayPoint = new WayPoint();
-	 			wayPoint.no = count;
+	 			wayPoint.no = nono;
 				wayPoint.kind = "waypoint";
-
 				wayPoint.setLat((nY+(nR*1.1)*Math.sin(Math.PI/180*i)/111189.57696002942)+"");
-				wayPoint.setLng((nX+(nR*1.1)*Math.cos(Math.PI/180*i)/88799.53629131494)+"");
+				double xx = distance(nX, nY, nX+Math.cos(Math.PI/180*i), nY)/Math.cos(Math.PI/180*i);
+				if(xx<0) {
+					xx=-xx;
+				}
+				wayPoint.setLng((nX+(nR*1.1)*Math.cos(Math.PI/180*i)/xx)+"");
 				wayPoint.altitude = a;
 				wayPoint.nfz=1;
 				wayPoint.getButton().setOnAction((event2)->{
@@ -501,25 +554,63 @@ public class AppMainController implements Initializable{
 					setMission(list);
 				});
 				list.add(wayPoint);
-				count++;
+				nono++;
 			}
+			List<WayPoint> resultList = new ArrayList<>();
+			for(WayPoint wp: beforeList)
+				resultList.add(wp);
+			beforeList.clear();
+			list.remove(0);
+			list.remove(0);
+			list.remove(list.size()-1);
+			list.remove(list.size()-1);
+			list.remove(list.size()-1);
+			for(WayPoint wp: list) {
+				wp.setNo(wp.getNo()-3);
+				resultList.add(wp);
+			}
+			list.clear();
+			for(WayPoint wp: afterList) {
+				wp.setNo(wp.getNo()+(nono-no-1)-5);
+				resultList.add(wp);
+			}
+			afterList.clear();
+			list = resultList;
+			System.out.println("리스트 사이즈8::::"+list.size());
+		Platform.runLater(() -> {	
 			setMission(list);
 			setTableViewItems(list);
 		});
 	}
+	//거리
+    private static double distance(double lon1, double lat1, double lon2, double lat2) {
+        
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+         
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515* 1609.344;
+        return dist;
+    }
+     
+ 
+    // This function converts decimal degrees to radians
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+     
+    // This function converts radians to decimal degrees
+    private static double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
+    }
+	
 	//회전방향 case
 	public void rotationCase(double nX,double nY,double x1,double y1,double x2,double y2) {
 
-		if(angle(nX,nY,x1,y1)<0) {
-			angle1=360+angle(nX,nY,x1,y1);
-		}else {
-			angle1=angle(nX,nY,x1,y1);
-		}
-		if(angle(nX,nY,x2,y2)<0) {
-			angle2=360+angle(nX,nY,x2,y2);
-		}else {
-			angle2=angle(nX,nY,x2,y2);
-		}
+
+		angle1=angle(nX,nY,x1,y1);
+		angle2=angle(nX,nY,x2,y2);
 
 		if(angle1>=0&&angle1<=90) {
 			if(angle2>angle1&&angle2<180+angle1) {
@@ -579,25 +670,48 @@ public class AppMainController implements Initializable{
 		}
 	}
 	
-
-	
 	//각도
-	public double angle(double x1,double y1, double x2, double y2){
-		   x1=x1*88799.53629131494;
-		   x2=x2*88799.53629131494;
-		   y1=y1*111189.57696002942;
-		   y2=y2*111189.57696002942;
-		   double dx = x2 - x1;
-		   double dy = y2 - y1;
-		   
-		   double rad= Math.atan2(dy, dx);
-		   double degree = (rad*180)/Math.PI ;
-		   return degree;
-	}
+	public static double angle(double P1_longitude, double P1_latitude, double P2_longitude, double P2_latitude){
+        // 현재 위치 : 위도나 경도는 지구 중심을 기반으로 하는 각도이기 때문에 라디안 각도로 변환한다.
+        double Cur_Lat_radian = P1_latitude * (Math.PI / 180);
+        double Cur_Lon_radian = P1_longitude * (Math.PI / 180);
+
+
+        // 목표 위치 : 위도나 경도는 지구 중심을 기반으로 하는 각도이기 때문에 라디안 각도로 변환한다.
+        double Dest_Lat_radian = P2_latitude * (Math.PI / 180);
+        double Dest_Lon_radian = P2_longitude * (Math.PI / 180);
+        double degree=0;
+        // radian distance
+        double radian_distance = 0;
+        radian_distance = Math.acos(Math.sin(Cur_Lat_radian) * Math.sin(Dest_Lat_radian) + Math.cos(Cur_Lat_radian) * Math.cos(Dest_Lat_radian) * Math.cos(Cur_Lon_radian - Dest_Lon_radian));
+
+        // 목적지 이동 방향을 구한다.(현재 좌표에서 다음 좌표로 이동하기 위해서는 방향을 설정해야 한다. 라디안값이다.
+        double radian_bearing = Math.acos((Math.sin(Dest_Lat_radian) - Math.sin(Cur_Lat_radian) * Math.cos(radian_distance)) / (Math.cos(Cur_Lat_radian) * Math.sin(radian_distance)));        // acos의 인수로 주어지는 x는 360분법의 각도가 아닌 radian(호도)값이다.        
+
+        double true_bearing = 0;
+        if (Math.sin(Dest_Lon_radian - Cur_Lon_radian) < 0)
+        {
+            true_bearing = radian_bearing * (180 / Math.PI);
+            true_bearing = 360 - true_bearing;
+        }
+        else
+        {
+            true_bearing = radian_bearing * (180 / Math.PI);
+        }
+        if(true_bearing<270&&true_bearing>=180) {
+        	degree=360-true_bearing+90;
+        }else if(true_bearing<360&&true_bearing>270) {
+        	degree=360-true_bearing+90;
+        }else if(true_bearing>=0&&true_bearing<90) {
+        	degree=90-true_bearing;
+        }else if(true_bearing>=90&&true_bearing<180) {
+        	degree=360-true_bearing+90;
+        }
+        
+        
+        return degree;
+    }
 	
-	public void handleMode(ActionEvent event) {
-		Network.getUav().st();
-	}
 	//화물 부착 시작,끝
 	public void handleCargoStart(ActionEvent event) {
 		Network.getUav().cargo("cargoStart");
@@ -685,7 +799,6 @@ public class AppMainController implements Initializable{
 		}
 	}
 	public void handleNoflyzoneDelete(ActionEvent event) {
-		System.out.println("비행금지구역삭제");
 		statusMessage("No-fly zone deleted.");
 		Platform.runLater(() -> {
 			jsproxy.call("deleteNoFlyZone");
@@ -693,6 +806,18 @@ public class AppMainController implements Initializable{
 		NoFlyZoneController.instance.x=0;
 		NoFlyZoneController.instance.y=0;
 		NoFlyZoneController.instance.r=0;
+		for(int i=0;i<list.size();i++) {
+			if(list.get(i).nfz==1) {
+				list.remove(i);
+				i-=1;
+			}else {
+				list.get(i).no=i+1;
+			}
+
+		}
+		
+		setMission(list);
+		setTableViewItems(list);
 	}
 	
 	//Arm, Takeoff, Land, Roiter, Rtl
@@ -701,15 +826,22 @@ public class AppMainController implements Initializable{
 		if(armBtn.getText().equals("Disarm")) statusMessage("UAV disarmed.");
 		else if(armBtn.getText().equals("Arm")) statusMessage("UAV armed.");
 	}
-	public void handleTakeoff(ActionEvent event) {
-		a = Integer.valueOf(txtAlt.getText());
-		Network.getUav().takeoff(a);//나중에 숫자입력으로 바꾸
-		statusMessage("UAV take off.");
-	}
-	public void handleLand(ActionEvent event) {
-		Network.getUav().land();	
-		statusMessage("UAV land.");
-	}
+	public void handleTakeoff(ActionEvent event) throws Exception {
+	      altStage = new Stage();
+	      altStage.setTitle("Altitude Setting.");
+	      altStage.initModality(Modality.WINDOW_MODAL);
+	      altStage.initOwner(AppMain.primaryStage);
+	      Parent root = FXMLLoader.load(getClass().getResource("../altdialog/altdialog.fxml"));
+	      Scene scene = new Scene(root);
+	      altStage.setScene(scene);
+
+	      altStage.show();
+   	}
+   public void handleLand(ActionEvent event) {
+      Network.getUav().land();
+      takeoffStart = false;
+      statusMessage("UAV land.");
+   }
 	public void handleLoiter(ActionEvent event) {
 		System.out.println("로이터 모드 실행 그러나 코딩 안함");
 		statusMessage("UAV loiter mode.");

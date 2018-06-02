@@ -27,7 +27,7 @@ public class AppMain extends Application{
  		scene.getStylesheets().add(getClass().getResource("../images/tabpane.css").toExternalForm());
 	 	tempScene = scene;
 		primaryStage.setTitle("UAV Ground Control Station(Team2)");
-		primaryStage.setScene(scene);		
+		primaryStage.setScene(scene);
 		primaryStage.setMaximized(true);
 		primaryStage.show();
 		
@@ -42,9 +42,9 @@ public class AppMain extends Application{
 	            		Thread.sleep(1000);
 	                }
 	                catch(Exception e){}
-                }
+            	}
             }
-        };		
+        };
 		thread.start();
 	}
 	
