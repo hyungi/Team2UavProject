@@ -9,7 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import gcs.mission.FencePoint;
-import gcs.mission.Noflyzone;
 import gcs.mission.WayPoint;
 import gcs.network.Network;
 import gcs.network.UAV;
@@ -49,7 +48,9 @@ import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.util.converter.DoubleStringConverter;
 import netscape.javascript.JSObject;
+import team2gcs.altdialog.altdialogController;
 import team2gcs.leftpane.leftPaneController;
 import team2gcs.noflyzone.NoFlyZoneController;
 
@@ -64,12 +65,14 @@ public class AppMainController implements Initializable{
 	@FXML private BorderPane mainBorderPane;
 	@FXML private BorderPane loginBorderPane;
 	String inTime;
+    int takeoffH = 0, takeoffM = 0, takeoffS = 0;
+    int missionH = 0, missionM = 0, missionS = 0;
 	public static String missionTime;
 	public static String takeoffTime;
-	int takeoffH = 0, takeoffM = 0, takeoffS = 0;
-	int missionH = 0, missionM = 0, missionS = 0;
 	public static boolean missionStart = false;
 	public static boolean takeoffStart = false;
+    public static double gotoLat;
+    public static double gotoLng;
 	
 	// 좌측
 	@FXML private VBox leftPane;
@@ -204,14 +207,12 @@ public class AppMainController implements Initializable{
 
 //////////////////////////////////Top Menu 관련 ////////////////////////////////
 	public void initTop() {
-	//	currTime();
-		homeLatLabel.setText("DisArmed");
-		homeLngLabel.setText("DisArmed");
-		locationLngLabel.setText("DisConnected");
-		locationLatLabel.setText("DisConnected");
+		homeLatLabel.setText("Disarmed");
+		homeLngLabel.setText("Disarmed");
+		locationLngLabel.setText("Disconnected");
+		locationLatLabel.setText("Disconnected");
 		batteryLabel.setText("0%");
 		signalLabel.setText("No signal");
-		
 		// 연결 이벤트 클릭 관리
 		connButton.setOnMouseClicked((event)->{
 			if(connectState) {
@@ -246,14 +247,44 @@ public class AppMainController implements Initializable{
 			}
 		});
 	}
-	
+
 	public void setZoomSliderValue(int zoom) {
 		this.zoom = zoom;
 	}
-	
+
 	public void currTime() {
-		String inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
+		inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
 		currtimeLabel.setText(inTime);
+		missionTime();
+		takeoffTime();
+	}
+
+	public void missionTime() {
+		if(missionStart) {
+			missionS++;
+			if(missionS==60) {
+				missionM++;
+				missionS = 00;
+			} if(missionM==60) {
+				missionH++;
+				missionM = 00;
+			}
+			missionTime = String.format("%02d:%02d:%02d", missionH, missionM, missionS);
+		}
+	}
+
+	public void takeoffTime() {
+		if(takeoffStart) {
+			takeoffS++;
+			if(takeoffS==60) {
+				takeoffM++;
+				takeoffS = 00;
+			} if(takeoffM==60) {
+				takeoffH++;
+				takeoffM = 00;
+			}
+		}
+		takeoffTime = String.format("%02d:%02d:%02d", takeoffH, takeoffM, takeoffS);
 	}
 
 ////////////////////////////////// Slide Menu 관련 ////////////////////////////////
@@ -272,12 +303,12 @@ public class AppMainController implements Initializable{
 		bottomPaneLocation.addListener(change -> updateVBox());
 		rightPaneLocation.addListener(change -> updateHBox());
 	}
-   
+
    // 각 전체 Pane의 위치를 property 값 만큼 변경(SlidePane 메소드를 통해 차례로 변경된 값이 적용됨)
 	private void updateVBox() { bottomMovePane.setTranslateY(bottomPaneLocation.get());}
-   
+
 	private void updateHBox() {	rightMovePane.setTranslateX(rightPaneLocation.get());}
-	
+
 	// animate 메소드는 현재 상태를 파악하여 어느위치로 이동시켜야되는지 slidePane에게 전달해준다.
 	private void animateRightPane() {
 		if(rightControl) {
@@ -290,7 +321,7 @@ public class AppMainController implements Initializable{
 			slidePane(550,rightPaneLocation);
 		}
 	}
-   
+
 	private void animateBottomPane() {
 		if(bottomControl) {
 			// rightPane이 열려있으면 닫아줌
@@ -380,7 +411,7 @@ public class AppMainController implements Initializable{
 		btnMissionLoi.setOnAction((event)->{handleMissionLoi(event);});
 		btnMissionDelete.setOnAction((event)->{handleMissionDelete(event);});
 		btnMissionRTL.setOnAction((event)->{handleMissionRTL(event);});
-		armBtn.setOnAction((event)->{handleArm(event);});
+		armBtn.setOnAction((event)->{try {handleArm(event);} catch (Exception e) {}});
 		armBtn.setGraphic(new Circle(5, Color.rgb(0x35, 0x35, 0x35)));
 		takeoffBtn.setOnAction((event)->{try{handleTakeoff(event);}catch(Exception e) {}});
 		landBtn.setOnAction((event)->{handleLand(event);});
@@ -724,6 +755,7 @@ public class AppMainController implements Initializable{
 		list.clear();
 		setTableViewItems(list);
 		setMission(list);
+		statusMessage("Mission deleted.");
 	}
 	//미션 RTL 추가
 	public void handleMissionRTL(ActionEvent event) {
@@ -740,18 +772,24 @@ public class AppMainController implements Initializable{
 	}
 	//미션 시작 정지
 	public void handleMissionStart(ActionEvent event) {
-		Network.getUav().missionStart();
-		Platform.runLater(() -> {
-			jsproxy.call("missionStart");
-		}); 
-		statusMessage("Mission started.");
+		if(list.size() > 0 && Network.getUav().armed) {
+			Network.getUav().missionStart();
+			Platform.runLater(() -> {
+				jsproxy.call("missionStart");
+			});
+			statusMessage("Mission started.");
+			missionStart = true;
+		} else statusMessage("No Mission.");
 	}
 	public void handleMissionStop(ActionEvent event) {
 		Network.getUav().missionStop();
 		Platform.runLater(() -> {
 			jsproxy.call("missionStop");
 		});
-		statusMessage("Mission stopped.");
+		missionStart = false;
+		missionH = 0; missionM = 0; missionS = 0;
+		if(list.size() > 0) statusMessage("Mission stopped.");
+		else statusMessage("No Mission.");
 	}
 	//펜스 이벤트 처리
 	public void handleFenceSet(ActionEvent event) {
@@ -759,6 +797,9 @@ public class AppMainController implements Initializable{
 			jsproxy.call("fenceMake");
 		});
 		statusMessage("Fence data set.");
+	}
+	public void fenceUpload(String jsonFencePoints) {
+		Network.getUav().fenceUpload(jsonFencePoints);
 	}
 	public void handleFenceUpload(ActionEvent event) {
 		jsproxy.call("fenceUpload");
@@ -821,27 +862,27 @@ public class AppMainController implements Initializable{
 	}
 	
 	//Arm, Takeoff, Land, Roiter, Rtl
-	public void handleArm(ActionEvent event) {
+	public void handleArm(ActionEvent event) throws Exception {
 		Network.getUav().arm();
-		if(armBtn.getText().equals("Disarm")) statusMessage("UAV disarmed.");
-		else if(armBtn.getText().equals("Arm")) statusMessage("UAV armed.");
 	}
 	public void handleTakeoff(ActionEvent event) throws Exception {
-	      altStage = new Stage();
-	      altStage.setTitle("Altitude Setting.");
-	      altStage.initModality(Modality.WINDOW_MODAL);
-	      altStage.initOwner(AppMain.primaryStage);
-	      Parent root = FXMLLoader.load(getClass().getResource("../altdialog/altdialog.fxml"));
-	      Scene scene = new Scene(root);
-	      altStage.setScene(scene);
+		if(Network.getUav().armed) {
+			altStage = new Stage();
+			altStage.setTitle("Altitude Setting.");
+			altStage.initModality(Modality.WINDOW_MODAL);
+			altStage.initOwner(AppMain.primaryStage);
+			Parent root = FXMLLoader.load(getClass().getResource("../altdialog/altdialog.fxml"));
+			Scene scene = new Scene(root);
+			altStage.setScene(scene);
 
-	      altStage.show();
-   	}
-   public void handleLand(ActionEvent event) {
-      Network.getUav().land();
-      takeoffStart = false;
-      statusMessage("UAV land.");
-   }
+			altStage.show();
+		} else statusMessage("Arm before taking off.");
+	}
+	public void handleLand(ActionEvent event) {
+		Network.getUav().land();
+		takeoffStart = false;
+		statusMessage("UAV land.");
+	}
 	public void handleLoiter(ActionEvent event) {
 		System.out.println("로이터 모드 실행 그러나 코딩 안함");
 		statusMessage("UAV loiter mode.");
@@ -873,7 +914,7 @@ public class AppMainController implements Initializable{
 	// List를 계속 관리하기 위해서 Field 영역으로 가져옴
 	public static List<WayPoint> list = new ArrayList<>();
 	public void getMissionResponse(String data) {
-		a = Integer.valueOf(txtAlt.getText());
+		double alt = altdialogController.alt;
 		list.clear();
 		Platform.runLater(() -> {	
 			JSONArray jsonArray = new JSONArray(data);
@@ -993,14 +1034,14 @@ public class AppMainController implements Initializable{
 		column1.setSortable(false);
 		column1.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column1);
-		
+
 		TableColumn<WayPoint, String> column2 = new TableColumn<WayPoint, String>("Command");
 		column2.setCellValueFactory(new PropertyValueFactory<WayPoint, String>("kind"));
 		column2.setPrefWidth(200);
-		column2.setSortable(false);		
+		column2.setSortable(false);
 		column2.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column2);
-		
+
 		TableColumn<WayPoint, String> column3 = new TableColumn<WayPoint, String>("Latitude");
 		column3.setCellValueFactory(new PropertyValueFactory<WayPoint, String>("lat"));
 		column3.setEditable(true);
@@ -1014,49 +1055,56 @@ public class AppMainController implements Initializable{
 		column3.setSortable(false);
 		column3.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column3);
-		
+
 		TableColumn<WayPoint, String> column4 = new TableColumn<WayPoint, String>("Longitude");
 		column4.setCellValueFactory(new PropertyValueFactory<WayPoint, String>("lng"));
 		column4.setEditable(true);
 		column4.setCellFactory(TextFieldTableCell.forTableColumn());
 		column4.setOnEditCommit((target)->{
 			target.getTableView().getItems().get(
-					target.getTablePosition().getRow()).setLng(target.getNewValue());
+				target.getTablePosition().getRow()).setLng(target.getNewValue());
 			setMission(list);
 		});
 		column4.setPrefWidth(200);
 		column4.setSortable(false);
 		column4.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column4);
-		
+
 		TableColumn<WayPoint, Double> column5 = new TableColumn<WayPoint, Double>("Altitude");
 		column5.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("altitude"));
+		column5.setEditable(true);
+		column5.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+		column5.setOnEditCommit((target)->{
+			target.getTableView().getItems().get(
+					target.getTablePosition().getRow()).setAltitude(target.getNewValue());
+			setMission(list);
+		});
 		column5.setPrefWidth(200);
 		column5.setSortable(false);
 		column5.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column5);
-		
+
 		TableColumn<WayPoint, Double> column6 = new TableColumn<WayPoint, Double>("Jump");
 		column6.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("jump"));
 		column6.setPrefWidth(80);
 		column6.setSortable(false);
 		column6.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column6);
-		
+
 		TableColumn<WayPoint, Double> column7 = new TableColumn<WayPoint, Double>("num");
 		column7.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("jumpnum"));
 		column7.setPrefWidth(80);
 		column7.setSortable(false);
 		column7.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column7);
-		
+
 		TableColumn<WayPoint, Double> column8 = new TableColumn<WayPoint, Double>("Waiting Time");
 		column8.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("waitingTime"));
 		column8.setPrefWidth(80);
 		column8.setSortable(false);
 		column8.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column8);
-		
+
 		TableColumn<WayPoint, Button> column9 = new TableColumn<WayPoint, Button>("Delect");
 		column9.setCellValueFactory(new PropertyValueFactory<>("button"));
 		column9.setPrefWidth(80);
@@ -1065,13 +1113,20 @@ public class AppMainController implements Initializable{
 		tableView.getColumns().add(column9);
 	}
 	
+
 	public void viewStatus(UAV uav) {
 		try {
 			setStatus(uav);
+			setMissionStatus(uav);
 			leftPaneController.instance.getRollStatus(uav);
 			leftPaneController.instance.getStatus(uav);
-			setMissionStatus(uav);
-			
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					leftPaneController.instance.setRollStatus();
+					leftPaneController.instance.setStatus();
+				}
+			});
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -1184,17 +1239,16 @@ public class AppMainController implements Initializable{
 	
 	///////////////////////////// 미션 관련 //////////////////////////////////////
 	public void gotoStart(String data) {
-		a = Integer.valueOf(txtAlt.getText());
 		Platform.runLater(() -> {
 			JSONObject jsonObject = new JSONObject(data);
-			double latitude = jsonObject.getDouble("lat");
-			double longitude = jsonObject.getDouble("lng");
-			double altitude = a;
-			Network.getUav().gotoStart(latitude, longitude, altitude);
-			
+			gotoLat = jsonObject.getDouble("lat");
+			gotoLng = jsonObject.getDouble("lng");
+			double altitude = altdialogController.alt;
+			Network.getUav().gotoStart(gotoLat, gotoLng, altitude);
 		});
 		statusMessage("Go to!");
 	}
+
 	
 	public void batterySet(double level) {
 		Platform.runLater(()->{
