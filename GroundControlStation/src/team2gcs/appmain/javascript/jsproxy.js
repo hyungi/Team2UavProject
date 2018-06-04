@@ -266,4 +266,5 @@ var jsproxy = {
 	missionClear: function(){
 		
 	}
+
 };

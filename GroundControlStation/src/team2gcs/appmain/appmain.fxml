@@ -313,7 +313,7 @@
                                              <center>
                                                 <GridPane alignment="CENTER" prefHeight="81.0" prefWidth="142.0" BorderPane.alignment="CENTER">
                                                    <children>
-                                                      <Button fx:id="btnMode" mnemonicParsing="false" text="Cargo WP">
+                                                      <Button mnemonicParsing="false" text="Cargo WP">
                                                          <GridPane.margin>
                                                             <Insets bottom="20.0" left="23.0" />
                                                          </GridPane.margin>
@@ -649,7 +649,6 @@
                            </font>
                         </Button>
                         <TextField fx:id="txtAlt" style="-fx-background-color: #555555;" text="0" />
-                        <Button fx:id="circleWP" mnemonicParsing="false" text="Button" />
                         <VBox maxHeight="90.0" minHeight="90.0" prefHeight="90.0" prefWidth="226.0" spacing="5.0" style="-fx-padding: 10 10 10 10" styleClass="pane2">
                            <children>
                               <GridPane maxHeight="90.0" prefHeight="90.0">
