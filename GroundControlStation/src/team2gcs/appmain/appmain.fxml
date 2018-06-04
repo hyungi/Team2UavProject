@@ -264,17 +264,17 @@
                                              <center>
                                                 <GridPane prefHeight="89.0" prefWidth="70.0" BorderPane.alignment="CENTER">
                                                    <children>
-                                                      <Button fx:id="btnNoflyzoneSet" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Set">
+                                                      <Button fx:id="btnNoflyzoneSet" maxHeight="20.0" mnemonicParsing="false" prefWidth="80.0" text="Set">
                                                          <font>
                                                             <Font name="Aharoni Bold" size="12.0" />
                                                          </font>
                                                       </Button>
-                                                      <Button fx:id="btnNoflyzoneActivate" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Activate" GridPane.rowIndex="1">
+                                                      <Button fx:id="btnNoflyzoneActivate" maxHeight="20.0" mnemonicParsing="false" prefWidth="80.0" text="Activate" GridPane.rowIndex="1">
                                                          <font>
                                                             <Font name="Aharoni Bold" size="12.0" />
                                                          </font>
                                                       </Button>
-                                                      <Button fx:id="btnNoflyzoneDelete" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Delete" GridPane.rowIndex="2">
+                                                      <Button fx:id="btnNoflyzoneDelete" maxHeight="20.0" mnemonicParsing="false" prefWidth="80.0" text="Delete" GridPane.rowIndex="2">
                                                          <font>
                                                             <Font name="Aharoni Bold" size="12.0" />
                                                          </font>

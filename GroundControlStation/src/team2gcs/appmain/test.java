@@ -4,8 +4,8 @@ public class test {
 	public static void main(String[] args) {
 
         // 미터(Meter) 단위
-        double distanceMeter =
-            distance(127,50,127, 51);
+        double distanceMeter =distance(127,37,126, 37);
+        
         System.out.println(distanceMeter) ;
          
          

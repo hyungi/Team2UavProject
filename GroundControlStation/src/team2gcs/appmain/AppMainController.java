@@ -54,6 +54,7 @@ import netscape.javascript.JSObject;
 import team2gcs.altdialog.altdialogController;
 import team2gcs.leftpane.leftPaneController;
 import team2gcs.noflyzone.NoFlyZoneController;
+import team2gcs.noflyzone.Noflyzone;
 
 public class AppMainController implements Initializable{
 	private String test;
@@ -162,7 +163,7 @@ public class AppMainController implements Initializable{
 	private int e;
 	private double angle1;
 	private double angle2;
-	private boolean rotation;
+	public boolean rotation;
 	private int nono;
 	
 	//화물
@@ -187,7 +188,7 @@ public class AppMainController implements Initializable{
 	@FXML private Label batteryLabel;
 	@FXML private Label signalLabel;
 	@FXML private ImageView connButton;
-	int a=0;
+	public int a;
 	
 
 	
@@ -438,17 +439,18 @@ public class AppMainController implements Initializable{
 		btnCargoStart.setOnAction((event)->{handleCargoStart(event);});
 		btnCargoStop.setOnAction((event)->{handleCargoStop(event);});
 		btnNoflyzoneActivate.setOnAction((event)->{handleNoflyzoneActivate(event);});
-		btnTop.setOnAction((event)->{handleBtnTop(event);});
-		btnRight.setOnAction((event)->{handleBtnRight(event);});
-		btnBottom.setOnAction((event)->{handleBtnBottom(event);});
-		btnLeft.setOnAction((event)->{handleBtnLeft(event);});
-		btnHeadingToNorth.setOnAction((event)->{handleBtnHeadingToNorth(event);});
+		//btnTop.setOnAction((event)->{handleBtnTop(event);});
+		//btnRight.setOnAction((event)->{handleBtnRight(event);});
+		//btnBottom.setOnAction((event)->{handleBtnBottom(event);});
+		//btnLeft.setOnAction((event)->{handleBtnLeft(event);});
+		//btnHeadingToNorth.setOnAction((event)->{handleBtnHeadingToNorth(event);});
 	}
-	boolean wait;
-	WayPoint tPoint;
-	WayPoint tPoint2;
+	public static boolean wait;
+	public static WayPoint tPoint;
+	public static WayPoint tPoint2;
+	public static List<WayPoint> listCP = new ArrayList<WayPoint>();
 	
-	//활성화 버튼
+	//비행금지구역 활성화 버튼
 	public void handleNoflyzoneActivate(ActionEvent event) {
 
 		for(int i=0;i<list.size()-1;i++) {
@@ -457,6 +459,7 @@ public class AppMainController implements Initializable{
 			System.out.println("리스트 사이즈1::::"+list.size());
 			tPoint = list.get(i);
 			tPoint2 = list.get(i+1);
+			Noflyzone.listchange();
 			double x1 = Double.parseDouble(list.get(i).getLng());
 			double y1 = Double.parseDouble(list.get(i).getLat());
 			double x2 = Double.parseDouble(list.get(i+1).getLng());
@@ -466,21 +469,24 @@ public class AppMainController implements Initializable{
 			if(NoFlyZoneController.instance.x!=0&&NoFlyZoneController.instance.y!=0&&NoFlyZoneController.instance.r!=0) {
 				System.out.println("리스트 사이즈2::::"+list.size());
 				//noflyzone안에 wp선이 들어 오냐
-				if(true) {//nfz.ifNoflyzone(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,x1,y1,x2,y2)<=NoFlyZoneController.instance.r*1.1){
+				if(Noflyzone.ifNoflyzone(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,x1,y1,x2,y2)<=NoFlyZoneController.instance.r*1.1) {
+					System.out.println("반지름 : "+NoFlyZoneController.instance.r*1.1);
 					// 시계 or 반시계
-					System.out.println("리스트 사이즈3::::"+list.size());
-					rotationCase(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,x1,y1,x2,y2);
+					Noflyzone.rotationCase(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,x1,y1,x2,y2);
+					int s = Noflyzone.s;
+					int e = Noflyzone.e;
 					// 반시계 로 돈다면 여기
 					if(!rotation) {
-						System.out.println("리스트 사이즈4::::"+list.size());
-						circleWP1(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2,i+2);
+						System.out.println("시계");
+						Noflyzone.circleWP1(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2,i+2);
 						i+=(int)((e-s)/10) +1-5;
-						
+						list = Noflyzone.list;
 					// 시계 로 돈다면 여기
 					}else{
-						System.out.println("리스트 사이즈5::::"+list.size());
-						circleWP2(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2,i+2);
+						System.out.println("반시계");
+						Noflyzone.circleWP2(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2,i+2);
 						i += (int)((s-e+1)/10)+1-5;
+						list = Noflyzone.list;
 					}
 				}
 			}
@@ -783,7 +789,6 @@ public class AppMainController implements Initializable{
 	}
 	//미션 삭제
 	public void handleMissionDelete(ActionEvent event) {
-		System.out.println("size: " + list.size());
 		list.clear();
 		setTableViewItems(list);
 		setMission(list);
@@ -791,6 +796,7 @@ public class AppMainController implements Initializable{
 	}
 	//미션 RTL 추가
 	public void handleMissionRTL(ActionEvent event) {
+
 		WayPoint waypoint = new WayPoint();
 		waypoint.kind = "rtl";
 		waypoint.setLat(Network.getUav().homeLat +"");
@@ -944,6 +950,7 @@ public class AppMainController implements Initializable{
 	// List를 계속 관리하기 위해서 Field 영역으로 가져옴
 	public static List<WayPoint> list = new ArrayList<>();
 	public void getMissionResponse(String data) {
+		double alt = altdialogController.alt;
 		list.clear();
 		Platform.runLater(() -> {	
 			JSONArray jsonArray = new JSONArray(data);
@@ -955,6 +962,7 @@ public class AppMainController implements Initializable{
 				wayPoint.setLat(jsonObject.getDouble("lat")+"");
 				wayPoint.setLng(jsonObject.getDouble("lng")+"");
 				wayPoint.altitude = altitude;
+				wayPoint.altitude = alt;
 				wayPoint.getButton().setOnAction((event)->{
 					list.remove(wayPoint.no-1);
 					for(WayPoint wp : list) {
@@ -976,7 +984,6 @@ public class AppMainController implements Initializable{
 	//미션 업로드
 	public void handleMissionUpload(ActionEvent event) {
 		List<WayPoint> list = tableView.getItems();
-		System.out.println("size: " + list.size());
 		Network.getUav().missionUpload(list);
 		statusMessage("Mission uploaded.");
 	}
