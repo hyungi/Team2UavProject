@@ -478,8 +478,70 @@ public class AppMainController implements Initializable{
 		statusMessage("Arm made.");
 	}
 	
-	//비행금지구역 활성화 버튼
 	public void handleNoflyzoneActivate(ActionEvent event) {
+		
+		WayPoint wp = new WayPoint();
+		wp.no=0;
+		wp.kind = "waypoint";
+		wp.setLat(Network.getUav().latitude+"");
+		wp.setLng(Network.getUav().longitude+"");
+		wp.nfz=2;
+		list.add(0,wp);
+
+		
+		for(int i=0;i<list.size()-1;i++) {
+			//WP1(x1,y1), WP2(x2,y2)
+			System.out.println("i ==== "+i);
+			System.out.println("리스트 사이즈1::::"+list.size());
+			tPoint = list.get(i);
+			tPoint2 = list.get(i+1);
+			Noflyzone.listchange();
+			double x1 = Double.parseDouble(list.get(i).getLng());
+			double y1 = Double.parseDouble(list.get(i).getLat());
+			double x2 = Double.parseDouble(list.get(i+1).getLng());
+			double y2 = Double.parseDouble(list.get(i+1).getLat());
+			
+			//noflyzone x,y,r이 입력 되였냐
+			if(NoFlyZoneController.instance.x!=0&&NoFlyZoneController.instance.y!=0&&NoFlyZoneController.instance.r!=0) {
+				System.out.println("리스트 사이즈2::::"+list.size());
+				//noflyzone안에 wp선이 들어 오냐
+				if(Noflyzone.ifNoflyzone(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,x1,y1,x2,y2)<=NoFlyZoneController.instance.r*1.1) {
+					System.out.println("반지름 : "+NoFlyZoneController.instance.r*1.1);
+					// 시계 or 반시계
+					Noflyzone.rotationCase(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,x1,y1,x2,y2);
+					int s = Noflyzone.s;
+					int e = Noflyzone.e;
+					// 반시계 로 돈다면 여기
+					if(!rotation) {
+						System.out.println("시계");
+						Noflyzone.circleWP1(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2,i+2);
+						list = Noflyzone.list;
+						i+=(int)((e-s)/10) +1-5;
+					// 시계 로 돈다면 여기
+					}else{
+						System.out.println("반시계");
+						Noflyzone.circleWP2(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2,i+2);
+						list = Noflyzone.list;
+						i += (int)((s-e+1)/10)+1-5;
+
+					}
+				}
+			}
+			System.out.println("리스트 사이즈::::"+list.size());
+		}
+		for(int a=0;a<list.size();a++) {
+			if(list.get(a).no==0) {
+				list.remove(0);
+			}
+		}
+ 		Platform.runLater(() -> {	
+ 			setMission(list);
+ 			setTableViewItems(list);
+ 		});
+	}
+	
+	//비행금지구역 활성화 버튼
+	/*public void handleNoflyzoneActivate(ActionEvent event) {
 
 		for(int i=0;i<list.size()-1;i++) {
 			//WP1(x1,y1), WP2(x2,y2)
@@ -520,7 +582,7 @@ public class AppMainController implements Initializable{
 			}
 			System.out.println("리스트 사이즈::::"+list.size());
 		}
-	}
+	}*/
 	
 	// 시계 방향 돌면서 WP 찍기 nX=noflyzone X좌표, nY=noflyzone Y좌표, WP1(x1,y1), WP(x2,y2)
 	public void circleWP1(double nX,double nY, double nR,double x1,double y1,double x2,double y2,int no) {
