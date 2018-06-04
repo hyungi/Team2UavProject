@@ -221,6 +221,7 @@ public class UAV implements Cloneable {
 			wayPoints = listWayPoint;
 			if(!listWayPoint.isEmpty()) {
 				AppMainController.instance2.list = listWayPoint;
+				AppMainController.instance2.setMission(listWayPoint);
 			}
 			
 			JSONObject jsonObjectFenceInfo =  jsonObject.getJSONObject("fence_info");
