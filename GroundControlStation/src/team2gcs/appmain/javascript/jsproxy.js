@@ -61,6 +61,8 @@ var jsproxy = {
 	gotoMake: function() {
 		try {
 			map.gotoMake = true;
+			map.armMake = false;
+			map.landMake = false;
 			map.roiMake = false;
 			map.missionMake = false;
 			map.fenceMake = false;
@@ -94,10 +96,38 @@ var jsproxy = {
 		}
 	},
 	//------------------------------------------------------
+	landMake: function() {
+		try {
+			map.gotoMake = false;
+			map.missionMake = false;		
+			map.armMake = false;
+			map.landMake = true;
+			map.roiMake = false;
+			map.fenceMake = false;
+		} catch(err) {
+			console.log(">> [jsproxy.landMake()] " + err);
+		}	
+	},
+	//------------------------------------------------------
+	armMake: function() {
+		try {
+			map.gotoMake = false;
+			map.missionMake = false;		
+			map.armMake = true;
+			map.landMake = false;
+			map.roiMake = false;
+			map.fenceMake = false;
+		} catch(err) {
+			console.log(">> [jsproxy.armMake()] " + err);
+		}	
+	},	
+	//------------------------------------------------------
 	missionMake: function() {
 		try {
 			map.gotoMake = false;
-			map.missionMake = true;			
+			map.missionMake = true;
+			map.armMake = false;
+			map.landMake = false;
 			map.roiMake = false;
 			map.fenceMake = false;
 		} catch(err) {
@@ -114,8 +144,8 @@ var jsproxy = {
 					kind: map.uav.missionMarkers[i].kind,
 					lat: map.uav.missionMarkers[i].getPosition().lat(),
 					lng: map.uav.missionMarkers[i].getPosition().lng()
-					
 				};
+				console.log("Log ::: "+ json.kind);
 				mission.push(json);
 			}
 			mission = JSON.stringify(mission);
@@ -162,6 +192,8 @@ var jsproxy = {
 		try {
 			map.gotoMake = false;
 			map.missionMake = false;
+			map.armMake = false;
+			map.landMake = false;
 			map.roiMake = true;
 			map.fenceMake = false;
 			map.uav.roiIndex = selectedIndex+1;
@@ -169,6 +201,25 @@ var jsproxy = {
 			console.log(">> [jsproxy.roiMake()] " + err);
 		}
 	},
+	//-------------------------------------------------------
+	addLand: function(location) {
+		try {
+			location = JSON.stringify(location);
+			jsproxy.java.addLand(location);
+		} catch(err) {
+			console.log(">> [jsproxy.addLand()] " + err);
+		}
+	},
+	//-------------------------------------------------------
+	addArm: function(location) {
+		try {
+			location = JSON.stringify(location);
+			jsproxy.java.addARM(location);
+		} catch(err) {
+			console.log(">> [jsproxy.addARM()] " + err);
+		}
+	},
+	//-------------------------------------------------------
 	addROI: function(location) {
 		try {
 			location = JSON.stringify(location);
@@ -205,7 +256,9 @@ var jsproxy = {
 	fenceMake: function() {
 		try {
 			map.gotoMake = false;
-			map.missionMake = false;			
+			map.missionMake = false;
+			map.armMake = false;
+			map.landMake = false;
 			map.roiMake = false;
 			map.fenceMake = true;
 		} catch(err) {

@@ -131,6 +131,9 @@ public class AppMainController implements Initializable{
 	@FXML private Button loiterBtn;
 	@FXML private Button btnMissionStart;
 	@FXML private Button btnMissionStop;
+	@FXML private Button btnMissionArm;
+	@FXML private Button btnMissionLand;
+	@FXML private Button btnMissionTime;
 	@FXML private TextField txtAlt;
 	
 	//펜스
@@ -402,10 +405,10 @@ public class AppMainController implements Initializable{
 		btnMissionLoi.setOnAction((event)->{handleMissionLoi(event);});
 		btnMissionDelete.setOnAction((event)->{handleMissionDelete(event);});
 		btnMissionRTL.setOnAction((event)->{handleMissionRTL(event);});
-		armBtn.setOnAction((event)->{try {handleArm(event);} catch (Exception e) {}});
+		armBtn.setOnAction((event)->{try {handleArm();} catch (Exception e) {}});
 		armBtn.setGraphic(new Circle(5, Color.rgb(0x35, 0x35, 0x35)));
-		takeoffBtn.setOnAction((event)->{try {handleTakeoff(event);} catch (Exception e) {}});
-		landBtn.setOnAction((event)->{handleLand(event);});
+		takeoffBtn.setOnAction((event)->{try {handleTakeoff();} catch (Exception e) {}});
+		landBtn.setOnAction((event)->{handleLand();});
 		loiterBtn.setOnAction((event)->{handleLoiter(event);});
 		rtlBtn.setOnAction((event)->{handleRtl(event);});
 		btnFenceSet.setOnAction((event)->{handleFenceSet(event);});
@@ -419,10 +422,37 @@ public class AppMainController implements Initializable{
 		btnMissionStart.setOnAction((event)->{handleMissionStart(event);});
 		btnMissionStop.setOnAction((event)->{handleMissionStop(event);});
 		btnCargoStart.setOnAction((event)->{handleCargoStart(event);});
-		btnCargoStop.setOnAction((event)->{handleCargoStop(event);});
+		btnCargoStop.setOnAction((event)->{handleCargoStop();});
 		btnMode.setOnAction((event)->{handleMode(event);});
+		btnMissionArm.setOnAction((event)->{handleMissionArm();});
+		btnMissionLand.setOnAction((event)->{handleMissionLand();});
+		btnMissionTime.setOnAction((event)->{handleMissionTime();});
 		circleWP.setOnAction((event)->{handleCircleWP(event);});
 	}
+	
+	public void handleMissionTime() {
+//		30초 대기
+		try{Thread.sleep(30000);}catch(Exception e) {}
+	}
+	
+	public static boolean checkLand = false;
+	public static int landNum = -999;
+	public void handleMissionLand() {
+		checkLand = !checkLand;
+		Platform.runLater(() -> {
+			jsproxy.call("landMake");
+		});
+		statusMessage("Land made.");
+	}
+	
+	//미션 Arm
+	public void handleMissionArm() {
+		Platform.runLater(() -> {
+			jsproxy.call("armMake");
+		});
+		statusMessage("Arm made.");
+	}
+	
 	public void handleCircleWP(ActionEvent event) {
 		alt = altdialogController.alt;
 		list.clear();
@@ -457,7 +487,7 @@ public class AppMainController implements Initializable{
 	public void handleCargoStart(ActionEvent event) {
 		Network.getUav().cargo("cargoStart");
 	}
-	public void handleCargoStop(ActionEvent event) {
+	public void handleCargoStop() {
 		Network.getUav().cargo("cargoStop");
 	}
 	//미션 삭제
@@ -557,10 +587,10 @@ public class AppMainController implements Initializable{
 	}
 	
 	//Arm, Takeoff, Land, Roiter, Rtl
-	public void handleArm(ActionEvent event) throws Exception {
+	public void handleArm() throws Exception {
 		Network.getUav().arm();	
 	}
-	public void handleTakeoff(ActionEvent event) throws Exception {
+	public void handleTakeoff() throws Exception {
 		altStage = new Stage();
 		altStage.setTitle("Altitude Setting.");
 		altStage.initModality(Modality.WINDOW_MODAL);
@@ -568,10 +598,9 @@ public class AppMainController implements Initializable{
 		Parent root = FXMLLoader.load(getClass().getResource("../altdialog/altdialog.fxml"));
 		Scene scene = new Scene(root);
 		altStage.setScene(scene);
-
 		altStage.show();
 	}
-	public void handleLand(ActionEvent event) {
+	public void handleLand() {
 		Network.getUav().land();
 		takeoffStart = false;
 		statusMessage("UAV land.");
@@ -622,7 +651,9 @@ public class AppMainController implements Initializable{
 				wayPoint.getButton().setOnAction((event)->{
 					list.remove(wayPoint.no-1);
 					for(WayPoint wp : list) {
-						if(wp.no>wayPoint.no) wp.no--;
+						if(wp.no>=wayPoint.no) {
+							wp.no--;
+						}
 					}
 					setTableViewItems(list);
 					setMission(list);
@@ -681,7 +712,7 @@ public class AppMainController implements Initializable{
 		}
 	}
 	
-	//미션 Lio
+	//미션 Loi
 	public void handleMissionLoi(ActionEvent event) {
 		roiMake();
 		statusMessage("Roi made.");
@@ -818,12 +849,12 @@ public class AppMainController implements Initializable{
 	}
 	public void setMissionStatus(UAV uav) {		
 		Platform.runLater(() -> {
-			if(uav.homeLat != 0.0) {
+			if(uav.homeLat >= 10) {
 				jsproxy.call("setHomeLocation", uav.homeLat, uav.homeLng);
 				homeLatLabel.setText(String.format("Lat:	%.6f", uav.homeLat));
-				homeLngLabel.setText(String.format("Lng:	%.6f", uav.homeLng));	
+				homeLngLabel.setText(String.format("Lng:	%.6f", uav.homeLng));
+				jsproxy.call("setUavLocation", uav.latitude, uav.longitude, uav.heading);
 			}
-			jsproxy.call("setUavLocation", uav.latitude, uav.longitude, uav.heading);
 			
 			if(uav.wayPoints.size() != 0) {
 				setMission(uav.wayPoints);
@@ -866,7 +897,6 @@ public class AppMainController implements Initializable{
 	}
 	
 	public void setMission(List<WayPoint> wayPoints) {
-		setTableViewItems(wayPoints);
 		JSONArray jsonArray = new JSONArray();
 		for(WayPoint wayPoint : wayPoints) {
 			JSONObject jsonObject = new JSONObject();
@@ -891,11 +921,23 @@ public class AppMainController implements Initializable{
 				jsonObject.put("kind",  wayPoint.kind);
 				jsonObject.put("lat", Double.parseDouble(wayPoint.getLat()));
 				jsonObject.put("lng", Double.parseDouble(wayPoint.getLng()));
+			}else if(wayPoint.kind.equals("arm")) {
+				System.out.println("arm들어옴");
+				jsonObject.put("kind",  wayPoint.kind);
+				jsonObject.put("lat", Double.parseDouble(wayPoint.getLat()));
+				jsonObject.put("lng", Double.parseDouble(wayPoint.getLng()));
+			}else if(wayPoint.kind.equals("land")) {
+				landNum = wayPoint.no;
+				jsonObject.put("kind",  wayPoint.kind);
+				jsonObject.put("lat", Double.parseDouble(wayPoint.getLat()));
+				jsonObject.put("lng", Double.parseDouble(wayPoint.getLng()));
 			}
 			jsonArray.put(jsonObject);
 		}
 		String strMissionArr = jsonArray.toString();
+		setTableViewItems(wayPoints);
 		Platform.runLater(() -> {
+			System.out.println(strMissionArr);
 			jsproxy.call("setMission", strMissionArr);
 		});
 		statusMessage("Mission set.");

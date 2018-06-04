@@ -202,6 +202,56 @@ function UAV() {
 				this.missionMarkers.splice(marker.index,0,marker);
 			} 
 			
+			else if(kind == "land") {
+				marker = new google.maps.Marker({
+					map: map.googlemap,
+					position: {lat:lat, lng:lng},
+					icon: {
+					  path: google.maps.SymbolPath.CIRCLE,
+					  fillOpacity: 1,
+					  fillColor: '#0f0',
+					  strokeOpacity: 1,
+					  strokeWeight: 1,
+					  strokeColor: '#333',
+					  scale: 12
+					},
+					draggable: true,
+					optimized: false
+				});
+				marker.kind = kind;
+				marker.index = this.missionMarkers.length;
+				this.missionMarkers.push(marker);
+				var self = this;
+				marker.addListener('drag', function() {
+					self.drawMissionPath();
+				});
+			} 
+			
+			else if(kind == "arm") {
+				marker = new google.maps.Marker({
+					map: map.googlemap,
+					position: {lat:lat, lng:lng},
+					icon: {
+					  path: google.maps.SymbolPath.CIRCLE,
+					  fillOpacity: 1,
+					  fillColor: '#f00',
+					  strokeOpacity: 1,
+					  strokeWeight: 1,
+					  strokeColor: '#333',
+					  scale: 12
+					},
+					draggable: true,
+					optimized: false
+				});
+				marker.kind = kind;
+				marker.index = this.missionMarkers.length;
+				this.missionMarkers.push(marker);
+				var self = this;
+				marker.addListener('drag', function() {
+					self.drawMissionPath();
+				});
+			} 
+			
 			else if(kind == "waypoint") {
 				marker = new google.maps.Marker({
 					map: map.googlemap,
@@ -251,7 +301,7 @@ function UAV() {
 					marker.index = this.missionMarkers.length;
 					this.missionMarkers.push(marker);
 				}
-			}			
+			}
 			
 			for(var i=0; i<this.missionMarkers.length; i++) {
 				this.missionMarkers[i].index = i;
@@ -381,10 +431,10 @@ function UAV() {
 				
 				if(nextMarker.kind == "roi") {
 					continue;
-				} else {
-					polyline.setPath([prevMarker.getPosition(), nextMarker.getPosition()]);
 				}
-				
+				else {
+					polyline.setPath([prevMarker.getPosition(), nextMarker.getPosition()]);
+				}				
 				this.missionPolylines.push(polyline);
 				prevMarker = nextMarker;
 			}
@@ -479,6 +529,12 @@ function UAV() {
 					map.uav.makeMissionMark("roi", e.latLng.lat(), e.latLng.lng(), map.uav.roiIndex);
 					jsproxy.addROI({lat:e.latLng.lat(), lng:e.latLng.lng()});
 					map.roiMake = false;
+				} else if(map.armMake == true){
+					map.uav.makeMissionMark("arm", e.latLng.lat(), e.latLng.lng());
+//					jsproxy.addArm({lat:e.latLng.lat(), lng:e.latLng.lng()});
+				} else if(map.landMake == true){
+					map.uav.makeMissionMark("land", e.latLng.lat(), e.latLng.lng());
+//					jsproxy.addLand({lat:e.latLng.lat(), lng:e.latLng.lng()});
 				}
 			});
 		} catch(err) {

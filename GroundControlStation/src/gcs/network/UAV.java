@@ -105,6 +105,8 @@ public class UAV implements Cloneable {
 		}
 		connected = false;
 	}
+	
+	private boolean misstionState = false;
 
 	private void dataParsing(String strJson) {
 		try {
@@ -133,9 +135,50 @@ public class UAV implements Cloneable {
 			homeLat = jsonObject.getDouble("homeLat");
 			homeLng = jsonObject.getDouble("homeLng");
 			nextWP = jsonObject.getInt("next_waypoint_no");
-			
+
 			if(armed) AppMainController.instance2.statusMessage("UAV Armed.");
 			else if(!armed) AppMainController.instance2.statusMessage("UAV Disarmed.");
+			
+			// land에 해당하는 Misstion에 도달시 Land 진행
+			if(AppMainController.instance2.checkLand&&statusText.equals("Reached command #"+AppMainController.instance2.landNum)) {
+				AppMainController.instance2.handleLand();
+			}
+			// land 마크가 활성화 되어있을 때만 자동 미션 진행
+			if(statusText.equals("Disarming motors") && AppMainController.instance2.checkLand) {
+				AppMainController.instance2.checkLand = false;
+				// 미션 재생성
+				List<WayPoint> tList = new ArrayList<>();
+				missionUpload(tList);
+				int i=1;
+				System.out.println("들어옴");
+				for(WayPoint wp: AppMainController.instance2.list) {
+					System.out.println("들어옴2");
+					if(wp.no > AppMainController.instance2.landNum) {
+						System.out.println("---------------------------");
+						System.out.println(wp.no);
+						wp.setNo(i++);
+						tList.add(wp);
+					}
+				}
+				
+				for(WayPoint wp : tList) {
+					System.out.println(wp.no +"   "+wp.kind);
+				}
+				missionUpload(tList);
+				// DisArmed 되면 화물 내림
+//				AppMainController.instance2.handleCargoStop();
+				Thread.sleep(1000);
+				arm();
+				Thread.sleep(2000);
+				// 다시 Armed 후 TakeOff 진행				
+				takeoff(10);
+				misstionState = true;
+			}
+			
+			if(misstionState && altitude >= 9.5) {
+				missionStart();
+				misstionState = false;
+			}
 			
 			AppMainController.instance2.batterySet(batteryLevel);
 			AppMainController.instance2.locationSet(latitude, longitude);
@@ -170,10 +213,19 @@ public class UAV implements Cloneable {
 				} else if(wp.kind.equals("roi")) {
  					wp.setLat(jo.getDouble("lat")+"");
 					wp.setLng(jo.getDouble("lng")+"");
+				} else if(wp.kind.equals("arm")) {
+ 					wp.setLat(jo.getDouble("lat")+"");
+					wp.setLng(jo.getDouble("lng")+"");
+				} else if(wp.kind.equals("land")) {
+ 					wp.setLat(jo.getDouble("lat")+"");
+					wp.setLng(jo.getDouble("lng")+"");
 				}
 				listWayPoint.add(wp);
 			}
 			wayPoints = listWayPoint;
+			if(!listWayPoint.isEmpty()) {
+				AppMainController.instance2.list = listWayPoint;
+			}
 			
 			JSONObject jsonObjectFenceInfo =  jsonObject.getJSONObject("fence_info");
 			fenceEnable = jsonObjectFenceInfo.getDouble("fence_enable");
