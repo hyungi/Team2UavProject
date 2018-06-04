@@ -616,32 +616,32 @@
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Button fx:id="takeoffBtn" alignment="CENTER" prefHeight="87.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Take Off">
+                        <Button fx:id="takeoffBtn" alignment="CENTER" prefHeight="80.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Take Off">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Button fx:id="landBtn" alignment="CENTER" prefHeight="87.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Land">
+                        <Button fx:id="landBtn" alignment="CENTER" prefHeight="80.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Land">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Button fx:id="loiterBtn" alignment="CENTER" prefHeight="87.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Loiter">
+                        <Button fx:id="loiterBtn" alignment="CENTER" prefHeight="80.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Loiter">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Button fx:id="rtlBtn" alignment="CENTER" prefHeight="87.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="RTL">
+                        <Button fx:id="rtlBtn" alignment="CENTER" prefHeight="80.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="RTL">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnMissionStart" alignment="CENTER" prefHeight="87.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Mission Start">
+                        <Button fx:id="btnMissionStart" alignment="CENTER" prefHeight="80.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Mission Start">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnMissionStop" alignment="CENTER" prefHeight="87.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Mission Stop">
+                        <Button fx:id="btnMissionStop" alignment="CENTER" prefHeight="80.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Mission Stop">
                            <font>
                               <Font size="13.0" />
                            </font>

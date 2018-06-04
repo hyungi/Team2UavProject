@@ -13,15 +13,12 @@ public class WayPoint {
    	public SimpleStringProperty lng 
    	= new SimpleStringProperty();
 	public double altitude;
-	public int jump;
-	public int jumpnum;
+	public int jumpNo;
+	public int repeatCount;
 	public double waitingTime;
 	private Button button = new Button("x");
 	public int nfz;
 	
-	
-	
-
 	public int getNfz() {
 		return nfz;
 	}
@@ -83,23 +80,22 @@ public class WayPoint {
 	public void setAltitude(double altitude) {
 		this.altitude = altitude;
 	}
-	public int getJump() {
-		return jump;
+	public int getJumpNo() {
+		return jumpNo;
 	}
-	public void setJump(int jump) {
-		this.jump = jump;
+	public void setJumpNo(int jumpNo) {
+		this.jumpNo = jumpNo;
 	}
-	public int getJumpnum() {
-		return jumpnum;
+	public int getRepeatCount() {
+		return repeatCount;
 	}
-	public void setJumpnum(int jumpnum) {
-		this.jumpnum = jumpnum;
+	public void setRepeatCount(int repeatCount) {
+		this.repeatCount = repeatCount;
 	}
 	public double getWaitingTime() {
 		return waitingTime;
 	}
 	public void setWaitingTime(double waitingTime) {
 		this.waitingTime = waitingTime;
-	}	
-	
+	}
 }

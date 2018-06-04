@@ -15,6 +15,7 @@ import gcs.mission.FencePoint;
 import gcs.mission.WayPoint;
 import javafx.application.Platform;
 import sun.nio.ch.Net;
+import team2gcs.altdialog.altdialogController;
 import team2gcs.appmain.AppMainController;
 import team2gcs.leftpane.leftPaneController;
 
@@ -156,8 +157,6 @@ public class UAV implements Cloneable {
 				opticalFlowQuality = 0;
 			}
 			
-			nextWaypointNo = jsonObject.getInt("next_waypoint_no");
-			
 			JSONArray jsonArrayWayPoints = jsonObject.getJSONArray("waypoints");
 			List<WayPoint> listWayPoint = new ArrayList<WayPoint>();
 			for(int i=0; i<jsonArrayWayPoints.length(); i++) {
@@ -173,8 +172,8 @@ public class UAV implements Cloneable {
 					wp.altitude = jo.getDouble("alt");
 				} else if(wp.kind.equals("rtl")) {
 				} else if(wp.kind.equals("jump")) {
- 					wp.setLat(jo.getDouble("lat")+"");
-					wp.setLng(jo.getDouble("lng")+"");
+ 					wp.setJumpNo(jo.getInt("seq"));
+					wp.setRepeatCount(jo.getInt("cnt"));
 				} else if(wp.kind.equals("roi")) {
  					wp.setLat(jo.getDouble("lat")+"");
 					wp.setLng(jo.getDouble("lng")+"");
@@ -304,9 +303,11 @@ public class UAV implements Cloneable {
 		for(WayPoint wp : list) {
 			JSONObject jo = new JSONObject();
 			jo.put("kind", wp.kind);
-			jo.put("lat", Double.parseDouble(wp.getLat()));
-			jo.put("lng", Double.parseDouble(wp.getLng()));
+			if(wp.getLat() != null) jo.put("lat", Double.parseDouble(wp.getLat()));
+			if(wp.getLng() != null) jo.put("lng", Double.parseDouble(wp.getLng()));
 			jo.put("alt", wp.altitude);
+			jo.put("seq", wp.jumpNo);
+			jo.put("cnt", wp.repeatCount);
 			jsonArray.put(jo);
 		}
 		root.put("waypoints", jsonArray);
@@ -389,9 +390,7 @@ public class UAV implements Cloneable {
 						String strJson = jsonObject.toString();
 						send(strJson);
 						Thread.sleep(1000);
-					}catch(Exception e) {
-						
-					}
+					}catch(Exception e) {}
 				}
 			}
 		};

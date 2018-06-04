@@ -18,14 +18,14 @@ import simplejson
 debug = True
 
 # #Autopilot(FC-펌웨어)과 연결----------------------------------jdh------------------------------
-vehicle = connect("udp:192.168.3.217:14560", wait_ready=True)
+vehicle = connect("udp:192.168.3.177:14560", wait_ready=True)
 # vehicle = connect('udp:127.0.0.1:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
 # vehicle = connect('/dev/ttyS0',wait_ready = True,baud57600) #라즈베리파이에서 실행시 
 
 #MQTT Broker와 연결하기 위한 정보-----------------------------
 #mqtt_ip = "106.253.56.122"
-# mqtt_ip = "192.168.3.217"
-mqtt_ip = "106.253.56.122"
+mqtt_ip = "192.168.3.177"
+# mqtt_ip = "106.253.56.122"
 mqtt_port = 1883
 uav_pub_topic = "/uav2/pub"
 uav_sub_topic = "/uav2/sub"
@@ -471,8 +471,8 @@ def send_mission_info(data):
                 waypoint["kind"] = "rtl"   
             elif cmd.command==177:
                 waypoint["kind"] = "jump"   
-                waypoint["lat"] = cmd.param1
-                waypoint["lng"] = cmd.param2
+                waypoint["seq"] = cmd.param1
+                waypoint["cnt"] = cmd.param2
             elif cmd.command==201:
                 waypoint["kind"] = "roi"
                 waypoint["lat"] = cmd.x
@@ -701,9 +701,9 @@ def mission_upload(json_dict):
             elif kind=="rtl":
                 vehicle.commands.add(Command( 0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, mavutil.mavlink.MAV_CMD_NAV_RETURN_TO_LAUNCH, 0, 0, 0, 0, 0, 0, 0, 0, 0))
             elif kind=="jump":
-                jumpNo = waypoint["lat"]
-                repeatCount = waypoint["lng"]
-                vehicle.commands.add(Command( 0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, 177, 0, 0, jumpNo, repeatCount, 0, 0, 0, 0, 0))
+                jumpNo = waypoint["seq"]
+                repeatCount = waypoint["cnt"]
+                vehicle.commands.add(Command( 0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, mavutil.mavlink.MAV_CMD_DO_JUMP, 0, 0, jumpNo, repeatCount, 0, 0, 0, 0, 0))
             elif kind=="roi":
                 latitude = waypoint["lat"]
                 longitude = waypoint["lng"]
@@ -734,7 +734,7 @@ def fence_enable(json_dict):
 #------------------------------------------------------ 
 def fence_disable(json_dict):
     vehicle.parameters["FENCE_ENABLE"] = 0
-#------------------------------------------------------ 
+#------------------------------------------------------
 def fence_upload(json_dict):
     global statustext
     fence_points = json_dict["points"]

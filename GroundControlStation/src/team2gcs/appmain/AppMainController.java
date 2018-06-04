@@ -49,6 +49,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 import netscape.javascript.JSObject;
 import team2gcs.altdialog.altdialogController;
 import team2gcs.leftpane.leftPaneController;
@@ -60,6 +61,10 @@ public class AppMainController implements Initializable{
 	// child들의 높이 조정을 위해
 	public static double heightSize;
 	public static Stage altStage;
+	String strFenceArr;
+	int jumpNo = 1;
+	int repeatCount = 2;
+	double altitude = altdialogController.alt;
 	//공용
 
 	@FXML private BorderPane mainBorderPane;
@@ -196,7 +201,6 @@ public class AppMainController implements Initializable{
 		initTableView();
 		initMissionButton();
 		initLoginButton();
-
 		initSlide();
 		initTop();
 		initRightPane();
@@ -779,6 +783,7 @@ public class AppMainController implements Initializable{
 	}
 	//미션 삭제
 	public void handleMissionDelete(ActionEvent event) {
+		System.out.println("size: " + list.size());
 		list.clear();
 		setTableViewItems(list);
 		setMission(list);
@@ -786,7 +791,6 @@ public class AppMainController implements Initializable{
 	}
 	//미션 RTL 추가
 	public void handleMissionRTL(ActionEvent event) {
-
 		WayPoint waypoint = new WayPoint();
 		waypoint.kind = "rtl";
 		waypoint.setLat(Network.getUav().homeLat +"");
@@ -799,14 +803,12 @@ public class AppMainController implements Initializable{
 	}
 	//미션 시작 정지
 	public void handleMissionStart(ActionEvent event) {
-		if(list.size() > 0 && Network.getUav().armed) {
-			Network.getUav().missionStart();
-			Platform.runLater(() -> {
-				jsproxy.call("missionStart");
-			});
-			statusMessage("Mission started.");
-			missionStart = true;
-		} else statusMessage("No Mission.");
+		Network.getUav().missionStart();
+		Platform.runLater(() -> {
+			jsproxy.call("missionStart");
+		});
+		statusMessage("Mission started.");
+		missionStart = true;
 	}
 	public void handleMissionStop(ActionEvent event) {
 		Network.getUav().missionStop();
@@ -815,8 +817,7 @@ public class AppMainController implements Initializable{
 		});
 		missionStart = false;
 		missionH = 0; missionM = 0; missionS = 0;
-		if(list.size() > 0) statusMessage("Mission stopped.");
-		else statusMessage("No Mission.");
+		statusMessage("Mission stopped.");
 	}
 	//펜스 이벤트 처리
 	public void handleFenceSet(ActionEvent event) {
@@ -833,8 +834,11 @@ public class AppMainController implements Initializable{
 		statusMessage("Fence data uploaded.");
 	}
 	public void handleFenceDownload(ActionEvent event) {
-		Network.getUav().fenceDownload();
-		statusMessage("Fence data downloaded.");
+		if(strFenceArr == null) statusMessage("No Fence.");
+		else {
+			Network.getUav().fenceDownload();
+			statusMessage("Fence data downloaded.");
+		}
 	}
 	public void handleFenceActivate(ActionEvent event) {
 		Network.getUav().fenceEnable();
@@ -883,7 +887,6 @@ public class AppMainController implements Initializable{
 			}
 
 		}
-		
 		setMission(list);
 		setTableViewItems(list);
 	}
@@ -941,7 +944,6 @@ public class AppMainController implements Initializable{
 	// List를 계속 관리하기 위해서 Field 영역으로 가져옴
 	public static List<WayPoint> list = new ArrayList<>();
 	public void getMissionResponse(String data) {
-		double alt = altdialogController.alt;
 		list.clear();
 		Platform.runLater(() -> {	
 			JSONArray jsonArray = new JSONArray(data);
@@ -952,7 +954,7 @@ public class AppMainController implements Initializable{
 				wayPoint.kind = jsonObject.getString("kind"); //all is "waypoint";
 				wayPoint.setLat(jsonObject.getDouble("lat")+"");
 				wayPoint.setLng(jsonObject.getDouble("lng")+"");
-				wayPoint.altitude = a;
+				wayPoint.altitude = altitude;
 				wayPoint.getButton().setOnAction((event)->{
 					list.remove(wayPoint.no-1);
 					for(WayPoint wp : list) {
@@ -974,6 +976,7 @@ public class AppMainController implements Initializable{
 	//미션 업로드
 	public void handleMissionUpload(ActionEvent event) {
 		List<WayPoint> list = tableView.getItems();
+		System.out.println("size: " + list.size());
 		Network.getUav().missionUpload(list);
 		statusMessage("Mission uploaded.");
 	}
@@ -1000,19 +1003,11 @@ public class AppMainController implements Initializable{
 	private void addJump() {
 		WayPoint waypoint = new WayPoint();
 		waypoint.kind = "jump";
-		
-		int selectedIndex = tableView.getSelectionModel().getSelectedIndex();
-		WayPoint wp = tableView.getItems().get(selectedIndex);
-		
-		if(selectedIndex < tableView.getItems().size()-1) {
-			tableView.getItems().add(selectedIndex+1, waypoint);
-		} else {
-			tableView.getItems().add(waypoint);
-		}
-		for(int i=0; i<tableView.getItems().size(); i++) {
-			wp = tableView.getItems().get(i);
-			wp.no = i+1;
-		}
+		waypoint.no = list.size()+1;
+		waypoint.jumpNo = jumpNo;
+		waypoint.repeatCount = repeatCount;
+		list.add(waypoint);
+		setTableViewItems(list);
 	}
 	
 	//미션 Lio
@@ -1111,20 +1106,34 @@ public class AppMainController implements Initializable{
 		column5.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column5);
 
-		TableColumn<WayPoint, Double> column6 = new TableColumn<WayPoint, Double>("Jump");
-		column6.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("jump"));
+		TableColumn<WayPoint, Integer> column6 = new TableColumn<WayPoint, Integer>("JumpNo");
+		column6.setCellValueFactory(new PropertyValueFactory<WayPoint, Integer>("jumpNo"));
+		column6.setEditable(true);
+		column6.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+		column6.setOnEditCommit((target)->{
+			target.getTableView().getItems().get(
+					target.getTablePosition().getRow()).setJumpNo(target.getNewValue());
+			setMission(list);
+		});
 		column6.setPrefWidth(80);
 		column6.setSortable(false);
 		column6.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column6);
 
-		TableColumn<WayPoint, Double> column7 = new TableColumn<WayPoint, Double>("num");
-		column7.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("jumpnum"));
+		TableColumn<WayPoint, Integer> column7 = new TableColumn<WayPoint, Integer>("RepeatCount");
+		column7.setCellValueFactory(new PropertyValueFactory<WayPoint, Integer>("repeatCount"));
+		column7.setEditable(true);
+		column7.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+		column7.setOnEditCommit((target)->{
+			target.getTableView().getItems().get(
+					target.getTablePosition().getRow()).setRepeatCount(target.getNewValue());
+			setMission(list);
+		});
 		column7.setPrefWidth(80);
 		column7.setSortable(false);
 		column7.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column7);
-
+		
 		TableColumn<WayPoint, Double> column8 = new TableColumn<WayPoint, Double>("Waiting Time");
 		column8.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("waitingTime"));
 		column8.setPrefWidth(80);
@@ -1132,7 +1141,7 @@ public class AppMainController implements Initializable{
 		column8.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column8);
 
-		TableColumn<WayPoint, Button> column9 = new TableColumn<WayPoint, Button>("Delect");
+		TableColumn<WayPoint, Button> column9 = new TableColumn<WayPoint, Button>("Delete");
 		column9.setCellValueFactory(new PropertyValueFactory<>("button"));
 		column9.setPrefWidth(80);
 		column9.setSortable(false);
@@ -1160,7 +1169,7 @@ public class AppMainController implements Initializable{
 	}
 	public void setMissionStatus(UAV uav) {		
 		Platform.runLater(() -> {
-			if(uav.homeLat != 0.0) {
+			if(uav.homeLat > 0.0) {
 				jsproxy.call("setHomeLocation", uav.homeLat, uav.homeLng);
 				homeLatLabel.setText(String.format("Lat:	%.6f", uav.homeLat));
 				homeLngLabel.setText(String.format("Lng:	%.6f", uav.homeLng));	
@@ -1171,7 +1180,7 @@ public class AppMainController implements Initializable{
 				setMission(uav.wayPoints);
 			} 
 			
-			jsproxy.call("setNextWaypointNo", uav.nextWaypointNo);			
+			jsproxy.call("setNextWaypointNo", UAV.nextWP);			
 			
 			if(Network.getUav().mode.equals("AUTO")) {
 				for(int i=0; i<tableView.getItems().size(); i++) {
@@ -1222,9 +1231,8 @@ public class AppMainController implements Initializable{
 				jsonObject.put("lng", Double.parseDouble(wayPoint.getLng()));
 			} else if(wayPoint.kind.equals("jump")) {
 				jsonObject.put("kind",  wayPoint.kind);
-//				jump 주석처리
-//				jsonObject.put("lat", wayPoints.get((int)wayPoint.latitude-1).latitude);
-//				jsonObject.put("lng", wayPoints.get((int)wayPoint.latitude-1).longitude+0.00005);
+				jsonObject.put("seq", wayPoint.jumpNo);
+				jsonObject.put("cnt", wayPoint.repeatCount);
 			} else if(wayPoint.kind.equals("rtl")) {
 				jsonObject.put("kind",  wayPoint.kind);
 				jsonObject.put("lat", Network.getUav().homeLat);
@@ -1253,11 +1261,11 @@ public class AppMainController implements Initializable{
 			jsonObject.put("lng", fencePoint.lng);
 			jsonArray.put(jsonObject);
 		}
-		String strFenceArr = jsonArray.toString();
+		strFenceArr = jsonArray.toString();
 		Platform.runLater(() -> {
 			jsproxy.call("setFence", strFenceArr);
 		});
-		statusMessage("Fence set.");
+		statusMessage("Set Fence.");
 	}
 	
 	public void log(String message) {
@@ -1270,13 +1278,11 @@ public class AppMainController implements Initializable{
 			JSONObject jsonObject = new JSONObject(data);
 			gotoLat = jsonObject.getDouble("lat");
 			gotoLng = jsonObject.getDouble("lng");
-			double altitude = altdialogController.alt;
 			Network.getUav().gotoStart(gotoLat, gotoLng, altitude);
 		});
 		statusMessage("Go to!");
 	}
 
-	
 	public void batterySet(double level) {
 		Platform.runLater(()->{
 			batteryLabel.setText(level+"%");
