@@ -9,7 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import gcs.mission.FencePoint;
-import gcs.mission.Noflyzone;
 import gcs.mission.WayPoint;
 import gcs.network.Network;
 import gcs.network.UAV;
@@ -52,7 +51,6 @@ import javafx.util.Duration;
 import netscape.javascript.JSObject;
 import team2gcs.altdialog.altdialogController;
 import team2gcs.leftpane.leftPaneController;
-import team2gcs.noflyzone.NoFlyZoneController;
 
 public class AppMainController implements Initializable{
 	private String test;
