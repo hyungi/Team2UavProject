@@ -20,7 +20,7 @@
                <children>
                   <Label alignment="TOP_LEFT" text="HUD" textAlignment="RIGHT" textFill="WHITE">
                      <font>
-                        <Font name="Aharoni Bold" size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="20.0" top="10.0" />
@@ -57,7 +57,7 @@
                      <children>
                         <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="140.0" text="Roll" textFill="WHITE">
                            <font>
-                              <Font name="Aharoni Bold" size="18.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                            <VBox.margin>
                               <Insets left="20.0" />
@@ -65,7 +65,7 @@
                         </Label>
                         <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="140.0" text="Pitch" textFill="WHITE">
                            <font>
-                              <Font name="Aharoni Bold" size="18.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                            <VBox.margin>
                               <Insets left="20.0" top="10.0" />
@@ -73,7 +73,7 @@
                         </Label>
                         <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="140.0" text="Yaw" textFill="WHITE">
                            <font>
-                              <Font name="Aharoni Bold" size="18.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                            <VBox.margin>
                               <Insets left="20.0" top="10.0" />
@@ -81,7 +81,7 @@
                         </Label>
                         <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="140.0" text="Armed" textFill="WHITE">
                            <font>
-                              <Font name="Aharoni Bold" size="18.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                            <VBox.margin>
                               <Insets left="20.0" top="10.0" />
@@ -99,7 +99,7 @@
                               <Insets />
                            </VBox.margin>
                            <font>
-                              <Font name="Aharoni Bold" size="18.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
                         <Label fx:id="pitchLabel" alignment="CENTER" maxWidth="-Infinity" prefHeight="40.0" prefWidth="100.0" textFill="WHITE">
@@ -107,7 +107,7 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                            <font>
-                              <Font name="Aharoni Bold" size="18.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
                         <Label fx:id="yawLabel" alignment="CENTER" maxWidth="-Infinity" prefHeight="40.0" prefWidth="100.0" textFill="WHITE">
@@ -115,7 +115,7 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                            <font>
-                              <Font name="Aharoni Bold" size="18.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
                         <Label fx:id="armedLabel" alignment="CENTER" maxWidth="-Infinity" prefHeight="40.0" prefWidth="100.0" textFill="WHITE">
@@ -123,7 +123,7 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                            <font>
-                              <Font name="Aharoni Bold" size="14.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
                      </children>
@@ -139,7 +139,7 @@
                <children>
                   <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="57.0" text="Status" textFill="WHITE">
                      <font>
-                        <Font name="Aharoni Bold" size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="20.0" />
@@ -150,7 +150,7 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                      <font>
-                        <Font name="Aharoni Bold" size="17.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                </children>
@@ -159,7 +159,7 @@
       </BorderPane>
       <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="550.0">
          <children>
-            <BorderPane fx:id="sensorDetailBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.8" prefHeight="500.0" prefWidth="370.0" style="-fx-background-color: #222222; -fx-background-radius: 8;" StackPane.alignment="TOP_CENTER">
+            <BorderPane fx:id="sensorDetailBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.8" prefHeight="500.0" prefWidth="370.0" style="-fx-background-color: #222222; -fx-background-radius: 8;" visible="false" StackPane.alignment="TOP_CENTER">
                <top>
                   <HBox maxHeight="-Infinity" prefHeight="41.0" prefWidth="370.0" spacing="115.0" style="-fx-background-color: black; -fx-opacity: 0.7; -fx-background-radius: 8 8 0 0;" BorderPane.alignment="CENTER">
                      <children>
@@ -382,13 +382,13 @@
                   </HBox>
                </center>
             </BorderPane>
-            <BorderPane fx:id="sensorBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.8" prefHeight="500.0" prefWidth="370.0" style="-fx-background-color: #222222; -fx-background-radius: 8;" visible="false" StackPane.alignment="TOP_CENTER">
+            <BorderPane fx:id="sensorBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.8" prefHeight="500.0" prefWidth="370.0" style="-fx-background-color: #222222; -fx-background-radius: 8;" StackPane.alignment="TOP_CENTER">
                <top>
                   <HBox maxHeight="-Infinity" prefHeight="41.0" prefWidth="370.0" spacing="180.0" style="-fx-background-color: black; -fx-opacity: 0.7; -fx-background-radius: 8 8 0 0;" BorderPane.alignment="CENTER">
                      <children>
                         <Label prefHeight="22.0" prefWidth="147.0" text="Sensor Data" textAlignment="CENTER" textFill="WHITE">
                            <font>
-                              <Font name="Aharoni Bold" size="18.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="20.0" top="10.0" />
@@ -415,7 +415,7 @@
                            <children>
                               <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Mode" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="20.0" />
+                                    <Font name="System Bold" size="20.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="20.0" />
@@ -423,7 +423,7 @@
                               </Label>
                               <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Altitude" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="20.0" />
+                                    <Font name="System Bold" size="20.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="20.0" top="15.0" />
@@ -431,7 +431,7 @@
                               </Label>
                               <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Air Speed" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="20.0" />
+                                    <Font name="System Bold" size="20.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="20.0" top="15.0" />
@@ -439,7 +439,7 @@
                               </Label>
                               <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Ground Speed" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="20.0" />
+                                    <Font name="System Bold" size="20.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="20.0" top="15.0" />
@@ -447,7 +447,7 @@
                               </Label>
                               <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="71.0" prefWidth="146.0" style="-fx-background-radius: 8;" text="Time in Air" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="18.0" />
+                                    <Font name="System Bold" size="20.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="20.0" top="15.0" />
@@ -465,7 +465,7 @@
                            <children>
                               <Label fx:id="modeLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="170.0" style="-fx-background-radius: 8;" text="Mode" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="24.0" />
+                                    <Font name="System Bold" size="20.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="15.0" />
@@ -473,7 +473,7 @@
                               </Label>
                               <Label fx:id="altitudeLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="170.0" style="-fx-background-radius: 8;" text="Altitude" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="24.0" />
+                                    <Font name="System Bold" size="20.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="15.0" top="15.0" />
@@ -481,7 +481,7 @@
                               </Label>
                               <Label fx:id="airSpeedLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="170.0" style="-fx-background-radius: 8;" text="Air Speed" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="24.0" />
+                                    <Font name="System Bold" size="20.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="15.0" top="15.0" />
@@ -489,7 +489,7 @@
                               </Label>
                               <Label fx:id="groundSpeedLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="170.0" style="-fx-background-radius: 8;" text="Ground Speed" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="24.0" />
+                                    <Font name="System Bold" size="20.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="15.0" top="15.0" />
@@ -497,7 +497,7 @@
                               </Label>
                               <Label fx:id="takeoffTimeLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="75.0" prefWidth="170.0" style="-fx-background-radius: 8;" text="00:00:00" textFill="WHITE">
                                  <font>
-                                    <Font name="Aharoni Bold" size="20.0" />
+                                    <Font name="System Bold" size="20.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="15.0" top="15.0" />

@@ -83,8 +83,7 @@ public class AppMainController implements Initializable{
 	private int zoom = 18;
 	
 	// 우측
-	@FXML private VBox rightPane;	
-	@FXML private BorderPane rightStatusPane;
+	@FXML private VBox rightStatusPane;
 	@FXML private AnchorPane rightCameraPane;
 	@FXML private Label rightStatusLabel;
 	@FXML private Label rightCameraLabel;

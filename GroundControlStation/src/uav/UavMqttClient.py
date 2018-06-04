@@ -24,7 +24,7 @@ vehicle = connect("udp:192.168.3.217:14560", wait_ready=True)
 
 #MQTT Broker와 연결하기 위한 정보-----------------------------
 #mqtt_ip = "106.253.56.122"
-#mqtt_ip = "192.168.3.217"
+# mqtt_ip = "192.168.3.217"
 mqtt_ip = "106.253.56.122"
 mqtt_port = 1883
 uav_pub_topic = "/uav2/pub"
