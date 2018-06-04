@@ -796,7 +796,6 @@ public class AppMainController implements Initializable{
 	}
 	//미션 RTL 추가
 	public void handleMissionRTL(ActionEvent event) {
-
 		WayPoint waypoint = new WayPoint();
 		waypoint.kind = "rtl";
 		waypoint.setLat(Network.getUav().homeLat +"");
