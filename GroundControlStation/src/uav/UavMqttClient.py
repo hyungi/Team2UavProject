@@ -24,8 +24,8 @@ vehicle = connect("udp:192.168.3.217:14560", wait_ready=True)
 
 #MQTT Broker와 연결하기 위한 정보-----------------------------
 #mqtt_ip = "106.253.56.122"
-#mqtt_ip = "192.168.3.217"
-mqtt_ip = "106.253.56.122"
+mqtt_ip = "192.168.3.217"
+#mqtt_ip = "106.253.56.122"
 mqtt_port = 1883
 uav_pub_topic = "/uav2/pub"
 uav_sub_topic = "/uav2/sub"
@@ -111,7 +111,7 @@ def send_data():
                 json = simplejson.JSONEncoder().encode(data)
                 mqtt_client.publish(uav_pub_topic, json)
 #                 time.sleep(5)
-                #print(json)
+               # print(json)
                 
             time.sleep(0.1)
         except Exception as e:
@@ -728,9 +728,9 @@ def gcs_fail_safe():
     global count
     try:
         if gcs_fail_safe_request == True:
-            print("connecting")
+            #print("connecting")
             count = count + 1
-            print(count)
+            #print(count)
         if count > 20:
             if not vehicle.armed: return
             vehicle.mode = VehicleMode("RTL")
