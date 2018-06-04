@@ -395,4 +395,23 @@ public class UAV implements Cloneable {
 		String strJson = jsonObject.toString();
 		send(strJson);
 	}
+	
+	public void move(double velocityX, double velocityY, double velocityZ, double duration) {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("command", "move");
+		jsonObject.put("velocity_x", velocityX);
+		jsonObject.put("velocity_y", velocityY);
+		jsonObject.put("velocity_z", velocityZ);
+		jsonObject.put("duration", duration);
+		String strJson = jsonObject.toString();
+		send(strJson);
+	}
+	
+	public void changeHeading(double heading) {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("command", "change_heading");
+		jsonObject.put("heading", heading);
+		String strJson = jsonObject.toString();
+		send(strJson);
+	}
 }

@@ -130,6 +130,11 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnMissionStart;
 	@FXML private Button btnMissionStop;
 	@FXML private TextField txtAlt;
+	@FXML private Button btnTop;
+	@FXML private Button btnRight;
+	@FXML private Button btnBottom;
+	@FXML private Button btnLeft;
+	@FXML private Button btnHeadingToNorth;
 
 	//펜스
 	@FXML private Button btnFenceSet;
@@ -420,6 +425,12 @@ public class AppMainController implements Initializable{
 		btnCargoStop.setOnAction((event)->{handleCargoStop(event);});
 		btnMode.setOnAction((event)->{handleMode(event);});
 		circleWP.setOnAction((event)->{handleCircleWP(event);});
+		btnTop.setOnAction((event)->{handleBtnTop(event);});
+		btnRight.setOnAction((event)->{handleBtnRight(event);});
+		btnBottom.setOnAction((event)->{handleBtnBottom(event);});
+		btnLeft.setOnAction((event)->{handleBtnLeft(event);});
+		btnHeadingToNorth.setOnAction((event)->{handleBtnHeadingToNorth(event);});
+		
 	}
 	public void handleCircleWP(ActionEvent event) {
 		alt = altdialogController.alt;
@@ -451,6 +462,27 @@ public class AppMainController implements Initializable{
 	public void handleMode(ActionEvent event) {
 		Network.getUav().st();
 	}
+	
+	public void handleBtnTop(ActionEvent e) {
+		Network.getUav().move(5, 0, 0, 0.5);
+	}
+
+	public void handleBtnBottom(ActionEvent e) {
+		Network.getUav().move(-5, 0, 0, 0.5);
+	}
+
+	public void handleBtnRight(ActionEvent e) {
+		Network.getUav().move(0, 5, 0, 0.5);
+	}
+
+	public void handleBtnLeft(ActionEvent e) {
+		Network.getUav().move(0, -5, 0, 0.5);
+	}
+
+	public void handleBtnHeadingToNorth(ActionEvent e) {
+		Network.getUav().changeHeading(0);
+	}
+	
 	//화물 부착 시작,끝
 	public void handleCargoStart(ActionEvent event) {
 		Network.getUav().cargo("cargoStart");
