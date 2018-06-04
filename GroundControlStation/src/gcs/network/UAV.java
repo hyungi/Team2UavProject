@@ -14,7 +14,9 @@ import org.json.JSONObject;
 import gcs.mission.FencePoint;
 import gcs.mission.WayPoint;
 import javafx.application.Platform;
+import sun.nio.ch.Net;
 import team2gcs.appmain.AppMainController;
+import team2gcs.leftpane.leftPaneController;
 
 public class UAV implements Cloneable {
 	public String systemStatus;	
@@ -136,7 +138,13 @@ public class UAV implements Cloneable {
 			
 			if(armed) AppMainController.instance2.statusMessage("UAV Armed.");
 			else if(!armed) AppMainController.instance2.statusMessage("UAV Disarmed.");
-			
+			if(leftPaneController.instance.distance(AppMainController.gotoLat, AppMainController.gotoLng, 
+				Network.getUav().latitude, Network.getUav().longitude, "meter") < 0.7 && (AppMainController.gotoLat != 0 && AppMainController.gotoLng != 0)) {
+				AppMainController.instance2.statusMessage("Go to Completed.");
+				AppMainController.gotoLat = 0;
+				AppMainController.gotoLng = 0;
+			}
+					
 			AppMainController.instance2.batterySet(batteryLevel);
 			AppMainController.instance2.locationSet(latitude, longitude);
 			
@@ -388,5 +396,24 @@ public class UAV implements Cloneable {
 			}
 		};
 		thread.start();
+	}
+	
+	public void move(double velocityX, double velocityY, double velocityZ, double duration) {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("command", "move");
+		jsonObject.put("velocity_x", velocityX);
+		jsonObject.put("velocity_y", velocityY);
+		jsonObject.put("velocity_z", velocityZ);
+		jsonObject.put("duration", duration);
+		String strJson = jsonObject.toString();
+		send(strJson);
+	}
+	
+	public void changeHeading(double heading) {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("command", "change_heading");
+		jsonObject.put("heading", heading);
+		String strJson = jsonObject.toString();
+		send(strJson);
 	}
 }

@@ -56,6 +56,7 @@ import team2gcs.noflyzone.NoFlyZoneController;
 import team2gcs.noflyzone.Noflyzone;
 
 public class AppMainController implements Initializable{
+	private String test;
 	public static AppMainController instance2;
 	// child들의 높이 조정을 위해
 	public static double heightSize;
@@ -83,8 +84,7 @@ public class AppMainController implements Initializable{
 	private int zoom = 18;
 	
 	// 우측
-	@FXML private VBox rightPane;	
-	@FXML private BorderPane rightStatusPane;
+	@FXML private VBox rightStatusPane;
 	@FXML private AnchorPane rightCameraPane;
 	@FXML private Label rightStatusLabel;
 	@FXML private Label rightCameraLabel;
@@ -136,6 +136,11 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnMissionStart;
 	@FXML private Button btnMissionStop;
 	@FXML private TextField txtAlt;
+	@FXML private Button btnTop;
+	@FXML private Button btnRight;
+	@FXML private Button btnBottom;
+	@FXML private Button btnLeft;
+	@FXML private Button btnHeadingToNorth;
 	
 	//펜스
 	@FXML private Button btnFenceSet;
@@ -429,6 +434,11 @@ public class AppMainController implements Initializable{
 		btnCargoStart.setOnAction((event)->{handleCargoStart(event);});
 		btnCargoStop.setOnAction((event)->{handleCargoStop(event);});
 		btnNoflyzoneActivate.setOnAction((event)->{handleNoflyzoneActivate(event);});
+		//btnTop.setOnAction((event)->{handleBtnTop(event);});
+		//btnRight.setOnAction((event)->{handleBtnRight(event);});
+		//btnBottom.setOnAction((event)->{handleBtnBottom(event);});
+		//btnLeft.setOnAction((event)->{handleBtnLeft(event);});
+		//btnHeadingToNorth.setOnAction((event)->{handleBtnHeadingToNorth(event);});
 	}
 	public static boolean wait;
 	public static WayPoint tPoint;
@@ -439,7 +449,6 @@ public class AppMainController implements Initializable{
 	public void handleNoflyzoneActivate(ActionEvent event) {
 
 		for(int i=0;i<list.size()-1;i++) {
-
 			//WP1(x1,y1), WP2(x2,y2)
 			tPoint = list.get(i);
 			tPoint2 = list.get(i+1);

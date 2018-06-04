@@ -24,8 +24,13 @@ vehicle = connect("udp:192.168.3.217:14560", wait_ready=True)
 
 #MQTT Broker와 연결하기 위한 정보-----------------------------
 #mqtt_ip = "106.253.56.122"
+<<<<<<< HEAD
 mqtt_ip = "192.168.3.217"
 #mqtt_ip = "106.253.56.122"
+=======
+# mqtt_ip = "192.168.3.217"
+mqtt_ip = "106.253.56.122"
+>>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
 mqtt_port = 1883
 uav_pub_topic = "/uav2/pub"
 uav_sub_topic = "/uav2/sub"
@@ -584,10 +589,58 @@ def on_message(client, userdata, msg):
         elif command == "gcs_connect": gcs_connect(json_dict)
         elif command == "cargoStart": cargoStart()
         elif command == "cargoStop": cargoStop()
+        elif command == "move": move(json_dict)
+        elif command == "change_heading": change_heading(json_dict)
     except Exception as e:
         if debug: print(">>>", type(e), "on_message():", e)
         
 #------------------------------------------------------
+def move(json_dict):
+    vehicle.mode = VehicleMode("GUIDED")
+
+    velocity_x = json_dict["velocity_x"]
+    velocity_y = json_dict["velocity_y"]
+    velocity_z = json_dict["velocity_z"]
+    duration = json_dict["duration"]
+
+    vehicle.parameters["WP_YAW_BEHAVIOR"] = 0
+    msg = vehicle.message_factory.set_position_target_local_ned_encode(
+        0, 0, 0, mavutil.mavlink.MAV_FRAME_LOCAL_NED,
+        0b0000111111000111, 0, 0, 0,
+        velocity_x, velocity_y, velocity_z,
+        0, 0, 0, 0, 0)
+    vehicle.send_mavlink(msg)
+
+    def return_original_velocity():
+        time.sleep(duration) #max 3(sec)
+        msg = vehicle.message_factory.set_position_target_local_ned_encode(
+            0, 0, 0, mavutil.mavlink.MAV_FRAME_LOCAL_NED,
+            0b0000111111000111, 0, 0, 0,
+            0, 0, 0,
+            0, 0, 0, 0, 0)
+        vehicle.send_mavlink(msg)
+        vehicle.parameters["WP_YAW_BEHAVIOR"] = 3
+
+    thread = threading.Thread(target=return_original_velocity)
+    thread.start()
+#------------------------------------------------------
+def change_heading(json_dict):
+    heading = json_dict["heading"]
+    relative = False
+    if relative: is_relative=1 #yaw relative to direction of travel
+    else: is_relative=0 #yaw is an absolute angle
+    msg = vehicle.message_factory.command_long_encode(
+        0, 0,    # target system, target component
+        mavutil.mavlink.MAV_CMD_CONDITION_YAW, #command
+        0, #confirmation
+        heading,    # param 1, yaw in degrees
+        0,          # param 2, yaw speed deg/s
+        1,          # param 3, direction -1 ccw, 1 cw
+        is_relative, # param 4, relative offset 1, absolute angle 0
+        0, 0, 0)    # param 5 ~ 7 not used
+    vehicle.send_mavlink(msg)
+#------------------------------------------------------
+    
 def cargoStart():
 #     gpio.output(23,1)
 #     gpio.output(24,1)
