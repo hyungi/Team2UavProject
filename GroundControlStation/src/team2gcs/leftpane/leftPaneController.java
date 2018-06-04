@@ -245,7 +245,9 @@ public class leftPaneController implements Initializable {
                 }
                 if (AppMainController.missionStart == true) 
                     detailMissionTimeLabel.setText(missionTime);
+                else detailMissionTimeLabel.setText("No Mission.");
                 if (AppMainController.takeoffStart == true) detailTakeoffTimeLabel.setText(takeoffTime);
+                else detailTakeoffTimeLabel.setText("Landed");
                 if (Network.getUav().homeLat > 0.0 && Network.getUav().latitude > 0.0)
                     detailDistHomeLabel.setText(String.format("%.4fm", distance(Network.getUav().homeLat, Network.getUav().longitude, Network.getUav().latitude, Network.getUav().longitude, "meter")));
                 detailVoltageLabel.setText(String.format("%.4f", voltage));
