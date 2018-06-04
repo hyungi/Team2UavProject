@@ -13,8 +13,8 @@ import org.json.JSONObject;
 
 import gcs.mission.FencePoint;
 import gcs.mission.WayPoint;
-import javafx.application.Platform;
 import team2gcs.appmain.AppMainController;
+import team2gcs.leftpane.leftPaneController;
 
 public class UAV implements Cloneable {
 	public String systemStatus;	
@@ -138,7 +138,13 @@ public class UAV implements Cloneable {
 
 			if(armed) AppMainController.instance2.statusMessage("UAV Armed.");
 			else if(!armed) AppMainController.instance2.statusMessage("UAV Disarmed.");
-			
+			if(leftPaneController.instance.distance(AppMainController.gotoLat, AppMainController.gotoLng, 
+				Network.getUav().latitude, Network.getUav().longitude, "meter") < 0.7 && (AppMainController.gotoLat != 0 && AppMainController.gotoLng != 0)) {
+				AppMainController.instance2.statusMessage("Go to Completed.");
+				AppMainController.gotoLat = 0;
+				AppMainController.gotoLng = 0;
+			}
+					
 			// land에 해당하는 Misstion에 도달시 Land 진행
 			if(AppMainController.instance2.checkLand&&statusText.equals("Reached command #"+AppMainController.instance2.landNum)) {
 				AppMainController.instance2.handleLand();
@@ -150,19 +156,11 @@ public class UAV implements Cloneable {
 				List<WayPoint> tList = new ArrayList<>();
 				missionUpload(tList);
 				int i=1;
-				System.out.println("들어옴");
 				for(WayPoint wp: AppMainController.instance2.list) {
-					System.out.println("들어옴2");
 					if(wp.no > AppMainController.instance2.landNum) {
-						System.out.println("---------------------------");
-						System.out.println(wp.no);
 						wp.setNo(i++);
 						tList.add(wp);
 					}
-				}
-				
-				for(WayPoint wp : tList) {
-					System.out.println(wp.no +"   "+wp.kind);
 				}
 				missionUpload(tList);
 				// DisArmed 되면 화물 내림
@@ -191,8 +189,6 @@ public class UAV implements Cloneable {
 				opticalFlowQuality = 0;
 			}
 			
-			nextWaypointNo = jsonObject.getInt("next_waypoint_no");
-			
 			JSONArray jsonArrayWayPoints = jsonObject.getJSONArray("waypoints");
 			List<WayPoint> listWayPoint = new ArrayList<WayPoint>();
 			for(int i=0; i<jsonArrayWayPoints.length(); i++) {
@@ -208,8 +204,8 @@ public class UAV implements Cloneable {
 					wp.altitude = jo.getDouble("alt");
 				} else if(wp.kind.equals("rtl")) {
 				} else if(wp.kind.equals("jump")) {
- 					wp.setLat(jo.getDouble("lat")+"");
-					wp.setLng(jo.getDouble("lng")+"");
+ 					wp.setJumpNo(jo.getInt("seq"));
+					wp.setRepeatCount(jo.getInt("cnt"));
 				} else if(wp.kind.equals("roi")) {
  					wp.setLat(jo.getDouble("lat")+"");
 					wp.setLng(jo.getDouble("lng")+"");
@@ -348,9 +344,11 @@ public class UAV implements Cloneable {
 		for(WayPoint wp : list) {
 			JSONObject jo = new JSONObject();
 			jo.put("kind", wp.kind);
-			jo.put("lat", Double.parseDouble(wp.getLat()));
-			jo.put("lng", Double.parseDouble(wp.getLng()));
+			if(wp.getLat() != null) jo.put("lat", Double.parseDouble(wp.getLat()));
+			if(wp.getLng() != null) jo.put("lng", Double.parseDouble(wp.getLng()));
 			jo.put("alt", wp.altitude);
+			jo.put("seq", wp.jumpNo);
+			jo.put("cnt", wp.repeatCount);
 			jsonArray.put(jo);
 		}
 		root.put("waypoints", jsonArray);
@@ -433,17 +431,28 @@ public class UAV implements Cloneable {
 						String strJson = jsonObject.toString();
 						send(strJson);
 						Thread.sleep(1000);
-					}catch(Exception e) {
-						
-					}
+					}catch(Exception e) {}
 				}
 			}
 		};
 		thread.start();
 	}
-	public void st() {
+	
+	public void move(double velocityX, double velocityY, double velocityZ, double duration) {
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("command", "st");
+		jsonObject.put("command", "move");
+		jsonObject.put("velocity_x", velocityX);
+		jsonObject.put("velocity_y", velocityY);
+		jsonObject.put("velocity_z", velocityZ);
+		jsonObject.put("duration", duration);
+		String strJson = jsonObject.toString();
+		send(strJson);
+	}
+	
+	public void changeHeading(double heading) {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("command", "change_heading");
+		jsonObject.put("heading", heading);
 		String strJson = jsonObject.toString();
 		send(strJson);
 	}

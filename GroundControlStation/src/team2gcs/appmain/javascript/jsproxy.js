@@ -229,6 +229,8 @@ var jsproxy = {
 		}
 	},
 	//-------------------------------------------------------
+	
+	//-------------------------------------------------------
 	addTakeoff: function() {
 		try {
 			map.uav.makeMissionMark("takeoff");
@@ -319,4 +321,5 @@ var jsproxy = {
 	missionClear: function(){
 		
 	}
+
 };
