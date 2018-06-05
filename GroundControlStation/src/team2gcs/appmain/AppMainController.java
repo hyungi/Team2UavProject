@@ -47,6 +47,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
@@ -580,6 +581,7 @@ public class AppMainController implements Initializable{
 		setMission(list);
 		statusMessage("Mission deleted.");
 	}
+	
 	//미션 RTL 추가
 	public void handleMissionRTL(ActionEvent event) {
 		WayPoint waypoint = new WayPoint();
@@ -687,18 +689,17 @@ public class AppMainController implements Initializable{
 		Network.getUav().arm();
 	}
 	public void handleTakeoff() throws Exception {
-		if(Network.getUav().armed) {
-			altStage = new Stage();
-			altStage.setTitle("Altitude Setting.");
-			altStage.initModality(Modality.WINDOW_MODAL);
-			altStage.initOwner(AppMain.primaryStage);
-			Parent root = FXMLLoader.load(getClass().getResource("../altdialog/altdialog.fxml"));
-			Scene scene = new Scene(root);
-			altStage.setScene(scene);
-
-			altStage.show();
-		} else statusMessage("Arm before taking off.");
+		altStage = new Stage();
+		altStage.setTitle("Altitude Setting.");
+		altStage.initModality(Modality.WINDOW_MODAL);
+		altStage.initOwner(AppMain.primaryStage);
+		altStage.initStyle(StageStyle.TRANSPARENT);
+		Parent root = FXMLLoader.load(getClass().getResource("../altdialog/altdialog.fxml"));
+		Scene scene = new Scene(root);
+		altStage.setScene(scene);
+		altStage.show();
 	}
+	
 	public void handleLand() {
 		Network.getUav().land();
 		takeoffStart = false;
@@ -735,7 +736,7 @@ public class AppMainController implements Initializable{
 	// List를 계속 관리하기 위해서 Field 영역으로 가져옴
 	public static List<WayPoint> list = new ArrayList<>();
 	public void getMissionResponse(String data) {
-		double alt = altdialogController.alt;
+		double alt = Double.parseDouble(txtAlt.getText());
 		list.clear();
 		Platform.runLater(() -> {	
 			JSONArray jsonArray = new JSONArray(data);
@@ -746,7 +747,6 @@ public class AppMainController implements Initializable{
 				wayPoint.kind = jsonObject.getString("kind"); //all is "waypoint";
 				wayPoint.setLat(jsonObject.getDouble("lat")+"");
 				wayPoint.setLng(jsonObject.getDouble("lng")+"");
-				wayPoint.altitude = altitude;
 				wayPoint.altitude = alt;
 				wayPoint.getButton().setOnAction((event)->{
 					list.remove(wayPoint.no-1);
