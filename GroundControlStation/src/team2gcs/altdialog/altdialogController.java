@@ -19,19 +19,23 @@ public class altdialogController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		if(Network.getUav().altitude > 1.5) btnTakeoff.setText("Change");
-		else btnTakeoff.setText("Take off");
+		if(Network.getUav().altitude > 1.5) {
+			btnTakeoff.setText("Change");
+		}
+		else {
+			btnTakeoff.setText("Take off");
+		}
 		btnTakeoff.setOnAction((event) -> {handleTakeoff(event);});
 		btnExit.setOnAction((event)-> {AppMainController.altStage.close();});
 	}
 	
 	public void handleTakeoff(ActionEvent event) {
-		if(btnTakeoff.getText().equals("Change")) {
+		if(Network.getUav().altitude > 1.5) {
 			alt = Integer.valueOf(txtAlt.getText());
 			Network.getUav().changeAlt(alt);
 			AppMainController.instance2.statusMessage("Altitude " + alt + "M.");
 			AppMainController.altStage.close();
-		} else if(btnTakeoff.getText().equals("Take off")) {
+		} else if(Network.getUav().altitude < 1.5) {
 			alt = Integer.valueOf(txtAlt.getText());
 			Network.getUav().takeoff(alt);
 			AppMainController.instance2.statusMessage("UAV Takeoff.");
