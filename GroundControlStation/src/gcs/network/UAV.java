@@ -170,8 +170,8 @@ public class UAV implements Cloneable {
 					}
 				}
 				missionUpload(tList);
-				// DisArmed 되면 화물 내림
-//				AppMainController.instance2.handleCargoStop();
+//				 DisArmed 되면 화물 내림
+				AppMainController.instance2.handleCargoStop();
 				Thread.sleep(1000);
 				arm();
 				Thread.sleep(2000);
