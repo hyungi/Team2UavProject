@@ -18,7 +18,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
-import team2gcs.camera.CameraStream;
+import team2gcs.camera.CameraStreamB;
+import team2gcs.camera.CameraStreamF;
 
 public class MjpgStreamViewerController implements Initializable {
     @FXML private Canvas canvas;
@@ -34,22 +35,22 @@ public class MjpgStreamViewerController implements Initializable {
 		imgdownloadLabel.setOnMouseClicked((event) -> {try {handleImgdownloadBtn(event);} catch (Exception e) {e.printStackTrace();}});
 		
     }
-    private void httpView() {
+    /*private void httpView() {
         try {
             CameraStream camStream = new CameraStream("http://192.168.3.41:50005/?action=stream", canvas);
             camStream.start();
         } catch(Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
     
     private void mqttView() {
         try {
 //        	CameraStream front = new CameraStream("tcp://192.168.3.16:1883", "/uav2/cameraFront", canvas);
 //        	CameraStream bottom = new CameraStream("tcp://192.168.3.16:1883", "/uav2/cameraBottom", canvas2);
-        	CameraStream bottom = new CameraStream("tcp://106.253.56.122:1883", "/uav2/cameraBottom", canvas2);
-        	CameraStream front = new CameraStream("tcp://106.253.56.122:1883", "/uav2/cameraFront", canvas);
-
+        	CameraStreamB bottom = new CameraStreamB(canvas2);
+        	CameraStreamF front = new CameraStreamF(canvas);
+        	
         	bottom.start();
             front.start();
             

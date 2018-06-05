@@ -22,13 +22,14 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.json.JSONObject;
 
+import gcs.network.Network;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class CameraStream {
+public class CameraStreamB {
 
     private String serverURI;
     private String mqttBrokerURI;
@@ -48,15 +49,20 @@ public class CameraStream {
 
     public Thread thread;
     
+    public CameraStreamB(Canvas canvas) throws Exception {
+    	this.canvas = canvas;
+        this.gc = canvas.getGraphicsContext2D();
+    }
+    
     //CamPublisher("http://192.168.3.xxx:50005/?action=stream", "tcp://192.168.3.xxx:1883", "/uav/camera");
-    public CameraStream(String serverURI, String mqttBrokerURI, String topic) throws Exception {
+    public CameraStreamB(String serverURI, String mqttBrokerURI, String topic) throws Exception {
         this.serverURI = serverURI;
         this.mqttBrokerURI = mqttBrokerURI;
         this.topic = topic;
     }    
 
     //CamPublisher("http://192.168.3.xxx:50005/?action=stream", "tcp://192.168.3.xxx:1883", "/uav/camera");
-    public CameraStream(String mqttBrokerURI, String topic, Canvas canvas) throws Exception {
+    public CameraStreamB(String mqttBrokerURI, String topic, Canvas canvas) throws Exception {
         this.mqttBrokerURI = mqttBrokerURI;
         this.topic = topic;
         this.canvas = canvas;
@@ -64,7 +70,7 @@ public class CameraStream {
     }
     
     //CamPublisher("http://192.168.3.xxx:50005/?action=stream", canvas);
-    public CameraStream(String serverURI, Canvas canvas) {
+    public CameraStreamB(String serverURI, Canvas canvas) {
         this.serverURI = serverURI;
         this.canvas = canvas;
         this.gc = canvas.getGraphicsContext2D();
@@ -75,13 +81,62 @@ public class CameraStream {
     		mqttClient.disconnect();
     		mqttClient.close();
     	} catch(Exception e) {}
-    	
-		try {
-			httpURLConnection.disconnect();
-		} catch(Exception e) {}
     }
     
     public void start() {
+        Thread thread = new Thread() {
+            boolean connected;
+            @Override
+            public void run() {
+                while(!connected) {
+                    try {
+                    	mqttClient = new MqttClient("tcp://" + Network.mqttIp + ":" + Network.mqttPort, MqttClient.generateClientId(), null);
+                        mqttClient.setCallback(new MqttCallback() {
+                            @Override
+                            public void messageArrived(String topic, MqttMessage message) throws Exception {
+                            	MqttMessage nextMessage = new MqttMessage("next".getBytes());
+            					mqttClient.publish(Network.uavCameraSubTopicB, nextMessage);
+
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                        	byte[] imageBytes = message.getPayload();
+                                        	BufferedImage bufferdImage = ImageIO.read(new ByteArrayInputStream(imageBytes));
+                                            Image imgFx = SwingFXUtils.toFXImage(bufferdImage, null);
+                                            gc.drawImage(imgFx, 0, 0, imgFx.getWidth(), imgFx.getHeight(), 0, 0, canvas.getWidth(), canvas.getHeight());
+                                        } catch (IOException ex) {
+                                            ex.printStackTrace();
+                                        }
+                                    }
+                                });
+                            }
+                            @Override
+                            public void deliveryComplete(IMqttDeliveryToken token) {
+                            }
+                            @Override
+                            public void connectionLost(Throwable cause) {
+                            }
+                        });
+                        MqttConnectOptions options = new MqttConnectOptions();
+                        options.setConnectionTimeout(1000);
+                        mqttClient.connect(options);
+                        mqttClient.subscribe(Network.uavCameraPubTopicB);
+                        connected = true;
+                        MqttMessage nextMessage = new MqttMessage("next".getBytes());
+    					mqttClient.publish(Network.uavCameraSubTopicB, nextMessage);
+                    } catch(Exception e) {
+                        try {
+                            CameraStreamB.this.stop();
+                        } catch(Exception e2) {}
+                    }
+                }
+            }
+        };
+        thread.setDaemon(true);
+        thread.start();
+    }
+    /*public void start() {
     	String strtopic = topic;
         if(mqttBrokerURI != null && canvas == null) {
             thread = new Thread() {
@@ -211,7 +266,7 @@ public class CameraStream {
             thread.start();
         }
     }
-
+*/
     static class StreamSplit {
         public static final String BOUNDARY_MARKER_PREFIX = "--";
         public static final String BOUNDARY_MARKER_TERM = BOUNDARY_MARKER_PREFIX;
