@@ -469,22 +469,24 @@ public class AppMainController implements Initializable{
 	
 	//홈위치WP
 	public void handleMissionHomeWP() {
-		WayPoint wp = new WayPoint();
-		wp.no=list.size()+1;
-		wp.kind = "waypoint";
-		wp.setLat(Network.getUav().homeLat+"");
-		wp.setLng(Network.getUav().homeLng+"");
-		wp.getButton().setOnAction((event)->{
-			list.remove(wp.no-1);
-			for(WayPoint wp1 : list) {
-				if(wp1.no>wp.no) wp1.no--;
-			}
-			setTableViewItems(list);
+		if(Network.getUav().homeLat!=0&&Network.getUav().homeLng!=0) {
+			WayPoint wp = new WayPoint();
+			wp.no=list.size()+1;
+			wp.kind = "waypoint";
+			wp.setLat(Network.getUav().homeLat+"");
+			wp.setLng(Network.getUav().homeLng+"");
+			wp.getButton().setOnAction((event)->{
+				list.remove(wp.no-1);
+				for(WayPoint wp1 : list) {
+					if(wp1.no>wp.no) wp1.no--;
+				}
+				setTableViewItems(list);
+				setMission(list);
+			});
+			list.add(list.size(),wp);
 			setMission(list);
-		});
-		list.add(list.size(),wp);
-		setMission(list);
-		setTableViewItems(list);
+			setTableViewItems(list);
+		}
 	}
 	
 	public void handleNoflyzoneActivate(ActionEvent event) {		
@@ -500,7 +502,6 @@ public class AppMainController implements Initializable{
 		for(int i=0;i<list.size()-1;i++) {
 			//WP1(x1,y1), WP2(x2,y2)
 			System.out.println("i ==== "+i);
-			System.out.println("리스트 사이즈1::::"+list.size());
 			tPoint = list.get(i);
 			tPoint2 = list.get(i+1);
 			Noflyzone.listchange();
@@ -511,17 +512,14 @@ public class AppMainController implements Initializable{
 			
 			//Noflyzone x,y,r이 입력 되였냐
 			if(NoFlyZoneController.instance.x!=0&&NoFlyZoneController.instance.y!=0&&NoFlyZoneController.instance.r!=0) {
-				System.out.println("리스트 사이즈2::::"+list.size());
 				//Noflyzone안에 wp선이 들어 오냐
 				if(Noflyzone.ifNoflyzone(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,x1,y1,x2,y2)<=NoFlyZoneController.instance.r*1.1) {
-					System.out.println("반지름 : "+NoFlyZoneController.instance.r*1.1);
 					// 시계 or 반시계
 					Noflyzone.rotationCase(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,x1,y1,x2,y2);
 					int s = Noflyzone.s;
 					int e = Noflyzone.e;
 					// 반시계 로 돈다면 여기
 					if(!rotation) {
-						System.out.println("시계");
 						Noflyzone.circleWP1(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2,i+2);
 						list = Noflyzone.list;
 						i+=(int)((e-s)/10) +1-(Noflyzone.k+Noflyzone.j);
