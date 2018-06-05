@@ -373,6 +373,8 @@ public class Noflyzone {
         return (rad * 180 / Math.PI);
     }
     
+ 	public static int k = 0;
+	public static int j = 0;
  // 시계 방향 돌면서 WP 찍기 nX=noflyzone X좌표, nY=noflyzone Y좌표, WP1(x1,y1), WP(x2,y2)
  	public static void circleWP1(double nX,double nY, double nR,double x1,double y1,double x2,double y2,int no) {
  		System.out.println("circleWP1");
@@ -418,27 +420,38 @@ public class Noflyzone {
  			for(WayPoint wp: beforeList)
  				resultList.add(wp);
  			beforeList.clear();
- 			list.remove(0);
- 			list.remove(0);
- 			list.remove(list.size()-1);
- 			list.remove(list.size()-1);
- 			list.remove(list.size()-1);
+ 			k = 0;
+ 			j = 0;
+ 			try {
+	 			list.remove(0);
+	 			k++;
+	 			list.remove(0);
+	 			k++;
+	 			list.remove(list.size()-1);
+	 			j++;
+	 			list.remove(list.size()-1);
+	 			j++;
+	 			list.remove(list.size()-1);
+	 			j++;
+ 			}catch(Exception e) {}
  			for(WayPoint wp: list) {
- 				wp.setNo(wp.getNo()-3);
+ 				wp.setNo(wp.getNo()-j);
  				resultList.add(wp);
  			}
  			list.clear();
  			for(WayPoint wp: afterList) {
- 				wp.setNo(wp.getNo()+(nono-no-1)-5);
+ 				wp.setNo(wp.getNo()+(nono-no)-(k+j));
  				resultList.add(wp);
  			}
  			afterList.clear();
  			list = resultList;
- 	 		Platform.runLater(() -> {	
- 	 			AppMainController.instance2.setMission(list);
- 	 			AppMainController.instance2.setTableViewItems(list);
- 	 		});
+// 	 		Platform.runLater(() -> {	
+// 	 			AppMainController.instance2.setMission(list);
+// 	 			AppMainController.instance2.setTableViewItems(list);
+// 	 		});
  	}
+ 	
+
  	//반시계방향
  	public static void circleWP2(double nX,double nY, double nR,double x1,double y1,double x2,double y2,int no) {
  		System.out.println("circleWP2");
@@ -484,26 +497,35 @@ public class Noflyzone {
 		for(WayPoint wp: beforeList)
 			resultList.add(wp);
 		beforeList.clear();
-		list.remove(0);
-		list.remove(0);
-		list.remove(list.size()-1);
-		list.remove(list.size()-1);
-		list.remove(list.size()-1);
+		k = 0;
+		j = 0;
+		try {
+			list.remove(0);
+			k++;
+			list.remove(0);
+			k++;
+			list.remove(list.size()-1);
+			j++;
+			list.remove(list.size()-1);
+			j++;
+			list.remove(list.size()-1);
+			j++;
+		}catch(Exception e) {}
 		for(WayPoint wp: list) {
-			wp.setNo(wp.getNo()-3);
+			wp.setNo(wp.getNo()-j);
 			resultList.add(wp);
 		}
 		list.clear();
 		for(WayPoint wp: afterList) {
-			wp.setNo(wp.getNo()+(nono-no-1)-5);
+			wp.setNo(wp.getNo()+(nono-no)-(k+j));
 			resultList.add(wp);
 		}
 		afterList.clear();
 		list = resultList;
- 		Platform.runLater(() -> {	
- 			AppMainController.instance2.setMission(list);
- 			AppMainController.instance2.setTableViewItems(list);
- 		});
+// 		Platform.runLater(() -> {	
+// 			AppMainController.instance2.setMission(list);
+// 			AppMainController.instance2.setTableViewItems(list);
+// 		});
  	}
 
  	

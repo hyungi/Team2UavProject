@@ -147,7 +147,7 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnBottom;
 	@FXML private Button btnLeft;
 	@FXML private Button btnHeadingToNorth;
-	@FXML private Button btnMissionArm;
+	@FXML private Button btnMissionHomeWP;
 	@FXML private Button btnMissionLand;
 	@FXML private Button btnMissionTime;
 	
@@ -163,12 +163,7 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnNoflyzoneSet;
 	@FXML private Button btnNoflyzoneDelete;
 	@FXML private Button btnNoflyzoneActivate;
-	private int s;
-	private int e;
-	private double angle1;
-	private double angle2;
 	public boolean rotation;
-	private int nono;
 	
 	//화물
 	@FXML private Button btnCargoStart;
@@ -442,7 +437,7 @@ public class AppMainController implements Initializable{
 		btnCargoStart.setOnAction((event)->{handleCargoStart(event);});
 		btnCargoStop.setOnAction((event)->{handleCargoStop();});
 		btnNoflyzoneActivate.setOnAction((event)->{handleNoflyzoneActivate(event);});
-		btnMissionArm.setOnAction((event)->{handleMissionArm();});
+		btnMissionHomeWP.setOnAction((event)->{handleMissionHomeWP();});
 		btnMissionLand.setOnAction((event)->{handleMissionLand();});
 		btnMissionTime.setOnAction((event)->{handleMissionTime();});
 		btnTop.setOnAction((event)->{handleBtnTop(event);});
@@ -466,22 +461,39 @@ public class AppMainController implements Initializable{
 	public static int lastNum = -999;
 	public void handleMissionLand() {
 		checkLand = !checkLand;
+		changeColor();
 		Platform.runLater(() -> {
 			jsproxy.call("landMake");
 		});
 		statusMessage("Land made.");
 	}
 	
-	//미션 Arm
-	public void handleMissionArm() {
-		Platform.runLater(() -> {
-			jsproxy.call("armMake");
-		});
-		statusMessage("Arm made.");
+	public void changeColor() {
+		if(checkLand) btnMissionLand.setStyle("-fx-text-fill: #55FF55;");
+		else btnMissionLand.setStyle("-fx-text-fill: white;");
 	}
 	
-	public void handleNoflyzoneActivate(ActionEvent event) {
-		
+	//홈위치WP
+	public void handleMissionHomeWP() {
+		WayPoint wp = new WayPoint();
+		wp.no=list.size()+1;
+		wp.kind = "waypoint";
+		wp.setLat(Network.getUav().homeLat+"");
+		wp.setLng(Network.getUav().homeLng+"");
+		wp.getButton().setOnAction((event)->{
+			list.remove(wp.no-1);
+			for(WayPoint wp1 : list) {
+				if(wp1.no>wp.no) wp1.no--;
+			}
+			setTableViewItems(list);
+			setMission(list);
+		});
+		list.add(list.size(),wp);
+		setMission(list);
+		setTableViewItems(list);
+	}
+	
+	public void handleNoflyzoneActivate(ActionEvent event) {		
 		WayPoint wp = new WayPoint();
 		wp.no=0;
 		wp.kind = "waypoint";
@@ -518,28 +530,25 @@ public class AppMainController implements Initializable{
 						System.out.println("시계");
 						Noflyzone.circleWP1(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2,i+2);
 						list = Noflyzone.list;
-						i+=(int)((e-s)/10) +1-5;
+						i+=(int)((e-s)/10) +1-(Noflyzone.k+Noflyzone.j);
 					// 시계 로 돈다면 여기
 					}else{
 						System.out.println("반시계");
 						Noflyzone.circleWP2(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2,i+2);
 						list = Noflyzone.list;
-						i += (int)((s-e+1)/10)+1-5;
+						i += (int)((s-e+1)/10)+1-(Noflyzone.k+Noflyzone.j);
 
 					}
 				}
 			}
-			System.out.println("리스트 사이즈::::"+list.size());
 		}
 		for(int a=0;a<list.size();a++) {
 			if(list.get(a).no==0) {
 				list.remove(0);
 			}
 		}
- 		Platform.runLater(() -> {	
- 			setMission(list);
- 			setTableViewItems(list);
- 		});
+		setMission(list);
+		setTableViewItems(list);
 	}
 	
 	public void handleBtnTop(ActionEvent e) {
@@ -760,6 +769,8 @@ public class AppMainController implements Initializable{
 		tableView.setItems(FXCollections.observableArrayList(list));
 	}
 	
+	
+	public static boolean uploadState = false;
 	//미션 업로드
 	public void handleMissionUpload(ActionEvent event) {
 		List<WayPoint> list = tableView.getItems();

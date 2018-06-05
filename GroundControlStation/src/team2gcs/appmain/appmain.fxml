@@ -377,9 +377,9 @@
                                                 <Insets />
                                              </GridPane.margin>
                                           </Button>
-                                          <Button fx:id="btnMissionArm" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Arm" GridPane.rowIndex="3" />
-                                          <Button fx:id="btnMissionLand" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="CargoWP" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <Button fx:id="btnMissionTime" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Time" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                          <Button fx:id="btnMissionHomeWP" mnemonicParsing="false" prefWidth="100.0" text="HomeWP" GridPane.rowIndex="3" />
+                                          <Button fx:id="btnMissionLand" mnemonicParsing="false" prefWidth="100.0" text="CargoWP" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <Button fx:id="btnMissionTime" mnemonicParsing="false" prefWidth="100.0" text="Time" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                                        </children>
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
