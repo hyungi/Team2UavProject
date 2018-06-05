@@ -465,6 +465,8 @@ public class AppMainController implements Initializable{
 	public static int lastNum = -999;
 	public void handleMissionLand() {
 		checkLand = !checkLand;
+		if(checkLand) btnMissionLand.setStyle("-fx-text-fill: #55FF55;");
+		else btnMissionLand.setStyle("-fx-text-fill: white;");
 		Platform.runLater(() -> {
 			jsproxy.call("landMake");
 		});
@@ -516,13 +518,13 @@ public class AppMainController implements Initializable{
 						System.out.println("시계");
 						Noflyzone.circleWP1(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2,i+2);
 						list = Noflyzone.list;
-						i+=(int)((e-s)/10) +1-5;
+						i+=(int)((e-s)/10) +1-(Noflyzone.k+Noflyzone.j);
 					// 시계 로 돈다면 여기
 					}else{
 						System.out.println("반시계");
 						Noflyzone.circleWP2(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2,i+2);
 						list = Noflyzone.list;
-						i += (int)((s-e+1)/10)+1-5;
+						i += (int)((s-e+1)/10)+1-(Noflyzone.k+Noflyzone.j);
 
 					}
 				}
