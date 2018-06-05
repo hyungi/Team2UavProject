@@ -57,7 +57,6 @@ import team2gcs.noflyzone.NoFlyZoneController;
 import team2gcs.noflyzone.Noflyzone;
 
 public class AppMainController implements Initializable{	
-	private String test;
 	public static AppMainController instance2;
 	// child들의 높이 조정을 위해
 	public static double heightSize;
@@ -146,7 +145,7 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnBottom;
 	@FXML private Button btnLeft;
 	@FXML private Button btnHeadingToNorth;
-	@FXML private Button btnMissionArm;
+	@FXML private Button btnMissionHomeWP;
 	@FXML private Button btnMissionLand;
 	@FXML private Button btnMissionTime;
 	
@@ -162,12 +161,7 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnNoflyzoneSet;
 	@FXML private Button btnNoflyzoneDelete;
 	@FXML private Button btnNoflyzoneActivate;
-	private int s;
-	private int e;
-	private double angle1;
-	private double angle2;
 	public boolean rotation;
-	private int nono;
 	
 	//화물
 	@FXML private Button btnCargoStart;
@@ -441,7 +435,7 @@ public class AppMainController implements Initializable{
 		btnCargoStart.setOnAction((event)->{handleCargoStart(event);});
 		btnCargoStop.setOnAction((event)->{handleCargoStop();});
 		btnNoflyzoneActivate.setOnAction((event)->{handleNoflyzoneActivate(event);});
-		btnMissionArm.setOnAction((event)->{handleMissionArm();});
+		btnMissionHomeWP.setOnAction((event)->{handleMissionHomeWP();});
 		btnMissionLand.setOnAction((event)->{handleMissionLand();});
 		btnMissionTime.setOnAction((event)->{handleMissionTime();});
 		btnTop.setOnAction((event)->{handleBtnTop(event);});
@@ -471,12 +465,24 @@ public class AppMainController implements Initializable{
 		statusMessage("Land made.");
 	}
 	
-	//미션 Arm
-	public void handleMissionArm() {
-		Platform.runLater(() -> {
-			jsproxy.call("armMake");
+	//홈위치WP
+	public void handleMissionHomeWP() {
+		WayPoint wp = new WayPoint();
+		wp.no=list.size()+1;
+		wp.kind = "waypoint";
+		wp.setLat(Network.getUav().homeLat+"");
+		wp.setLng(Network.getUav().homeLng+"");
+		wp.getButton().setOnAction((event)->{
+			list.remove(wp.no-1);
+			for(WayPoint wp1 : list) {
+				if(wp1.no>wp.no) wp1.no--;
+			}
+			setTableViewItems(list);
+			setMission(list);
 		});
-		statusMessage("Arm made.");
+		list.add(list.size(),wp);
+		setMission(list);
+		setTableViewItems(list);
 	}
 	
 	public void handleNoflyzoneActivate(ActionEvent event) {
@@ -502,10 +508,10 @@ public class AppMainController implements Initializable{
 			double x2 = Double.parseDouble(list.get(i+1).getLng());
 			double y2 = Double.parseDouble(list.get(i+1).getLat());
 			
-			//noflyzone x,y,r이 입력 되였냐
+			//Noflyzone x,y,r이 입력 되였냐
 			if(NoFlyZoneController.instance.x!=0&&NoFlyZoneController.instance.y!=0&&NoFlyZoneController.instance.r!=0) {
 				System.out.println("리스트 사이즈2::::"+list.size());
-				//noflyzone안에 wp선이 들어 오냐
+				//Noflyzone안에 wp선이 들어 오냐
 				if(Noflyzone.ifNoflyzone(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,x1,y1,x2,y2)<=NoFlyZoneController.instance.r*1.1) {
 					System.out.println("반지름 : "+NoFlyZoneController.instance.r*1.1);
 					// 시계 or 반시계
@@ -535,10 +541,8 @@ public class AppMainController implements Initializable{
 				list.remove(0);
 			}
 		}
- 		Platform.runLater(() -> {	
- 			setMission(list);
- 			setTableViewItems(list);
- 		});
+		setMission(list);
+		setTableViewItems(list);
 	}
 	
 	public void handleBtnTop(ActionEvent e) {
