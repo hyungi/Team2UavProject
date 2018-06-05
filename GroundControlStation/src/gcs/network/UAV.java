@@ -14,7 +14,9 @@ import org.json.JSONObject;
 import gcs.mission.FencePoint;
 import gcs.mission.WayPoint;
 import javafx.application.Platform;
+import sun.nio.ch.Net;
 import team2gcs.appmain.AppMainController;
+import team2gcs.leftpane.leftPaneController;
 
 public class UAV implements Cloneable {
 	public String systemStatus;	
@@ -136,7 +138,13 @@ public class UAV implements Cloneable {
 			
 			if(armed) AppMainController.instance2.statusMessage("UAV Armed.");
 			else if(!armed) AppMainController.instance2.statusMessage("UAV Disarmed.");
-			
+			if(leftPaneController.instance.distance(AppMainController.gotoLat, AppMainController.gotoLng, 
+				Network.getUav().latitude, Network.getUav().longitude, "meter") < 0.7 && (AppMainController.gotoLat != 0 && AppMainController.gotoLng != 0)) {
+				AppMainController.instance2.statusMessage("Go to Completed.");
+				AppMainController.gotoLat = 0;
+				AppMainController.gotoLng = 0;
+			}
+					
 			AppMainController.instance2.batterySet(batteryLevel);
 			AppMainController.instance2.locationSet(latitude, longitude);
 			

@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 import gcs.network.Network;
 import gcs.network.UAV;
 import javafx.animation.AnimationTimer;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -98,7 +100,7 @@ public class leftPaneController implements Initializable {
     private double timeAir = 0;
     private double voltage = 0;
     private double fenceEnable = 0.0;
-    private String mode = "DisArmed";
+    private String mode = "DisArmed.";
     private String missionTime;
     private String takeoffTime;
     private String labelMessage;
@@ -191,7 +193,7 @@ public class leftPaneController implements Initializable {
             armedLabel.setText("Armed");
         } else if (armed == false) {
             armedLabel.setStyle("-fx-text-fill: white;");
-            armedLabel.setText("DisArmed");
+            armedLabel.setText("DisArmed.");
         }
         hudLineCanvas.setRotate(roll * 2);
         circle.setRotate(roll * 2);
@@ -218,7 +220,7 @@ public class leftPaneController implements Initializable {
             modeLabel.setText(mode);
             airSpeedLabel.setText(String.format("%.4f", airSpeed));
             groundSpeedLabel.setText(String.format("%.4f", groundSpeed));
-            altitudeLabel.setText(String.format("%.2f", altitude));
+            setAltLabel();
             if (AppMainController.takeoffStart == true) takeoffTimeLabel.setText(takeoffTime);
             else if (AppMainController.takeoffStart == false) takeoffTimeLabel.setText("UAV Landed.");
 
@@ -227,7 +229,6 @@ public class leftPaneController implements Initializable {
                 detailModeLabel.setText(mode);
                 detailAirSpeedLabel.setText(String.format("%.6f", airSpeed));
                 detailGroundSpeedLabel.setText(String.format("%.6f", groundSpeed));
-                detailAltitudeLabel.setText(String.format("%.2f", altitude));
                 if (fenceEnable == 0.0) {
                     detailFenceLabel.setStyle("-fx-text-fill: white;");
                     detailFenceLabel.setText("Deactivated.");
@@ -248,6 +249,7 @@ public class leftPaneController implements Initializable {
                 } else if (AppMainController.missionStart == false) detailMissionTimeLabel.setText("No Mission.");
                 if (AppMainController.takeoffStart == true) detailTakeoffTimeLabel.setText(takeoffTime);
                 else if (AppMainController.takeoffStart == false) detailTakeoffTimeLabel.setText("Landed.");
+                
                 if (Network.getUav().homeLat > 0.0 && Network.getUav().latitude > 0.0)
                     detailDistHomeLabel.setText(String.format("%.4fm", distance(Network.getUav().homeLat, Network.getUav().longitude, Network.getUav().latitude, Network.getUav().longitude, "meter")));
                 detailVoltageLabel.setText(String.format("%.4f", voltage));
@@ -280,5 +282,25 @@ public class leftPaneController implements Initializable {
     public double deg2rad(double deg) { return (deg * Math.PI / 180.0); }
     public double rad2deg(double rad) {
         return (rad * 180 / Math.PI);
+    }
+    
+    public void setAltLabel() {
+    	altitudeLabel.setStyle("-fx-text-fill: white;");
+        if(altitudeLabel.getText() != String.format("%.2f", altitude)) altitudeLabel.setText(String.format("%.2f", altitude));
+        altitudeLabel.textProperty().addListener(new ChangeListener<String>() {
+        	@Override
+        	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+        		altitudeLabel.setStyle("-fx-text-fill: red;");
+        	}
+		}); 
+        
+        detailAltitudeLabel.setStyle("-fx-text-fill: white;");
+        if(detailAltitudeLabel.getText() != String.format("%.2f", altitude)) detailAltitudeLabel.setText(String.format("%.2f", altitude));
+        detailAltitudeLabel.textProperty().addListener(new ChangeListener<String>() {
+        	@Override
+        	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+        		detailAltitudeLabel.setStyle("-fx-text-fill: red;");
+        	}
+		});
     }
 }
