@@ -5,6 +5,9 @@ var map = {
 	missionMake: false,
 	roiMake: false,
 	fenceMake: false,
+	armMake: false,
+	landMake: false,
+	
 	
 	uav: null,
 	
@@ -132,6 +135,12 @@ var map = {
 						map.roiMake = false;
 					} else if(map.fenceMake == true) {
 						map.uav.makeFenceMark(e.latLng.lat(), e.latLng.lng());
+					} else if(map.armMake == true){
+						map.uav.makeMissionMark("arm", e.latLng.lat(), e.latLng.lng());
+						map.armMake = false;
+					} else if(map.landMake == true){
+						map.uav.makeMissionMark("land", e.latLng.lat(), e.latLng.lng());
+						map.landMake = false;
 					}
 				} catch(err) {
 					console.log(">> [map.googlemap.click_function()] " + err);

@@ -18,7 +18,7 @@ import simplejson
 debug = True
 
 # #Autopilot(FC-펌웨어)과 연결----------------------------------jdh------------------------------
-vehicle = connect("udp:192.168.3.89:14560", wait_ready=True)
+vehicle = connect("udp:192.168.3.41:14560", wait_ready=True)
 # vehicle = connect('udp:127.0.0.1:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
 # vehicle = connect('/dev/ttyS0',wait_ready = True,baud57600) #라즈베리파이에서 실행시 
 
@@ -574,6 +574,7 @@ def on_message(client, userdata, msg):
         if command == "arm": arm(json_dict)
         elif command == "disarm": disarm(json_dict)
         elif command == "takeoff": takeoff(json_dict)
+        elif command == "changealt": changealt(json_dict)
         elif command == "rtl": rtl(json_dict)
         elif command == "land": land(json_dict)
         elif command == "goto": goto(json_dict)
@@ -669,6 +670,13 @@ def takeoff(json_dict):
     vehicle.mode = VehicleMode("GUIDED")
     height = json_dict["height"]
     vehicle.simple_takeoff(height) 
+#------------------------------------------------------
+def changealt(json_dict):
+    if not vehicle.armed: return
+    vehicle.mode = VehicleMode("GUIDED")
+    height = json_dict["height"]
+    targetLocation = LocationGlobalRelative(vehicle.location._lat, vehicle.location._lon, height)
+    vehicle.simple_goto(targetLocation);
 #------------------------------------------------------ 
 def rtl(json_dict):
     if not vehicle.armed: return

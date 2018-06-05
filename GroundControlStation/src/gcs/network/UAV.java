@@ -13,8 +13,6 @@ import org.json.JSONObject;
 
 import gcs.mission.FencePoint;
 import gcs.mission.WayPoint;
-import javafx.application.Platform;
-import sun.nio.ch.Net;
 import team2gcs.appmain.AppMainController;
 import team2gcs.leftpane.leftPaneController;
 
@@ -107,6 +105,8 @@ public class UAV implements Cloneable {
 		}
 		connected = false;
 	}
+	
+	private boolean misstionState = false;
 
 	private void dataParsing(String strJson) {
 		try {
@@ -134,8 +134,7 @@ public class UAV implements Cloneable {
 			groundSpeed = jsonObject.getDouble("groundspeed");
 			homeLat = jsonObject.getDouble("homeLat");
 			homeLng = jsonObject.getDouble("homeLng");
-			nextWP = jsonObject.getInt("next_waypoint_no");
-			
+
 			if(armed) AppMainController.instance2.statusMessage("UAV Armed.");
 			else if(!armed) AppMainController.instance2.statusMessage("UAV Disarmed.");
 			if(leftPaneController.instance.distance(AppMainController.gotoLat, AppMainController.gotoLng, 
@@ -144,7 +143,55 @@ public class UAV implements Cloneable {
 				AppMainController.gotoLat = 0;
 				AppMainController.gotoLng = 0;
 			}
+			if(statusText.length() > 0){
+				if(statusText.contains("EKF2")) AppMainController.instance2.statusMessage("EKF2 message.");
+				else AppMainController.instance2.statusMessage(statusText);
+			}
 					
+			// land에 해당하는 Mission에 도달시 Land 진행
+			if(AppMainController.instance2.checkLand&&statusText.equals("Reached command #"+AppMainController.instance2.landNum)) {
+				AppMainController.instance2.handleLand();
+				AppMainController.instance2.uploadState = true;
+			}
+			// land 마크가 활성화 되어있을 때만 자동 미션 진행
+			if(statusText.equals("Disarming motors") && AppMainController.instance2.checkLand && AppMainController.instance2.uploadState) {
+				AppMainController.instance2.checkLand = false;
+				AppMainController.instance2.changeColor();
+				AppMainController.instance2.uploadState = false;
+				
+				// 미션 재생성
+				List<WayPoint> tList = new ArrayList<>();
+				missionUpload(tList);
+				int i=1;
+				for(WayPoint wp: AppMainController.instance2.list) {
+					if(wp.no > AppMainController.instance2.landNum) {
+						wp.setNo(i++);
+						tList.add(wp);
+						AppMainController.instance2.lastNum = wp.getNo();
+					}
+				}
+				missionUpload(tList);
+				// DisArmed 되면 화물 내림
+//				AppMainController.instance2.handleCargoStop();
+				Thread.sleep(1000);
+				arm();
+				Thread.sleep(2000);
+				// 다시 Armed 후 TakeOff 진행				
+				takeoff(10);
+				misstionState = true;
+			}
+			
+			if(misstionState && altitude >= 9.5) {
+				missionStart();
+				misstionState = false;
+				AppMainController.instance2.landNum = -999;
+			}
+			
+			if(!misstionState && statusText.equals("Reached command #"+AppMainController.instance2.lastNum)) {
+				AppMainController.instance2.handleLand();
+				AppMainController.instance2.lastNum = -999;
+			}
+			
 			AppMainController.instance2.batterySet(batteryLevel);
 			AppMainController.instance2.locationSet(latitude, longitude);
 			
@@ -155,8 +202,6 @@ public class UAV implements Cloneable {
 				rangeFinderDistance = 0;
 				opticalFlowQuality = 0;
 			}
-			
-			nextWaypointNo = jsonObject.getInt("next_waypoint_no");
 			
 			JSONArray jsonArrayWayPoints = jsonObject.getJSONArray("waypoints");
 			List<WayPoint> listWayPoint = new ArrayList<WayPoint>();
@@ -173,15 +218,25 @@ public class UAV implements Cloneable {
 					wp.altitude = jo.getDouble("alt");
 				} else if(wp.kind.equals("rtl")) {
 				} else if(wp.kind.equals("jump")) {
+ 					wp.setJumpNo(jo.getInt("seq"));
+					wp.setRepeatCount(jo.getInt("cnt"));
+				} else if(wp.kind.equals("roi")) {
  					wp.setLat(jo.getDouble("lat")+"");
 					wp.setLng(jo.getDouble("lng")+"");
-				} else if(wp.kind.equals("roi")) {
+				} else if(wp.kind.equals("arm")) {
+ 					wp.setLat(jo.getDouble("lat")+"");
+					wp.setLng(jo.getDouble("lng")+"");
+				} else if(wp.kind.equals("land")) {
  					wp.setLat(jo.getDouble("lat")+"");
 					wp.setLng(jo.getDouble("lng")+"");
 				}
 				listWayPoint.add(wp);
 			}
 			wayPoints = listWayPoint;
+			if(!listWayPoint.isEmpty()) {
+				AppMainController.instance2.list = listWayPoint;
+				AppMainController.instance2.setMission(listWayPoint);
+			}
 			
 			JSONObject jsonObjectFenceInfo =  jsonObject.getJSONObject("fence_info");
 			fenceEnable = jsonObjectFenceInfo.getDouble("fence_enable");
@@ -273,6 +328,14 @@ public class UAV implements Cloneable {
 		send(strJson);
 	}	
 	
+	public void changeAlt(int height) {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("command", "changealt");
+		jsonObject.put("height", height);
+		String strJson = jsonObject.toString();
+		send(strJson);
+	}
+	
 	public void rtl() {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("command", "rtl");
@@ -304,9 +367,11 @@ public class UAV implements Cloneable {
 		for(WayPoint wp : list) {
 			JSONObject jo = new JSONObject();
 			jo.put("kind", wp.kind);
-			jo.put("lat", Double.parseDouble(wp.getLat()));
-			jo.put("lng", Double.parseDouble(wp.getLng()));
+			if(wp.getLat() != null) jo.put("lat", Double.parseDouble(wp.getLat()));
+			if(wp.getLng() != null) jo.put("lng", Double.parseDouble(wp.getLng()));
 			jo.put("alt", wp.altitude);
+			jo.put("seq", wp.jumpNo);
+			jo.put("cnt", wp.repeatCount);
 			jsonArray.put(jo);
 		}
 		root.put("waypoints", jsonArray);
@@ -389,9 +454,7 @@ public class UAV implements Cloneable {
 						String strJson = jsonObject.toString();
 						send(strJson);
 						Thread.sleep(1000);
-					}catch(Exception e) {
-						
-					}
+					}catch(Exception e) {}
 				}
 			}
 		};
