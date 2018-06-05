@@ -148,7 +148,7 @@ public class AppMainController implements Initializable{
 	
 	//고도 
 	double takeoffAlt = altdialogController.alt;
-	double missionAlt = Double.parseDouble(txtAlt.getText());
+	double missionAlt;
 	
 	//펜스
 	@FXML private Button btnFenceSet;
@@ -189,7 +189,6 @@ public class AppMainController implements Initializable{
 	@FXML private Label batteryLabel;
 	@FXML private Label signalLabel;
 	@FXML private ImageView connButton;
-	public int alt;
 	
 	
 
@@ -477,14 +476,14 @@ public class AppMainController implements Initializable{
 	
 	//홈위치WP
 	public void handleMissionHomeWP() {
-		double alt = Double.parseDouble(txtAlt.getText());
+		missionAlt = Double.parseDouble(txtAlt.getText());
 		if(Network.getUav().homeLat!=0&&Network.getUav().homeLng!=0) {
 			WayPoint wp = new WayPoint();
 			wp.no=list.size()+1;
 			wp.kind = "waypoint";
 			wp.setLat(Network.getUav().homeLat+"");
 			wp.setLng(Network.getUav().homeLng+"");
-			wp.altitude = alt;
+			wp.altitude = missionAlt;
 			wp.getButton().setOnAction((event)->{
 				list.remove(wp.no-1);
 				for(WayPoint wp1 : list) {
@@ -741,7 +740,7 @@ public class AppMainController implements Initializable{
 	// List를 계속 관리하기 위해서 Field 영역으로 가져옴
 	public static List<WayPoint> list = new ArrayList<>();
 	public void getMissionResponse(String data) {
-		double alt = Double.parseDouble(txtAlt.getText());
+		missionAlt = Double.parseDouble(txtAlt.getText());
 		list.clear();
 		Platform.runLater(() -> {	
 			JSONArray jsonArray = new JSONArray(data);
@@ -752,7 +751,7 @@ public class AppMainController implements Initializable{
 				wayPoint.kind = jsonObject.getString("kind"); //all is "waypoint";
 				wayPoint.setLat(jsonObject.getDouble("lat")+"");
 				wayPoint.setLng(jsonObject.getDouble("lng")+"");
-				wayPoint.altitude = alt;
+				wayPoint.altitude = missionAlt;
 				wayPoint.getButton().setOnAction((event)->{
 					list.remove(wayPoint.no-1);
 					for(WayPoint wp : list) {
