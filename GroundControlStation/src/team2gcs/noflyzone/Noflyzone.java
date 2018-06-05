@@ -377,6 +377,7 @@ public class Noflyzone {
 	public static int j = 0;
  // 시계 방향 돌면서 WP 찍기 nX=noflyzone X좌표, nY=noflyzone Y좌표, WP1(x1,y1), WP(x2,y2)
  	public static void circleWP1(double nX,double nY, double nR,double x1,double y1,double x2,double y2,int no) {
+ 		double alt = Double.parseDouble(AppMainController.instance2.txtAlt.getText());
  		System.out.println("circleWP1");
  		WayPoint tPoint = AppMainController.tPoint;
  		//a=alt값넣기 우리는 써서 넣음
@@ -454,6 +455,7 @@ public class Noflyzone {
 
  	//반시계방향
  	public static void circleWP2(double nX,double nY, double nR,double x1,double y1,double x2,double y2,int no) {
+ 		double alt = Double.parseDouble(AppMainController.instance2.txtAlt.getText());
  		System.out.println("circleWP2");
 
  		//a=alt값넣기 우리는 써서 넣음

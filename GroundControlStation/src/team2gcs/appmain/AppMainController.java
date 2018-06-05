@@ -140,7 +140,7 @@ public class AppMainController implements Initializable{
 	@FXML private Button loiterBtn;
 	@FXML private Button btnMissionStart;
 	@FXML private Button btnMissionStop;
-	@FXML private TextField txtAlt;
+	@FXML public TextField txtAlt;
 	@FXML private Button btnTop;
 	@FXML private Button btnRight;
 	@FXML private Button btnBottom;
@@ -474,12 +474,14 @@ public class AppMainController implements Initializable{
 	
 	//홈위치WP
 	public void handleMissionHomeWP() {
+		double alt = Double.parseDouble(txtAlt.getText());
 		if(Network.getUav().homeLat!=0&&Network.getUav().homeLng!=0) {
 			WayPoint wp = new WayPoint();
 			wp.no=list.size()+1;
 			wp.kind = "waypoint";
 			wp.setLat(Network.getUav().homeLat+"");
 			wp.setLng(Network.getUav().homeLng+"");
+			wp.altitude = alt;
 			wp.getButton().setOnAction((event)->{
 				list.remove(wp.no-1);
 				for(WayPoint wp1 : list) {
@@ -742,7 +744,7 @@ public class AppMainController implements Initializable{
 			JSONArray jsonArray = new JSONArray(data);
 			for(int i=0; i<jsonArray.length(); i++) {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
-				WayPoint wayPoint = new WayPoint();
+				WayPoint wayPoint = new WayPoint();  
 	 			wayPoint.no = jsonObject.getInt("no");
 				wayPoint.kind = jsonObject.getString("kind"); //all is "waypoint";
 				wayPoint.setLat(jsonObject.getDouble("lat")+"");
