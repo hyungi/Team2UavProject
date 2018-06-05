@@ -62,12 +62,8 @@ public class AppMainController implements Initializable{
 	// child들의 높이 조정을 위해
 	public static double heightSize;
 	public static Stage altStage;
-	String strFenceArr;
-	int jumpNo = 1;
-	int repeatCount = 2;
-	double altitude = altdialogController.alt;
+		
 	//공용
-
 	@FXML private BorderPane mainBorderPane;
 	@FXML private BorderPane loginBorderPane;
 	String inTime;
@@ -150,6 +146,10 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnMissionLand;
 	@FXML private Button btnMissionTime;
 	
+	//고도 
+	double takeoffAlt = altdialogController.alt;
+	double missionAlt = Double.parseDouble(txtAlt.getText());
+	
 	//펜스
 	@FXML private Button btnFenceSet;
 	@FXML private Button btnFenceUpload;
@@ -157,6 +157,9 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnFenceActivate;
 	@FXML private Button btnFenceDeactivate;
 	@FXML private Button btnFenceDelete;
+	String strFenceArr;
+	int jumpNo = 1;		//디폴트값.
+	int repeatCount = 2;
 	
 	//비행금지구역
 	@FXML private Button btnNoflyzoneSet;
@@ -1083,7 +1086,7 @@ public class AppMainController implements Initializable{
 			JSONObject jsonObject = new JSONObject(data);
 			gotoLat = jsonObject.getDouble("lat");
 			gotoLng = jsonObject.getDouble("lng");
-			Network.getUav().gotoStart(gotoLat, gotoLng, altitude);
+			Network.getUav().gotoStart(gotoLat, gotoLng, takeoffAlt);
 		});
 		statusMessage("Go to!");
 	}
