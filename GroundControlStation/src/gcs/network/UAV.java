@@ -134,7 +134,6 @@ public class UAV implements Cloneable {
 			groundSpeed = jsonObject.getDouble("groundspeed");
 			homeLat = jsonObject.getDouble("homeLat");
 			homeLng = jsonObject.getDouble("homeLng");
-			nextWP = jsonObject.getInt("next_waypoint_no");
 
 			if(armed) AppMainController.instance2.statusMessage("UAV Armed.");
 			else if(!armed) AppMainController.instance2.statusMessage("UAV Disarmed.");
@@ -144,8 +143,12 @@ public class UAV implements Cloneable {
 				AppMainController.gotoLat = 0;
 				AppMainController.gotoLng = 0;
 			}
+			if(statusText.length() > 0){
+				if(statusText.contains("EKF2")) AppMainController.instance2.statusMessage("EKF2 message.");
+				else AppMainController.instance2.statusMessage(statusText);
+			}
 					
-			// land에 해당하는 Misstion에 도달시 Land 진행
+			// land에 해당하는 Mission에 도달시 Land 진행
 			if(AppMainController.instance2.checkLand&&statusText.equals("Reached command #"+AppMainController.instance2.landNum)) {
 				AppMainController.instance2.handleLand();
 			}
@@ -320,6 +323,14 @@ public class UAV implements Cloneable {
 		String strJson = jsonObject.toString();
 		send(strJson);
 	}	
+	
+	public void changeAlt(int height) {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("command", "changealt");
+		jsonObject.put("height", height);
+		String strJson = jsonObject.toString();
+		send(strJson);
+	}
 	
 	public void rtl() {
 		JSONObject jsonObject = new JSONObject();
