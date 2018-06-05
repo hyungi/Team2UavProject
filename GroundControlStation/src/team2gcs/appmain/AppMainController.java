@@ -450,7 +450,6 @@ public class AppMainController implements Initializable{
 		btnBottom.setOnAction((event)->{handleBtnBottom(event);});
 		btnLeft.setOnAction((event)->{handleBtnLeft(event);});
 		btnHeadingToNorth.setOnAction((event)->{handleBtnHeadingToNorth(event);});
-		altBtn.setOnAction((event)->{handleAlt(event);});
 	}
 	public static boolean wait;
 	public static WayPoint tPoint;
@@ -693,10 +692,6 @@ public class AppMainController implements Initializable{
 		Scene scene = new Scene(root);
 		altStage.setScene(scene);
 		altStage.show();
-	}
-	
-	public void handleAlt(ActionEvent event) {
-		Network.getUav().changeAlt(100);
 	}
 	
 	public void handleLand() {
