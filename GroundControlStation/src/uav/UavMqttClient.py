@@ -18,13 +18,13 @@ import simplejson
 debug = True
 
 # #Autopilot(FC-펌웨어)과 연결----------------------------------jdh------------------------------
-vehicle = connect("udp:localhost:14560", wait_ready=True)
-# vehicle = connect('udp:127.0.0.1:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
+# vehicle = connect("udp:192.168.3.177:14560", wait_ready=True)
+vehicle = connect('udp:127.0.0.1:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
 # vehicle = connect('/dev/ttyS0',wait_ready = True,baud57600) #라즈베리파이에서 실행시 
 
 #MQTT Broker와 연결하기 위한 정보-----------------------------
-mqtt_ip = "192.168.3.16"
-#mqtt_ip = "106.253.56.122"
+# mqtt_ip = "192.168.3.89"
+mqtt_ip = "106.253.56.122"
 #mqtt_ip = "192.168.3.16"
 mqtt_port = 1883
 uav_pub_topic = "/uav2/pub"
@@ -575,6 +575,7 @@ def on_message(client, userdata, msg):
         elif command == "disarm": disarm(json_dict)
         elif command == "takeoff": takeoff(json_dict)
         elif command == "rtl": rtl(json_dict)
+        elif command == "changealt" : changealt(json_dict)
         elif command == "land": land(json_dict)
         elif command == "goto": goto(json_dict)
         elif command == "mission_upload": mission_upload(json_dict)
@@ -686,6 +687,13 @@ def goto(json_dict):
     longitude = json_dict["longitude"]
     altitude = json_dict["altitude"]
     targetLocation = LocationGlobalRelative(latitude, longitude, altitude)
+    vehicle.simple_goto(targetLocation);
+#------------------------------------------------------
+def changealt(json_dict):
+    if not vehicle.armed: return
+    vehicle.mode = VehicleMode("GUIDED")
+    altitude = json_dict["height"]
+    targetLocation = LocationGlobalRelative(vehicle.location._lat, vehicle.location._lon, altitude)
     vehicle.simple_goto(targetLocation);
 #------------------------------------------------------
 def mission_upload(json_dict):
