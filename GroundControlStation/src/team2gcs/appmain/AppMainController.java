@@ -58,7 +58,6 @@ import team2gcs.noflyzone.NoFlyZoneController;
 import team2gcs.noflyzone.Noflyzone;
 
 public class AppMainController implements Initializable{	
-	private String test;
 	public static AppMainController instance2;
 	// child들의 높이 조정을 위해
 	public static double heightSize;
@@ -137,7 +136,7 @@ public class AppMainController implements Initializable{
 	@FXML private Button loiterBtn;
 	@FXML private Button btnMissionStart;
 	@FXML private Button btnMissionStop;
-	@FXML private TextField txtAlt;
+	@FXML public TextField txtAlt;
 	@FXML private Button btnTop;
 	@FXML private Button btnRight;
 	@FXML private Button btnBottom;
@@ -149,7 +148,7 @@ public class AppMainController implements Initializable{
 	
 	//고도 
 	double takeoffAlt = altdialogController.alt;
-	double missionAlt = Double.parseDouble(txtAlt.getText());
+	double missionAlt;
 	
 	//펜스
 	@FXML private Button btnFenceSet;
@@ -190,7 +189,6 @@ public class AppMainController implements Initializable{
 	@FXML private Label batteryLabel;
 	@FXML private Label signalLabel;
 	@FXML private ImageView connButton;
-	public int alt;
 	
 	
 
@@ -478,22 +476,26 @@ public class AppMainController implements Initializable{
 	
 	//홈위치WP
 	public void handleMissionHomeWP() {
-		WayPoint wp = new WayPoint();
-		wp.no=list.size()+1;
-		wp.kind = "waypoint";
-		wp.setLat(Network.getUav().homeLat+"");
-		wp.setLng(Network.getUav().homeLng+"");
-		wp.getButton().setOnAction((event)->{
-			list.remove(wp.no-1);
-			for(WayPoint wp1 : list) {
-				if(wp1.no>wp.no) wp1.no--;
-			}
-			setTableViewItems(list);
+		missionAlt = Double.parseDouble(txtAlt.getText());
+		if(Network.getUav().homeLat!=0&&Network.getUav().homeLng!=0) {
+			WayPoint wp = new WayPoint();
+			wp.no=list.size()+1;
+			wp.kind = "waypoint";
+			wp.setLat(Network.getUav().homeLat+"");
+			wp.setLng(Network.getUav().homeLng+"");
+			wp.altitude = missionAlt;
+			wp.getButton().setOnAction((event)->{
+				list.remove(wp.no-1);
+				for(WayPoint wp1 : list) {
+					if(wp1.no>wp.no) wp1.no--;
+				}
+				setTableViewItems(list);
+				setMission(list);
+			});
+			list.add(list.size(),wp);
 			setMission(list);
-		});
-		list.add(list.size(),wp);
-		setMission(list);
-		setTableViewItems(list);
+			setTableViewItems(list);
+		}
 	}
 	
 	public void handleNoflyzoneActivate(ActionEvent event) {		
@@ -509,7 +511,6 @@ public class AppMainController implements Initializable{
 		for(int i=0;i<list.size()-1;i++) {
 			//WP1(x1,y1), WP2(x2,y2)
 			System.out.println("i ==== "+i);
-			System.out.println("리스트 사이즈1::::"+list.size());
 			tPoint = list.get(i);
 			tPoint2 = list.get(i+1);
 			Noflyzone.listchange();
@@ -520,17 +521,14 @@ public class AppMainController implements Initializable{
 			
 			//noflyzone x,y,r이 입력 되였냐
 			if(NoFlyZoneController.instance.x!=0&&NoFlyZoneController.instance.y!=0&&NoFlyZoneController.instance.r!=0) {
-				System.out.println("리스트 사이즈2::::"+list.size());
 				//noflyzone안에 wp선이 들어 오냐
 				if(Noflyzone.ifNoflyzone(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,x1,y1,x2,y2)<=NoFlyZoneController.instance.r*1.1) {
-					System.out.println("반지름 : "+NoFlyZoneController.instance.r*1.1);
 					// 시계 or 반시계
 					Noflyzone.rotationCase(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,x1,y1,x2,y2);
 					int s = Noflyzone.s;
 					int e = Noflyzone.e;
 					// 반시계 로 돈다면 여기
 					if(!rotation) {
-						System.out.println("시계");
 						Noflyzone.circleWP1(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2,i+2);
 						list = Noflyzone.list;
 						i+=(int)((e-s)/10) +1-(Noflyzone.k+Noflyzone.j);
@@ -742,18 +740,18 @@ public class AppMainController implements Initializable{
 	// List를 계속 관리하기 위해서 Field 영역으로 가져옴
 	public static List<WayPoint> list = new ArrayList<>();
 	public void getMissionResponse(String data) {
-		double alt = Double.parseDouble(txtAlt.getText());
+		missionAlt = Double.parseDouble(txtAlt.getText());
 		list.clear();
 		Platform.runLater(() -> {	
 			JSONArray jsonArray = new JSONArray(data);
 			for(int i=0; i<jsonArray.length(); i++) {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
-				WayPoint wayPoint = new WayPoint();
+				WayPoint wayPoint = new WayPoint();  
 	 			wayPoint.no = jsonObject.getInt("no");
 				wayPoint.kind = jsonObject.getString("kind"); //all is "waypoint";
 				wayPoint.setLat(jsonObject.getDouble("lat")+"");
 				wayPoint.setLng(jsonObject.getDouble("lng")+"");
-				wayPoint.altitude = alt;
+				wayPoint.altitude = missionAlt;
 				wayPoint.getButton().setOnAction((event)->{
 					list.remove(wayPoint.no-1);
 					for(WayPoint wp : list) {

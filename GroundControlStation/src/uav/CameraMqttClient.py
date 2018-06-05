@@ -20,7 +20,7 @@ jpg = None
 
 #MQTT Broker와 연결하기 위한 정보-----------------------------
 #mqtt_ip = "106.253.56.122"
-mqtt_ip = "192.168.3.89"
+mqtt_ip = "192.168.3.16"
 mqtt_port = 1883
 uav_pub_topic = "/uav2/cameraFront/pub"
 uav_sub_topic = "/uav2/cameraFront/sub"
