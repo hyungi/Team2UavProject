@@ -479,8 +479,7 @@ public class AppMainController implements Initializable{
 		statusMessage("Arm made.");
 	}
 	
-	public void handleNoflyzoneActivate(ActionEvent event) {
-		
+	public void handleNoflyzoneActivate(ActionEvent event) {		
 		WayPoint wp = new WayPoint();
 		wp.no=0;
 		wp.kind = "waypoint";
@@ -528,17 +527,14 @@ public class AppMainController implements Initializable{
 					}
 				}
 			}
-			System.out.println("리스트 사이즈::::"+list.size());
 		}
 		for(int a=0;a<list.size();a++) {
 			if(list.get(a).no==0) {
 				list.remove(0);
 			}
 		}
- 		Platform.runLater(() -> {	
- 			setMission(list);
- 			setTableViewItems(list);
- 		});
+		setTableViewItems(list);
+		setMission(list);
 	}
 	
 	public void handleBtnTop(ActionEvent e) {
@@ -760,6 +756,8 @@ public class AppMainController implements Initializable{
 		tableView.setItems(FXCollections.observableArrayList(list));
 	}
 	
+	
+	public static boolean uploadState = false;
 	//미션 업로드
 	public void handleMissionUpload(ActionEvent event) {
 		List<WayPoint> list = tableView.getItems();
@@ -1029,6 +1027,7 @@ public class AppMainController implements Initializable{
 					jsonObject.put("lng", Double.parseDouble(wayPoint.getLng()));
 				} else if(wayPoint.kind.equals("land")) {
 					landNum = wayPoint.no;
+					System.out.println("landNum::::::::::::::::::::::"+landNum);
 					jsonObject.put("kind",  wayPoint.kind);
 					jsonObject.put("lat", Double.parseDouble(wayPoint.getLat()));
 					jsonObject.put("lng", Double.parseDouble(wayPoint.getLng()));
