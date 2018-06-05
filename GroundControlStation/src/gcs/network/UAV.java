@@ -153,6 +153,7 @@ public class UAV implements Cloneable {
 			// land 마크가 활성화 되어있을 때만 자동 미션 진행
 			if(statusText.equals("Disarming motors") && AppMainController.instance2.checkLand && AppMainController.instance2.uploadState) {
 				AppMainController.instance2.checkLand = false;
+				AppMainController.instance2.changeColor();
 				AppMainController.instance2.uploadState = false;
 				
 				// 미션 재생성

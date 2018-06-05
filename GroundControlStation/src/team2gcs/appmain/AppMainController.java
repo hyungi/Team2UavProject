@@ -465,12 +465,16 @@ public class AppMainController implements Initializable{
 	public static int lastNum = -999;
 	public void handleMissionLand() {
 		checkLand = !checkLand;
-		if(checkLand) btnMissionLand.setStyle("-fx-text-fill: #55FF55;");
-		else btnMissionLand.setStyle("-fx-text-fill: white;");
+		changeColor();
 		Platform.runLater(() -> {
 			jsproxy.call("landMake");
 		});
 		statusMessage("Land made.");
+	}
+	
+	public void changeColor() {
+		if(checkLand) btnMissionLand.setStyle("-fx-text-fill: #55FF55;");
+		else btnMissionLand.setStyle("-fx-text-fill: white;");
 	}
 	
 	//미션 Arm
