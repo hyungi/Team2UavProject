@@ -160,6 +160,7 @@ public class UAV implements Cloneable {
 					if(wp.no > AppMainController.instance2.landNum) {
 						wp.setNo(i++);
 						tList.add(wp);
+						AppMainController.instance2.lastNum = wp.getNo();
 					}
 				}
 				missionUpload(tList);
@@ -176,6 +177,12 @@ public class UAV implements Cloneable {
 			if(misstionState && altitude >= 9.5) {
 				missionStart();
 				misstionState = false;
+				AppMainController.instance2.landNum = -999;
+			}
+			
+			if(!misstionState && statusText.equals("Reached command #"+AppMainController.instance2.lastNum)) {
+				AppMainController.instance2.handleLand();
+				AppMainController.instance2.lastNum = -999;
 			}
 			
 			AppMainController.instance2.batterySet(batteryLevel);

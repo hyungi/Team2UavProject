@@ -311,16 +311,11 @@
                                              <center>
                                                 <GridPane alignment="CENTER" prefHeight="81.0" prefWidth="142.0" BorderPane.alignment="CENTER">
                                                    <children>
-                                                      <Button mnemonicParsing="false" text="Cargo WP">
-                                                         <GridPane.margin>
-                                                            <Insets bottom="20.0" left="23.0" />
-                                                         </GridPane.margin>
-                                                      </Button>
-                                                      <Button fx:id="btnCargoStart" mnemonicParsing="false" text="Cargo Start" GridPane.columnIndex="1" />
-                                                      <Button fx:id="btnCargoStop" mnemonicParsing="false" text="Cargo Stop" GridPane.columnIndex="2" />
+                                                      <Button fx:id="btnCargoStart" mnemonicParsing="false" text="Cargo Start" />
+                                                      <Button fx:id="btnCargoStop" mnemonicParsing="false" text="Cargo Stop" GridPane.columnIndex="1" />
                                                    </children>
                                                    <columnConstraints>
-                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                       <ColumnConstraints />
                                                       <ColumnConstraints />
                                                    </columnConstraints>
@@ -383,7 +378,7 @@
                                              </GridPane.margin>
                                           </Button>
                                           <Button fx:id="btnMissionArm" mnemonicParsing="false" prefWidth="100.0" text="Arm" GridPane.rowIndex="3" />
-                                          <Button fx:id="btnMissionLand" mnemonicParsing="false" prefWidth="100.0" text="Land" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <Button fx:id="btnMissionLand" mnemonicParsing="false" prefWidth="100.0" text="CargoWP" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                           <Button fx:id="btnMissionTime" mnemonicParsing="false" prefWidth="100.0" text="Time" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                                        </children>
                                        <columnConstraints>
