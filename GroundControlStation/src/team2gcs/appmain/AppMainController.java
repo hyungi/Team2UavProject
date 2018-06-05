@@ -459,12 +459,16 @@ public class AppMainController implements Initializable{
 	public static int lastNum = -999;
 	public void handleMissionLand() {
 		checkLand = !checkLand;
-		if(checkLand) btnMissionLand.setStyle("-fx-text-fill: #55FF55;");
-		else btnMissionLand.setStyle("-fx-text-fill: white;");
+		changeColor();
 		Platform.runLater(() -> {
 			jsproxy.call("landMake");
 		});
 		statusMessage("Land made.");
+	}
+	
+	public void changeColor() {
+		if(checkLand) btnMissionLand.setStyle("-fx-text-fill: #55FF55;");
+		else btnMissionLand.setStyle("-fx-text-fill: white;");
 	}
 	
 	//홈위치WP
@@ -510,9 +514,9 @@ public class AppMainController implements Initializable{
 			double x2 = Double.parseDouble(list.get(i+1).getLng());
 			double y2 = Double.parseDouble(list.get(i+1).getLat());
 			
-			//Noflyzone x,y,r이 입력 되였냐
+			//noflyzone x,y,r이 입력 되였냐
 			if(NoFlyZoneController.instance.x!=0&&NoFlyZoneController.instance.y!=0&&NoFlyZoneController.instance.r!=0) {
-				//Noflyzone안에 wp선이 들어 오냐
+				//noflyzone안에 wp선이 들어 오냐
 				if(Noflyzone.ifNoflyzone(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,x1,y1,x2,y2)<=NoFlyZoneController.instance.r*1.1) {
 					// 시계 or 반시계
 					Noflyzone.rotationCase(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,x1,y1,x2,y2);
