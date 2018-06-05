@@ -146,7 +146,7 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnBottom;
 	@FXML private Button btnLeft;
 	@FXML private Button btnHeadingToNorth;
-	@FXML private Button btnMissionArm;
+	@FXML private Button btnMissionHomeWP;
 	@FXML private Button btnMissionLand;
 	@FXML private Button btnMissionTime;
 	
@@ -162,12 +162,7 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnNoflyzoneSet;
 	@FXML private Button btnNoflyzoneDelete;
 	@FXML private Button btnNoflyzoneActivate;
-	private int s;
-	private int e;
-	private double angle1;
-	private double angle2;
 	public boolean rotation;
-	private int nono;
 	
 	//화물
 	@FXML private Button btnCargoStart;
@@ -441,7 +436,7 @@ public class AppMainController implements Initializable{
 		btnCargoStart.setOnAction((event)->{handleCargoStart(event);});
 		btnCargoStop.setOnAction((event)->{handleCargoStop();});
 		btnNoflyzoneActivate.setOnAction((event)->{handleNoflyzoneActivate(event);});
-		btnMissionArm.setOnAction((event)->{handleMissionArm();});
+		btnMissionHomeWP.setOnAction((event)->{handleMissionHomeWP();});
 		btnMissionLand.setOnAction((event)->{handleMissionLand();});
 		btnMissionTime.setOnAction((event)->{handleMissionTime();});
 		btnTop.setOnAction((event)->{handleBtnTop(event);});
@@ -477,12 +472,24 @@ public class AppMainController implements Initializable{
 		else btnMissionLand.setStyle("-fx-text-fill: white;");
 	}
 	
-	//미션 Arm
-	public void handleMissionArm() {
-		Platform.runLater(() -> {
-			jsproxy.call("armMake");
+	//홈위치WP
+	public void handleMissionHomeWP() {
+		WayPoint wp = new WayPoint();
+		wp.no=list.size()+1;
+		wp.kind = "waypoint";
+		wp.setLat(Network.getUav().homeLat+"");
+		wp.setLng(Network.getUav().homeLng+"");
+		wp.getButton().setOnAction((event)->{
+			list.remove(wp.no-1);
+			for(WayPoint wp1 : list) {
+				if(wp1.no>wp.no) wp1.no--;
+			}
+			setTableViewItems(list);
+			setMission(list);
 		});
-		statusMessage("Arm made.");
+		list.add(list.size(),wp);
+		setMission(list);
+		setTableViewItems(list);
 	}
 	
 	public void handleNoflyzoneActivate(ActionEvent event) {		
@@ -539,8 +546,8 @@ public class AppMainController implements Initializable{
 				list.remove(0);
 			}
 		}
-		setTableViewItems(list);
 		setMission(list);
+		setTableViewItems(list);
 	}
 	
 	public void handleBtnTop(ActionEvent e) {
@@ -1033,7 +1040,6 @@ public class AppMainController implements Initializable{
 					jsonObject.put("lng", Double.parseDouble(wayPoint.getLng()));
 				} else if(wayPoint.kind.equals("land")) {
 					landNum = wayPoint.no;
-					System.out.println("landNum::::::::::::::::::::::"+landNum);
 					jsonObject.put("kind",  wayPoint.kind);
 					jsonObject.put("lat", Double.parseDouble(wayPoint.getLat()));
 					jsonObject.put("lng", Double.parseDouble(wayPoint.getLng()));
