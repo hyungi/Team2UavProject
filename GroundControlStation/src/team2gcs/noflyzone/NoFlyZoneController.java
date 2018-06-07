@@ -32,6 +32,7 @@ public class NoFlyZoneController implements Initializable{
 		initButton();
 	}
 	public void initButton() {
+		btnOk.setDefaultButton(true);
 		btnOk.setOnAction((event)->{handleOk(event);});
 	}
 	public void handleOk(ActionEvent event) {
