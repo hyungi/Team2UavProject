@@ -10,26 +10,11 @@
 
 <VBox prefHeight="740.0" prefWidth="350.0" spacing="40.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team2gcs.camera.viewer.MjpgStreamViewerController">
    <children>
-<<<<<<< HEAD
       <Button fx:id="captureBtn" alignment="CENTER" mnemonicParsing="false" prefHeight="47.0" prefWidth="350.0" style="-fx-background-radius: 0;" text="Capture" textAlignment="CENTER">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-=======
-      <HBox alignment="CENTER" prefHeight="30.0" spacing="20.0">
-         <children>
-            <Label fx:id="captureLabel" alignment="CENTER" prefWidth="150.0" text="Capture" textFill="WHITE" HBox.hgrow="ALWAYS">
-               <font>
-                  <Font size="18.0" />
-               </font></Label>
-            <Label fx:id="imgdownloadLabel" alignment="CENTER" prefWidth="150.0" text="Download" textFill="WHITE" HBox.hgrow="ALWAYS">
-               <font>
-                  <Font size="18.0" />
-               </font></Label>
-         </children>
-      </HBox>
->>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
       <Canvas fx:id="canvas" height="240.0" width="320.0" />
       <Canvas fx:id="canvas2" height="240.0" width="320.0" />
    </children>
