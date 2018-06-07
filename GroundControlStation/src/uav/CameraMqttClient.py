@@ -102,10 +102,6 @@ def on_message(client, userdata, msg):
         command = msg.payload
         if command == 'next' and jpg is not None:
             mqtt_client.publish(uav_pub_topic, jpg) 
-        json = msg.payload
-        json_dict = simplejson.loads(json)
-        command = json_dict["command"]
-        if command == "caputer_image": caputer_image()
     except Exception as e:
         if debug: print(">>>", type(e), "on_message():", e)
 #------------------------------------------------------

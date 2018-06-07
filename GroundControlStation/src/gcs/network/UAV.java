@@ -53,7 +53,6 @@ public class UAV implements Cloneable {
 	
 	public boolean connected;
 	private MqttClient mqttClient;
-	public byte[] imgbyte;
 
 	public UAV() {
 	}
@@ -136,7 +135,6 @@ public class UAV implements Cloneable {
 			groundSpeed = jsonObject.getDouble("groundspeed");
 			homeLat = jsonObject.getDouble("homeLat");
 			homeLng = jsonObject.getDouble("homeLng");
-			imgbyte = jsonObject.getString("caputer_image").toString().getBytes();
 			
 			if(armed) AppMainController.instance2.statusMessage("UAV Armed.");
 			else if(!armed) AppMainController.instance2.statusMessage("UAV Disarmed.");
