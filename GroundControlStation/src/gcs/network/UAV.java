@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import gcs.mission.FencePoint;
 import gcs.mission.WayPoint;
 import javafx.application.Platform;
+import javafx.scene.image.WritableImage;
 import team2gcs.appmain.AppMainController;
 import team2gcs.dialog.altdialogController;
 import team2gcs.dialog.timeDialogController;
