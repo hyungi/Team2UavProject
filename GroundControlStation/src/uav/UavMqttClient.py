@@ -18,12 +18,12 @@ import simplejson
 debug = True
 
 # #Autopilot(FC-펌웨어)과 연결----------------------------------jdh------------------------------
-vehicle = connect("udp:192.168.3.217:14560", wait_ready=True)
+vehicle = connect("udp:192.168.3.177:14560", wait_ready=True)
 # vehicle = connect('udp:127.0.0.1:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
 # vehicle = connect('/dev/ttyS0',wait_ready = True,baud57600) #라즈베리파이에서 실행시 
 
 #MQTT Broker와 연결하기 위한 정보-----------------------------
-mqtt_ip = "192.168.3.217"
+mqtt_ip = "192.168.3.177"
 #mqtt_ip = "106.253.56.122"
 #mqtt_ip = "192.168.3.16"
 mqtt_port = 1883
@@ -643,13 +643,15 @@ def change_heading(json_dict):
     vehicle.send_mavlink(msg)
 #------------------------------------------------------
     
-# def cargoStart():
+def cargoStart():
+    pass
 #     gpio.output(23,1)
 #     gpio.output(24,1)
 #     gpio.output(16,1)
 #     gpio.output(18,1)
     
-# def cargoStop():
+def cargoStop():
+    pass
 #     gpio.output(23,0)
 #     gpio.output(24,0)
 #     gpio.output(16,0)

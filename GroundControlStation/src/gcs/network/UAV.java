@@ -13,7 +13,10 @@ import org.json.JSONObject;
 
 import gcs.mission.FencePoint;
 import gcs.mission.WayPoint;
+import javafx.application.Platform;
 import team2gcs.appmain.AppMainController;
+import team2gcs.dialog.altdialogController;
+import team2gcs.dialog.timeDialogController;
 import team2gcs.leftpane.leftPaneController;
 
 public class UAV implements Cloneable {
@@ -173,15 +176,25 @@ public class UAV implements Cloneable {
 				missionUpload(tList);
 //				 DisArmed 되면 화물 내림
 				AppMainController.instance2.handleCargoStop();
-				Thread.sleep(1000);
-				arm();
-				Thread.sleep(2000);
-				// 다시 Armed 후 TakeOff 진행				
-				takeoff(10);
-				misstionState = true;
+//				System.out.println("arm하기 전: " + timeDialogController.missionTime);
+				Thread thread = new Thread(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							Thread.sleep(timeDialogController.missionTime*1000);
+							arm();
+							Thread.sleep(timeDialogController.missionTime*500);
+							// 다시 Armed 후 TakeOff 진행
+							AppMainController.instance2.statusMessage("UAV Takeoff " + altdialogController.alt + "m.");
+							takeoff(altdialogController.alt);
+							misstionState = true;
+						} catch (InterruptedException e) {e.printStackTrace();}
+					}
+				});
+				thread.start();
 			}
 			
-			if(misstionState && altitude >= 9.5) {
+			if(misstionState && altitude >= altdialogController.alt -0.5) {
 				missionStart();
 				misstionState = false;
 				AppMainController.instance2.landNum = -999;

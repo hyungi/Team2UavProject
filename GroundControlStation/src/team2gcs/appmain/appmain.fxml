@@ -483,18 +483,18 @@
                                        <children>
                                           <Label text="Mission" textFill="WHITE">
                                              <HBox.margin>
-                                                <Insets />
+                                                <Insets right="80.0" />
                                              </HBox.margin>
                                              <font>
                                                 <Font size="15.0" />
                                              </font>
                                           </Label>
-                                          <TextField fx:id="txtAlt" alignment="CENTER" prefHeight="23.0" prefWidth="95.0" style="-fx-background-color: black; -fx-text-fill: white; -fx-background-radius: 0;" text="20">
+                                          <TextField fx:id="txtAlt" alignment="CENTER" prefHeight="23.0" prefWidth="75.0" style="-fx-background-color: black; -fx-text-fill: white; -fx-background-radius: 0;" text="20">
                                              <HBox.margin>
-                                                <Insets left="60.0" />
+                                                <Insets left="90.0" />
                                              </HBox.margin>
                                           </TextField>
-                                          <Label text="  m" textFill="WHITE">
+                                          <Label alignment="CENTER_RIGHT" text="  m" textFill="WHITE">
                                              <font>
                                                 <Font size="15.0" />
                                              </font>
@@ -750,19 +750,23 @@
                                     <Button fx:id="btnTop" maxHeight="45.0" maxWidth="1.7976931348623157E308" minHeight="45.0" minWidth="50.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="50.0" style="-fx-padding: 10 10 10 20" text="N" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                        <font>
                                           <Font size="17.0" />
-                                       </font></Button>
+                                       </font>
+                                    </Button>
                                     <Button fx:id="btnBottom" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" minWidth="50.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="50.0" style="-fx-padding: 10 10 10 20" text="S" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                        <font>
                                           <Font size="17.0" />
-                                       </font></Button>
+                                       </font>
+                                    </Button>
                                     <Button fx:id="btnLeft" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-padding: 10 10 10 20" text="W" GridPane.rowIndex="2">
                                        <font>
                                           <Font size="17.0" />
-                                       </font></Button>
+                                       </font>
+                                    </Button>
                                     <Button fx:id="btnRight" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-padding: 10 10 10 20" text="E" GridPane.columnIndex="4" GridPane.rowIndex="2">
                                        <font>
                                           <Font size="17.0" />
-                                       </font></Button>
+                                       </font>
+                                    </Button>
                                  </children>
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
