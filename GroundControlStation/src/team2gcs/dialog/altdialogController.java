@@ -1,4 +1,4 @@
-package team2gcs.altdialog;
+package team2gcs.dialog;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -34,12 +34,12 @@ public class altdialogController implements Initializable {
 		if(Network.getUav().altitude > 1.5) {
 			alt = Integer.valueOf(txtAlt.getText());
 			Network.getUav().changeAlt(alt);
-			AppMainController.instance2.statusMessage("Altitude " + alt + "M.");
+			AppMainController.instance2.statusMessage("Change altitude " + alt + "m.");
 			AppMainController.altStage.close();
 		} else if(Network.getUav().altitude < 1.5) {
 			alt = Integer.valueOf(txtAlt.getText());
 			Network.getUav().takeoff(alt);
-			AppMainController.instance2.statusMessage("UAV Takeoff.");
+			AppMainController.instance2.statusMessage("UAV Takeoff " + altdialogController.alt + "m.");
 			AppMainController.takeoffStart = true;
 			AppMainController.altStage.close();
 		}

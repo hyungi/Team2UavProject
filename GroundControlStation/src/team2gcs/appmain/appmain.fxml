@@ -483,18 +483,18 @@
                                        <children>
                                           <Label text="Mission" textFill="WHITE">
                                              <HBox.margin>
-                                                <Insets />
+                                                <Insets right="80.0" />
                                              </HBox.margin>
                                              <font>
                                                 <Font size="15.0" />
                                              </font>
                                           </Label>
-                                          <TextField fx:id="txtAlt" alignment="CENTER" prefHeight="23.0" prefWidth="95.0" style="-fx-background-color: black; -fx-text-fill: white; -fx-background-radius: 0;" text="20">
+                                          <TextField fx:id="txtAlt" alignment="CENTER" prefHeight="23.0" prefWidth="75.0" style="-fx-background-color: black; -fx-text-fill: white; -fx-background-radius: 0;" text="20">
                                              <HBox.margin>
-                                                <Insets left="60.0" />
+                                                <Insets left="90.0" />
                                              </HBox.margin>
                                           </TextField>
-                                          <Label text="  m" textFill="WHITE">
+                                          <Label alignment="CENTER_RIGHT" text="  m" textFill="WHITE">
                                              <font>
                                                 <Font size="15.0" />
                                              </font>
