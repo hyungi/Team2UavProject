@@ -1045,11 +1045,7 @@ public class AppMainController implements Initializable{
 					jsonObject.put("kind",  wayPoint.kind);
 					jsonObject.put("lat", Double.parseDouble(wayPoint.getLat()));
 					jsonObject.put("lng", Double.parseDouble(wayPoint.getLng()));
-				} else if(wayPoint.kind.equals("arm")) {
-					jsonObject.put("kind",  wayPoint.kind);
-					jsonObject.put("lat", Double.parseDouble(wayPoint.getLat()));
-					jsonObject.put("lng", Double.parseDouble(wayPoint.getLng()));
-				}
+				} 
 				jsonArray.put(jsonObject);
 		}
 			String strMissionArr = jsonArray.toString();
