@@ -12,6 +12,57 @@
 
 <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team2gcs.appmain.AppMainController">
    <children>
+      <BorderPane fx:id="loginBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0">
+		   <center>
+		      <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+		         <children>
+		            <ImageView fx:id="imgView" blendMode="DARKEN" fitHeight="1800.0" fitWidth="3200.0" pickOnBounds="true">
+		               <image>
+		                  <Image url="@../images/bgbg.png" />
+		               </image>
+		            </ImageView>
+		            <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="460.0" prefWidth="350.0" style="-fx-background-color: black; -fx-opacity: 0.3;" />
+		            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="460.0" prefWidth="350.0" style="-fx-opacity: 1;">
+		               <children>
+		                  <ImageView fitHeight="78.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
+		                     <image>
+		                        <Image url="@../images/logo_white.png" />
+		                     </image>
+		                     <VBox.margin>
+		                        <Insets bottom="50.0" />
+		                     </VBox.margin></ImageView>
+		                        <Label fx:id="loginLabel" alignment="CENTER" prefHeight="17.0" prefWidth="229.0" textFill="WHITE" />
+		                  <TextField fx:id="txtIP" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="240.0" promptText="MQTT Broker IP" style="-fx-background-color: #515253; -fx-opacity: 0.8; -fx-background-radius: 20;" text="localhost">
+		                     <VBox.margin>
+		                        <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+		                     </VBox.margin>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+		                  </TextField>
+		                  <TextField fx:id="txtPort" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="240.0" promptText="MQTT Broker Port" style="-fx-background-color: #515253; -fx-opacity: 0.8; -fx-background-radius: 20;" text="1883">
+                           <font>
+                              <Font size="15.0" />
+                           </font></TextField>
+		                  <Button fx:id="btnConnect" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="240.0" style="-fx-background-radius: 20; -fx-background-color: #73a856;" text="CONNECT" textFill="WHITE">
+		                     <font>
+		                        <Font name="System Bold" size="20.0" />
+		                     </font>
+		                     <VBox.margin>
+		                        <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+		                     </VBox.margin>
+		                  </Button>
+		                  <Button fx:id="btnCancle" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="240.0" style="-fx-background-color: transparent;" text="Want to Exit?" textFill="#ffffffb2">
+		                     <font>
+		                        <Font name="System Bold" size="15.0" />
+		                     </font>
+		                  </Button>
+		               </children>
+		            </VBox>
+		         </children>
+		      </StackPane>
+		   </center>
+		</BorderPane>
       <BorderPane fx:id="mainBorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="731.25" prefWidth="1300.0" style="-fx-background-color: #000000;">
          <center>
             <StackPane BorderPane.alignment="CENTER">
@@ -73,18 +124,18 @@
                               <Insets />
                            </HBox.margin>
                         </AnchorPane>
-                        <BorderPane prefHeight="798.0" prefWidth="350.0" translateX="-200.0">
+                        <BorderPane prefHeight="800.0" prefWidth="350.0" translateX="-200.0">
                            <top>
-                              <HBox prefHeight="100.0" prefWidth="350.0" spacing="1.0" BorderPane.alignment="CENTER">
+                              <HBox prefHeight="60.0" prefWidth="350.0" spacing="1.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Label fx:id="rightStatusLabel" alignment="CENTER" prefHeight="100.0" prefWidth="175.0" text="Status" HBox.hgrow="ALWAYS">
+                                    <Label fx:id="rightStatusLabel" alignment="CENTER" prefHeight="60.0" prefWidth="175.0" text="Status" HBox.hgrow="ALWAYS">
                                        <font>
-                                          <Font size="20.0" />
+                                          <Font size="25.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="rightCameraLabel" alignment="CENTER" prefHeight="100.0" prefWidth="174.5" text="Camera" HBox.hgrow="ALWAYS">
+                                    <Label fx:id="rightCameraLabel" alignment="CENTER" prefHeight="60.0" prefWidth="175.0" text="Camera" HBox.hgrow="ALWAYS">
                                        <font>
-                                          <Font size="20.0" />
+                                          <Font size="25.0" />
                                        </font>
                                     </Label>
                                  </children>
@@ -95,15 +146,15 @@
                                  <children>
                                     <VBox fx:id="rightStatusPane" prefHeight="200.0" prefWidth="100.0">
                                        <children>
-                                          <Button fx:id="rightDeleteBtn" alignment="CENTER" mnemonicParsing="false" prefHeight="47.0" prefWidth="350.0" style="-fx-background-radius: 0;" text="Delete all" textAlignment="CENTER">
+                                          <Button fx:id="rightDeleteBtn" alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="350.0" style="-fx-background-radius: 0;" text="Delete all" textAlignment="CENTER">
                                              <font>
-                                                <Font size="16.0" />
+                                                <Font size="18.0" />
                                              </font>
                                           </Button>
-                                          <ListView fx:id="statusListView" prefHeight="579.0" prefWidth="350.0" />
+                                          <ListView fx:id="statusListView" prefHeight="710.0" prefWidth="350.0" />
                                        </children>
                                     </VBox>
-                                    <AnchorPane fx:id="rightCameraPane" prefHeight="695.0" prefWidth="350.0" visible="false" />
+                                    <AnchorPane fx:id="rightCameraPane" prefHeight="650.0" prefWidth="350.0" visible="false" />
                                  </children>
                               </StackPane>
                            </center>
@@ -116,7 +167,7 @@
                            <children>
                               <Label fx:id="bottomOpenLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="35" prefWidth="200.0" text="Open Mission" textAlignment="CENTER" textFill="WHITE">
                                  <font>
-                                    <Font name="System Bold" size="16.0" />
+                                    <Font name="System Bold" size="20.0" />
                                  </font>
                               </Label>
                            </children>
@@ -140,7 +191,7 @@
                                                    <children>
                                                       <Button fx:id="btnFenceUpload" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Upload" GridPane.columnIndex="1">
                                                          <font>
-                                                            <Font name="System Bold" size="12.0" />
+                                                            <Font name="System Bold" size="16.0" />
                                                          </font>
                                                          <GridPane.margin>
                                                             <Insets left="5.0" />
@@ -148,7 +199,7 @@
                                                       </Button>
                                                       <Button fx:id="btnFenceSet" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Set">
                                                          <font>
-                                                            <Font name="System Bold" size="12.0" />
+                                                            <Font name="System Bold" size="16.0" />
                                                          </font>
                                                          <GridPane.margin>
                                                             <Insets left="3.0" />
@@ -156,7 +207,7 @@
                                                       </Button>
                                                       <Button fx:id="btnFenceDownload" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Download" GridPane.columnIndex="2">
                                                          <font>
-                                                            <Font name="System Bold" size="12.0" />
+                                                            <Font name="System Bold" size="15.0" />
                                                          </font>
                                                          <GridPane.margin>
                                                             <Insets left="5.0" right="3.0" />
@@ -164,7 +215,7 @@
                                                       </Button>
                                                       <Button fx:id="btnFenceDelete" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text=" Delete All" GridPane.rowIndex="1">
                                                          <font>
-                                                            <Font name="System Bold" size="12.0" />
+                                                            <Font name="System Bold" size="15.0" />
                                                          </font>
                                                          <GridPane.margin>
                                                             <Insets left="3.0" />
@@ -172,7 +223,7 @@
                                                       </Button>
                                                       <Button fx:id="btnFenceActivate" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Activate" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                          <font>
-                                                            <Font name="System Bold" size="12.0" />
+                                                            <Font name="System Bold" size="14.0" />
                                                          </font>
                                                          <GridPane.margin>
                                                             <Insets left="5.0" />
@@ -180,7 +231,7 @@
                                                       </Button>
                                                       <Button fx:id="btnFenceDeactivate" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Deactivate" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                                          <font>
-                                                            <Font name="System Bold" size="12.0" />
+                                                            <Font name="System Bold" size="14.0" />
                                                          </font>
                                                          <GridPane.margin>
                                                             <Insets left="5.0" right="3.0" />
@@ -209,6 +260,9 @@
                                                    <padding>
                                                       <Insets left="24.0" />
                                                    </padding>
+                                                   <font>
+                                                      <Font size="15.0" />
+                                                   </font>
                                                 </Label>
                                              </top>
                                              <HBox.margin>
@@ -219,8 +273,14 @@
                                              <center>
                                                 <GridPane prefHeight="89.0" prefWidth="70.0" BorderPane.alignment="CENTER">
                                                    <children>
-                                                      <Button fx:id="btnCargoStart" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Start" />
-                                                      <Button fx:id="btnCargoStop" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Stop" GridPane.rowIndex="1" />
+                                                      <Button fx:id="btnCargoStart" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Start">
+                                                         <font>
+                                                            <Font name="System Bold" size="16.0" />
+                                                         </font></Button>
+                                                      <Button fx:id="btnCargoStop" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Stop" GridPane.rowIndex="1">
+                                                         <font>
+                                                            <Font name="System Bold" size="16.0" />
+                                                         </font></Button>
                                                    </children>
                                                    <columnConstraints>
                                                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="80.0" />
@@ -238,7 +298,10 @@
                                                 <Insets top="5.0" />
                                              </padding>
                                              <top>
-                                                <Label text="Cargo" textFill="WHITE" BorderPane.alignment="CENTER_LEFT" />
+                                                <Label text="Cargo" textFill="WHITE" BorderPane.alignment="CENTER_LEFT">
+                                                   <font>
+                                                      <Font size="15.0" />
+                                                   </font></Label>
                                              </top>
                                           </BorderPane>
                                        </children>
@@ -254,7 +317,7 @@
                                                    <children>
                                                       <Button fx:id="btnNoflyzoneSet" maxHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Set">
                                                          <font>
-                                                            <Font name="System Bold" size="12.0" />
+                                                            <Font name="System Bold" size="16.0" />
                                                          </font>
                                                          <GridPane.margin>
                                                             <Insets left="1.0" />
@@ -262,15 +325,15 @@
                                                       </Button>
                                                       <Button fx:id="btnNoflyzoneActivate" maxHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Activate" GridPane.columnIndex="1">
                                                          <font>
-                                                            <Font name="System Bold" size="12.0" />
+                                                            <Font name="System Bold" size="16.0" />
                                                          </font>
                                                          <GridPane.margin>
                                                             <Insets left="6.0" />
                                                          </GridPane.margin>
                                                       </Button>
-                                                      <Button fx:id="btnNoflyzoneDelete" maxHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Delete" GridPane.columnIndex="2">
+                                                      <Button fx:id="btnNoflyzoneDelete" maxHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Deactivate" GridPane.columnIndex="2">
                                                          <font>
-                                                            <Font name="System Bold" size="12.0" />
+                                                            <Font name="System Bold" size="14.0" />
                                                          </font>
                                                          <GridPane.margin>
                                                             <Insets left="7.0" />
@@ -299,6 +362,9 @@
                                                    <BorderPane.margin>
                                                       <Insets left="24.0" />
                                                    </BorderPane.margin>
+                                                   <font>
+                                                      <Font size="15.0" />
+                                                   </font>
                                                 </Label>
                                              </top>
                                           </BorderPane>
@@ -319,34 +385,70 @@
                                              <GridPane.margin>
                                                 <Insets />
                                              </GridPane.margin>
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font>
                                           </Button>
-                                          <Button fx:id="btnMissionDownload" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Download" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                          <Button fx:id="btnMissionRead" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Read" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Button fx:id="btnMissionDownload" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Download" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font></Button>
+                                          <Button fx:id="btnMissionRead" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Read" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font></Button>
                                           <Button fx:id="btnMissionDelete" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Delete " GridPane.rowIndex="1">
                                              <GridPane.margin>
                                                 <Insets />
                                              </GridPane.margin>
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font>
                                           </Button>
-                                          <Button fx:id="btnMissionUpload" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Upload" GridPane.columnIndex="2" />
-                                          <Button fx:id="btnMissionSet" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Set" GridPane.columnIndex="1" />
+                                          <Button fx:id="btnMissionUpload" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Upload" GridPane.columnIndex="2">
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font></Button>
+                                          <Button fx:id="btnMissionSet" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Set" GridPane.columnIndex="1">
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font></Button>
                                           <Button fx:id="btnMissionLoi" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Loi" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                              <GridPane.margin>
                                                 <Insets />
                                              </GridPane.margin>
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font>
                                           </Button>
                                           <Button fx:id="btnMissionJump" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Jump" GridPane.rowIndex="2">
                                              <GridPane.margin>
                                                 <Insets />
                                              </GridPane.margin>
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font>
                                           </Button>
                                           <Button fx:id="btnMissionGoto" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Go to">
                                              <GridPane.margin>
                                                 <Insets />
                                              </GridPane.margin>
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font>
                                           </Button>
-                                          <Button fx:id="btnMissionHomeWP" mnemonicParsing="false" prefWidth="100.0" text="HomeWP" GridPane.rowIndex="3" />
-                                          <Button fx:id="btnMissionLand" mnemonicParsing="false" prefWidth="100.0" text="CargoWP" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <Button fx:id="btnMissionTime" mnemonicParsing="false" prefWidth="100.0" text="Time" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                          <Button fx:id="btnMissionHomeWP" mnemonicParsing="false" prefWidth="100.0" text="HomeWP" GridPane.rowIndex="3">
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font></Button>
+                                          <Button fx:id="btnMissionLand" mnemonicParsing="false" prefWidth="100.0" text="CargoWP" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font></Button>
+                                          <Button fx:id="btnMissionTime" mnemonicParsing="false" prefWidth="100.0" text="Time" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font></Button>
                                        </children>
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -383,12 +485,20 @@
                                              <HBox.margin>
                                                 <Insets />
                                              </HBox.margin>
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
                                           </Label>
-                                          <TextField fx:id="txtAlt" prefHeight="23.0" prefWidth="210.0" style="-fx-background-color: black; -fx-text-fill: white; -fx-background-radius: 0;" text="20">
+                                          <TextField fx:id="txtAlt" alignment="CENTER" prefHeight="23.0" prefWidth="95.0" style="-fx-background-color: black; -fx-text-fill: white; -fx-background-radius: 0;" text="20">
                                              <HBox.margin>
                                                 <Insets left="60.0" />
                                              </HBox.margin>
                                           </TextField>
+                                          <Label text="  m" textFill="WHITE">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Label>
                                        </children>
                                        <padding>
                                           <Insets top="5.0" />
@@ -407,25 +517,13 @@
             </StackPane>
          </center>
          <top>
-            <VBox maxHeight="-Infinity" prefHeight="120.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <VBox maxHeight="-Infinity" prefHeight="60.0" prefWidth="1600.0" BorderPane.alignment="CENTER">
                <children>
-                  <BorderPane prefHeight="30.0" prefWidth="200.0">
-                     <center>
-                        <Label fx:id="currtimeLabel" text="Label" textFill="WHITE" BorderPane.alignment="CENTER_RIGHT">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                           <BorderPane.margin>
-                              <Insets right="7.0" />
-                           </BorderPane.margin>
-                        </Label>
-                     </center>
-                  </BorderPane>
-                  <BorderPane maxWidth="1.7976931348623157E308" prefHeight="90.0" style="-fx-background-color: #FFFFFF;">
+                  <BorderPane maxWidth="1.7976931348623157E308" prefHeight="60.0" style="-fx-background-color: #000000;">
                      <center>
                         <HBox alignment="CENTER" spacing="5.0" BorderPane.alignment="CENTER">
                            <children>
-                              <ImageView fx:id="logoImage1" fitHeight="40.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="logoImage1" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/그림1.png" />
                                  </image>
@@ -433,22 +531,22 @@
                                     <Insets left="10.0" />
                                  </HBox.margin>
                               </ImageView>
-                              <Label alignment="CENTER" prefWidth="80.0" text="Home">
+                              <Label alignment="CENTER" prefWidth="80.0" text="Home" textFill="WHITE">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
                               <VBox maxHeight="-Infinity" prefHeight="50.0" prefWidth="160.0">
                                  <children>
-                                    <Label fx:id="homeLatLabel" prefHeight="20.0" prefWidth="154.0" text="Label">
+                                    <Label fx:id="homeLatLabel" prefHeight="20.0" prefWidth="154.0" text="Label" textFill="WHITE">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
                                        <VBox.margin>
-                                          <Insets bottom="4.0" />
+                                          <Insets bottom="2.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="homeLngLabel" prefHeight="20.0" prefWidth="154.0" text="Label">
+                                    <Label fx:id="homeLngLabel" prefHeight="20.0" prefWidth="154.0" text="Label" textFill="WHITE">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
@@ -461,12 +559,12 @@
                                     <Insets right="10.0" />
                                  </HBox.margin>
                               </VBox>
-                              <ImageView fx:id="logoImage2" fitHeight="40.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="logoImage2" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/그림2.png" />
                                  </image>
                               </ImageView>
-                              <Label prefWidth="100.0" text="Location">
+                              <Label prefWidth="100.0" text="Location" textFill="WHITE">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -476,15 +574,15 @@
                               </Label>
                               <VBox maxHeight="-Infinity" prefHeight="50.0" prefWidth="160.0">
                                  <children>
-                                    <Label fx:id="locationLatLabel" maxHeight="-Infinity" prefHeight="20.0" prefWidth="154.0" text="Label">
+                                    <Label fx:id="locationLatLabel" maxHeight="-Infinity" prefHeight="20.0" prefWidth="154.0" text="Label" textFill="WHITE">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
                                        <VBox.margin>
-                                          <Insets bottom="4.0" />
+                                          <Insets bottom="2.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="locationLngLabel" maxHeight="-Infinity" prefHeight="20.0" prefWidth="154.0" text="Label">
+                                    <Label fx:id="locationLngLabel" maxHeight="-Infinity" prefHeight="20.0" prefWidth="154.0" text="Label" textFill="WHITE">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
@@ -497,7 +595,7 @@
                                     <Insets right="10.0" />
                                  </HBox.margin>
                               </VBox>
-                              <ImageView fx:id="logoImage3" fitHeight="40.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="logoImage3" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/그림3.png" />
                                  </image>
@@ -505,7 +603,7 @@
                                     <Insets left="10.0" />
                                  </HBox.margin>
                               </ImageView>
-                              <Label prefHeight="26.0" prefWidth="85.0" text="Battery">
+                              <Label prefHeight="26.0" prefWidth="85.0" text="Battery" textFill="WHITE">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -513,7 +611,7 @@
                                     <Insets left="12.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="batteryLabel" prefHeight="20.0" prefWidth="70.0" text="Label">
+                              <Label fx:id="batteryLabel" prefHeight="20.0" prefWidth="70.0" text="Label" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -521,12 +619,12 @@
                                     <Insets right="10.0" />
                                  </HBox.margin>
                               </Label>
-                              <ImageView fx:id="logoImage31" fitHeight="40.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="logoImage31" fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/그림4.png" />
                                  </image>
                               </ImageView>
-                              <Label prefHeight="26.0" prefWidth="76.0" text="Signal">
+                              <Label prefHeight="26.0" prefWidth="76.0" text="Signal" textFill="WHITE">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -534,7 +632,7 @@
                                     <Insets left="12.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="signalLabel" prefWidth="105.0" text="Label">
+                              <Label fx:id="signalLabel" prefWidth="105.0" text="Label" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -542,15 +640,27 @@
                                     <Insets right="10.0" />
                                  </HBox.margin>
                               </Label>
+                              <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label fx:id="currtimeLabel" text="Label" textFill="WHITE">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
                            </children>
                         </HBox>
                      </center>
                      <left>
                         <VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="90.0" BorderPane.alignment="CENTER">
                            <children>
-                              <ImageView fx:id="logoImage" fitHeight="76.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="logoImage" fitHeight="44.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../images/logo_black.png" />
+                                    <Image url="@../images/logo_white.png" />
                                  </image>
                                  <VBox.margin>
                                     <Insets left="20.0" />
@@ -562,12 +672,12 @@
                      <right>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                            <children>
-                              <ImageView fx:id="connButton" fitHeight="40.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="connButton" fitHeight="31.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/connect.png" />
                                  </image>
                               </ImageView>
-                              <Label fx:id="signalLabel1" text="connected" textFill="#25972f">
+                              <Label fx:id="signalLabel1" prefHeight="17.0" prefWidth="83.0" text="connected" textFill="#25972f">
                                  <font>
                                     <Font name="System Bold" size="16.0" />
                                  </font>
@@ -575,6 +685,9 @@
                            </children>
                         </VBox>
                      </right>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
                   </BorderPane>
                </children>
             </VBox>
@@ -582,7 +695,7 @@
          <bottom>
             <BorderPane maxHeight="80.0" minHeight="80.0" prefHeight="80.0" style="-fx-background-color: #000000;" BorderPane.alignment="CENTER">
                <center>
-                  <HBox alignment="CENTER" prefHeight="51.0" prefWidth="492.0" spacing="1.0" BorderPane.alignment="CENTER">
+                  <HBox alignment="CENTER" prefHeight="80.0" prefWidth="492.0" spacing="1.0" BorderPane.alignment="CENTER">
                      <children>
                         <Label style="-fx-text-fill: white; -fx-background-color: black;" text="Control" textFill="WHITE">
                            <font>
@@ -597,47 +710,59 @@
                         </Label>
                         <Button fx:id="armBtn" alignment="CENTER" prefHeight="80.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Arm">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="20.0" />
                            </font>
                         </Button>
                         <Button fx:id="takeoffBtn" alignment="CENTER" prefHeight="80.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Take Off">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="20.0" />
                            </font>
                         </Button>
                         <Button fx:id="landBtn" alignment="CENTER" prefHeight="80.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Land">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="20.0" />
                            </font>
                         </Button>
                         <Button fx:id="loiterBtn" alignment="CENTER" prefHeight="80.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Loiter">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="20.0" />
                            </font>
                         </Button>
                         <Button fx:id="rtlBtn" alignment="CENTER" prefHeight="80.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="RTL">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="20.0" />
                            </font>
                         </Button>
                         <Button fx:id="btnMissionStart" alignment="CENTER" prefHeight="80.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Mission Start">
                            <font>
-                              <Font size="13.0" />
+                              <Font size="15.0" />
                            </font>
                         </Button>
                         <Button fx:id="btnMissionStop" alignment="CENTER" prefHeight="80.0" prefWidth="100.0" style="-fx-background-radius: 0;" text="Mission Stop">
                            <font>
-                              <Font size="13.0" />
+                              <Font size="15.0" />
                            </font>
                         </Button>
                         <VBox maxHeight="90.0" minHeight="90.0" prefHeight="90.0" prefWidth="226.0" spacing="5.0" style="-fx-padding: 10 10 10 10" styleClass="pane2">
                            <children>
                               <GridPane maxHeight="90.0" prefHeight="90.0">
                                  <children>
-                                    <Button fx:id="btnTop" maxHeight="45.0" maxWidth="1.7976931348623157E308" minHeight="45.0" minWidth="50.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="50.0" style="-fx-padding: 10 10 10 20" text="북" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                    <Button fx:id="btnBottom" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" minWidth="50.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="50.0" style="-fx-padding: 10 10 10 20" text="남" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                    <Button fx:id="btnLeft" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-padding: 10 10 10 20" text="서" GridPane.rowIndex="2" />
-                                    <Button fx:id="btnRight" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-padding: 10 10 10 20" text="동" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                    <Button fx:id="btnTop" maxHeight="45.0" maxWidth="1.7976931348623157E308" minHeight="45.0" minWidth="50.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="50.0" style="-fx-padding: 10 10 10 20" text="N" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="17.0" />
+                                       </font></Button>
+                                    <Button fx:id="btnBottom" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" minWidth="50.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="50.0" style="-fx-padding: 10 10 10 20" text="S" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font size="17.0" />
+                                       </font></Button>
+                                    <Button fx:id="btnLeft" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-padding: 10 10 10 20" text="W" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font size="17.0" />
+                                       </font></Button>
+                                    <Button fx:id="btnRight" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-padding: 10 10 10 20" text="E" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font size="17.0" />
+                                       </font></Button>
                                  </children>
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -669,50 +794,5 @@
             </BorderPane>
          </bottom>
       </BorderPane>
-      <BorderPane fx:id="loginBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0">
-		   <center>
-		      <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-		         <children>
-		            <ImageView fx:id="imgView" blendMode="DARKEN" fitHeight="1800.0" fitWidth="3200.0" pickOnBounds="true">
-		               <image>
-		                  <Image url="@../images/bgbg.png" />
-		               </image>
-		            </ImageView>
-		            <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="460.0" prefWidth="350.0" style="-fx-background-color: black; -fx-opacity: 0.3;" />
-		            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="460.0" prefWidth="350.0" style="-fx-opacity: 1;">
-		               <children>
-		                  <ImageView fitHeight="78.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
-		                     <image>
-		                        <Image url="@../images/logo_white.png" />
-		                     </image>
-		                     <VBox.margin>
-		                        <Insets bottom="50.0" />
-		                     </VBox.margin></ImageView>
-		                        <Label fx:id="loginLabel" alignment="CENTER" prefHeight="17.0" prefWidth="229.0" textFill="WHITE" />
-		                  <TextField fx:id="txtIP" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="240.0" promptText="MQTT Broker IP" style="-fx-background-color: #515253; -fx-opacity: 0.8; -fx-background-radius: 20;" text="localhost">
-		                     <VBox.margin>
-		                        <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
-		                     </VBox.margin>
-		                  </TextField>
-		                  <TextField fx:id="txtPort" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="240.0" promptText="MQTT Broker Port" style="-fx-background-color: #515253; -fx-opacity: 0.8; -fx-background-radius: 20;" text="1883" />
-		                  <Button fx:id="btnConnect" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="240.0" style="-fx-background-radius: 20; -fx-background-color: #73a856;" text="CONNECT" textFill="WHITE">
-		                     <font>
-		                        <Font name="System Bold" size="15.0" />
-		                     </font>
-		                     <VBox.margin>
-		                        <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
-		                     </VBox.margin>
-		                  </Button>
-		                  <Button fx:id="btnCancle" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="240.0" style="-fx-background-color: transparent;" text="Want to Exit?" textFill="#ffffffb2">
-		                     <font>
-		                        <Font name="System Bold" size="12.0" />
-		                     </font>
-		                  </Button>
-		               </children>
-		            </VBox>
-		         </children>
-		      </StackPane>
-		   </center>
-		</BorderPane>
    </children>
 </StackPane>

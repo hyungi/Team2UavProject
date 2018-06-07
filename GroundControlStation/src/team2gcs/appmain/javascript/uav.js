@@ -207,44 +207,22 @@ function UAV() {
 					map: map.googlemap,
 					position: {lat:lat, lng:lng},
 					icon: {
-					  path: google.maps.SymbolPath.CIRCLE,
+//					  path: google.maps.SymbolPath.CIRCLE,
+					  url: 'box.svg',
 					  fillOpacity: 1,
 					  fillColor: '#0f0',
 					  strokeOpacity: 1,
 					  strokeWeight: 1,
 					  strokeColor: '#333',
-					  scale: 12
+					  scale: 12,
+					  labelOrigin: new google.maps.Point(21,14)
 					},
 					draggable: true,
 					optimized: false
 				});
 				marker.kind = kind;
 				marker.index = this.missionMarkers.length;
-				this.missionMarkers.push(marker);
-				var self = this;
-				marker.addListener('drag', function() {
-					self.drawMissionPath();
-				});
-			} 
-			
-			else if(kind == "arm") {
-				marker = new google.maps.Marker({
-					map: map.googlemap,
-					position: {lat:lat, lng:lng},
-					icon: {
-					  path: google.maps.SymbolPath.CIRCLE,
-					  fillOpacity: 1,
-					  fillColor: '#f00',
-					  strokeOpacity: 1,
-					  strokeWeight: 1,
-					  strokeColor: '#333',
-					  scale: 12
-					},
-					draggable: true,
-					optimized: false
-				});
-				marker.kind = kind;
-				marker.index = this.missionMarkers.length;
+				marker.setAnimation(google.maps.Animation.DROP);
 				this.missionMarkers.push(marker);
 				var self = this;
 				marker.addListener('drag', function() {
@@ -257,19 +235,21 @@ function UAV() {
 					map: map.googlemap,
 					position: {lat:lat, lng:lng},
 					icon: {
-					  path: google.maps.SymbolPath.CIRCLE,
+					  url: "marker.svg",
 					  fillOpacity: 1,
 					  fillColor: '#fff',
 					  strokeOpacity: 1,
 					  strokeWeight: 1,
 					  strokeColor: '#333',
-					  scale: 12
+					  scale: 12,
+					  labelOrigin: new google.maps.Point(14,14)
 					},
 					draggable: true,
 					optimized: false
 				});
 				marker.kind = kind;
 				marker.index = this.missionMarkers.length;
+				marker.setAnimation(google.maps.Animation.DROP);
 				this.missionMarkers.push(marker);
 				var self = this;
 				marker.addListener('drag', function() {
@@ -294,6 +274,7 @@ function UAV() {
 					optimized: false
 				});
 				marker.kind = kind;
+				marker.setAnimation(google.maps.Animation.DROP);
 				if(index) {
 					marker.index = index;
 					this.missionMarkers.splice(marker.index,0,marker);
@@ -421,7 +402,8 @@ function UAV() {
 			var nextMarker = null;
 			for(var i=1; i<this.missionMarkers.length; i++) {			 
 				var polyline = new google.maps.Polyline({
-					strokeColor: '#1ea4ff',
+//					strokeColor: '#1ea4ff',
+					strokeColor: 'white',
 					strokeOpacity: 1.0,
 					strokeWeight: 3,
 					map: map.googlemap

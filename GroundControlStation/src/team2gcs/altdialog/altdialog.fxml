@@ -16,7 +16,7 @@
          <children>
             <Label prefHeight="34.0" prefWidth="211.0" style="-fx-text-fill: white;" text=" Set altitude.">
                <font>
-                  <Font name="NanumGothic ExtraBold" size="18.0" />
+                  <Font size="23.0" />
                </font>
             </Label>
             <Button fx:id="btnExit" mnemonicParsing="false" prefHeight="23.0" prefWidth="18.0" style="-fx-background-color: black; -fx-text-fill: white; fx-background-radius: 0;" text="X">

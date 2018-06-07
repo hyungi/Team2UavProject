@@ -643,17 +643,17 @@ def change_heading(json_dict):
     vehicle.send_mavlink(msg)
 #------------------------------------------------------
     
-def cargoStart():
+# def cargoStart():
 #     gpio.output(23,1)
 #     gpio.output(24,1)
-    gpio.output(16,1)
-    gpio.output(18,1)
+#     gpio.output(16,1)
+#     gpio.output(18,1)
     
-def cargoStop():
+# def cargoStop():
 #     gpio.output(23,0)
 #     gpio.output(24,0)
-    gpio.output(16,0)
-    gpio.output(18,0)
+#     gpio.output(16,0)
+#     gpio.output(18,0)
 #------------------------------------------------------  
 def arm(json_dict):
     if vehicle.armed: return

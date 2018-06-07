@@ -816,9 +816,10 @@ public class AppMainController implements Initializable{
 	}
 	private void roiMake() {
 		int selectedIndex = tableView.getSelectionModel().getSelectedIndex();
-		
-		WayPoint wp = tableView.getItems().get(selectedIndex);
-		wp = tableView.getItems().get(selectedIndex+1);
+		try {
+			WayPoint wp = tableView.getItems().get(selectedIndex);
+			wp = tableView.getItems().get(selectedIndex+1);
+		}catch(Exception e) {}
 		
 		Platform.runLater(() -> {
 			jsproxy.call("roiMake", selectedIndex);
@@ -968,37 +969,39 @@ public class AppMainController implements Initializable{
 	}
 	public void setMissionStatus(UAV uav) {		
 		Platform.runLater(() -> {
-			if(uav.homeLat >= 10) {
-				jsproxy.call("setHomeLocation", uav.homeLat, uav.homeLng);
-				homeLatLabel.setText(String.format("Lat:	%.6f", uav.homeLat));
-				homeLngLabel.setText(String.format("Lng:	%.6f", uav.homeLng));
-				jsproxy.call("setUavLocation", uav.latitude, uav.longitude, uav.heading);
-			}
-			
-			if(uav.wayPoints.size() != 0) {
-				setMission(uav.wayPoints);
-			} 
-			
-			jsproxy.call("setNextWaypointNo", UAV.nextWP);			
-			
-			if(Network.getUav().mode.equals("AUTO")) {
-				for(int i=0; i<tableView.getItems().size(); i++) {
-					WayPoint wp = tableView.getItems().get(i);
-					if(wp.no == uav.nextWaypointNo) {
-						tableView.getSelectionModel().select(wp);
+			try {
+				if(uav.homeLat >= 10) {
+					jsproxy.call("setHomeLocation", uav.homeLat, uav.homeLng);
+					homeLatLabel.setText(String.format("Lat:	%.6f", uav.homeLat));
+					homeLngLabel.setText(String.format("Lng:	%.6f", uav.homeLng));
+					jsproxy.call("setUavLocation", uav.latitude, uav.longitude, uav.heading);
+				}
+				
+				if(uav.wayPoints.size() != 0) {
+					setMission(uav.wayPoints);
+				} 
+				
+				jsproxy.call("setNextWaypointNo", UAV.nextWP);			
+				
+				if(Network.getUav().mode.equals("AUTO")) {
+					for(int i=0; i<tableView.getItems().size(); i++) {
+						WayPoint wp = tableView.getItems().get(i);
+						if(wp.no == uav.nextWaypointNo) {
+							tableView.getSelectionModel().select(wp);
+						}
 					}
 				}
-			}
-			
-			if(uav.fenceEnable == 0) {
-				btnFenceActivate.setGraphic(new Circle(5, Color.rgb(0x35, 0x35, 0x35)));
-			} else {
-				btnFenceActivate.setGraphic(new Circle(5, Color.RED)); 
-			}
-			
-			if(uav.fencePoints.size() != 0) {
-				setFence(uav.fencePoints);
-			}
+				
+				if(uav.fenceEnable == 0) {
+					btnFenceActivate.setGraphic(new Circle(5, Color.rgb(0x35, 0x35, 0x35)));
+				} else {
+					btnFenceActivate.setGraphic(new Circle(5, Color.RED)); 
+				}
+				
+				if(uav.fencePoints.size() != 0) {
+					setFence(uav.fencePoints);
+				}
+			}catch(Exception e) {}
 		});
 	}
 	public void setStatus(UAV uav) {
