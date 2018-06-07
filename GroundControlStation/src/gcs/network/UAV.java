@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import gcs.mission.FencePoint;
 import gcs.mission.WayPoint;
+import javafx.scene.image.WritableImage;
 import team2gcs.appmain.AppMainController;
 import team2gcs.leftpane.leftPaneController;
 
@@ -52,7 +53,7 @@ public class UAV implements Cloneable {
 	
 	public boolean connected;
 	private MqttClient mqttClient;
-	
+
 	public UAV() {
 	}
 	
@@ -107,7 +108,7 @@ public class UAV implements Cloneable {
 	}
 	
 	private boolean misstionState = false;
-
+	
 	private void dataParsing(String strJson) {
 		try {
 			JSONObject jsonObject = new JSONObject(strJson);
@@ -134,7 +135,7 @@ public class UAV implements Cloneable {
 			groundSpeed = jsonObject.getDouble("groundspeed");
 			homeLat = jsonObject.getDouble("homeLat");
 			homeLng = jsonObject.getDouble("homeLng");
-
+			
 			if(armed) AppMainController.instance2.statusMessage("UAV Armed.");
 			else if(!armed) AppMainController.instance2.statusMessage("UAV Disarmed.");
 			if(leftPaneController.instance.distance(AppMainController.gotoLat, AppMainController.gotoLng, 
@@ -479,4 +480,5 @@ public class UAV implements Cloneable {
 		String strJson = jsonObject.toString();
 		send(strJson);
 	}
+	
 }
