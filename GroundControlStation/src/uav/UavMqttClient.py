@@ -12,26 +12,45 @@ import time
 import threading
 import simplejson
 # from doctest import master
+<<<<<<< HEAD
 #import RPi.GPIO as gpio
+=======
+# import RPi.GPIO as gpio
+>>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
 
 #예외 발생시 예외 내용 출력을 위해 True로 설정----------------------
 debug = True
 
 # #Autopilot(FC-펌웨어)과 연결----------------------------------jdh------------------------------
+<<<<<<< HEAD
 vehicle = connect("udp:192.168.3.89:14560", wait_ready=True)
 #vehicle = connect('udp:127.0.0.1:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
+=======
+vehicle = connect("udp:192.168.3.217:14560", wait_ready=True)
+# vehicle = connect('udp:127.0.0.1:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
+>>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
 # vehicle = connect('/dev/ttyS0',wait_ready = True,baud57600) #라즈베리파이에서 실행시 
 
 #MQTT Broker와 연결하기 위한 정보-----------------------------
+<<<<<<< HEAD
 mqtt_ip = "192.168.3.89"
+=======
+mqtt_ip = "192.168.3.217"
+>>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
 #mqtt_ip = "106.253.56.122"
 #mqtt_ip = "192.168.3.16"
 mqtt_port = 1883
 uav_pub_topic = "/uav2/pub"
 uav_sub_topic = "/uav2/sub"
+<<<<<<< HEAD
 #gpio.setmode(gpio.BOARD)
 #gpio.setup(16,gpio.OUT)
 #gpio.setup(18,gpio.OUT)
+=======
+# gpio.setmode(gpio.BOARD)
+# gpio.setup(16,gpio.OUT)
+# gpio.setup(18,gpio.OUT)
+>>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
 
 #MQTT Broker와 연결---------------------------------------    
 mqtt_client = None
@@ -644,6 +663,7 @@ def change_heading(json_dict):
 #------------------------------------------------------
     
 # def cargoStart():
+<<<<<<< HEAD
 # #     gpio.output(23,1)
 # #     gpio.output(24,1)
 #     gpio.output(16,1)
@@ -652,6 +672,16 @@ def change_heading(json_dict):
 # def cargoStop():
 # #     gpio.output(23,0)
 # #     gpio.output(24,0)
+=======
+#     gpio.output(23,1)
+#     gpio.output(24,1)
+#     gpio.output(16,1)
+#     gpio.output(18,1)
+    
+# def cargoStop():
+#     gpio.output(23,0)
+#     gpio.output(24,0)
+>>>>>>> branch 'master' of https://github.com/hyungi/Team2UavProject
 #     gpio.output(16,0)
 #     gpio.output(18,0)
 #------------------------------------------------------  
