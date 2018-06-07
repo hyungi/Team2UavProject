@@ -52,7 +52,8 @@ import javafx.util.Duration;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import netscape.javascript.JSObject;
-import team2gcs.altdialog.altdialogController;
+import team2gcs.dialog.altdialogController;
+import team2gcs.dialog.timeDialogController;
 import team2gcs.leftpane.leftPaneController;
 import team2gcs.noflyzone.NoFlyZoneController;
 import team2gcs.noflyzone.Noflyzone;
@@ -62,6 +63,7 @@ public class AppMainController implements Initializable{
 	// child들의 높이 조정을 위해
 	public static double heightSize;
 	public static Stage altStage;
+	public static Stage timeStage;
 		
 	//공용
 	@FXML private BorderPane mainBorderPane;
@@ -144,7 +146,7 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnHeadingToNorth;
 	@FXML private Button btnMissionHomeWP;
 	@FXML private Button btnMissionLand;
-	@FXML private Button btnMissionTime;
+	@FXML public Button btnMissionTime;
 	
 	//고도 
 	double takeoffAlt = altdialogController.alt;
@@ -453,12 +455,6 @@ public class AppMainController implements Initializable{
 	public static WayPoint tPoint;
 	public static WayPoint tPoint2;
 	public static List<WayPoint> listCP = new ArrayList<WayPoint>();
-	
-	public void handleMissionTime() {
-//		30초 대기
-		try{Thread.sleep(30000);}catch(Exception e) {}
-	}
-	
 	public static boolean checkLand = false;
 	public static int landNum = -999;
 	public static int lastNum = -999;
@@ -552,6 +548,20 @@ public class AppMainController implements Initializable{
 		}
 		setMission(list);
 		setTableViewItems(list);
+	}
+	
+	public void handleMissionTime() {
+		try {
+			timeStage = new Stage();
+			timeStage.setTitle("Altitude Setting.");
+			timeStage.initModality(Modality.WINDOW_MODAL);
+			timeStage.initOwner(AppMain.primaryStage);
+			timeStage.initStyle(StageStyle.TRANSPARENT);
+			Parent root = FXMLLoader.load(getClass().getResource("../dialog/timedialog.fxml"));
+			Scene scene = new Scene(root);
+			timeStage.setScene(scene);
+			timeStage.show();
+		} catch (Exception ex) {}
 	}
 	
 	public void handleBtnTop(ActionEvent e) {
@@ -659,6 +669,7 @@ public class AppMainController implements Initializable{
 			dialog.setTitle("NoFlyZone");
 			dialog.initModality(Modality.APPLICATION_MODAL);
 			dialog.initOwner(AppMain.instance.primaryStage);
+			dialog.initStyle(StageStyle.TRANSPARENT);
 			Parent parent = FXMLLoader.load(getClass().getResource("../noflyzone/noflyzone.fxml"));
 			Scene scene = new Scene(parent);
 			scene.getStylesheets().add(getClass().getResource("../images/app.css").toExternalForm());
@@ -702,7 +713,7 @@ public class AppMainController implements Initializable{
 		altStage.initModality(Modality.WINDOW_MODAL);
 		altStage.initOwner(AppMain.primaryStage);
 		altStage.initStyle(StageStyle.TRANSPARENT);
-		Parent root = FXMLLoader.load(getClass().getResource("../altdialog/altdialog.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("../dialog/altdialog.fxml"));
 		Scene scene = new Scene(root);
 		altStage.setScene(scene);
 		altStage.show();
@@ -1084,6 +1095,7 @@ public class AppMainController implements Initializable{
 	
 	///////////////////////////// 미션 관련 //////////////////////////////////////
 	public void gotoStart(String data) {
+		takeoffAlt = altdialogController.alt;
 		Platform.runLater(() -> {
 			JSONObject jsonObject = new JSONObject(data);
 			gotoLat = jsonObject.getDouble("lat");

@@ -313,8 +313,8 @@ import java.util.List;
 
 import gcs.mission.WayPoint;
 import javafx.application.Platform;
-import team2gcs.altdialog.altdialogController;
 import team2gcs.appmain.AppMainController;
+import team2gcs.dialog.altdialogController;
 
 public class Noflyzone {
 

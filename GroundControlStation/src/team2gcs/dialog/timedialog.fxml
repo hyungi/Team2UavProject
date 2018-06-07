@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="81.0" prefWidth="235.0" style="-fx-background-color: #222222;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team2gcs.dialog.timeDialogController">
+   <padding>
+      <Insets left="6.0" right="6.0" top="5.0" />
+   </padding>
+   <top>
+      <HBox prefHeight="36.0" prefWidth="242.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label prefHeight="34.0" prefWidth="194.0" style="-fx-text-fill: white;" text=" Set wait time">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnExit" mnemonicParsing="false" prefHeight="23.0" prefWidth="18.0" style="-fx-background-color: black; -fx-text-fill: white; fx-background-radius: 0;" text="X">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <HBox prefHeight="40.0" prefWidth="214.0" spacing="15.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="txtTime" maxHeight="-Infinity" prefHeight="31.0" prefWidth="124.0" style="-fx-background-color: black; -fx-text-fill: white; -fx-background-radius: 0;">
+               <font>
+                  <Font name="NanumGothic" size="15.5" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </TextField>
+            <Button fx:id="btnSet" maxHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: black; -fx-text-fill: white; fx-background-radius: 0; -fx: 0;" text="Set" />
+         </children>
+      </HBox>
+   </center>
+</BorderPane>

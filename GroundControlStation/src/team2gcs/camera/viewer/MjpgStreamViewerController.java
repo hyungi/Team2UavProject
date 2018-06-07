@@ -76,15 +76,6 @@ public class MjpgStreamViewerController implements Initializable {
 
         File output = new File("camera" + new Date().getTime() + ".png");
         ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
-        /*Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.05), evt -> imgdownloadLabel.setVisible(false)),
-                new KeyFrame(Duration.seconds( 0.1), evt -> imgdownloadLabel.setVisible(true)));
-		timeline.setCycleCount(1);
-		timeline.play();
-
-		BufferedImage img = ImageIO.read(new ByteArrayInputStream(Network.getUav().imgbyte));
-		
-	    File output = new File("camera" + new Date().getTime() + ".png");
-	    ImageIO.write(img, "png", output);*/
 	}
 	
 }
