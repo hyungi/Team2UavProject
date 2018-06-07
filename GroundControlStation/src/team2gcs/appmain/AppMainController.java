@@ -207,9 +207,10 @@ public class AppMainController implements Initializable{
 		heightSize = webView.getHeight();
 		try {
 			Parent leftRoot = FXMLLoader.load(getClass().getResource("../leftpane/left.fxml"));
-			Parent cameraRoot = FXMLLoader.load(getClass().getResource("../camera/viewer/mjpgstreamviewer.fxml"));
+			// 카메라 꺼놈
+//			Parent cameraRoot = FXMLLoader.load(getClass().getResource("../camera/viewer/mjpgstreamviewer.fxml"));
 			leftPane.getChildren().add(leftRoot);
-			rightCameraPane.getChildren().add(cameraRoot);
+//			rightCameraPane.getChildren().add(cameraRoot);
 		}catch (Exception e) {}
 	}
 
@@ -691,8 +692,10 @@ public class AppMainController implements Initializable{
 	
 	//Arm, Takeoff, Land, Roiter, Rtl
 	public void handleArm() throws Exception {
-		Network.getUav().arm();
+		if(armBtn.getText().equals("Arm")) Network.getUav().arm();
+		else if (armBtn.getText().equals("Disarm")) Network.getUav().disarm();
 	}
+
 	public void handleTakeoff() throws Exception {
 		altStage = new Stage();
 		altStage.setTitle("Altitude Setting.");
