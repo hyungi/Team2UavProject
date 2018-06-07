@@ -207,9 +207,9 @@ public class AppMainController implements Initializable{
 		heightSize = webView.getHeight();
 		try {
 			Parent leftRoot = FXMLLoader.load(getClass().getResource("../leftpane/left.fxml"));
-			Parent cameraRoot = FXMLLoader.load(getClass().getResource("../camera/viewer/mjpgstreamviewer.fxml"));
+//			Parent cameraRoot = FXMLLoader.load(getClass().getResource("../camera/viewer/mjpgstreamviewer.fxml"));
 			leftPane.getChildren().add(leftRoot);
-			rightCameraPane.getChildren().add(cameraRoot);
+//			rightCameraPane.getChildren().add(cameraRoot);
 		}catch (Exception e) {}
 	}
 

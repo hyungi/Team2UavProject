@@ -13,7 +13,6 @@ import org.json.JSONObject;
 
 import gcs.mission.FencePoint;
 import gcs.mission.WayPoint;
-import javafx.scene.image.WritableImage;
 import team2gcs.appmain.AppMainController;
 import team2gcs.leftpane.leftPaneController;
 
