@@ -3,14 +3,15 @@
 }
 
 .text-field-table-cell .text-field {
-	-fx-font-family: "Bombardier";
+   -fx-font-family: "Bombardier";
    -fx-border-color:red;
    -fx-text-fill: black;
 }
 
-.table-view .table-cell{
+.table-view .table-cell .table-button:hover{
 	-fx-font-family: "Bombardier";
     -fx-alignment: center;
+    
 }
 
 .label {
@@ -35,12 +36,17 @@
 	-fx-background-color: white;
 	-fx-text-fill: black;
 }
-
+#btnCancle{
+	-fx-text-fill : "#a19d9d";
+	-fx-font-size: 15;
+}
 #btnCancle:hover {
+	-fx-font-size: 15;
 	-fx-text-fill: white;
 }
 
-#rightDeleteBtn:focused {
+#rightDeleteBtn:focused, #rightDeleteBtn:hover {
+	-fx-font-size: 18;
 	-fx-background-color: black;
 	-fx-text-fill: white;
 }
@@ -133,6 +139,13 @@
 	-fx-font-family: "Bombardier";
 	-fx-background-color: white;
 	-fx-text-fill: black;
+	-fx-font-size: 25;
+}
+#rightStatusLabel:focused {
+	-fx-font-family: "Bombardier";
+	-fx-background-color: white;
+	-fx-text-fill: black;
+	-fx-font-size: 25;
 }
 
 #rightCameraLabel {
@@ -145,6 +158,14 @@
 	-fx-font-family: "Bombardier";
 	-fx-background-color: white;
 	-fx-text-fill: black;
+	-fx-font-size: 25;
+}
+
+#rightCameraLabel:focused {
+	-fx-font-family: "Bombardier";
+	-fx-background-color: white;
+	-fx-text-fill: black;
+	-fx-font-size: 25;
 }
 
 .list-view {
@@ -160,6 +181,58 @@
 }
 
 .list-cell:hover {
+	-fx-background-color: white;
+	-fx-text-fill: black;
+}
+#btnMissionStart:hover, #btnMissionStop:hover,#btnFenceDownload:hover, #btnFenceDelete:hover,#btnFenceActivate:hover{
+	-fx-font-family: "Bombardier";
+	-fx-font-size: 15;
+	-fx-background-color: white;
+	-fx-text-fill: black;
+}
+
+#btnFenceUpload:hover,#btnNoflyzoneActivate:hover,#btnMissionDownload:hover{
+	-fx-font-family: "Bombardier";
+	-fx-font-size: 16;
+	-fx-background-color: white;
+	-fx-text-fill: black;
+}
+
+#btnFenceDeactivate:hover{
+	-fx-font-family: "Bombardier";
+	-fx-font-size: 14;
+	-fx-background-color: white;
+	-fx-text-fill: black;
+}
+#btnNoflyzoneDelete:hover{
+	-fx-font-family: "Bombardier";
+	-fx-font-size: 13;
+	-fx-background-color: white;
+	-fx-text-fill: black;
+}
+#btnMissionStart:focused, #btnMissionStop:focused,#btnFenceDownload:focused, #btnFenceDelete:focused,#btnFenceActivate:focused{
+	-fx-font-family: "Bombardier";
+	-fx-font-size: 15;
+	-fx-background-color: white;
+	-fx-text-fill: black;
+}
+
+#btnFenceUpload:focused,#btnNoflyzoneActivate:focused,#btnMissionDownload:focused{
+	-fx-font-family: "Bombardier";
+	-fx-font-size: 16;
+	-fx-background-color: white;
+	-fx-text-fill: black;
+}
+
+#btnFenceDeactivate:focused{
+	-fx-font-family: "Bombardier";
+	-fx-font-size: 14;
+	-fx-background-color: white;
+	-fx-text-fill: black;
+}
+#btnNoflyzoneDelete:focused{
+	-fx-font-family: "Bombardier";
+	-fx-font-size: 13;
 	-fx-background-color: white;
 	-fx-text-fill: black;
 }

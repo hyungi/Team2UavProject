@@ -6,8 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class AppMain extends Application{
@@ -28,6 +26,7 @@ public class AppMain extends Application{
 		primaryStage.setTitle("UAV Ground Control Station(Team2)");
 		primaryStage.setScene(scene);
 		primaryStage.setMaximized(true);
+        primaryStage.setFullScreen(true);
 		primaryStage.show();
 
 		this.primaryStage = primaryStage;
