@@ -25,6 +25,7 @@ public class altdialogController implements Initializable {
 		else {
 			btnTakeoff.setText("Take off");
 		}
+		btnTakeoff.setDefaultButton(true);
 		btnTakeoff.setOnAction((event) -> {handleTakeoff(event);});
 		btnExit.setOnAction((event)-> {AppMainController.altStage.close();});
 	}

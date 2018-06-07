@@ -45,11 +45,14 @@
 	-fx-text-fill: white;
 }
 
-.text-input {
-	-fx-text-fill: white;
+.table-view .table-cell{
+    -fx-alignment: center;
+    -fx-text-fill: white;
+    
 }
 .table-view .filler{
 	-fx-background-color: #222222;
+	-fx-text-fill: white;
 }
 
 .table-view .column-header {
@@ -64,8 +67,26 @@
 
 .table-view .column-header .label:hover {
 	-fx-font-family: "Bombardier";
-	-fx-background-color: white;
-	-fx-text-fill: black;
+	-fx-background-color: #222222;
+	-fx-text-fill: white;
+}
+
+.table-row-cell{
+    -fx-background-color: -fx-table-cell-border-color, #616161;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+}
+
+.table-row-cell:odd{
+    -fx-background-color: -fx-table-cell-border-color, #424242;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */  
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #005797;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
 }
 
 #leftVbox {

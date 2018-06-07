@@ -384,6 +384,7 @@ public class AppMainController implements Initializable{
 
 	//로그인 버튼////////////////////////////////////////////////////////////////////////////////////////
 	public void initLoginButton() {
+		btnConnect.setDefaultButton(true);
 		btnConnect.setOnAction((event)->{handleConnect(event);});
 		btnCancle.setOnAction((event)->{handleCancle(event);});
 	}

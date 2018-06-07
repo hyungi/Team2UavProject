@@ -62,6 +62,7 @@ public class UAV implements Cloneable {
 			public void run() {			
 				try {
 					mqttClient = new MqttClient("tcp://" + AppMainController.ip + ":" + AppMainController.port, MqttClient.generateClientId(), null);
+					System.out.println(AppMainController.ip);
 					mqttClient.setCallback(new MqttCallback() {
 						String strJson;
 						@Override //메세지가 도착했을때
