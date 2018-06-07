@@ -691,8 +691,10 @@ public class AppMainController implements Initializable{
 	
 	//Arm, Takeoff, Land, Roiter, Rtl
 	public void handleArm() throws Exception {
-		Network.getUav().arm();
+		if(armBtn.getText().equals("Arm")) Network.getUav().arm();
+		else if (armBtn.getText().equals("Disarm")) Network.getUav().disarm();
 	}
+
 	public void handleTakeoff() throws Exception {
 		altStage = new Stage();
 		altStage.setTitle("Altitude Setting.");
