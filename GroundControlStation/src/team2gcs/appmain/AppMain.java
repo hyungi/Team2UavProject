@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class AppMain extends Application{
@@ -17,7 +18,7 @@ public class AppMain extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		instance = this;
-		
+		Font.loadFont(getClass().getResourceAsStream("../images/Bombardier.ttf"),70);
  		Parent root = FXMLLoader.load(getClass().getResource("appmain.fxml"));
  		scene = new Scene(root);
  		scene.getStylesheets().add(getClass().getResource("../images/app.css").toExternalForm());

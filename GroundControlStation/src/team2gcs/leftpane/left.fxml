@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<VBox fx:id="leftVbox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="820.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team2gcs.leftpane.leftPaneController">
+<VBox fx:id="leftVbox" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team2gcs.leftpane.leftPaneController">
    <padding>
   		<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 	</padding>

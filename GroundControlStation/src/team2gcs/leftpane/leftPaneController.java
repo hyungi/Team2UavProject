@@ -8,7 +8,6 @@ import gcs.network.UAV;
 import javafx.animation.AnimationTimer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,7 +21,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import team2gcs.appmain.AppMain;
 import team2gcs.appmain.AppMainController;
 
 public class leftPaneController implements Initializable {
@@ -137,7 +135,7 @@ public class leftPaneController implements Initializable {
     }
 
     private void drawHud() {
-        ImagePattern img = new ImagePattern(new Image(getClass().getResourceAsStream("../images/hudBg1.png")), 0, pitch * 2, 100, 300, false);
+        ImagePattern img = new ImagePattern(new Image(getClass().getResourceAsStream("../images/hudBg2.png")), 0, pitch * 2, 100, 300, false);
         circle.setFill(img);
 
         //yaw
