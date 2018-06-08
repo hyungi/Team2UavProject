@@ -210,9 +210,9 @@ public class AppMainController implements Initializable{
 		try {
 			Parent leftRoot = FXMLLoader.load(getClass().getResource("../leftpane/left.fxml"));
 			// 카메라 꺼놈
-//			Parent cameraRoot = FXMLLoader.load(getClass().getResource("../camera/viewer/mjpgstreamviewer.fxml"));
+			Parent cameraRoot = FXMLLoader.load(getClass().getResource("../camera/viewer/mjpgstreamviewer.fxml"));
 			leftPane.getChildren().add(leftRoot);
-//			rightCameraPane.getChildren().add(cameraRoot);
+			rightCameraPane.getChildren().add(cameraRoot);
 		}catch (Exception e) {}
 	}
 
