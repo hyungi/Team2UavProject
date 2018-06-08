@@ -23,8 +23,4 @@ public class MjpgStreamViewer extends Application {
         System.exit(0);
     }
     
-    public static void main(String[] args) {
-        launch(args);
-    }
-    
 }

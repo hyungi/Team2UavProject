@@ -20,7 +20,7 @@ import javafx.scene.layout.Region;
  * @author Michael Hoffer &lt;info@michaelhoffer.de&gt;
  */
 public class MilkGlassPane extends Region {
-
+ 
     // circle container
     private final Pane container;
 
