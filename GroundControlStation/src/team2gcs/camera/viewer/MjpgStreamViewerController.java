@@ -1,7 +1,5 @@
 package team2gcs.camera.viewer;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.net.URL;
 import java.util.Date;
@@ -9,7 +7,6 @@ import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
-import gcs.network.Network;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.embed.swing.SwingFXUtils;
@@ -18,7 +15,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
