@@ -459,7 +459,13 @@ public class AppMainController implements Initializable{
 	public static int landNum = -999;
 	public static int lastNum = -999;
 	public void handleMissionLand() {
-		checkLand = !checkLand;
+		if(checkLand) {
+			Platform.runLater(() -> {
+				jsproxy.call("landMake");
+			});
+			return;
+		}
+		checkLand = true;
 		changeColor();
 		Platform.runLater(() -> {
 			jsproxy.call("landMake");
