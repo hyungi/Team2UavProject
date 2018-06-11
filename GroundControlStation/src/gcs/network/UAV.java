@@ -154,14 +154,12 @@ public class UAV implements Cloneable {
 			if(AppMainController.instance2.checkLand&&statusText.equals("Reached command #"+AppMainController.instance2.landNum)) {
 				AppMainController.instance2.handleLand();
 				AppMainController.instance2.uploadState = true;
-				System.out.println("들어옴1");
 			}
 			// land 마크가 활성화 되어있을 때만 자동 미션 진행
 			if(!armed && AppMainController.instance2.checkLand && AppMainController.instance2.uploadState) {
 				AppMainController.instance2.checkLand = false;
 				AppMainController.instance2.changeColor();
 				AppMainController.instance2.uploadState = false;
-				System.out.println("들어옴2");
 				// 미션 재생성
 				List<WayPoint> tList = new ArrayList<>();
 				missionUpload(tList);
@@ -176,17 +174,14 @@ public class UAV implements Cloneable {
 				missionUpload(tList);
 //				 DisArmed 되면 화물 내림
 				AppMainController.instance2.handleCargoStop();
-				System.out.println("arm하기 전: " + timeDialogController.missionTime);
 				Thread thread = new Thread(new Runnable() {
 					@Override
 					public void run() {
 						try {
-							System.out.println("들어옴3");
 							Thread.sleep(timeDialogController.missionTime*1000);
 							arm();
 							Thread.sleep(timeDialogController.missionTime*1000);
 							// 다시 Armed 후 TakeOff 진행
-							AppMainController.instance2.statusMessage("UAV Takeoff " + altdialogController.alt + "m.");
 							takeoff(altdialogController.alt);
 							misstionState = true;
 						} catch (InterruptedException e) {e.printStackTrace();}

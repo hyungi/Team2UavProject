@@ -22,7 +22,7 @@ vehicle = connect("udp:192.168.3.16:14560", wait_ready=True)
 # vehicle = connect('/dev/ttyS0',wait_ready = True,baud57600) #라즈베리파이에서 실행시 
 
 #MQTT Broker와 연결하기 위한 정보-----------------------------
-mqtt_ip = "192.168.3.217"
+mqtt_ip = "192.168.3.16"
 mqtt_port = 1883
 uav_pub_topic = "/uav2/pub"
 uav_sub_topic = "/uav2/sub"
@@ -721,12 +721,8 @@ def mission_upload(json_dict):
             elif kind=="land":
                 latitude = waypoint["lat"]
                 longitude = waypoint["lng"]
-                altitude = waypoint["alt"]
                 cmd = Command(0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 0, 0, 1, 0, 0, 0, latitude, longitude, altitude)
                 vehicle.commands.add(cmd)
-            elif kind=="arm":
-                altitude = waypoint["alt"]
-                vehicle.commands.add(Command( 0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, mavutil.mavlink.MAV_CMD_NAV_LAND, 0, 0, 0, 0, 0, 0, 0, 0, altitude))
                 
         #처음 미션을 추가할 경우  한 개가 빠지는 오류 때문
         if len(waypoints) == vehicle.commands.count:  
