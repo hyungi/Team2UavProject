@@ -238,6 +238,7 @@ public class UAV implements Cloneable {
 				} else if(wp.kind.equals("land")) {
  					wp.setLat(jo.getDouble("lat")+"");
 					wp.setLng(jo.getDouble("lng")+"");
+					wp.altitude = jo.getDouble("alt");
 				}
 				listWayPoint.add(wp);
 			}

@@ -721,6 +721,7 @@ def mission_upload(json_dict):
             elif kind=="land":
                 latitude = waypoint["lat"]
                 longitude = waypoint["lng"]
+                altitude = waypoint["alt"]
                 cmd = Command(0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 0, 0, 1, 0, 0, 0, latitude, longitude, altitude)
                 vehicle.commands.add(cmd)
                 
@@ -794,8 +795,8 @@ def gcs_fail_safe():
         if gcs_fail_safe_request == True:
 #             print("connecting")
             count = count + 1
-#             print(count)
-        if count > 20:
+            print(count)
+        if count > 250:
             if not vehicle.armed: return
             vehicle.mode = VehicleMode("RTL")
             gcs_fail_safe_request = False
