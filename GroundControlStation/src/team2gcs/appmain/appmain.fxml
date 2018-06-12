@@ -644,7 +644,7 @@
                                  <children>
                                     <Label fx:id="currtimeLabel" text="Label" textFill="WHITE">
                                        <font>
-                                          <Font size="16.0" />
+                                          <Font size="22.0" />
                                        </font>
                                        <HBox.margin>
                                           <Insets />

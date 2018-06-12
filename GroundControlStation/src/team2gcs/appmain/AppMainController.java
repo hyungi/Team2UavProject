@@ -1,5 +1,8 @@
 package team2gcs.appmain;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +56,6 @@ import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import netscape.javascript.JSObject;
 import team2gcs.dialog.altdialogController;
-import team2gcs.dialog.timeDialogController;
 import team2gcs.leftpane.leftPaneController;
 import team2gcs.noflyzone.NoFlyZoneController;
 import team2gcs.noflyzone.Noflyzone;
@@ -192,7 +194,7 @@ public class AppMainController implements Initializable{
 	@FXML private Label signalLabel;
 	@FXML private ImageView connButton;
 	
-	
+	BufferedWriter gpsTxt;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -266,8 +268,13 @@ public class AppMainController implements Initializable{
 	public void currTime() {
 		inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
 		currtimeLabel.setText(inTime);
+		
 		missionTime();
 		takeoffTime();
+		/*if(!Network.getUav().connected && !Network.getUav().armed) {
+			System.out.println(!Network.getUav().connected);
+			System.out.println(!Network.getUav().armed);
+		}*/
 	}
 
 	public void missionTime() {
