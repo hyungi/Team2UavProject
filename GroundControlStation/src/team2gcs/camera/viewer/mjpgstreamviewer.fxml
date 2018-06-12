@@ -10,11 +10,25 @@
 
 <VBox prefHeight="740.0" prefWidth="350.0" spacing="40.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team2gcs.camera.viewer.MjpgStreamViewerController">
    <children>
-      <Button fx:id="captureBtn" alignment="CENTER" mnemonicParsing="false" prefHeight="47.0" prefWidth="350.0" style="-fx-background-radius: 0;" text="Capture" textAlignment="CENTER">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Button>
+      <HBox>
+         <children>
+            <Button fx:id="captureBtn" alignment="CENTER" mnemonicParsing="false" prefHeight="47.0" prefWidth="350.0" style="-fx-background-radius: 0;" text="Capture" textAlignment="CENTER">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="startCamBtn" alignment="CENTER" mnemonicParsing="false" prefHeight="47.0" prefWidth="350.0" style="-fx-background-radius: 0;" text="CamStart" textAlignment="CENTER">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="stopCamBtn" alignment="CENTER" mnemonicParsing="false" prefHeight="47.0" prefWidth="350.0" style="-fx-background-radius: 0;" text="CamStop" textAlignment="CENTER">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
       <Canvas fx:id="canvas" height="240.0" width="320.0" />
       <Canvas fx:id="canvas2" height="240.0" width="320.0" />
    </children>
