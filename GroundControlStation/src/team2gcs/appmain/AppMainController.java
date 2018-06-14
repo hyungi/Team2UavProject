@@ -70,26 +70,26 @@ import team2gcs.leftpane.leftPaneController;
 import team2gcs.noflyzone.NoFlyZoneController;
 import team2gcs.noflyzone.Noflyzone;
 
-public class AppMainController implements Initializable{	
+public class AppMainController implements Initializable{
 	public static AppMainController instance2;
 	// child들의 높이 조정을 위해
 	public static double heightSize;
 	public static Stage altStage;
 	public static Stage timeStage;
-		
+
 	//공용
 	@FXML private BorderPane mainBorderPane;
 	@FXML private BorderPane loginBorderPane;
 	String inTime;
-    int takeoffH = 0, takeoffM = 0, takeoffS = 0;
-    int missionH = 0, missionM = 0, missionS = 0;
+	int takeoffH = 0, takeoffM = 0, takeoffS = 0;
+	int missionH = 0, missionM = 0, missionS = 0;
 	public static String missionTime;
 	public static String takeoffTime;
 	public static boolean missionStart = false;
 	public static boolean takeoffStart = false;
-    public static double gotoLat;
-    public static double gotoLng;
-	
+	public static double gotoLat;
+	public static double gotoLng;
+
 	// 좌측
 	@FXML private VBox leftPane;
 	@FXML private Label mapButton;
@@ -97,28 +97,28 @@ public class AppMainController implements Initializable{
 	@FXML private Label plusButton;
 	@FXML private Label minusButton;
 	private int zoom = 18;
-	
+
 	// 우측
 	@FXML private VBox rightStatusPane;
 	@FXML private AnchorPane rightCameraPane;
 	@FXML private Label rightStatusLabel;
 	@FXML private Label rightCameraLabel;
 	@FXML private Button rightDeleteBtn;
-	@FXML private ListView<String> statusListView; 
+	@FXML private ListView<String> statusListView;
 	List<String> statusList = new ArrayList<String>();
 	String messageTemp = "messageTemp";
-	
+
 	// 아래 버튼 & Pane & 둘을 가지고있는 VBox & control 값
 	@FXML private AnchorPane openBottom;
 	@FXML private BorderPane missionPane;
 	@FXML private VBox bottomMovePane;
 	@FXML private Label bottomOpenLabel;
-	private boolean bottomControl = true;	
+	private boolean bottomControl = true;
 	// 우측 버튼 & Pane & 둘을 가지고있는 HBox & control 값
 	@FXML private AnchorPane openRight;
 	@FXML private HBox rightMovePane;
 	@FXML private Label rightOpenLabel;;
-	private boolean rightControl = true;	
+	private boolean rightControl = true;
 	//맵
 	@FXML WebView webView;
 	private WebEngine webEngine;
@@ -132,7 +132,7 @@ public class AppMainController implements Initializable{
 	public static String ip;
 	public static String port;
 	public static boolean connectState;
-	
+
 	//미션부분
 	@FXML private Button btnMissionSet;
 	@FXML private Button btnMissionRead;
@@ -159,11 +159,11 @@ public class AppMainController implements Initializable{
 	@FXML private Button btnMissionHomeWP;
 	@FXML private Button btnMissionLand;
 	@FXML public Button btnMissionTime;
-	
+
 	//고도 
 	double takeoffAlt = altdialogController.alt;
 	double missionAlt;
-	
+
 	//펜스
 	@FXML private Button btnFenceSet;
 	@FXML private Button btnFenceUpload;
@@ -174,28 +174,28 @@ public class AppMainController implements Initializable{
 	String strFenceArr;
 	int jumpNo = 1;		//디폴트값.
 	int repeatCount = 2;
-	
+
 	//비행금지구역
 	@FXML private Button btnNoflyzoneSet;
 	@FXML private Button btnNoflyzoneDelete;
 	@FXML private Button btnNoflyzoneActivate;
 	public boolean rotation;
-	
+
 	//화물
 	@FXML private Button btnCargoStart;
 	@FXML private Button btnCargoStop;
-	
+
 	//미션 테이블 뷰
 	@FXML private TableView<WayPoint> tableView;
-     
-   	// Pane을 움직이기 위해 Double 속성값을 사용 -> Listener를 등록가능
-   	private DoubleProperty bottomPaneLocation 
-   	= new SimpleDoubleProperty(this,"bottomPaneLocation");
-   	private DoubleProperty rightPaneLocation
-   	= new SimpleDoubleProperty(this,"rightPaneLocation");   
 
-   	//상단 라벨
-   	@FXML private Label currtimeLabel;
+	// Pane을 움직이기 위해 Double 속성값을 사용 -> Listener를 등록가능
+	private DoubleProperty bottomPaneLocation
+			= new SimpleDoubleProperty(this,"bottomPaneLocation");
+	private DoubleProperty rightPaneLocation
+			= new SimpleDoubleProperty(this,"rightPaneLocation");
+
+	//상단 라벨
+	@FXML private Label currtimeLabel;
 	@FXML private Label homeLatLabel;
 	@FXML private Label homeLngLabel;
 	@FXML private Label locationLatLabel;
@@ -203,7 +203,7 @@ public class AppMainController implements Initializable{
 	@FXML private Label batteryLabel;
 	@FXML private Label signalLabel;
 	@FXML private ImageView connButton;
-	
+
 	FileOutputStream gpsTxt;
 	public boolean setGps = false;
 
@@ -234,7 +234,7 @@ public class AppMainController implements Initializable{
 		}catch (Exception e) {}
 	}
 
-//////////////////////////////////Top Menu 관련 ////////////////////////////////
+	//////////////////////////////////Top Menu 관련 ////////////////////////////////
 	public void initTop() {
 		homeLatLabel.setText("Disarmed");
 		homeLngLabel.setText("Disarmed");
@@ -284,7 +284,7 @@ public class AppMainController implements Initializable{
 	public void currTime() {
 		inTime   = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
 		currtimeLabel.setText(inTime);
-		
+
 		missionTime();
 		takeoffTime();
 		/*if(!Network.getUav().connected && !Network.getUav().armed) {
@@ -325,21 +325,21 @@ public class AppMainController implements Initializable{
 
 	public void makeGpsTxt() {
 		System.out.println("gg");
-        try {
+		try {
 			gpsTxt.write((inTime + "   Lat: " + Network.getUav().latitude + "   Lng: " + Network.getUav().longitude + "\r\n").getBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		setGps = false;
 	}
-////////////////////////////////// Slide Menu 관련 ////////////////////////////////
+	////////////////////////////////// Slide Menu 관련 ////////////////////////////////
 	public void initSlide() {
 		// 맨 처음 값을 200(닫혀있음)으로 만듬
 		bottomPaneLocation.set(200);
 		rightPaneLocation.set(350);
 		// 열닫힘 버튼 클릭 이벤트 등록
 		openBottom.setOnMouseClicked(event -> {
-		animateBottomPane();
+			animateBottomPane();
 		});
 		openRight.setOnMouseClicked(event->{
 			animateRightPane();
@@ -349,7 +349,7 @@ public class AppMainController implements Initializable{
 		rightPaneLocation.addListener(change -> updateHBox());
 	}
 
-   // 각 전체 Pane의 위치를 property 값 만큼 변경(SlidePane 메소드를 통해 차례로 변경된 값이 적용됨)
+	// 각 전체 Pane의 위치를 property 값 만큼 변경(SlidePane 메소드를 통해 차례로 변경된 값이 적용됨)
 	private void updateVBox() { bottomMovePane.setTranslateY(bottomPaneLocation.get());}
 
 	private void updateHBox() {	rightMovePane.setTranslateX(rightPaneLocation.get());}
@@ -378,7 +378,7 @@ public class AppMainController implements Initializable{
 			slidePane(200,bottomPaneLocation);
 		}
 	}
-   
+
 	// slidePane은 property의 값을 property에 있는 현재 위치값에서부터 to 변수로 주어진 값만큼 숫자를 0.3초 동안 올려주거나 내려준다.
 	// 여기서 property의 값이 변경되면 initSlide()에 등록한 Listener가 실행되고 각 Box의 위치를 조절한다.
 	// KeyValue를 통해 property의 현재 값을 -> to로 변경시키겠다.
@@ -395,28 +395,28 @@ public class AppMainController implements Initializable{
 			else rightControl = !rightControl;
 		});
 	}
-   
+
 	//맵////////////////////////////////////////////////////////////////////////////////
 	private void initWebView() {
 		webEngine = webView.getEngine();
-		webEngine.getLoadWorker().stateProperty().addListener(webEngineLoadStateListener);	
+		webEngine.getLoadWorker().stateProperty().addListener(webEngineLoadStateListener);
 		webEngine.load(getClass().getResource("javascript/map.html").toExternalForm());
 	}
-	
-   private ChangeListener<State> webEngineLoadStateListener = (observable, oldValue, newValue) -> {
-	      if(newValue == State.SUCCEEDED) {
-	         Platform.runLater(() -> {
-	            try {
-	               webEngine.executeScript("console.log = function(message) { jsproxy.java.log(message); };");
-	               jsproxy = (JSObject) webEngine.executeScript("jsproxy");
-	               jsproxy.setMember("java", AppMainController.this);
-	               //setMapSize();
-	            } catch(Exception e) {
-	               e.printStackTrace();
-	            }
-	         });
-	      }
-	   };
+
+	private ChangeListener<State> webEngineLoadStateListener = (observable, oldValue, newValue) -> {
+		if(newValue == State.SUCCEEDED) {
+			Platform.runLater(() -> {
+				try {
+					webEngine.executeScript("console.log = function(message) { jsproxy.java.log(message); };");
+					jsproxy = (JSObject) webEngine.executeScript("jsproxy");
+					jsproxy.setMember("java", AppMainController.this);
+					//setMapSize();
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			});
+		}
+	};
 
 	//로그인 버튼////////////////////////////////////////////////////////////////////////////////////////
 	public void initLoginButton() {
@@ -424,7 +424,7 @@ public class AppMainController implements Initializable{
 		btnConnect.setOnAction((event)->{handleConnect(event);});
 		btnCancle.setOnAction((event)->{handleCancle(event);});
 	}
-	
+
 	//로그인화면 연결 버튼 이벤트 처리
 	public void handleConnect(ActionEvent event) {
 		//ip,port 보내기
@@ -444,7 +444,7 @@ public class AppMainController implements Initializable{
 	public void handleCancle(ActionEvent event) {
 		System.exit(0);
 	}
-	
+
 	//미션부분 버튼
 	public void initMissionButton() {
 		btnMissionSet.setOnAction((event)->{handleMissionSet(event);});
@@ -505,12 +505,12 @@ public class AppMainController implements Initializable{
 		});
 		statusMessage("Land made.");
 	}
-	
+
 	public void changeColor() {
 		if(checkLand) btnMissionLand.setStyle("-fx-text-fill: #55FF55;");
 		else btnMissionLand.setStyle("-fx-text-fill: white;");
 	}
-	
+
 	//홈위치WP
 	public void handleMissionHomeWP() {
 		missionAlt = Double.parseDouble(txtAlt.getText());
@@ -534,8 +534,8 @@ public class AppMainController implements Initializable{
 			setTableViewItems(list);
 		}
 	}
-	
-	public void handleNoflyzoneActivate(ActionEvent event) {		
+
+	public void handleNoflyzoneActivate(ActionEvent event) {
 		WayPoint wp = new WayPoint();
 		wp.no=0;
 		wp.kind = "waypoint";
@@ -544,7 +544,7 @@ public class AppMainController implements Initializable{
 		wp.nfz=2;
 		list.add(0,wp);
 
-		
+
 		for(int i=0;i<list.size()-1;i++) {
 			//WP1(x1,y1), WP2(x2,y2)
 			System.out.println("i ==== "+i);
@@ -555,7 +555,7 @@ public class AppMainController implements Initializable{
 			double y1 = Double.parseDouble(list.get(i).getLat());
 			double x2 = Double.parseDouble(list.get(i+1).getLng());
 			double y2 = Double.parseDouble(list.get(i+1).getLat());
-			
+
 			//noflyzone x,y,r이 입력 되였냐
 			if(NoFlyZoneController.instance.x!=0&&NoFlyZoneController.instance.y!=0&&NoFlyZoneController.instance.r!=0) {
 				//noflyzone안에 wp선이 들어 오냐
@@ -569,7 +569,7 @@ public class AppMainController implements Initializable{
 						Noflyzone.circleWP1(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2,i+2);
 						list = Noflyzone.list;
 						i+=(int)((e-s)/10) +1-(Noflyzone.k+Noflyzone.j);
-					// 시계 로 돈다면 여기
+						// 시계 로 돈다면 여기
 					}else{
 						System.out.println("반시계");
 						Noflyzone.circleWP2(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2,i+2);
@@ -588,7 +588,7 @@ public class AppMainController implements Initializable{
 		setMission(list);
 		setTableViewItems(list);
 	}
-	
+
 	public void handleMissionTime() {
 		try {
 			timeStage = new Stage();
@@ -602,7 +602,7 @@ public class AppMainController implements Initializable{
 			timeStage.show();
 		} catch (Exception ex) {}
 	}
-	
+
 	public void handleBtnTop(ActionEvent e) {
 		Network.getUav().move(5, 0, 0, 0.5);
 	}
@@ -636,7 +636,7 @@ public class AppMainController implements Initializable{
 		setMission(list);
 		statusMessage("Mission deleted.");
 	}
-	
+
 	//미션 RTL 추가
 	public void handleMissionRTL(ActionEvent event) {
 		WayPoint waypoint = new WayPoint();
@@ -739,7 +739,7 @@ public class AppMainController implements Initializable{
 		setMission(list);
 		setTableViewItems(list);
 	}
-	
+
 	//Arm, Takeoff, Land, Roiter, Rtl
 	public void handleArm() throws Exception {
 		if(armBtn.getText().equals("Arm")) Network.getUav().arm();
@@ -757,7 +757,7 @@ public class AppMainController implements Initializable{
 		altStage.setScene(scene);
 		altStage.show();
 	}
-	
+
 	public void handleLand() {
 		Network.getUav().land();
 		takeoffStart = false;
@@ -774,7 +774,7 @@ public class AppMainController implements Initializable{
 		});
 		statusMessage("UAV rtl mode.");
 	}
-	
+
 	//미션생성 이벤트 처리
 	public void handleMissionSet(ActionEvent event) {
 		Platform.runLater(() -> {
@@ -790,18 +790,18 @@ public class AppMainController implements Initializable{
 		});
 		statusMessage("Mission read.");
 	}
-	
+
 	// List를 계속 관리하기 위해서 Field 영역으로 가져옴
 	public static List<WayPoint> list = new ArrayList<>();
 	public void getMissionResponse(String data) {
 		missionAlt = Double.parseDouble(txtAlt.getText());
 		list.clear();
-		Platform.runLater(() -> {	
+		Platform.runLater(() -> {
 			JSONArray jsonArray = new JSONArray(data);
 			for(int i=0; i<jsonArray.length(); i++) {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
-				WayPoint wayPoint = new WayPoint();  
-	 			wayPoint.no = jsonObject.getInt("no");
+				WayPoint wayPoint = new WayPoint();
+				wayPoint.no = jsonObject.getInt("no");
 				wayPoint.kind = jsonObject.getString("kind"); //all is "waypoint";
 				wayPoint.setLat(jsonObject.getDouble("lat")+"");
 				wayPoint.setLng(jsonObject.getDouble("lng")+"");
@@ -820,11 +820,11 @@ public class AppMainController implements Initializable{
 		});
 	}
 	public void setTableViewItems(List<WayPoint> list) {
- 		tableView.getItems().clear();
+		tableView.getItems().clear();
 		tableView.setItems(FXCollections.observableArrayList(list));
 	}
-	
-	
+
+
 	public static boolean uploadState = false;
 	//미션 업로드
 	public void handleMissionUpload(ActionEvent event) {
@@ -832,26 +832,26 @@ public class AppMainController implements Initializable{
 		Network.getUav().missionUpload(list);
 		statusMessage("Mission uploaded.");
 	}
-	
+
 	//미션 다운로드
 	public void handleMissionDownload(ActionEvent event) {
 		Network.getUav().missionDownload();
 		statusMessage("Mission downloaded.");
 	}
-	
+
 	//미션 바로가기
 	public void handleMissionGoto(ActionEvent event) {
 		Platform.runLater(() -> {
 			jsproxy.call("gotoMake");
 		});
 	}
-	
+
 	//미션 점프
 	public void handleMissionJump(ActionEvent event) {
 		addJump();
 		statusMessage("Jump added.");
 	}
-	
+
 	private void addJump() {
 		WayPoint waypoint = new WayPoint();
 		waypoint.kind = "jump";
@@ -861,7 +861,7 @@ public class AppMainController implements Initializable{
 		list.add(waypoint);
 		setTableViewItems(list);
 	}
-	
+
 	//미션 Loi
 	public void handleMissionLoi(ActionEvent event) {
 		roiMake();
@@ -873,12 +873,12 @@ public class AppMainController implements Initializable{
 			WayPoint wp = tableView.getItems().get(selectedIndex);
 			wp = tableView.getItems().get(selectedIndex+1);
 		}catch(Exception e) {}
-		
+
 		Platform.runLater(() -> {
 			jsproxy.call("roiMake", selectedIndex);
 		});
 	}
-	
+
 	public void addROI(String data) {
 		Platform.runLater(() -> {
 			WayPoint waypoint = new WayPoint();
@@ -898,8 +898,8 @@ public class AppMainController implements Initializable{
 			}
 		});
 		statusMessage("ROI added.");
-	}		
-	
+	}
+
 	//테이블뷰 설정////////////////////////////////////////////////////////////////////////////////////////////////////////
 	private void initTableView() {
 		tableView.setEditable(true);
@@ -937,7 +937,7 @@ public class AppMainController implements Initializable{
 		column4.setCellFactory(TextFieldTableCell.forTableColumn());
 		column4.setOnEditCommit((target)->{
 			target.getTableView().getItems().get(
-				target.getTablePosition().getRow()).setLng(target.getNewValue());
+					target.getTablePosition().getRow()).setLng(target.getNewValue());
 			setMission(list);
 		});
 		column4.setPrefWidth(200);
@@ -986,7 +986,7 @@ public class AppMainController implements Initializable{
 		column7.setSortable(false);
 		column7.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column7);
-		
+
 		TableColumn<WayPoint, Double> column8 = new TableColumn<WayPoint, Double>("Waiting Time");
 		column8.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("waitingTime"));
 		column8.setPrefWidth(80);
@@ -1001,7 +1001,7 @@ public class AppMainController implements Initializable{
 		column9.impl_setReorderable(false); //헤더를 클릭하면 멈춤 현상을 없애기 위해
 		tableView.getColumns().add(column9);
 	}
-	
+
 
 	public void viewStatus(UAV uav) {
 		try {
@@ -1020,7 +1020,7 @@ public class AppMainController implements Initializable{
 			e.printStackTrace();
 		}
 	}
-	public void setMissionStatus(UAV uav) {		
+	public void setMissionStatus(UAV uav) {
 		Platform.runLater(() -> {
 			try {
 				if(uav.homeLat >= 10) {
@@ -1029,13 +1029,13 @@ public class AppMainController implements Initializable{
 					homeLngLabel.setText(String.format("Lng:	%.6f", uav.homeLng));
 					jsproxy.call("setUavLocation", uav.latitude, uav.longitude, uav.heading);
 				}
-				
+
 				if(uav.wayPoints.size() != 0) {
 					setMission(uav.wayPoints);
-				} 
-				
-				jsproxy.call("setNextWaypointNo", UAV.nextWP);			
-				
+				}
+
+				jsproxy.call("setNextWaypointNo", UAV.nextWP);
+
 				if(Network.getUav().mode.equals("AUTO")) {
 					for(int i=0; i<tableView.getItems().size(); i++) {
 						WayPoint wp = tableView.getItems().get(i);
@@ -1044,13 +1044,13 @@ public class AppMainController implements Initializable{
 						}
 					}
 				}
-				
+
 				if(uav.fenceEnable == 0) {
 					btnFenceActivate.setGraphic(new Circle(5, Color.rgb(0x35, 0x35, 0x35)));
 				} else {
-					btnFenceActivate.setGraphic(new Circle(5, Color.RED)); 
+					btnFenceActivate.setGraphic(new Circle(5, Color.RED));
 				}
-				
+
 				if(uav.fencePoints.size() != 0) {
 					setFence(uav.fencePoints);
 				}
@@ -1062,7 +1062,7 @@ public class AppMainController implements Initializable{
 			if(uav.connected) {
 				if(uav.armed) {
 					armBtn.setText("Disarm");
-					armBtn.setGraphic(new Circle(5, Color.RED)); 
+					armBtn.setGraphic(new Circle(5, Color.RED));
 				} else {
 					armBtn.setText("Arm");
 					armBtn.setGraphic(new Circle(5, Color.rgb(0x35, 0x35, 0x35)));
@@ -1070,47 +1070,47 @@ public class AppMainController implements Initializable{
 			}
 		});
 	}
-	
+
 	public void setMission(List<WayPoint> wayPoints) {
 		setTableViewItems(wayPoints);
 		JSONArray jsonArray = new JSONArray();
 		for(WayPoint wayPoint : wayPoints) {
-				JSONObject jsonObject = new JSONObject();
-				if(wayPoint.kind.equals("takeoff")) {
-					jsonObject.put("kind",  wayPoint.kind);
-					jsonObject.put("lat", Network.getUav().homeLat);
-					jsonObject.put("lng", Network.getUav().homeLng);
-				} else if(wayPoint.kind.equals("waypoint")) {
-					jsonObject.put("kind",  wayPoint.kind);
-					jsonObject.put("lat", Double.parseDouble(wayPoint.getLat()));
-					jsonObject.put("lng", Double.parseDouble(wayPoint.getLng()));
-				} else if(wayPoint.kind.equals("jump")) {
-					jsonObject.put("kind",  wayPoint.kind);
-					jsonObject.put("seq", wayPoint.jumpNo);
-					jsonObject.put("cnt", wayPoint.repeatCount);
-				} else if(wayPoint.kind.equals("rtl")) {
-					jsonObject.put("kind",  wayPoint.kind);
-					jsonObject.put("lat", Network.getUav().homeLat);
-					jsonObject.put("lng", Network.getUav().homeLng+0.00005);
-				} else if(wayPoint.kind.equals("roi")) {
-					jsonObject.put("kind",  wayPoint.kind);
-					jsonObject.put("lat", Double.parseDouble(wayPoint.getLat()));
-					jsonObject.put("lng", Double.parseDouble(wayPoint.getLng()));
-				} else if(wayPoint.kind.equals("land")) {
-					landNum = wayPoint.no;
-					jsonObject.put("kind",  wayPoint.kind);
-					jsonObject.put("lat", Double.parseDouble(wayPoint.getLat()));
-					jsonObject.put("lng", Double.parseDouble(wayPoint.getLng()));
-				} 
-				jsonArray.put(jsonObject);
+			JSONObject jsonObject = new JSONObject();
+			if(wayPoint.kind.equals("takeoff")) {
+				jsonObject.put("kind",  wayPoint.kind);
+				jsonObject.put("lat", Network.getUav().homeLat);
+				jsonObject.put("lng", Network.getUav().homeLng);
+			} else if(wayPoint.kind.equals("waypoint")) {
+				jsonObject.put("kind",  wayPoint.kind);
+				jsonObject.put("lat", Double.parseDouble(wayPoint.getLat()));
+				jsonObject.put("lng", Double.parseDouble(wayPoint.getLng()));
+			} else if(wayPoint.kind.equals("jump")) {
+				jsonObject.put("kind",  wayPoint.kind);
+				jsonObject.put("seq", wayPoint.jumpNo);
+				jsonObject.put("cnt", wayPoint.repeatCount);
+			} else if(wayPoint.kind.equals("rtl")) {
+				jsonObject.put("kind",  wayPoint.kind);
+				jsonObject.put("lat", Network.getUav().homeLat);
+				jsonObject.put("lng", Network.getUav().homeLng+0.00005);
+			} else if(wayPoint.kind.equals("roi")) {
+				jsonObject.put("kind",  wayPoint.kind);
+				jsonObject.put("lat", Double.parseDouble(wayPoint.getLat()));
+				jsonObject.put("lng", Double.parseDouble(wayPoint.getLng()));
+			} else if(wayPoint.kind.equals("land")) {
+				landNum = wayPoint.no;
+				jsonObject.put("kind",  wayPoint.kind);
+				jsonObject.put("lat", Double.parseDouble(wayPoint.getLat()));
+				jsonObject.put("lng", Double.parseDouble(wayPoint.getLng()));
+			}
+			jsonArray.put(jsonObject);
 		}
-			String strMissionArr = jsonArray.toString();
-			Platform.runLater(() -> {
-				jsproxy.call("setMission", strMissionArr);
-			});
-			statusMessage("Mission set.");
+		String strMissionArr = jsonArray.toString();
+		Platform.runLater(() -> {
+			jsproxy.call("setMission", strMissionArr);
+		});
+		statusMessage("Mission set.");
 	}
-	
+
 	public void setFence(List<FencePoint> fencePoints) {
 		JSONArray jsonArray = new JSONArray();
 		for(FencePoint fencePoint : fencePoints) {
@@ -1127,11 +1127,11 @@ public class AppMainController implements Initializable{
 		});
 		statusMessage("Set Fence.");
 	}
-	
+
 	public void log(String message) {
 		System.out.println(message);
 	}
-	
+
 	///////////////////////////// 미션 관련 //////////////////////////////////////
 	public void gotoStart(String data) {
 		takeoffAlt = altdialogController.alt;
@@ -1149,17 +1149,17 @@ public class AppMainController implements Initializable{
 			batteryLabel.setText(level+"%");
 		});
 	}
-	
+
 	public void locationSet(double lat, double lng) {
 		Platform.runLater(()->{
 			locationLatLabel.setText("Lat:	" + lat);
 			locationLngLabel.setText("Lng:	" + lng);
 		});
 		setGps = true;
-		
+
 	}
-	
-///////////////////////////// 우측 //////////////////////////////////////
+
+	///////////////////////////// 우측 //////////////////////////////////////
 	public void initRightPane() {
 		rightBtnEvent();
 	}
@@ -1170,26 +1170,26 @@ public class AppMainController implements Initializable{
 		rightCameraLabel.setOnMouseClicked((event) -> {handleCameraBtn(event);});
 		rightDeleteBtn.setOnAction((event) -> {handleDeleteBtn(event);});
 	}
-	
+
 	public void handleStatusBtn (MouseEvent event) {
 		rightStatusPane.setVisible(true);
 		rightCameraPane.setVisible(false);
 		rightStatusLabel.setStyle("-fx-background-color: white; -fx-text-fill: black");
 		rightCameraLabel.setStyle("-fx-background-color: black; -fx-text-fill: white");
 	}
-	
+
 	public void handleCameraBtn (MouseEvent event) {
 		rightStatusPane.setVisible(false);
 		rightCameraPane.setVisible(true);
 		rightStatusLabel.setStyle("-fx-background-color: black; -fx-text-fill: white");
 		rightCameraLabel.setStyle("-fx-background-color: white; -fx-text-fill: black");
 	}
-	
+
 	public void handleDeleteBtn(ActionEvent event) {
 		statusList.removeAll(statusList);
 		statusListView.setItems(FXCollections.observableArrayList(statusList));
 	}
-	
+
 	//메세지 출력
 	public void statusMessage(String message) {
 		Platform.runLater(new Runnable() {
@@ -1207,7 +1207,7 @@ public class AppMainController implements Initializable{
 							statusList.add("   " + inTime + "			" + message);
 							statusListView.setItems(FXCollections.observableArrayList(statusList));
 							messageTemp = message;
-						}	
+						}
 					} else if(message.equals("UAV Disarmed.")) {
 						if(!messageTemp.equals(message)) {
 							if(list.size() > 0 && list.get(list.size()-1).equals("UAV Disarmed.")) {}
@@ -1223,7 +1223,7 @@ public class AppMainController implements Initializable{
 						statusList.add("   " + inTime + "			" + message);
 						statusListView.setItems(FXCollections.observableArrayList(statusList));
 					}
-				} 
+				}
 			}
 		});
 	}
