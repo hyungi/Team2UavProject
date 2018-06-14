@@ -136,9 +136,13 @@ public class UAV implements Cloneable {
 			groundSpeed = jsonObject.getDouble("groundspeed");
 			homeLat = jsonObject.getDouble("homeLat");
 			homeLng = jsonObject.getDouble("homeLng");
+			nextWaypointNo = jsonObject.getInt("next_waypoint_no");
 			
 			if(armed) AppMainController.instance2.statusMessage("UAV Armed.");
-			else if(!armed) AppMainController.instance2.statusMessage("UAV Disarmed.");
+			else if(!armed) {
+				AppMainController.instance2.statusMessage("UAV Disarmed.");
+				AppMainController.instance2.setGps = false;
+			}
 			if(leftPaneController.instance.distance(AppMainController.gotoLat, AppMainController.gotoLng, 
 				Network.getUav().latitude, Network.getUav().longitude, "meter") < 0.7 && (AppMainController.gotoLat != 0 && AppMainController.gotoLng != 0)) {
 				AppMainController.instance2.statusMessage("Go to Completed.");
@@ -150,18 +154,19 @@ public class UAV implements Cloneable {
 				else AppMainController.instance2.statusMessage(statusText);
 			}
 					
-			// land에 해당하는 Mission에 도달시 Land 진행
+			// landNum에 해당하는 Mission에 도달시 Land 진행
 			if(AppMainController.instance2.checkLand&&statusText.equals("Reached command #"+AppMainController.instance2.landNum)) {
 				AppMainController.instance2.handleLand();
 				AppMainController.instance2.uploadState = true;
 			}
-			// land 마크가 활성화 되어있을 때만 자동 미션 진행
+			// CargoWP 마크가 활성화 되어있을 때만 자동 미션 진행
 			if(!armed && AppMainController.instance2.checkLand && AppMainController.instance2.uploadState) {
 				AppMainController.instance2.checkLand = false;
 				AppMainController.instance2.changeColor();
 				AppMainController.instance2.uploadState = false;
-				// 미션 재생성
+				// 미션 재생성을 위한 List
 				List<WayPoint> tList = new ArrayList<>();
+				// Mission Clear
 				missionUpload(tList);
 				int i=1;
 				for(WayPoint wp: AppMainController.instance2.list) {
@@ -174,6 +179,7 @@ public class UAV implements Cloneable {
 				missionUpload(tList);
 //				 DisArmed 되면 화물 내림
 				AppMainController.instance2.handleCargoStop();
+				// Arm 후에 바로 TakeOff처리시 Delay를 위한 Thread Sleep
 				Thread thread = new Thread(new Runnable() {
 					@Override
 					public void run() {
@@ -190,12 +196,14 @@ public class UAV implements Cloneable {
 				thread.start();
 			}
 			
+			// MissionState가 True이고 TakeOff를 한 뒤 원하는 고도의 -0.5만큼 띄워졌으면 재정의된 미션을 수행
 			if(misstionState && altitude >= altdialogController.alt -0.5) {
 				missionStart();
 				misstionState = false;
 				AppMainController.instance2.landNum = -999;
 			}
 			
+			// 새로 정의된 미션의 마지막 WayPoint에 도달하면 Land 수행
 			if(!misstionState && statusText.equals("Reached command #"+AppMainController.instance2.lastNum)) {
 				AppMainController.instance2.handleLand();
 				AppMainController.instance2.lastNum = -999;

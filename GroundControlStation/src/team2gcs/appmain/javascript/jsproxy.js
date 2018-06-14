@@ -24,6 +24,7 @@ var jsproxy = {
 			console.log(">> [jsproxy.setZoomSliderValue()] " + err);
 		}
 	},
+	// Custom으로 MapType을 바꾸기 위해
 	setMapType: function(position){
 		try{
 			if(position == 1){
