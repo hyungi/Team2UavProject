@@ -1,12 +1,19 @@
 package team2gcs.appmain;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import javax.imageio.ImageIO;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,12 +31,14 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Worker.State;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -39,6 +48,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -194,7 +204,8 @@ public class AppMainController implements Initializable{
 	@FXML private Label signalLabel;
 	@FXML private ImageView connButton;
 	
-	BufferedWriter gpsTxt;
+	FileOutputStream gpsTxt;
+	public boolean setGps = false;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -209,6 +220,11 @@ public class AppMainController implements Initializable{
 		initTop();
 		initRightPane();
 		heightSize = webView.getHeight();
+		try {
+			gpsTxt = new FileOutputStream("src/team2gcs/images/"+"gps.txt");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		try {
 			Parent leftRoot = FXMLLoader.load(getClass().getResource("../leftpane/left.fxml"));
 			// 카메라 꺼놈
@@ -275,6 +291,8 @@ public class AppMainController implements Initializable{
 			System.out.println(!Network.getUav().connected);
 			System.out.println(!Network.getUav().armed);
 		}*/
+		if(setGps)
+			makeGpsTxt();
 	}
 
 	public void missionTime() {
@@ -305,6 +323,15 @@ public class AppMainController implements Initializable{
 		takeoffTime = String.format("%02d:%02d:%02d", takeoffH, takeoffM, takeoffS);
 	}
 
+	public void makeGpsTxt() {
+		System.out.println("gg");
+        try {
+			gpsTxt.write((inTime + "   Lat: " + Network.getUav().latitude + "   Lng: " + Network.getUav().longitude + "\r\n").getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		setGps = false;
+	}
 ////////////////////////////////// Slide Menu 관련 ////////////////////////////////
 	public void initSlide() {
 		// 맨 처음 값을 200(닫혀있음)으로 만듬
@@ -390,7 +417,6 @@ public class AppMainController implements Initializable{
 	         });
 	      }
 	   };
-  
 
 	//로그인 버튼////////////////////////////////////////////////////////////////////////////////////////
 	public void initLoginButton() {
@@ -1129,6 +1155,8 @@ public class AppMainController implements Initializable{
 			locationLatLabel.setText("Lat:	" + lat);
 			locationLngLabel.setText("Lng:	" + lng);
 		});
+		setGps = true;
+		
 	}
 	
 ///////////////////////////// 우측 //////////////////////////////////////
