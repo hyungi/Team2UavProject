@@ -1,5 +1,7 @@
 package team2gcs.appmain;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -46,6 +48,17 @@ public class AppMain extends Application{
             }
         };
 		thread.start();
+		
+		//프로그램 종료시 gps.txt 닫기
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+            	try {
+					AppMainController.instance2.gpsTxt.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+            }
+        });
 	}
 	
 	@Override

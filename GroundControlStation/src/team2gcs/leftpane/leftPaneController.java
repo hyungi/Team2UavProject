@@ -93,15 +93,11 @@ public class leftPaneController implements Initializable {
     private double airSpeed = 0;
     private double groundSpeed = 0;
     private double altitude = 0;
-    private double distWP = 0;
-    private double distHome = 0;
-    private double timeAir = 0;
     private double voltage = 0;
     private double fenceEnable = 0.0;
     private String mode = "DisArmed.";
     private String missionTime;
     private String takeoffTime;
-    private String labelMessage;
     private boolean armed = false;
     private boolean missionData = false;
     private boolean noFlyData = false;
@@ -134,15 +130,18 @@ public class leftPaneController implements Initializable {
         ctx2 = yawCanvas.getGraphicsContext2D();
     }
 
+    //HUD 그리기
     private void drawHud() {
+        //HUD 이미지
         ImagePattern img = new ImagePattern(new Image(getClass().getResourceAsStream("../images/hudBg2.png")), 0, pitch * 2, 100, 300, false);
         circle.setFill(img);
 
-        //yaw
+        //YAW
         ctx2.setFill(Color.WHITE);
         ctx2.fillOval(82.5 + (65 * Math.cos(yaw * 0.017468 - Math.PI / 2)), 82 + (65 * Math.sin(yaw * 0.017468 - Math.PI / 2)), 15, 15);
     }
 
+    //HUD line 그리기
     public void drawHudLine() {
         ctx1.setLineWidth(1);
         ctx1.setStroke(Color.WHITE);
@@ -157,6 +156,7 @@ public class leftPaneController implements Initializable {
         }
     }
 
+    //일반 및 상세 데이터 이벤트 처리
     private void sensorLabelEvent() {
         sensorLabel.setOnMouseClicked(new EventHandler<Event>() {
             @Override
@@ -174,6 +174,7 @@ public class leftPaneController implements Initializable {
         });
     }
 
+    //Roll, Pitch, Yaw 값
     public void getRollStatus(UAV uav) {
         roll = uav.roll;
         pitch = uav.pitch;
@@ -182,21 +183,7 @@ public class leftPaneController implements Initializable {
         armed = uav.armed;
     }
 
-    public void setRollStatus() {
-        rollLabel.setText(String.format("%.4f", roll));
-        pitchLabel.setText(String.format("%.4f", pitch));
-        yawLabel.setText(String.format("%.4f", yaw));
-        if (armed == true) {
-            armedLabel.setStyle("-fx-text-fill: red;");
-            armedLabel.setText("Armed");
-        } else if (armed == false) {
-            armedLabel.setStyle("-fx-text-fill: white;");
-            armedLabel.setText("DisArmed.");
-        }
-        hudLineCanvas.setRotate(roll * 2);
-        circle.setRotate(roll * 2);
-    }
-
+    //하단 Label
     public void getStatus(UAV uav) {
         if (uav.connected) {
             mode = uav.mode;
@@ -212,6 +199,23 @@ public class leftPaneController implements Initializable {
         }
     }
 
+    //상단 Label
+    public void setRollStatus() {
+        rollLabel.setText(String.format("%.4f", roll));
+        pitchLabel.setText(String.format("%.4f", pitch));
+        yawLabel.setText(String.format("%.4f", yaw));
+        if (armed == true) {
+            armedLabel.setStyle("-fx-text-fill: red;");
+            armedLabel.setText("Armed");
+        } else if (armed == false) {
+            armedLabel.setStyle("-fx-text-fill: white;");
+            armedLabel.setText("DisArmed.");
+        }
+        hudLineCanvas.setRotate(roll * 2);
+        circle.setRotate(roll * 2);
+    }
+
+    //하단 Label
     public void setStatus() {
         //간단 모드
         if (Network.getUav().connected) {
@@ -241,7 +245,7 @@ public class leftPaneController implements Initializable {
                     detailMissionLabel.setStyle("-fx-text-fill: red;");
                     detailMissionLabel.setText("Set.");
                 }
-                if (AppMainController.missionStart == true) 
+                if (AppMainController.missionStart == true)
                     detailMissionTimeLabel.setText(missionTime);
                 else detailMissionTimeLabel.setText("No Mission.");
                 if (AppMainController.takeoffStart == true) detailTakeoffTimeLabel.setText(takeoffTime);
@@ -257,10 +261,12 @@ public class leftPaneController implements Initializable {
         }
     }
 
+    //1줄 Status 출력
     public void setStatusLabels(String message) {
         statusLabel.setText(message);
     }
 
+    //거리 측정
     public double distance(double lat1, double lon1, double lat2, double lon2, String unit) {
         double theta = lon1 - lon2;
         double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
@@ -275,28 +281,35 @@ public class leftPaneController implements Initializable {
         return (dist);
     }
 
-    public double deg2rad(double deg) { return (deg * Math.PI / 180.0); }
+    public double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
     public double rad2deg(double rad) {
         return (rad * 180 / Math.PI);
     }
-    
+
+
+    //Alt listener
     public void setAltLabel() {
-    	altitudeLabel.setStyle("-fx-text-fill: white;");
-        if(altitudeLabel.getText() != String.format("%.2f", altitude)) altitudeLabel.setText(String.format("%.2f", altitude));
+        altitudeLabel.setStyle("-fx-text-fill: white;");
+        if (altitudeLabel.getText() != String.format("%.2f", altitude))
+            altitudeLabel.setText(String.format("%.2f", altitude));
         altitudeLabel.textProperty().addListener(new ChangeListener<String>() {
-        	@Override
-        	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-        		altitudeLabel.setStyle("-fx-text-fill: red;");
-        	}
-		}); 
-        
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                altitudeLabel.setStyle("-fx-text-fill: red;");
+            }
+        });
+
         detailAltitudeLabel.setStyle("-fx-text-fill: white;");
-        if(detailAltitudeLabel.getText() != String.format("%.2f", altitude)) detailAltitudeLabel.setText(String.format("%.2f", altitude));
+        if (detailAltitudeLabel.getText() != String.format("%.2f", altitude))
+            detailAltitudeLabel.setText(String.format("%.2f", altitude));
         detailAltitudeLabel.textProperty().addListener(new ChangeListener<String>() {
-        	@Override
-        	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-        		detailAltitudeLabel.setStyle("-fx-text-fill: red;");
-        	}
-		});
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                detailAltitudeLabel.setStyle("-fx-text-fill: red;");
+            }
+        });
     }
 }
