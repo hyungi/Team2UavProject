@@ -113,7 +113,7 @@ public class AppMainController implements Initializable{
 	@FXML private BorderPane missionPane;
 	@FXML private VBox bottomMovePane;
 	@FXML private Label bottomOpenLabel;
-	private boolean bottomControl = true;
+	private boolean bottomControl = true;	
 	// 우측 버튼 & Pane & 둘을 가지고있는 HBox & control 값
 	@FXML private AnchorPane openRight;
 	@FXML private HBox rightMovePane;
@@ -488,6 +488,7 @@ public class AppMainController implements Initializable{
 		btnLeft.setOnAction((event)->{handleBtnLeft(event);});
 		btnHeadingToNorth.setOnAction((event)->{handleBtnHeadingToNorth(event);});
 	}
+	
 	public static boolean wait;
 	public static WayPoint tPoint;
 	public static WayPoint tPoint2;
@@ -495,6 +496,7 @@ public class AppMainController implements Initializable{
 	public static boolean checkLand = false;
 	public static int landNum = -999;
 	public static int lastNum = -999;
+	//CargoWP 설정
 	
 	// Land 마크(상자)를 찍기위해 CargoWP 버튼을 클릭시 웹상의 Land값을 true로 바꿔줌
 	public void handleMissionLand() {
@@ -511,14 +513,13 @@ public class AppMainController implements Initializable{
 		});
 		statusMessage("Land made.");
 	}
-	
 	// CargoWP가 활성화 중인것을 알리기위한 Text Color 변경
 	public void changeColor() {
 		if(checkLand) btnMissionLand.setStyle("-fx-text-fill: #55FF55;");
 		else btnMissionLand.setStyle("-fx-text-fill: white;");
 	}
 	
-	//홈위치WP
+	//홈위치에 WP설정
 	public void handleMissionHomeWP() {
 		missionAlt = Double.parseDouble(txtAlt.getText());
 		if(Network.getUav().homeLat!=0&&Network.getUav().homeLng!=0) {
@@ -541,8 +542,9 @@ public class AppMainController implements Initializable{
 			setTableViewItems(list);
 		}
 	}
-
-	public void handleNoflyzoneActivate(ActionEvent event) {
+	
+	//no-fly-zone 활성화
+	public void handleNoflyzoneActivate(ActionEvent event) {		
 		WayPoint wp = new WayPoint();
 		wp.no=0;
 		wp.kind = "waypoint";
@@ -563,22 +565,21 @@ public class AppMainController implements Initializable{
 			double x2 = Double.parseDouble(list.get(i+1).getLng());
 			double y2 = Double.parseDouble(list.get(i+1).getLat());
 			
-			//noflyzone x,y,r이 입력 되였냐
+			//noflyzone이설정 되어있는지 판단
 			if(NoFlyZoneController.instance.x!=0&&NoFlyZoneController.instance.y!=0&&NoFlyZoneController.instance.r!=0) {
-				//noflyzone안에 wp선이 들어 오냐
+				//비행경로가 no-fly-zone에 들어오는지 판단(no-fly-zone의 반지름의 1.1배 기준)
 				if(Noflyzone.ifNoflyzone(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,x1,y1,x2,y2)<=NoFlyZoneController.instance.r*1.1) {
-					// 시계 or 반시계
+					// 회전방향 설정 (시계or반시계)
 					Noflyzone.rotationCase(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,x1,y1,x2,y2);
 					int s = Noflyzone.s;
 					int e = Noflyzone.e;
-					// 반시계 로 돈다면 여기
+					// 시계방향으로 돌 경우
 					if(!rotation) {
 						Noflyzone.circleWP1(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2,i+2);
 						list = Noflyzone.list;
 						i+=(int)((e-s)/10) +1-(Noflyzone.k+Noflyzone.j);
-					// 시계 로 돈다면 여기
+					// 반시계방향으로 돌 경우
 					}else{
-						System.out.println("반시계");
 						Noflyzone.circleWP2(NoFlyZoneController.instance.x,NoFlyZoneController.instance.y,NoFlyZoneController.instance.r,x1,y1,x2,y2,i+2);
 						list = Noflyzone.list;
 						i += (int)((s-e+1)/10)+1-(Noflyzone.k+Noflyzone.j);
@@ -595,7 +596,7 @@ public class AppMainController implements Initializable{
 		setMission(list);
 		setTableViewItems(list);
 	}
-	
+	// CargoWP에서의 waitting time 설정
 	public void handleMissionTime() {
 		try {
 			timeStage = new Stage();
@@ -609,30 +610,31 @@ public class AppMainController implements Initializable{
 			timeStage.show();
 		} catch (Exception ex) {}
 	}
-	
+	//미세조정 : 북쪽
 	public void handleBtnTop(ActionEvent e) {
 		Network.getUav().move(5, 0, 0, 0.5);
 	}
-
+	//미세조정 : 남쪽
 	public void handleBtnBottom(ActionEvent e) {
 		Network.getUav().move(-5, 0, 0, 0.5);
 	}
-
+	//미세조정 : 동쪽
 	public void handleBtnRight(ActionEvent e) {
 		Network.getUav().move(0, 5, 0, 0.5);
 	}
-
+	//미세조정 : 서쪽
 	public void handleBtnLeft(ActionEvent e) {
 		Network.getUav().move(0, -5, 0, 0.5);
 	}
-
+	//기체 head방향을 북으로 설정
 	public void handleBtnHeadingToNorth(ActionEvent e) {
 		Network.getUav().changeHeading(0);
 	}
-	//화물 부착 시작,끝
+	//화물 부착
 	public void handleCargoStart(ActionEvent event) {
 		Network.getUav().cargo("cargoStart");
 	}
+	//화물 탈착
 	public void handleCargoStop() {
 		Network.getUav().cargo("cargoStop");
 	}
@@ -656,7 +658,7 @@ public class AppMainController implements Initializable{
 			jsproxy.call("addRTL");
 		});
 	}
-	//미션 시작 정지
+	//미션 시작
 	public void handleMissionStart(ActionEvent event) {
 		Network.getUav().missionStart();
 		Platform.runLater(() -> {
@@ -665,6 +667,7 @@ public class AppMainController implements Initializable{
 		statusMessage("Mission started.");
 		missionStart = true;
 	}
+	//미션 정지
 	public void handleMissionStop(ActionEvent event) {
 		Network.getUav().missionStop();
 		Platform.runLater(() -> {
@@ -674,20 +677,22 @@ public class AppMainController implements Initializable{
 		missionH = 0; missionM = 0; missionS = 0;
 		statusMessage("Mission stopped.");
 	}
-	//펜스 이벤트 처리
+	//펜스 설정
 	public void handleFenceSet(ActionEvent event) {
 		Platform.runLater(() -> {
 			jsproxy.call("fenceMake");
 		});
 		statusMessage("Fence data set.");
 	}
-	public void fenceUpload(String jsonFencePoints) {
-		Network.getUav().fenceUpload(jsonFencePoints);
-	}
+	//펜스
 	public void handleFenceUpload(ActionEvent event) {
 		jsproxy.call("fenceUpload");
 		statusMessage("Fence data uploaded.");
 	}
+	public void fenceUpload(String jsonFencePoints) {
+		Network.getUav().fenceUpload(jsonFencePoints);
+	}
+	//펜스 다운로드
 	public void handleFenceDownload(ActionEvent event) {
 		if(strFenceArr == null) statusMessage("No Fence.");
 		else {
@@ -695,14 +700,17 @@ public class AppMainController implements Initializable{
 			statusMessage("Fence data downloaded.");
 		}
 	}
+	//펜스 활성화
 	public void handleFenceActivate(ActionEvent event) {
 		Network.getUav().fenceEnable();
 		statusMessage("Fence activated.");
 	}
+	//펜스 비활성화
 	public void handleFenceDeactivate(ActionEvent event) {
 		Network.getUav().fenceDisable();
 		statusMessage("Fence disactivated.");
 	}
+	//펜스 삭제
 	public void handleFenceDelete(ActionEvent event) {
 		Network.getUav().fenceClear();
 		jsproxy.call("fenceClear");
@@ -726,6 +734,7 @@ public class AppMainController implements Initializable{
 			e.printStackTrace();
 		}
 	}
+	//no-fly-zone 삭제및 비활성화
 	public void handleNoflyzoneDelete(ActionEvent event) {
 		statusMessage("No-fly zone deleted.");
 		Platform.runLater(() -> {
@@ -747,12 +756,12 @@ public class AppMainController implements Initializable{
 		setTableViewItems(list);
 	}
 	
-	//Arm, Takeoff, Land, Roiter, Rtl
+	//Arm : 시동걸기
 	public void handleArm() throws Exception {
 		if(armBtn.getText().equals("Arm")) Network.getUav().arm();
 		else if (armBtn.getText().equals("Disarm")) Network.getUav().disarm();
 	}
-
+	//Takeoff : 드론 띄우기 및 alt 바꾸기 가능
 	public void handleTakeoff() throws Exception {
 		altStage = new Stage();
 		altStage.setTitle("Altitude Setting.");
@@ -764,16 +773,18 @@ public class AppMainController implements Initializable{
 		altStage.setScene(scene);
 		altStage.show();
 	}
-	
+	//Land : 현 위치 착륙
 	public void handleLand() {
 		Network.getUav().land();
 		takeoffStart = false;
 		statusMessage("UAV land.");
 	}
+	//Roiter : 현 위치 고정
 	public void handleLoiter(ActionEvent event) {
 		System.out.println("로이터 모드 실행 그러나 코딩 안함");
 		statusMessage("UAV loiter mode.");
 	}
+	//Rtl : 홈위치로 돌아오기
 	public void handleRtl(ActionEvent event) {
 		Network.getUav().rtl();
 		Platform.runLater(() -> {
@@ -782,7 +793,7 @@ public class AppMainController implements Initializable{
 		statusMessage("UAV rtl mode.");
 	}
 	
-	//미션생성 이벤트 처리
+	//미션생성
 	public void handleMissionSet(ActionEvent event) {
 		Platform.runLater(() -> {
 			jsproxy.call("missionMake");
@@ -869,7 +880,7 @@ public class AppMainController implements Initializable{
 		setTableViewItems(list);
 	}
 	
-	//미션 Loi
+	//미션 Loi : 헤드 고정
 	public void handleMissionLoi(ActionEvent event) {
 		roiMake();
 		statusMessage("Roi made.");
