@@ -17,12 +17,17 @@ import simplejson
 #예외 발생시 예외 내용 출력을 위해 True로 설정----------------------
 debug = True
 #Autopilot(FC-펌웨어)과 연결----------------------------------jdh------------------------------
+
 vehicle = connect("udp:192.168.3.217:14560", wait_ready=True)
+
 #vehicle = connect('udp:127.0.0.1:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
 # vehicle = connect('/dev/ttyS0',wait_ready = True,baud57600) #라즈베리파이에서 실행시 
 
 #MQTT Broker와 연결하기 위한 정보-----------------------------
+
 mqtt_ip = "192.168.3.217"
+#106.253.56.122
+
 mqtt_port = 1883
 uav_pub_topic = "/uav2/pub"
 uav_sub_topic = "/uav2/sub"
@@ -721,6 +726,7 @@ def mission_upload(json_dict):
             elif kind=="land":
                 latitude = waypoint["lat"]
                 longitude = waypoint["lng"]
+                altitude = waypoint["alt"]
                 cmd = Command(0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 0, 0, 1, 0, 0, 0, latitude, longitude, altitude)
                 vehicle.commands.add(cmd)
                 
@@ -794,8 +800,8 @@ def gcs_fail_safe():
         if gcs_fail_safe_request == True:
 #             print("connecting")
             count = count + 1
-#             print(count)
-        if count > 20:
+            print(count)
+        if count > 250:
             if not vehicle.armed: return
             vehicle.mode = VehicleMode("RTL")
             gcs_fail_safe_request = False

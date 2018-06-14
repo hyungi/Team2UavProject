@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="lib/pi4j-device.jar"/>
 	<classpathentry kind="lib" path="lib/pi4j-gpio-extension.jar"/>
 	<classpathentry kind="lib" path="lib/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Minki.000/Downloads/xuggle-xuggler-5.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
