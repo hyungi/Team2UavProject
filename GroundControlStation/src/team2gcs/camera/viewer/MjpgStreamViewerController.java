@@ -1,15 +1,11 @@
 package team2gcs.camera.viewer;
 
 import java.io.File;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.Date;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
-
-import org.eclipse.paho.client.mqttv3.internal.websocket.Base64;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
