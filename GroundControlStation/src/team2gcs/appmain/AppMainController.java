@@ -1135,7 +1135,8 @@ public class AppMainController implements Initializable{
 	public void initRightPane() {
 		rightBtnEvent();
 	}
-	
+
+	//버튼 이벤트 처리
 	public void rightBtnEvent() {
 		rightStatusLabel.setOnMouseClicked((event) -> {handleStatusBtn(event);});
 		rightCameraLabel.setOnMouseClicked((event) -> {handleCameraBtn(event);});
@@ -1161,7 +1162,7 @@ public class AppMainController implements Initializable{
 		statusListView.setItems(FXCollections.observableArrayList(statusList));
 	}
 	
-///////////////////////////// 메세지 //////////////////////////////////////
+	//메세지 출력
 	public void statusMessage(String message) {
 		Platform.runLater(new Runnable() {
 			@Override
