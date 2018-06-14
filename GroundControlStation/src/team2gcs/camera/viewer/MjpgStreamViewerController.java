@@ -1,28 +1,14 @@
 package team2gcs.camera.viewer;
 
-import java.awt.AWTException;
 import java.awt.Dimension;
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.Date;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
-import org.eclipse.paho.client.mqttv3.internal.websocket.Base64;
 
-import com.xuggle.mediatool.IMediaWriter;
-import com.xuggle.mediatool.ToolFactory;
-import com.xuggle.xuggler.ICodec;
-
-import gcs.network.Network;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -32,12 +18,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import netscape.javascript.JSObject;
-import team2gcs.appmain.AppMainController;
 import team2gcs.camera.CameraStreamB;
 import team2gcs.camera.CameraStreamF;
 
