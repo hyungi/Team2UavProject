@@ -18,7 +18,7 @@ var map = {
 				center: {lat:37.313778, lng:127.109004},
 				//mapTypeId : "roadmap",
 				mapTypeId : "satellite",
-				//지도&위성 버튼 옵션
+				//지도&위성 버튼 옵션 -> Custom 으로 버튼 바꿈.
 //				mapTypeControlOptions: {
 //			        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
 //			        position: google.maps.ControlPosition.TOP_CENTER,
@@ -26,7 +26,7 @@ var map = {
 //			    zoomControlOptions: {
 //			        position: google.maps.ControlPosition.LEFT_BOTTOM
 //			    },
-				// night Mode
+				// 지도 야간모드를 위한 Style 설정
 				styles: [
 			            {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
 			            {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
@@ -107,6 +107,7 @@ var map = {
 			              stylers: [{color: '#17263c'}]
 			            }
 			          ],
+			    // Custom UI 사용을 위한 기존 UI 제거
 			    disableDefaultUI:true,
 //				zoomControl: true,
 				streetViewControl: false,
@@ -147,6 +148,7 @@ var map = {
 				}
 			});	
 			
+			// 지도 | 위성 형태로 지도 Type이 변경시 UAV 색도 맞추어서 바꿔줌
 			map.googlemap.addListener('maptypeid_changed', function() {
 				if(map.googlemap.getMapTypeId() == "roadmap") {
 					map.uav.setUavColor("#00a421", "#f15f5f");
@@ -161,6 +163,7 @@ var map = {
 		}
 	},
 
+	// 1초마다 uav를 그려준다.
 	animation: {
 		count: 1,
 		start: function() {

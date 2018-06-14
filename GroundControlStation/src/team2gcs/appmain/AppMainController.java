@@ -233,6 +233,8 @@ public class AppMainController implements Initializable{
 				connectState = false;
 			}
 		});
+		
+		// 지도의 좌측 상단 Map의 Type과 Zoom 변경 이벤트
 		mapButton.setOnMouseClicked((event)->{
 			Platform.runLater(() -> {
 				jsproxy.call("setMapType",0);
@@ -458,6 +460,8 @@ public class AppMainController implements Initializable{
 	public static boolean checkLand = false;
 	public static int landNum = -999;
 	public static int lastNum = -999;
+	
+	// Land 마크(상자)를 찍기위해 CargoWP 버튼을 클릭시 웹상의 Land값을 true로 바꿔줌
 	public void handleMissionLand() {
 		if(checkLand) {
 			Platform.runLater(() -> {
@@ -473,6 +477,7 @@ public class AppMainController implements Initializable{
 		statusMessage("Land made.");
 	}
 	
+	// CargoWP가 활성화 중인것을 알리기위한 Text Color 변경
 	public void changeColor() {
 		if(checkLand) btnMissionLand.setStyle("-fx-text-fill: #55FF55;");
 		else btnMissionLand.setStyle("-fx-text-fill: white;");
@@ -886,6 +891,7 @@ public class AppMainController implements Initializable{
 
 		TableColumn<WayPoint, String> column3 = new TableColumn<WayPoint, String>("Latitude");
 		column3.setCellValueFactory(new PropertyValueFactory<WayPoint, String>("lat"));
+		// Table에서 변경 Column을 적용하고 변경 내용을 저장을 어떻게 할 것인지 지정
 		column3.setEditable(true);
 		column3.setCellFactory(TextFieldTableCell.forTableColumn());
 		column3.setOnEditCommit((target)->{
@@ -900,6 +906,7 @@ public class AppMainController implements Initializable{
 
 		TableColumn<WayPoint, String> column4 = new TableColumn<WayPoint, String>("Longitude");
 		column4.setCellValueFactory(new PropertyValueFactory<WayPoint, String>("lng"));
+		// Table에서 변경 Column을 적용하고 변경 내용을 저장을 어떻게 할 것인지 지정
 		column4.setEditable(true);
 		column4.setCellFactory(TextFieldTableCell.forTableColumn());
 		column4.setOnEditCommit((target)->{
@@ -914,6 +921,7 @@ public class AppMainController implements Initializable{
 
 		TableColumn<WayPoint, Double> column5 = new TableColumn<WayPoint, Double>("Altitude");
 		column5.setCellValueFactory(new PropertyValueFactory<WayPoint, Double>("altitude"));
+		// Table에서 변경 Column을 적용하고 변경 내용을 저장을 어떻게 할 것인지 지정
 		column5.setEditable(true);
 		column5.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
 		column5.setOnEditCommit((target)->{
@@ -928,6 +936,7 @@ public class AppMainController implements Initializable{
 
 		TableColumn<WayPoint, Integer> column6 = new TableColumn<WayPoint, Integer>("JumpNo");
 		column6.setCellValueFactory(new PropertyValueFactory<WayPoint, Integer>("jumpNo"));
+		// Table에서 변경 Column을 적용하고 변경 내용을 저장을 어떻게 할 것인지 지정
 		column6.setEditable(true);
 		column6.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		column6.setOnEditCommit((target)->{
@@ -942,6 +951,7 @@ public class AppMainController implements Initializable{
 
 		TableColumn<WayPoint, Integer> column7 = new TableColumn<WayPoint, Integer>("RepeatCount");
 		column7.setCellValueFactory(new PropertyValueFactory<WayPoint, Integer>("repeatCount"));
+		// Table에서 변경 Column을 적용하고 변경 내용을 저장을 어떻게 할 것인지 지정
 		column7.setEditable(true);
 		column7.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		column7.setOnEditCommit((target)->{
@@ -1001,7 +1011,8 @@ public class AppMainController implements Initializable{
 					setMission(uav.wayPoints);
 				} 
 				
-				jsproxy.call("setNextWaypointNo", UAV.nextWP);			
+				// 주황선이 가르키는 곳의 정보
+				jsproxy.call("setNextWaypointNo", uav.nextWaypointNo);			
 				
 				if(Network.getUav().mode.equals("AUTO")) {
 					for(int i=0; i<tableView.getItems().size(); i++) {
@@ -1064,6 +1075,7 @@ public class AppMainController implements Initializable{
 					jsonObject.put("lat", Double.parseDouble(wayPoint.getLat()));
 					jsonObject.put("lng", Double.parseDouble(wayPoint.getLng()));
 				} else if(wayPoint.kind.equals("land")) {
+					// Land Point의 Mission Num을 landNum에 넣어 Uav Class에서 해당 WayPoint Num에 접근시 Land Mission을 수행
 					landNum = wayPoint.no;
 					jsonObject.put("kind",  wayPoint.kind);
 					jsonObject.put("lat", Double.parseDouble(wayPoint.getLat()));
