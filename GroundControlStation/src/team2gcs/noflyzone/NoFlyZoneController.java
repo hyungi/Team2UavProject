@@ -35,6 +35,7 @@ public class NoFlyZoneController implements Initializable{
 		btnOk.setDefaultButton(true);
 		btnOk.setOnAction((event)->{handleOk(event);});
 	}
+	//지도에 no-fly-zone 그리기
 	public void handleOk(ActionEvent event) {
 		try {
 
