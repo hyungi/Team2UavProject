@@ -797,7 +797,7 @@ def gcs_fail_safe():
         if gcs_fail_safe_request == True:
 #             print("connecting")
             count = count + 1
-            print(count)
+#            print(count)
         if count > 250:
             if not vehicle.armed: return
             vehicle.mode = VehicleMode("RTL")
