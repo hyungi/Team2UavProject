@@ -59,7 +59,10 @@ def on_connect(client, userdata, flags, rc):
             capture_thread = threading.Thread(target=caputer_image)
             capture_thread.setDaemon(True)
             capture_thread.start()
-            
+        
+        mqtt_client.publish(uav_pub_topic, "", 0 , True) # 버퍼 제거
+        mqtt_client.publish(uav_pub_topic, "alive") # GCS가 켜진 상태에서 드론이 접속할 경우, 영상을 보낼 수 있도록 alive 메시지 발송
+
         mqtt_client.on_message = on_message
         mqtt_client.subscribe(uav_sub_topic)    
     except Exception as e:
@@ -101,7 +104,7 @@ def on_message(client, userdata, msg):
     try:
         command = msg.payload
         if command == 'next' and jpg is not None:
-            mqtt_client.publish(uav_pub_topic, jpg) 
+            mqtt_client.publish(uav_pub_topic, jpg, 0 , True) # 최신영상을 받도록 retain 조건을 True로 설정
     except Exception as e:
         if debug: print(">>>", type(e), "on_message():", e)
 #------------------------------------------------------

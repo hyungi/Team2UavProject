@@ -1,3 +1,7 @@
+#txtNFZLat,#txtNFZLng,#txtNFZRadius,#txtAlt,#txtIP,#txtPort{
+	-fx-text-fill: white;
+}
+
 .root {
 	-fx-font-family: "Bombardier";
 }
