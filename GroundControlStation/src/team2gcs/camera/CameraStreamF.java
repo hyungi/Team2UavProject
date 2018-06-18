@@ -132,7 +132,7 @@ public class CameraStreamF {
                             CameraStreamF.this.stop();
                         } catch(Exception e2) {}
                     }
-                }
+                } 
             }
         };
         thread.setDaemon(true);
