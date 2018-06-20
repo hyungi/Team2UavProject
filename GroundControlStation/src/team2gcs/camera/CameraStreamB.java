@@ -106,8 +106,8 @@ public class CameraStreamB {
                                         	BufferedImage bufferdImage = ImageIO.read(new ByteArrayInputStream(imageBytes));
                                             Image imgFx = SwingFXUtils.toFXImage(bufferdImage, null);
                                             gc.drawImage(imgFx, 0, 0, imgFx.getWidth(), imgFx.getHeight(), 0, 0, canvas.getWidth(), canvas.getHeight());
-                                        } catch (IOException ex) {
-                                            ex.printStackTrace();
+                                        } catch (Exception ex) {
+                                            //ex.printStackTrace();
                                         }
                                     }
                                 });
@@ -124,8 +124,9 @@ public class CameraStreamB {
                         mqttClient.connect(options);
                         mqttClient.subscribe(Network.uavCameraPubTopicB);
                         connected = true;
-                        MqttMessage nextMessage = new MqttMessage("next".getBytes());
-    					mqttClient.publish(Network.uavCameraSubTopicB, nextMessage);
+                        mqttClient.publish(Network.uavCameraSubTopicB, new byte[0], 0, true); // MQTT Broker의 영상버퍼 제거
+                        MqttMessage nextMessage = new MqttMessage("next".getBytes()); // next Message 제작
+                        mqttClient.publish(Network.uavCameraSubTopicB, nextMessage.getPayload(), 0, true); //next Message 발송
                     } catch(Exception e) {
                         try {
                             CameraStreamB.this.stop();
