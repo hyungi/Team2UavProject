@@ -11,6 +11,7 @@ import paho.mqtt.client as mqtt
 import time
 import threading
 import simplejson
+import datetime
 # from doctest import master
 #import RPi.GPIO as gpio
 
@@ -18,14 +19,14 @@ import simplejson
 debug = True
 #Autopilot(FC-펌웨어)과 연결----------------------------------jdh------------------------------
 
-vehicle = connect("udp:192.168.3.217:14560", wait_ready=True)
+vehicle = connect("udp:192.168.3.16:14560", wait_ready=True)
 
 #vehicle = connect('udp:127.0.0.1:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
 # vehicle = connect('/dev/ttyS0',wait_ready = True,baud57600) #라즈베리파이에서 실행시 
 
 #MQTT Broker와 연결하기 위한 정보-----------------------------
 
-mqtt_ip = "192.168.3.217"
+mqtt_ip = "192.168.3.16"
 #106.253.56.122
 
 mqtt_port = 1883
@@ -108,6 +109,8 @@ def send_data():
                 send_statustext_info(data)            
                 send_mission_info(data)
                 send_fence_info(data)
+                send_gps_info(data)
+                send_time_info(data)
                 gcs_fail_safe()
                 
                 json = simplejson.JSONEncoder().encode(data)
@@ -244,7 +247,24 @@ def optical_flow_message(self, name, message):
     global optical_flow_quality
     optical_flow_quality = message.quality
     
+unix_time
 #------------------------------------------------------
+@vehicle.on_message('SYSTEM_TIME')
+def listener(self, name, message):
+    global unix_time
+    unix_time = (int) (message.time_unix_usec/1000000)
+    
+def send_time_info(data):
+    data["time"] = unix_time
+    
+gps_num
+#------------------------------------------------------
+@vehicle.on_message('GPS_STATUS')
+def listener(self, name, message):
+    global gps_num
+    gps_num = message.satellite_prn
+def send_gps_info(data):
+    data["gps"] = gps_num
 '''
 [Response]
 https://github.com/mavlink/mavlink/blob/master/message_definitions/v1.0/common.xml
