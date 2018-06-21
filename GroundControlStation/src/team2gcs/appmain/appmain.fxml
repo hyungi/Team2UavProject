@@ -32,7 +32,7 @@
 		                        <Insets bottom="50.0" />
 		                     </VBox.margin></ImageView>
 		                        <Label fx:id="loginLabel" alignment="CENTER" prefHeight="17.0" prefWidth="229.0" textFill="WHITE" />
-		                  <TextField fx:id="txtIP" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="240.0" promptText="MQTT Broker IP" style="-fx-background-color: #515253; -fx-opacity: 0.8; -fx-background-radius: 20;" text="localhost">
+		                  <TextField fx:id="txtIP" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="240.0" promptText="MQTT Broker IP" style="-fx-background-color: #515253; -fx-opacity: 0.8; -fx-background-radius: 20;" text="106.253.56.122">
 		                     <VBox.margin>
 		                        <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
 		                     </VBox.margin>
@@ -489,7 +489,7 @@
                                                 <Font size="15.0" />
                                              </font>
                                           </Label>
-                                          <TextField fx:id="txtAlt" alignment="CENTER" prefHeight="23.0" prefWidth="75.0" style="-fx-background-color: black; -fx-text-fill: white; -fx-background-radius: 0;" text="20">
+                                          <TextField fx:id="txtAlt" alignment="CENTER" prefHeight="23.0" prefWidth="75.0" style="-fx-background-color: black; -fx-text-fill: white; -fx-background-radius: 0;" text="10">
                                              <HBox.margin>
                                                 <Insets left="90.0" />
                                              </HBox.margin>

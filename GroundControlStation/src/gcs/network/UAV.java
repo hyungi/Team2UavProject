@@ -32,6 +32,8 @@ public class UAV implements Cloneable {
 	public double latitude;
 	public double longitude;
 	public double altitude;
+	public double gpsTime;
+	public double gpsSatellite;
 	public double heading;
 	public double airSpeed;
 	public double groundSpeed;	
@@ -137,8 +139,10 @@ public class UAV implements Cloneable {
 			homeLat = jsonObject.getDouble("homeLat");
 			homeLng = jsonObject.getDouble("homeLng");
 			nextWaypointNo = jsonObject.getInt("next_waypoint_no");
-			System.out.println(jsonObject.getString("time"));
-			System.out.println(jsonObject.getString("gps"));
+			gpsTime = jsonObject.getDouble("time");
+			gpsSatellite = jsonObject.getDouble("gps");
+			System.out.println(jsonObject.getDouble("time"));
+			System.out.println(jsonObject.getDouble("gps"));
 			
 			if(armed) AppMainController.instance2.statusMessage("UAV Armed.");
 			else if(!armed) {

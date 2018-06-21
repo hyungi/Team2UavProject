@@ -194,8 +194,6 @@ public class AppMainController implements Initializable{
 	@FXML private Label signalLabel;
 	@FXML private ImageView connButton;
 	
-	
-
 	FileOutputStream gpsTxt;
 	public boolean setGps = false;
 
@@ -214,7 +212,8 @@ public class AppMainController implements Initializable{
 		heightSize = webView.getHeight();
 		try {
 			gpsTxt = new FileOutputStream("src/team2gcs/images/"+"gps.txt");
-		} catch (FileNotFoundException e) {
+			gpsTxt.write(("자동,수동  경로점  GPS Time  Latitude  Longtitude  Altitude  PRN #" + "\r\n").getBytes());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		try {
@@ -318,9 +317,8 @@ public class AppMainController implements Initializable{
 	}
 
 	public void makeGpsTxt() {
-		System.out.println("gg");
 		try {
-			gpsTxt.write((inTime + "   Lat: " + Network.getUav().latitude + "   Lng: " + Network.getUav().longitude + "\r\n").getBytes());
+			gpsTxt.write((Network.getUav().gpsTime +"   "+ Network.getUav().latitude +"   "+ Network.getUav().longitude + "	"+ Network.getUav().gpsSatellite + "\r\n").getBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
