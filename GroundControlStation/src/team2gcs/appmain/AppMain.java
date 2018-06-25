@@ -9,7 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
+//37.5480231 127.1202967
 public class AppMain extends Application{
 	//106.253.56.122
 	//37.5475575
@@ -66,6 +66,7 @@ public class AppMain extends Application{
 	@Override
 	public void stop() {
 		System.exit(0);
+		
 	}
 	
 	public static void main(String[] args) {

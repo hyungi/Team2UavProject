@@ -141,8 +141,8 @@ public class UAV implements Cloneable {
 			nextWaypointNo = jsonObject.getInt("next_waypoint_no");
 			gpsTime = jsonObject.getDouble("time");
 			gpsSatellite = jsonObject.getDouble("gps");
-			System.out.println(jsonObject.getDouble("time"));
-			System.out.println(jsonObject.getDouble("gps"));
+			//System.out.println(jsonObject.getDouble("time"));
+			//System.out.println(jsonObject.getDouble("gps"));
 			
 			if(armed) AppMainController.instance2.statusMessage("UAV Armed.");
 			else if(!armed) {
