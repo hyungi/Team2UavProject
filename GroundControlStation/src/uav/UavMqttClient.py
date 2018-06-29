@@ -19,7 +19,7 @@ import datetime
 debug = True
 #Autopilot(FC-펌웨어)과 연결----------------------------------jdh------------------------------
 
-vehicle = connect("udp:192.168.3.16:14560", wait_ready=True)
+vehicle = connect('udp:192.168.3.16:14560', wait_ready=True)
 
 #vehicle = connect('udp:127.0.0.1:14560', wait_ready=True) #컴퓨터에서 테스트 실행시
 # vehicle = connect('/dev/ttyS0',wait_ready = True,baud57600) #라즈베리파이에서 실행시 
@@ -247,7 +247,7 @@ def optical_flow_message(self, name, message):
     global optical_flow_quality
     optical_flow_quality = message.quality
     
-unix_time
+unix_time = 0
 #------------------------------------------------------
 @vehicle.on_message('SYSTEM_TIME')
 def listener(self, name, message):
@@ -257,7 +257,7 @@ def listener(self, name, message):
 def send_time_info(data):
     data["time"] = unix_time
     
-gps_num
+gps_num = 0
 #------------------------------------------------------
 @vehicle.on_message('GPS_STATUS')
 def listener(self, name, message):

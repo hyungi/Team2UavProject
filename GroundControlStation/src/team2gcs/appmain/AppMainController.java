@@ -318,7 +318,6 @@ public class AppMainController implements Initializable{
 	}
 
 	public void makeGpsTxt() {
-		System.out.println("gg");
 		try {
 			gpsTxt.write((inTime + "   Lat: " + Network.getUav().latitude + "   Lng: " + Network.getUav().longitude + "\r\n").getBytes());
 		} catch (IOException e) {
