@@ -26,8 +26,8 @@ public class MjpgStreamViewerController implements Initializable {
     @FXML private Canvas canvas;
     @FXML private Canvas canvas2;
 	@FXML private Button captureBtn;
-	@FXML private Button startCamBtn;
-	@FXML private Button stopCamBtn;
+	//@FXML private Button startCamBtn;
+	//@FXML private Button stopCamBtn;
 	
 	public JSObject jsproxy;
     
@@ -36,8 +36,8 @@ public class MjpgStreamViewerController implements Initializable {
         //httpView();
         mqttView();        
         captureBtn.setOnMouseClicked((event) -> {try {handleCaptureBtn(event);} catch (Exception e) {e.printStackTrace();}});
-        startCamBtn.setOnMouseClicked((event) -> {try {handleStartCamBtn(event);} catch (Exception e) {e.printStackTrace();}});
-        stopCamBtn.setOnMouseClicked((event) -> {try {handleStopCamBtn(event);} catch (Exception e) {e.printStackTrace();}});
+        //startCamBtn.setOnMouseClicked((event) -> {try {handleStartCamBtn(event);} catch (Exception e) {e.printStackTrace();}});
+        //stopCamBtn.setOnMouseClicked((event) -> {try {handleStopCamBtn(event);} catch (Exception e) {e.printStackTrace();}});
 		
     }
     /*private void httpView() {
