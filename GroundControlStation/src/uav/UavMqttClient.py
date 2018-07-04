@@ -340,6 +340,7 @@ def send_global_position_int_info(data):
     data["latitude"] = vehicle.location.global_relative_frame.lat
     data["longitude"] = vehicle.location.global_relative_frame.lon
     data["altitude"] = vehicle.location.global_relative_frame.alt
+    data["abs_altitude"] = vehicle.location.global_frame.alt
 #------------------------------------------------------
 '''
 [Response]

@@ -317,8 +317,23 @@ public class AppMainController implements Initializable{
 	}
 
 	public void makeGpsTxt() {
+		String AutoManu;
+		if(Network.getUav().mode.equals("AUTO")) {
+			AutoManu = "1";
+		}else {
+			AutoManu = "0";
+		}
 		try {
-			gpsTxt.write((Network.getUav().gpsTime +"   "+ Network.getUav().latitude +"   "+ Network.getUav().longitude + "	"+ Network.getUav().gpsSatellite + "\r\n").getBytes());
+			gpsTxt.write(
+					(AutoManu +"   "+
+					Network.getUav().nextWaypointNo +"   "+
+					Network.getUav().gpsTime +"   "+ 
+					String.format("%.6f", Network.getUav().latitude) +"   "+ 
+					String.format("%.6f",Network.getUav().longitude) + "	"+ 
+					String.format("%.1f",Network.getUav().abs_altitude) + "	"+ 
+					//Network.getUav().gpsSatellite +
+					"\r\n").getBytes()
+			);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -600,11 +615,11 @@ public class AppMainController implements Initializable{
 	}
 	//미세조정 : 북쪽
 	public void handleBtnTop(ActionEvent e) {
-		Network.getUav().move(5, 0, 0, 0.5);
+		Network.getUav().move(5, 0, 0, 1);
 	}
 	//미세조정 : 남쪽
 	public void handleBtnBottom(ActionEvent e) {
-		Network.getUav().move(-5, 0, 0, 0.5);
+		Network.getUav().move(-5, 0, 0, 1);
 	}
 	//미세조정 : 동쪽
 	public void handleBtnRight(ActionEvent e) {
@@ -738,7 +753,6 @@ public class AppMainController implements Initializable{
 			}else {
 				list.get(i).no=i+1;
 			}
-
 		}
 		setMission(list);
 		setTableViewItems(list);
@@ -869,10 +883,7 @@ public class AppMainController implements Initializable{
 	}
 	
 	//미션 Loi : 헤드 고정
-	public void handleMissionLoi(ActionEvent event) {
-		roiMake();
-		statusMessage("Roi made.");
-	}
+	public void handleMissionLoi(ActionEvent event) {}
 	private void roiMake() {
 		int selectedIndex = tableView.getSelectionModel().getSelectedIndex();
 		try {
@@ -1169,7 +1180,6 @@ public class AppMainController implements Initializable{
 			locationLngLabel.setText("Lng:	" + lng);
 		});
 		setGps = true;
-
 	}
 
 	///////////////////////////// 우측 //////////////////////////////////////

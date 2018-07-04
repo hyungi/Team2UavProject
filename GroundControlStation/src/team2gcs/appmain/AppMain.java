@@ -12,8 +12,9 @@ import javafx.stage.Stage;
 //37.5480231 127.1202967
 public class AppMain extends Application{
 	//106.253.56.122
-	//37.5475575
-	//127.1195265
+	//37.547568
+	//127.119557
+	
 	public static AppMain instance;
 	public static Stage primaryStage;
 	public static Stage altStage;

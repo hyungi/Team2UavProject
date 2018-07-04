@@ -32,6 +32,7 @@ public class UAV implements Cloneable {
 	public double latitude;
 	public double longitude;
 	public double altitude;
+	public double abs_altitude;
 	public double gpsTime;
 	public double gpsSatellite;
 	public double heading;
@@ -133,6 +134,10 @@ public class UAV implements Cloneable {
 			latitude = jsonObject.getDouble("latitude");
 			longitude = jsonObject.getDouble("longitude");
 			altitude = jsonObject.getDouble("altitude");
+			try {
+				abs_altitude = jsonObject.getDouble("abs_altitude");
+			}catch (Exception e) {
+			}
 			heading = jsonObject.getDouble("heading");
 			airSpeed = jsonObject.getDouble("airspeed");
 			groundSpeed = jsonObject.getDouble("groundspeed");
@@ -441,7 +446,7 @@ public class UAV implements Cloneable {
 	public void fenceUpload(String jsonFencePoints) {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("command", "fence_upload");
-		jsonObject.put("fence_type", 4); //4:polygon, 7:All=polygon+radius+alt_max
+		jsonObject.put("fence_type", 7); //4:polygon, 7:All=polygon+radius+alt_max
 		jsonObject.put("fence_action", 1); //RTL
 		jsonObject.put("fence_radius", 500);
 		jsonObject.put("fence_alt_max", 100);
